@@ -492,6 +492,7 @@ Close Project</button>
                             <p>En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, il est précisé aux utilisateurs du site <a href="http://www.riwalennbas.com/">www.riwalennbas.com</a> l'identité des différents intervenants dans le cadre de sa réalisation et de son suivi :</p>
                             <p><strong>Propriétaire</strong> : Riwalenn Bas – 1 rue françois arago<br />
                                 <strong>Créateur</strong>  : <a href="http://www.riwalennbas.com">Riwalenn Bas</a><br />
+                                <strong>Template</strong> : <a href="https://github.com/BlackrockDigital/startbootstrap-agency/blob/master/LICENSE">Blackrock Digital LLC</a><br />
                                 <strong>Responsable publication</strong> : Riwalenn Bas – riwalenn@gmail.com<br />
                                 Le responsable publication est une personne physique ou une personne morale.<br />
                                 <strong>Webmaster</strong> : Riwalenn Bas – riwalenn@gmail.com<br />
