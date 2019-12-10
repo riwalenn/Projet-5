@@ -17,6 +17,7 @@
         <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet'
               type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 
         <!-- Custom styles for this template -->
         <link href="ressources/css/agency.min.css" rel="stylesheet">
@@ -25,7 +26,6 @@
         </head>
     <body class="container-fluid" id="page-top">
         <?php include('menu.html') ?>
-        <?php include('header.html') ?>
         <?= $content ?>
         <?php include('footer.html') ?>
         <!-- Bootstrap core JavaScript -->

@@ -8,6 +8,10 @@ try
         $action = $_REQUEST['action'];
         switch ($action)
         {
+            case 'articlesListe' :
+                $controller->voirListeArticles();
+                break;
+
             default :
                 break;
         }

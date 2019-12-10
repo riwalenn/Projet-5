@@ -83,7 +83,6 @@ img::-moz-selection {
 
 .btn-xl {
     font-size: 18px;
-    padding: 20px 40px
 }
 
 .btn-primary {
@@ -139,14 +138,16 @@ img::-moz-selection {
     color: #00c0c7
 }
 
+.logo.menu {
+    height: 60px;
+}
+
 @media (min-width: 992px) {
     #mainNav {
-        padding-top: 25px;
-        padding-bottom: 25px;
         -webkit-transition: padding-top .3s, padding-bottom .3s;
         transition: padding-top .3s, padding-bottom .3s;
         border: none;
-        background-color: transparent
+        background-color: #212529
     }
 
     #mainNav .navbar-brand {
@@ -221,7 +222,7 @@ header.masthead .intro-text .intro-heading {
         font-weight: 700;
         line-height: 75px;
         margin-bottom: 50px;
-        font-family: Montserrat, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'
+        font-family: "Source Sans Pro Black", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'
     }
 }
 
