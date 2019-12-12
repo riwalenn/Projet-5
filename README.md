@@ -2,25 +2,19 @@
 
 Projet n° 5 créé dans le cadre du parcours "Développement d'application PHP & Symfony" pour OpenClassroom.
 
-## Contributing
+## Download and Installation
 
-Ceci est un projet crée dans le cadre du parcours "Développement d'application PHP & Symfony" d'OpenClassroom, merci de ne pas y contribuer.
+* Clone the repo: `git clone https://github.com/riwalenn/Projet-5.git`
+
 
 ## Built With
 
-* [Sublime Text 3 - download](https://www.sublimetext.com/3) - The web framework used
-* [Sublime Text 3](https://www.sublimetext.com/docs/3/)  - Documentation
-* [Sublime Text 3](https://docs.sublimetext.info/en/latest/index.html) - Unofficial Documentation
-* [PHPMyAdmin 4.8.2](https://dev.mysql.com/doc/refman/5.7/en/) - BDD
 * [PHP 7.1.9]
-
-# [Start Bootstrap - Agency](https://startbootstrap.com/template-overviews/agency/)
-
-[Agency](https://startbootstrap.com/template-overviews/agency/) is a one page agency portfolio theme for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/). This theme features several content sections, a responsive portfolio grid with hover effects, full page portfolio item modals, a responsive timeline, and a working PHP contact form.
+# [Agency](https://startbootstrap.com/template-overviews/agency/) is a one page agency portfolio theme for [Bootstrap](http://getbootstrap.com/) created by [Start Bootstrap](http://startbootstrap.com/). This theme features several content sections, a responsive portfolio grid with hover effects, full page portfolio item modals, a responsive timeline, and a working PHP contact form.
 
 ## Preview
 
-[![Agency Preview](https://startbootstrap.com/assets/img/screenshots/themes/agency.png)](https://blackrockdigital.github.io/startbootstrap-agency/)
+**[![Agency Preview](https://startbootstrap.com/assets/img/screenshots/themes/agency.png)](https://blackrockdigital.github.io/startbootstrap-agency/)**
 
 **[View Live Preview](https://blackrockdigital.github.io/startbootstrap-agency/)**
 
@@ -31,38 +25,6 @@ Ceci est un projet crée dans le cadre du parcours "Développement d'application
 [![Build Status](https://travis-ci.org/BlackrockDigital/startbootstrap-agency.svg?branch=master)](https://travis-ci.org/BlackrockDigital/startbootstrap-agency)
 [![dependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-agency/status.svg)](https://david-dm.org/BlackrockDigital/startbootstrap-agency)
 [![devDependencies Status](https://david-dm.org/BlackrockDigital/startbootstrap-agency/dev-status.svg)](https://david-dm.org/BlackrockDigital/startbootstrap-agency?type=dev)
-
-## Download and Installation
-
-To begin using this template, choose one of the following options to get started:
-* [Download the latest release on Start Bootstrap](https://startbootstrap.com/template-overviews/agency/)
-* Install via npm: `npm i startbootstrap-agency`
-* Clone the repo: `git clone https://github.com/BlackrockDigital/startbootstrap-agency.git`
-* [Fork, Clone, or Download on GitHub](https://github.com/BlackrockDigital/startbootstrap-agency)
-
-## Usage
-
-### Basic Usage
-
-After downloading, simply edit the HTML and CSS files included with the template in your favorite text editor to make changes. These are the only files you need to worry about, you can ignore everything else! To preview the changes you make to the code, you can open the `index.html` file in your web browser.
-
-### Advanced Usage
-
-After installation, run `npm install` and then run `npm start` which will open up a preview of the template in your default browser, watch for changes to core template files, and live reload the browser when changes are saved. You can view the `gulpfile.js` to see which tasks are included with the dev environment.
-
-#### Gulp Tasks
-
-- `gulp` the default task that builds everything
-- `gulp watch` browserSync opens the project in your default browser and live reloads when changes are made
-- `gulp css` compiles SCSS files into CSS and minifies the compiled CSS
-- `gulp js` minifies the themes JS file
-- `gulp vendor` copies dependencies from node_modules to the vendor directory
-
-You must have npm installed globally in order to use this build environment.
-
-## Bugs and Issues
-
-Have a bug or an issue with this template? [Open a new issue](https://github.com/BlackrockDigital/startbootstrap-agency/issues) here on GitHub or leave a comment on the [template overview page at Start Bootstrap](http://startbootstrap.com/template-overviews/agency/).
 
 ## About
 
