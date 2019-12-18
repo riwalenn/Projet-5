@@ -10,7 +10,13 @@ class Controller
 
     public function voirListeArticles()
     {
+        $postManager = new PostManager();
+        $listPosts = $postManager->liste();
+
         $view = new View('Liste des articles');
-        $view->render('view/articlesView.php');
+        $view->render('view/articlesView.php', ['listPosts' => $listPosts]);
+        if (empty($listPosts)) {
+            throw new Exception('La liste est vide');
+        }
     }
 }
