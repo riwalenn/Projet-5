@@ -1,6 +1,6 @@
 <?php
 
-class User
+class User extends Post
 {
     private $id;
     private $pseudo;
@@ -79,6 +79,8 @@ class User
     {
         if (in_array($role, [self::ADMIN, self::USER])){
             $this->role = $role;
+        } else {
+            $this->role = self::USER;
         }
     }
 
@@ -96,6 +98,8 @@ class User
     {
         if (in_array($state, [self::EN_ATTENTE, self::VALIDE, self::SUPPRESSION])){
             $this->state = $state;
+        } else {
+            $this->state = self::EN_ATTENTE;
         }
     }
 }

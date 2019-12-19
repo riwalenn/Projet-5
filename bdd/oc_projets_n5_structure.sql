@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 12 déc. 2019 à 14:55
+-- Généré le :  jeu. 19 déc. 2019 à 07:54
 -- Version du serveur :  5.7.19
 -- Version de PHP :  7.1.9
 
@@ -23,6 +23,20 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `oc_projets_n5` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `oc_projets_n5`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `categories`
+--
+
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `category` varchar(155) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `category` (`category`)
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -55,11 +69,16 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `kicker` tinytext NOT NULL,
   `author` int(10) NOT NULL,
   `content` longtext NOT NULL,
+  `created_at` date NOT NULL,
   `modified_at` datetime NOT NULL,
+  `id_category` int(10) NOT NULL,
+  `state` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 en attente - 1 valide - 2 archive - 3 suppression',
   PRIMARY KEY (`id`),
   KEY `title` (`title`,`kicker`(255)),
-  KEY `modified_at` (`modified_at`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  KEY `modified_at` (`modified_at`),
+  KEY `id_category` (`id_category`),
+  KEY `created_at` (`created_at`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -74,11 +93,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role` tinyint(1) NOT NULL DEFAULT '2' COMMENT '1 - admin 2 - user',
   `email` varchar(155) NOT NULL,
   `password` varchar(45) NOT NULL,
-  `state` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 en attente - 1 valide - 2 archive - 3 suppression',
+  `state` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 en attente - 1 valide - 2 suppression',
   PRIMARY KEY (`id`),
   KEY `state` (`state`),
   KEY `pseudo` (`pseudo`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

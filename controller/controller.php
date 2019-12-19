@@ -12,11 +12,11 @@ class Controller
     {
         $postManager = new PostManager();
         $listPosts = $postManager->liste();
+        $categoriesManager = new CategoryManager();
+        $compteurCategories = $categoriesManager->categoryCount();
 
         $view = new View('Liste des articles');
-        $view->render('view/articlesView.php', ['listPosts' => $listPosts]);
-        if (empty($listPosts)) {
-            throw new Exception('La liste est vide');
-        }
+        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'compteurCategories' => $compteurCategories]);
+
     }
 }

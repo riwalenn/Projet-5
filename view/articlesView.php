@@ -8,8 +8,14 @@
                     intéresser.</h3>
             </div>
         </div>
-        <?php foreach ($listPosts as $posts) {
-            ?>
+        <?php
+            if (empty($listPosts)) {
+                ?>
+                <h6 class="alert alert-primary">Nous sommes désolés, la liste est vide ! Merci de revenir plus tard.</h6>
+                <?php
+            }
+            foreach ($listPosts as $posts) {
+        ?>
             <div class="row">
                 <div class="col-md-4 col-sm-6 portfolio-item">
                     <a class="portfolio-link" data-toggle="modal" href="#portfolioModal<?= $posts->getId() ?>">
@@ -18,9 +24,11 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid" src="ressources/img/articles/design.jpg" alt="">
+                        <img class="img-fluid" src="<?= $posts->getImg() ?>" alt="">
                     </a>
                     <div class="portfolio-caption">
+                        <footer class="blockquote-footer">catégorie : <?= $posts->getCategory() ?></footer>
+                        <footer class="blockquote-footer">Créé le <?= $posts->getCreated_at() ?></footer>
                         <h4><?= $posts->getTitle() ?></h4>
                         <p class="text-muted"><?= $posts->getKicker() ?></p>
                     </div>
@@ -49,12 +57,23 @@
                                 <!-- Project Details Go Here -->
                                 <h2 class="text-uppercase"><?= $posts->getTitle() ?></h2>
                                 <p class="item-intro text-muted"><?= $posts->getKicker() ?></p>
-                                <img class="img-fluid d-block mx-auto" src="ressources/img/articles/design.jpg" alt="">
+                                <cite title="Auteur" class="item-intro text-muted">Créé par <?= $posts->getPseudo() ?> - le <?= $posts->getCreated_at() ?></cite>
+                                <img class="img-fluid d-block mx-auto" src="<?= $posts->getImg() ?>" alt="">
                                 <p><?= $posts->getContent() ?></p>
                                 <button class="btn btn-primary" data-dismiss="modal" type="button">
                                     <i class="fas fa-times"></i>
                                     Close Article
                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="modal-body">
+                                <h4>Commentaires</h4>
+                                <hr>
                             </div>
                         </div>
                     </div>

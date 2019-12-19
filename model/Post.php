@@ -5,17 +5,20 @@ class Post
     private $id;
     private $title;
     private $kicker;
-    private $author;
+    private $pseudo;
     private $content;
+    private $url;
     private $created_at;
     private $modified_at;
-    private $id_category;
+    private $category;
     private $state;
+    private $img;
 
     const EN_ATTENTE = 0;
     const VALIDE = 1;
     const ARCHIVE = 2;
     const SUPPRESSION = 3;
+    const ADMIN = "Riwalenn";
 
     public function __construct($donnees = null)
     {
@@ -50,19 +53,29 @@ class Post
         return $this->kicker;
     }
 
-    public function getAuthor()
+    public function getPseudo()
     {
-        return $this->author;
+        if ($this->pseudo == "Administrateur") {
+            return self::ADMIN;
+        } else {
+            return $this->pseudo;
+        }
     }
 
     public function getContent()
     {
-        return $this->content;
+        return $this->content. ' <a href="'.$this->getUrl().'" target="_blank">[voir l\'article]</a>';
+    }
+
+    public function getUrl()
+    {
+        return $this->url;
     }
 
     public function getCreated_at()
     {
-        return $this->created_at;
+        $date = new DateTime($this->created_at);
+        return date_format($date, 'd-m-Y');
     }
 
     public function getModified_at()
@@ -70,14 +83,19 @@ class Post
         return $this->modified_at;
     }
 
-    public function getId_category()
+    public function getCategory()
     {
-        return $this->id_category;
+        return $this->category;
     }
 
     public function getState()
     {
         return $this->state;
+    }
+
+    public function getImg()
+    {
+        return 'ressources/img/categories/'.$this->img;
     }
 
     // ----- Setters -----
@@ -96,14 +114,19 @@ class Post
         $this->kicker = $kicker;
     }
 
-    public function setAuthor($author)
+    public function setPseudo($pseudo)
     {
-        $this->author = $author;
+        $this->pseudo = $pseudo;
     }
 
     public function setContent($content)
     {
         $this->content = $content;
+    }
+
+    public function setUrl($url)
+    {
+        $this->url = $url;
     }
 
     public function setCreated_at($created_at)
@@ -116,15 +139,22 @@ class Post
         $this->modified_at = $modified_at;
     }
 
-    public function setId_category($id_category)
+    public function setCategory($category)
     {
-        $this->id_category = $id_category;
+        $this->category = $category;
     }
 
     public function setState($state)
     {
         if (in_array($state, [self::EN_ATTENTE, self::VALIDE, self::ARCHIVE, self::SUPPRESSION])) {
             $this->state = $state;
+        } else {
+           $this->state = self::EN_ATTENTE;
         }
+    }
+
+    public function setImg($img)
+    {
+        $this->img = $img;
     }
 }

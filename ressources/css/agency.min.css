@@ -277,12 +277,19 @@ header.masthead .intro-text .intro-heading {
     margin: 0
 }
 
-#portfolio .portfolio-item .portfolio-caption {
+#portfolio .portfolio-item .portfolio-caption p, #portfolio .portfolio-item .portfolio-caption {
     max-width: 400px;
     margin: 0 auto;
     padding: 25px;
+    background-color: #fff;
+}
+
+#portfolio .portfolio-item .portfolio-caption p, #portfolio .portfolio-item .portfolio-caption h4 {
     text-align: center;
-    background-color: #fff
+}
+
+#portfolio .portfolio-item .portfolio-caption p, #portfolio .portfolio-item .portfolio-caption cite {
+    text-align: left;
 }
 
 #portfolio .portfolio-item .portfolio-caption h4 {
