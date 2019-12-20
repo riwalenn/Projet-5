@@ -9,14 +9,16 @@
             </div>
         </div>
         <?php
-            if (empty($listPosts)) {
-                ?>
-                <h6 class="alert alert-primary">Nous sommes désolés, la liste est vide ! Merci de revenir plus tard.</h6>
-                <?php
-            }
-            foreach ($listPosts as $posts) {
+        if (empty($listPosts)) {
         ?>
-            <div class="row">
+        <h6 class="alert alert-primary">Nous sommes désolés, la liste est vide ! Merci de revenir plus tard.</h6>
+            <?php
+            }
+        ?>
+        <div class="row">
+        <?php
+            foreach ($listPosts as $posts) {
+                ?>
                 <div class="col-md-4 col-sm-6 portfolio-item">
                     <a class="portfolio-link" data-toggle="modal" href="#portfolioModal<?= $posts->getId() ?>">
                         <div class="portfolio-hover">
@@ -33,8 +35,8 @@
                         <p class="text-muted"><?= $posts->getKicker() ?></p>
                     </div>
                 </div>
-            </div>
-        <?php } ?>
+            <?php } ?>
+        </div>
     </div>
 </section>
 
@@ -57,7 +59,8 @@
                                 <!-- Project Details Go Here -->
                                 <h2 class="text-uppercase"><?= $posts->getTitle() ?></h2>
                                 <p class="item-intro text-muted"><?= $posts->getKicker() ?></p>
-                                <cite title="Auteur" class="item-intro text-muted">Créé par <?= $posts->getPseudo() ?> - le <?= $posts->getCreated_at() ?></cite>
+                                <cite title="Auteur" class="item-intro text-muted">Créé par <?= $posts->getPseudo() ?> -
+                                    le <?= $posts->getCreated_at() ?></cite>
                                 <img class="img-fluid d-block mx-auto" src="<?= $posts->getImg() ?>" alt="">
                                 <p><?= $posts->getContent() ?></p>
                                 <button class="btn btn-primary" data-dismiss="modal" type="button">
