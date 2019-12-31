@@ -25,9 +25,9 @@
             <title><?= $title ?></title>
         </head>
     <body class="container-fluid" id="page-top">
-        <?php include('menu.html') ?>
+        <?php include 'menu.html' ?>
         <?= $content ?>
-        <?php include('footer.html') ?>
+        <?php include 'footer.html' ?>
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

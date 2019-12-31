@@ -5,7 +5,7 @@
 define('TEMPLATE_PATH', 'view/template.php');
 
 //Chemin de l'autoload
-require_once('framework/autoload.php');
+require_once 'framework/autoload.php';
 
 //Connexion à la base de données
 define('SGBD', 'mysql');
