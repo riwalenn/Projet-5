@@ -1,7 +1,8 @@
 <?php
 
 
-class View{
+class View
+{
 
     private $title;
     private $params;
@@ -19,7 +20,7 @@ class View{
 
     public function render($path, $params = null)
     {
-        if (!empty($params)){
+        if (!empty($params)) {
             $this->params = array_merge($this->params, $params);
         }
 
@@ -30,16 +31,14 @@ class View{
 
     public function renderContent($path)
     {
-        if (file_exists($path)) {
-            extract($this->params);
-            ob_start();
-
-            require $path;
-
-            return ob_get_clean();
-        } else {
-
+        if (!file_exists($path)) {
             throw new Exception("Mauvais paramètre renseigné ! => renderContent(path)");
         }
+        extract($this->params);
+        ob_start();
+
+        require $path;
+
+        return ob_get_clean();
     }
 }

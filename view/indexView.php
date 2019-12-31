@@ -47,6 +47,20 @@
         </div>
       </div>
       <div class="row">
+          <div class="col-md-4 col-sm-6 portfolio-item">
+              <a class="portfolio-link" data-toggle="modal" href="#portfolioModal6">
+                  <div class="portfolio-hover">
+                      <div class="portfolio-hover-content">
+                          <i class="fas fa-plus fa-3x"></i>
+                      </div>
+                  </div>
+                  <img class="img-fluid" src="ressources/img/portfolio/06-thumbnail.jpg" alt="">
+              </a>
+              <div class="portfolio-caption">
+                  <h4>La cuisine de Cécile</h4>
+                  <p class="text-muted">Création site php</p>
+              </div>
+          </div>
         <div class="col-md-4 col-sm-6 portfolio-item">
           <a class="portfolio-link" data-toggle="modal" href="#portfolioModal1">
             <div class="portfolio-hover">
@@ -483,6 +497,40 @@ Close Project</button>
       </div>
     </div>
   </div>
+
+<!-- Modal 6 -->
+<div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl"></div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here -->
+                            <h2 class="text-uppercase">La cuisine de cécile</h2>
+                            <p class="item-intro text-muted">Conception d'un site internet en php.</p>
+                            <img class="img-fluid d-block mx-auto" src="ressources/img/portfolio/06-full.jpg" alt="">
+                            <p>Conception d'un site en php pour un projet de fin d'études</p>
+                            <ul class="list-inline">
+                                <li>Date: Juin 2011</li>
+                                <li>Client: La cuisine de Cécile</li>
+                                <li>Categorie: Html/css/php</li>
+                            </ul>
+                            <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                <i class="fas fa-times"></i>
+                                Close Project</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Modal Conditions d'utilisation -->
 <div class="conditions-modal modal fade" id="conditionsModal" tabindex="-1" role="dialog" aria-hidden="true">
