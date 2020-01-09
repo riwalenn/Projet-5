@@ -6,6 +6,7 @@ exclude_paths:
   - 'bdd/**'
   - 'ressources/_img/**'
   - 'ressources/css/agency.css'
+  - 'ressources/css/agency.min.css'
   - 'ressources/js/**'
   - 'ressources/scss/**/*'
   - 'ressources/pdf/**'
