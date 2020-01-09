@@ -4,4 +4,5 @@ exclude_paths:
   - 'bdd/**'
   - 'ressources/_img/**'
   - 'diagrams/**/*'
-  - 'vendor/**'
+  - 'vendor/**/*'
+  - 'ressources/js/**'
