@@ -11,7 +11,6 @@ class Connexion
 
     protected function dbConnect()
     {
-        try {
             $db_config['OPTIONS'] = array(
                 //Activation des exceptions PDO
                 \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
@@ -25,8 +24,5 @@ class Connexion
                 $db_config['OPTIONS']);
             unset($db_config);
             return $db;
-        } catch (PDOException $exception) {
-            echo $exception;
-        }
     }
 }

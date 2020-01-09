@@ -31,14 +31,14 @@ class View
 
     public function renderContent($path)
     {
-        if (!file_exists($path)) {
-            throw new Exception("Mauvais paramètre renseigné ! => renderContent(path)");
+        if (file_exists($path)) {
+            extract($this->params);
+            ob_start();
+
+            require $path;
+
+            return ob_get_clean();
         }
-        extract($this->params);
-        ob_start();
-
-        require $path;
-
-        return ob_get_clean();
+        throw new Exception("Mauvais paramètre renseigné ! => renderContent(path)");
     }
 }

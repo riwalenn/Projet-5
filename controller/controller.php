@@ -17,6 +17,5 @@ class Controller
 
         $view = new View('Liste des articles');
         $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'compteurCategories' => $compteurCategories]);
-
     }
 }

@@ -10,3 +10,5 @@ class PostManager extends Connexion
         return $listPosts->fetchAll(PDO::FETCH_CLASS, 'Post');
     }
 }
+
+// TODO: commentaires à part !
