@@ -57,14 +57,13 @@ class Post
     {
         if ($this->pseudo == "Administrateur") {
             return self::ADMIN;
-        } else {
-            return $this->pseudo;
         }
+        return $this->pseudo;
     }
 
     public function getContent()
     {
-        return $this->content. ' <a href="'.$this->getUrl().'" target="_blank">[voir l\'article]</a>';
+        return $this->content . ' <a href="' . $this->getUrl() . '" target="_blank">[voir l\'article]</a>';
     }
 
     public function getUrl()
@@ -95,7 +94,7 @@ class Post
 
     public function getImg()
     {
-        return 'ressources/img/categories/'.$this->img;
+        return 'ressources/img/categories/' . $this->img;
     }
 
     // ----- Setters -----
@@ -148,9 +147,9 @@ class Post
     {
         if (in_array($state, [self::EN_ATTENTE, self::VALIDE, self::ARCHIVE, self::SUPPRESSION])) {
             $this->state = $state;
-        } else {
-           $this->state = self::EN_ATTENTE;
         }
+        $this->state = self::EN_ATTENTE;
+
     }
 
     public function setImg($img)

@@ -77,11 +77,11 @@ class User extends Post
 
     public function setRole($role)
     {
-        if (in_array($role, [self::ADMIN, self::USER])){
+        if (in_array($role, [self::ADMIN, self::USER])) {
             $this->role = $role;
-        } else {
-            $this->role = self::USER;
         }
+        $this->role = self::USER;
+
     }
 
     public function setEmail($email)
@@ -96,10 +96,9 @@ class User extends Post
 
     public function setState($state)
     {
-        if (in_array($state, [self::EN_ATTENTE, self::VALIDE, self::SUPPRESSION])){
+        if (in_array($state, [self::EN_ATTENTE, self::VALIDE, self::SUPPRESSION])) {
             $this->state = $state;
-        } else {
-            $this->state = self::EN_ATTENTE;
         }
+        $this->state = self::EN_ATTENTE;
     }
 }
