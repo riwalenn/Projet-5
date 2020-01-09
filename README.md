@@ -2,6 +2,8 @@
 
 Projet n° 5 créé dans le cadre du parcours "Développement d'application PHP & Symfony" pour OpenClassroom.
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ad9a4df6eed64b81b52976433e6074fe)](https://www.codacy.com/manual/riwalenn/Projet-5?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=riwalenn/Projet-5&amp;utm_campaign=Badge_Grade)
+
 ## Download and Installation
 
 * Clone the repo: `git clone https://github.com/riwalenn/Projet-5.git`

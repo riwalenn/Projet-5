@@ -1,4 +1,6 @@
 exclude_paths:
+  - 'LICENSE'
+  - 'README.md'
   - 'bdd/**'
   - 'ressources/_img/**'
   - 'diagrams/**/*'
