@@ -1,6 +1,8 @@
 exclude_paths:
   - 'LICENSE'
   - 'README.md'
+  - 'gulpfile.js'
+  - '.travis.yml'
   - 'bdd/**'
   - 'ressources/_img/**'
   - 'diagrams/**/*'
