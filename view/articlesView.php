@@ -77,6 +77,19 @@
                             <div class="modal-body">
                                 <h4>Commentaires</h4>
                                 <hr>
+                                <?php
+                                if (empty($listComments)) {
+                                    ?>
+                                    <h6 class="alert alert-primary">Nous sommes désolés, la liste est vide ! Merci de revenir plus tard.</h6>
+                                    <?php
+                                }
+                                foreach ($listComments as $comments) {
+                                ?>
+                                <h2 class="text-uppercase"><?= $comments->getTitle() ?></h2>
+                                <cite title="Auteur" class="item-intro text-muted">Créé par <?= $comments->getPseudo() ?> -
+                                    le <?= $comments->getCreated_at() ?></cite>
+                                <p><?= $comments->getContent() ?></p>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

@@ -21,16 +21,16 @@ try
 }
 
 catch (PDOException $e){
-    echo $e->getMessage();
+    $controller->erreurPDO();
 }
 
 catch (ExceptionOutput $e) {
-    echo  'Message d\'erreur : ' . $e->getMessage() . ' (code : ' . $e->getCode() . '), ligne ' . $e->getLine() . ' dans le fichier ' . $e->getFile();
+    $controller->erreurOutput();
 }
 
 catch (InvalidArgumentException $e)
 {
-    echo $e->getMessage();
+   $controller->erreur();
 }
 
 catch (Exception $e) {

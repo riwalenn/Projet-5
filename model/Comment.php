@@ -1,13 +1,13 @@
 <?php
 
+
 class Comment
 {
-    private $id;
     private $id_post;
-    private $id_user;
+    private $pseudo;
+    private $created_at;
     private $title;
     private $content;
-    private $state;
 
     const EN_ATTENTE = 0;
     const VALIDE = 1;
@@ -32,19 +32,21 @@ class Comment
     }
 
     // ----- Getters -----
-    public function getId()
-    {
-        return $this->id;
-    }
 
     public function getId_post()
     {
         return $this->id_post;
     }
 
-    public function getId_author()
+    public function getPseudo()
     {
-        return $this->id_user;
+        return $this->pseudo;
+    }
+
+    public function getCreated_at()
+    {
+        $date = new DateTime($this->created_at);
+        return date_format($date, 'd-m-Y à H:i:s');
     }
 
     public function getTitle()
@@ -57,25 +59,21 @@ class Comment
         return $this->content;
     }
 
-    public function getState()
-    {
-        return $this->state;
-    }
-
     // ----- Setters -----
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
 
     public function setId_post($id_post)
     {
         $this->id_post = $id_post;
     }
 
-    public function setId_user($id_user)
+    public function setPseudo($pseudo)
     {
-        $this->id_user = $id_user;
+        $this->pseudo = $pseudo;
+    }
+
+    public function setCreated_at($created_at)
+    {
+        $this->created_at = $created_at;
     }
 
     public function setTitle($title)
@@ -86,12 +84,5 @@ class Comment
     public function setContent($content)
     {
         $this->content = $content;
-    }
-
-    public function setState($state)
-    {
-        if (in_array($state, [self::EN_ATTENTE, self::VALIDE, self::ARCHIVE, self::SUPPRESSION])) {
-            $this->state = $state;
-        }
     }
 }

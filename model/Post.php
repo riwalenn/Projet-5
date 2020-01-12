@@ -149,7 +149,6 @@ class Post
             $this->state = $state;
         }
         $this->state = self::EN_ATTENTE;
-
     }
 
     public function setImg($img)
