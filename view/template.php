@@ -20,6 +20,7 @@
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 
         <!-- Custom styles for this template -->
+        <link href="ressources/css/styleSheet.css" rel="stylesheet">
         <link href="ressources/css/agency.min.css" rel="stylesheet">
         <head>
             <title><?= $title ?></title>
