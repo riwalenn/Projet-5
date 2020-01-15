@@ -1,3 +1,8 @@
+.btn.filtres{background-color:#11dbba;}
+.btn.filtres-submit{background-color: #00c0c7;}
+.row.filtres-form{margin-top: 10px!important;}
+.page-section h3.section-subheading, button.btn.filtres.btn-sm{margin-bottom: 30px;}
+.card.card-body.shadow-sm.p-3.mb-5.bg-white.rounded{background-color: #f8f9fa!important; border: none!important;}
 @media (min-width: 320px) and (max-width: 467px){
     body p{font-size: 11px!important;}
     .page-section h2.section-heading{font-size: 35px!important;}
