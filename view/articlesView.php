@@ -6,23 +6,29 @@
                 <h2 class="section-heading text-uppercase">Articles</h2>
                 <h3 class="section-subheading text-muted">Ci-dessous quelques articles qui pourraient vous
                     intéresser.</h3>
-                <button class="btn filtres btn-sm " type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                <button class="btn filtres btn-sm " type="button" data-toggle="collapse" data-target="#collapseExample"
+                        aria-expanded="false" aria-controls="collapseExample">
                     <i class="fa fa-search"></i> Filtres
                 </button>
                 <div class="collapse" id="collapseExample">
                     <div class="card card-body shadow-sm p-3 mb-5 bg-white rounded">
-                        Filtres à faire : catégories / périodes / auteurs
                         <form>
                             <div class="formulaire-recherche">
                                 <div class="row filtres-form">
                                     <div class="col">
                                         <label>Rechercher un auteur :</label>
+                                    </div>
+                                    <div class="col">
+                                        <label>Rechercher une catégorie :</label>
+                                    </div>
+                                </div>
+                                <div class="row filtres-form">
+                                    <div class="col">
                                         <select class="custom-select custom-select-sm">
                                             <option selected>---indifférent---</option>
                                         </select>
                                     </div>
                                     <div class="col">
-                                        <label>Rechercher une catégorie :</label>
                                         <select class="custom-select custom-select-sm">
                                             <option selected>---indifférent---</option>
                                         </select>
@@ -44,7 +50,7 @@
                                 <div class="row filtres-form">
                                     <div class="col">
                                         <button class="btn filtres-submit btn-sm " type="button">
-                                           Filtrer
+                                            Filtrer
                                         </button>
                                     </div>
                                 </div>
@@ -83,14 +89,26 @@
                 </div>
             <?php } ?>
         </div>
+        <nav aria-label="...">
+            <ul class="pagination justify-content-end pagination-sm">
+                <li class="page-item active" aria-current="page">
+      <span class="page-link">
+        1
+        <span class="sr-only">(current)</span>
+      </span>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+            </ul>
+        </nav>
     </div>
 </section>
-
 
 <!-- Modal -->
 <?php foreach ($listPosts as $posts) {
     ?>
-    <div class="portfolio-modal modal fade" id="portfolioModal<?= $posts->getId() ?>" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="portfolio-modal modal fade" id="portfolioModal<?= $posts->getId() ?>" tabindex="-1" role="dialog"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="close-modal" data-dismiss="modal">
@@ -126,13 +144,15 @@
                                 <?php
                                 if (empty($listComments)) {
                                     ?>
-                                    <h6 class="alert alert-primary">Nous sommes désolés, la liste est vide ! Merci de revenir plus tard.</h6>
+                                    <h6 class="alert alert-primary">Nous sommes désolés, la liste est vide ! Merci de
+                                        revenir plus tard.</h6>
                                     <?php
                                 }
                                 foreach ($listComments as $comments) {
                                     ?>
                                     <h2 class="text-uppercase"><?= $comments->getTitle() ?></h2>
-                                    <cite title="Auteur" class="item-intro text-muted">Créé par <?= $comments->getPseudo() ?> -
+                                    <cite title="Auteur" class="item-intro text-muted">Créé
+                                        par <?= $comments->getPseudo() ?> -
                                         le <?= $comments->getCreated_at() ?></cite>
                                     <p><?= $comments->getContent() ?></p>
                                 <?php } ?>
