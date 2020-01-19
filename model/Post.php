@@ -80,7 +80,8 @@ class Post
 
     public function getModified_at()
     {
-        return $this->modified_at;
+        $date = new DateTime($this->modified_at);
+        return date_format($date, 'd-m-Y H:m:s');
     }
 
     public function getCategory()

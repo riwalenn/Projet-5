@@ -133,7 +133,7 @@ foreach ($listPosts as $post) {
                                 <h2 class="text-uppercase"><?= $post->getTitle() ?></h2>
                                 <p class="item-intro text-muted"><?= $post->getKicker() ?></p>
                                 <cite title="Auteur" class="item-intro text-muted">Créé par <?= $post->getPseudo() ?> -
-                                    le <?= $post->getCreated_at() ?></cite>
+                                    le <?= $post->getCreated_at() ?> / Modifié le <?= $post->getModified_at() ?></cite>
                                 <img class="img-fluid d-block mx-auto" src="<?= $post->getImg() ?>" alt="">
                                 <p><?= $post->getContent() ?></p>
                                 <button class="btn btn-primary" data-dismiss="modal" type="button">
