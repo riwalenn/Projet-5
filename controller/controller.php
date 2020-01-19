@@ -11,13 +11,17 @@ class Controller
     public function voirListeArticles()
     {
         $postManager = new PostManager();
-        $listPosts = $postManager->liste();
-        $idComment = $listPosts['id'];
+        $listPosts = $postManager->getPosts();
+
         $commentManager = new CommentManager();
-        $listComments = $commentManager->ListByPost($idComment);
+        foreach ($listPosts as $post) {
+            $commentManager->fillCommentInPost($post);
+        }
+
+        $nbPages = $postManager->countPosts();
 
         $view = new View('Liste des articles');
-        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'listComments' => $listComments]);
+        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages]);
     }
 
     public function erreurPDO()
@@ -55,12 +59,4 @@ class Controller
         $view = new View('Exception');
         $view->render('view/errorView.php', ['erreurMessage' => $erreurMessage, 'erreurCode' => $erreurCode, 'erreurLine' => $erreurLine, 'erreurFile' => $erreurFile]);
     }
-
-   /* public function voirListeCommentairesByPost()
-    {
-        $commentManager = new CommentManager();
-        $listComments = $commentManager->ListByPost();
-        $view = new View('Commentaires');
-        $view->render('view/articlesView.php', ['listComments' => $listComments]);
-    }*/
 }

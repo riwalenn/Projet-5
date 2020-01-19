@@ -69,45 +69,54 @@
         ?>
         <div class="row">
             <?php
-            foreach ($listPosts as $posts) {
+            foreach ($listPosts as $post) {
                 ?>
                 <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a class="portfolio-link" data-toggle="modal" href="#portfolioModal<?= $posts->getId() ?>">
+                    <a class="portfolio-link" data-toggle="modal" href="#portfolioModal<?= $post->getId() ?>">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content">
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid" src="<?= $posts->getImg() ?>" alt="">
+                        <img class="img-fluid" src="<?= $post->getImg() ?>" alt="">
                     </a>
                     <div class="portfolio-caption">
-                        <footer class="blockquote-footer">catégorie : <?= $posts->getCategory() ?></footer>
-                        <footer class="blockquote-footer">Créé le <?= $posts->getCreated_at() ?></footer>
-                        <h4><?= $posts->getTitle() ?></h4>
-                        <p class="text-muted"><?= $posts->getKicker() ?></p>
+                        <footer class="blockquote-footer">catégorie : <?= $post->getCategory() ?></footer>
+                        <footer class="blockquote-footer">Créé le <?= $post->getCreated_at() ?></footer>
+                        <h4><?= $post->getTitle() ?></h4>
+                        <p class="text-muted"><?= $post->getKicker() ?></p>
                     </div>
                 </div>
             <?php } ?>
         </div>
         <nav aria-label="...">
             <ul class="pagination justify-content-end pagination-sm">
-                <li class="page-item active" aria-current="page">
-      <span class="page-link">
-        1
-        <span class="sr-only">(current)</span>
-      </span>
+                <li class="page-item active">
+                   <a class="page-link" href="index.php?action=articlesListe&page=1">1</a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <?php
+                foreach ($nbPages as $nbPage) {
+                    for ($counter = 1; $counter <= $nbPage; $counter++) {
+                        if ($nbPage >= 1) :
+                            ?>
+                            <li class="page-item">
+                                <a class="page-link" href="index.php?action=articlesListe&page=<?= $counter + 1 ?>"><?= $counter + 1 ?></a>
+                            </li>
+                        <?php
+                        endif;
+                    }
+                }
+                ?>
             </ul>
         </nav>
     </div>
 </section>
 
 <!-- Modal -->
-<?php foreach ($listPosts as $posts) {
+<?php
+foreach ($listPosts as $post) {
     ?>
-    <div class="portfolio-modal modal fade" id="portfolioModal<?= $posts->getId() ?>" tabindex="-1" role="dialog"
+    <div class="portfolio-modal modal fade" id="portfolioModal<?= $post->getId() ?>" tabindex="-1" role="dialog"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -121,12 +130,12 @@
                         <div class="col-lg-8 mx-auto">
                             <div class="modal-body">
                                 <!-- Project Details Go Here -->
-                                <h2 class="text-uppercase"><?= $posts->getTitle() ?></h2>
-                                <p class="item-intro text-muted"><?= $posts->getKicker() ?></p>
-                                <cite title="Auteur" class="item-intro text-muted">Créé par <?= $posts->getPseudo() ?> -
-                                    le <?= $posts->getCreated_at() ?></cite>
-                                <img class="img-fluid d-block mx-auto" src="<?= $posts->getImg() ?>" alt="">
-                                <p><?= $posts->getContent() ?></p>
+                                <h2 class="text-uppercase"><?= $post->getTitle() ?></h2>
+                                <p class="item-intro text-muted"><?= $post->getKicker() ?></p>
+                                <cite title="Auteur" class="item-intro text-muted">Créé par <?= $post->getPseudo() ?> -
+                                    le <?= $post->getCreated_at() ?></cite>
+                                <img class="img-fluid d-block mx-auto" src="<?= $post->getImg() ?>" alt="">
+                                <p><?= $post->getContent() ?></p>
                                 <button class="btn btn-primary" data-dismiss="modal" type="button">
                                     <i class="fas fa-times"></i>
                                     Close Article
@@ -142,19 +151,19 @@
                                 <h4>Commentaires</h4>
                                 <hr>
                                 <?php
-                                if (empty($listComments)) {
+                                if (empty($post->getComments())) {
                                     ?>
-                                    <h6 class="alert alert-primary">Nous sommes désolés, la liste est vide ! Merci de
-                                        revenir plus tard.</h6>
+                                    <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire
+                                        !</h6>
                                     <?php
                                 }
-                                foreach ($listComments as $comments) {
+                                foreach ($post->getComments() as $comment) {
                                     ?>
-                                    <h2 class="text-uppercase"><?= $comments->getTitle() ?></h2>
+                                    <h5 class="text-uppercase"><?= $comment->getTitle() ?></h5>
                                     <cite title="Auteur" class="item-intro text-muted">Créé
-                                        par <?= $comments->getPseudo() ?> -
-                                        le <?= $comments->getCreated_at() ?></cite>
-                                    <p><?= $comments->getContent() ?></p>
+                                        par <?= $comment->getPseudo() ?> -
+                                        le <?= $comment->getCreated_at() ?></cite>
+                                    <p><?= $comment->getContent() ?></p>
                                 <?php } ?>
                             </div>
                         </div>

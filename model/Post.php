@@ -13,6 +13,7 @@ class Post
     private $category;
     private $state;
     private $img;
+    private $comments;
 
     const EN_ATTENTE = 0;
     const VALIDE = 1;
@@ -97,6 +98,11 @@ class Post
         return 'ressources/img/categories/' . $this->img;
     }
 
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
     // ----- Setters -----
     public function setId($id)
     {
@@ -154,5 +160,10 @@ class Post
     public function setImg($img)
     {
         $this->img = $img;
+    }
+
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
     }
 }
