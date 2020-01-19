@@ -6,6 +6,7 @@
                 <h2 class="section-heading text-uppercase">Articles</h2>
                 <h3 class="section-subheading text-muted">Ci-dessous quelques articles qui pourraient vous
                     intéresser.</h3>
+                <!-- Recherche : filtres -->
                 <button class="btn filtres btn-sm " type="button" data-toggle="collapse" data-target="#collapseExample"
                         aria-expanded="false" aria-controls="collapseExample">
                     <i class="fa fa-search"></i> Filtres
@@ -26,12 +27,28 @@
                                     <div class="col">
                                         <select class="custom-select custom-select-sm">
                                             <option selected>---indifférent---</option>
+                                            <?php foreach ($users as $user) { ?>
+                                                <option><?= $user->getPseudo() ?></option>
+                                            <?php } ?>
                                         </select>
                                     </div>
                                     <div class="col">
                                         <select class="custom-select custom-select-sm">
                                             <option selected>---indifférent---</option>
+                                            <?php foreach ($categories as $category) { ?>
+                                                <option><?= $category->getCategory() ?></option>
+                                            <?php } ?>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="row filtres-form">
+                                    <div class="col">
+                                        <label>Recherche par terme ou phrase :</label>
+                                    </div>
+                                </div>
+                                <div class="row filtres-form">
+                                    <div class="col">
+                                        <input type="text" class="form-control">
                                     </div>
                                 </div>
                                 <div class="row filtres-form">

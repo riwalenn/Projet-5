@@ -12,6 +12,7 @@ class Controller
     {
         $postManager = new PostManager();
         $listPosts = $postManager->getPosts();
+        $users = $postManager->usersUsed();
 
         $commentManager = new CommentManager();
         foreach ($listPosts as $post) {
@@ -19,9 +20,11 @@ class Controller
         }
 
         $nbPages = $postManager->countPosts();
+        $categoryManager = new CategoryManager();
+        $categories = $categoryManager->categoriesUsed();
 
         $view = new View('Liste des articles');
-        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages]);
+        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'categories' => $categories, 'users' => $users, 'nbPages' => $nbPages]);
     }
 
     public function erreurPDO()

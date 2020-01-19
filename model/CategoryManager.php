@@ -2,11 +2,11 @@
 
 class CategoryManager extends Connexion
 {
-    public function categoryCount()
-    {
-        $bdd = $this->dbConnect();
-        $countCategories = $bdd->prepare('SELECT COUNT(id_category) as nb_postbycat, categories.category FROM `posts` INNER JOIN categories ON posts.id_category = categories.id GROUP BY id_category');
-        $countCategories->execute();
-        return $countCategories->fetch();
-    }
+   public function categoriesUsed()
+   {
+       $bdd = $this->dbConnect();
+       $categories = $bdd->prepare('SELECT DISTINCT categories.category FROM `posts` LEFT JOIN categories ON posts.id_category = categories.id');
+       $categories->execute();
+       return $categories->fetchAll(PDO::FETCH_CLASS, 'Category');
+   }
 }
