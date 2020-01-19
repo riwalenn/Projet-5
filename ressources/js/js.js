@@ -1,4 +1,4 @@
-$('.page-item').click(function () {
+$(".page-link").click(function () {
     console.log('click');
-   $('li.active').removeClass('active');
+    $(".page-link").parent().addClass("active");
 });

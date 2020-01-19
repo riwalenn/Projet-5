@@ -1,5 +1,5 @@
-<!-- Portfolio Grid -->
-<section class="bg-light page-section" id="portfolio">
+<!-- articles Grid -->
+<section class="bg-light page-section" id="articles">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -71,16 +71,16 @@
             <?php
             foreach ($listPosts as $post) {
                 ?>
-                <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a class="portfolio-link" data-toggle="modal" href="#portfolioModal<?= $post->getId() ?>">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content">
+                <div class="col-md-4 col-sm-6 articles-item">
+                    <a class="articles-link" data-toggle="modal" href="#articlesModal<?= $post->getId() ?>">
+                        <div class="articles-hover">
+                            <div class="articles-hover-content">
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
                         <img class="img-fluid" src="<?= $post->getImg() ?>" alt="">
                     </a>
-                    <div class="portfolio-caption">
+                    <div class="articles-caption">
                         <footer class="blockquote-footer">catégorie : <?= $post->getCategory() ?></footer>
                         <footer class="blockquote-footer">Créé le <?= $post->getCreated_at() ?></footer>
                         <h4><?= $post->getTitle() ?></h4>
@@ -91,7 +91,7 @@
         </div>
         <nav aria-label="...">
             <ul class="pagination justify-content-end pagination-sm">
-                <li class="page-item active">
+                <li class="page-item">
                    <a class="page-link" href="index.php?action=articlesListe&page=1">1</a>
                 </li>
                 <?php
@@ -116,7 +116,7 @@
 <?php
 foreach ($listPosts as $post) {
     ?>
-    <div class="portfolio-modal modal fade" id="portfolioModal<?= $post->getId() ?>" tabindex="-1" role="dialog"
+    <div class="articles-modal modal fade" id="articlesModal<?= $post->getId() ?>" tabindex="-1" role="dialog"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
