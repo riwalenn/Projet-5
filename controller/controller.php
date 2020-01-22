@@ -12,16 +12,20 @@ class Controller
     {
         $postManager = new PostManager();
         $listPosts = $postManager->getPosts();
-        $users = $postManager->usersUsed();
+        $userManager = new UserManager();
+        $users = $userManager->usersUsed();
 
         $commentManager = new CommentManager();
         foreach ($listPosts as $post) {
             $commentManager->fillCommentInPost($post);
         }
 
-        $nbPages = $postManager->countPosts();
+        $nbPages = $postManager->countPages();
         $categoryManager = new CategoryManager();
         $categories = $categoryManager->categoriesUsed();
+        foreach ($listPosts as $post) {
+            $categoryManager->fillCategoryInPost($post);
+        }
 
         $view = new View('Liste des articles');
         $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'categories' => $categories, 'users' => $users, 'nbPages' => $nbPages]);

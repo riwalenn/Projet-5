@@ -7,70 +7,49 @@
                 <h3 class="section-subheading text-muted">Ci-dessous quelques articles qui pourraient vous
                     intéresser.</h3>
                 <!-- Recherche : filtres -->
-                <button class="btn filtres btn-sm " type="button" data-toggle="collapse" data-target="#collapseExample"
+                <button class="btn filtres btn-sm dropdown-toggle" type="button" data-toggle="collapse"
+                        data-target="#collapseExample"
                         aria-expanded="false" aria-controls="collapseExample">
                     <i class="fa fa-search"></i> Filtres
                 </button>
                 <div class="collapse" id="collapseExample">
-                    <div class="card card-body shadow-sm p-3 mb-5 bg-white rounded">
-                        <form>
-                            <div class="formulaire-recherche">
+                    <div class="card bg-light mb-3 rounded" style="max-width: 18rem;">
+                        <form id="search-form">
+                            <div class="card-body text-center">
                                 <div class="row filtres-form">
-                                    <div class="col">
-                                        <label>Rechercher un auteur :</label>
-                                    </div>
-                                    <div class="col">
-                                        <label>Rechercher une catégorie :</label>
-                                    </div>
+                                    <label>par auteur :</label>
+                                    <select class="form-control form-control-sm">
+                                        <option selected>---indifférent---</option>
+                                        <?php foreach ($users as $user) { ?>
+                                            <option><?= $user->getPseudo() ?></option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                                 <div class="row filtres-form">
-                                    <div class="col">
-                                        <select class="custom-select custom-select-sm">
-                                            <option selected>---indifférent---</option>
-                                            <?php foreach ($users as $user) { ?>
-                                                <option><?= $user->getPseudo() ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                    <div class="col">
-                                        <select class="custom-select custom-select-sm">
-                                            <option selected>---indifférent---</option>
-                                            <?php foreach ($categories as $category) { ?>
-                                                <option><?= $category->getCategory() ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
+                                    <label>par catégorie :</label>
+                                    <select class="form-control form-control-sm">
+                                        <option selected>---indifférent---</option>
+                                        <?php foreach ($categories as $category) { ?>
+                                            <option><?= $category->getCategory() ?></option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                                 <div class="row filtres-form">
-                                    <div class="col">
-                                        <label>Recherche par terme ou phrase :</label>
-                                    </div>
+                                    <label>par terme(s) :</label>
+                                    <input type="text" class="form-control form-control-sm">
                                 </div>
                                 <div class="row filtres-form">
-                                    <div class="col">
-                                        <input type="text" class="form-control">
-                                    </div>
+                                    <label>par dates :</label>
+                                    <input type="date" class="form-control form-control-sm"><input type="date"
+                                                                                                   class="form-control form-control-sm">
                                 </div>
-                                <div class="row filtres-form">
-                                    <div class="col">
-                                        <label>Rechercher par date de création :</label>
-                                    </div>
-                                </div>
-                                <div class="row filtres-form">
-                                    <div class="col">
-                                        <input type="date" class="form-control">
-                                    </div>
-                                    <div class="col">
-                                        <input type="date" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="row filtres-form">
-                                    <div class="col">
-                                        <button class="btn filtres-submit btn-sm " type="button">
-                                            Filtrer
-                                        </button>
-                                    </div>
-                                </div>
+                            </div>
+                            <div class="card-footer text-muted">
+                                <button class="btn filtres-submit btn-sm " type="button" id="clear">Effacer
+                                </button>
+                                <button class="btn filtres-submit btn-sm " type="button">
+                                    Rechercher
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -86,6 +65,7 @@
         ?>
         <div class="row">
             <?php
+            //print_r($listPosts);
             foreach ($listPosts as $post) {
                 ?>
                 <div class="col-md-4 col-sm-6 articles-item">
@@ -95,7 +75,13 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid" src="<?= $post->getImg() ?>" alt="">
+                        <picture>
+                            <?php foreach ($post->getCategories() as $category) {
+                                ?>
+                                <source srcset="<?= $category->getImgCategoryS() ?>" media="all">
+                                <img class="img-fluid" src="<?= $category->getImgCategoryWP() ?>" alt="">
+                            <?php } ?>
+                        </picture>
                     </a>
                     <div class="articles-caption">
                         <footer class="blockquote-footer">catégorie : <?= $post->getCategory() ?></footer>
@@ -109,7 +95,7 @@
         <nav aria-label="...">
             <ul class="pagination justify-content-end pagination-sm">
                 <li class="page-item">
-                   <a class="page-link" href="index.php?action=articlesListe&page=1">1</a>
+                    <a class="page-link" href="index.php?action=articlesListe&page=1">1</a>
                 </li>
                 <?php
                 foreach ($nbPages as $nbPage) {
@@ -117,7 +103,8 @@
                         if ($nbPage >= 1) :
                             ?>
                             <li class="page-item">
-                                <a class="page-link" href="index.php?action=articlesListe&page=<?= $counter + 1 ?>"><?= $counter + 1 ?></a>
+                                <a class="page-link"
+                                   href="index.php?action=articlesListe&page=<?= $counter + 1 ?>"><?= $counter + 1 ?></a>
                             </li>
                         <?php
                         endif;
@@ -151,7 +138,14 @@ foreach ($listPosts as $post) {
                                 <p class="item-intro text-muted"><?= $post->getKicker() ?></p>
                                 <cite title="Auteur" class="item-intro text-muted">Créé par <?= $post->getPseudo() ?> -
                                     le <?= $post->getCreated_at() ?> / Modifié le <?= $post->getModified_at() ?></cite>
-                                <img class="img-fluid d-block mx-auto" src="<?= $post->getImg() ?>" alt="">
+                                <picture>
+                                    <?php foreach ($post->getCategories() as $category) {
+                                        ?>
+                                        <source srcset="<?= $category->getImgCategoryWP() ?>" media="all">
+                                        <img class="img-fluid d-block mx-auto" src="<?= $category->getImgCategoryS() ?>"
+                                             alt="">
+                                    <?php } ?>
+                                </picture>
                                 <p><?= $post->getContent() ?></p>
                                 <button class="btn btn-primary" data-dismiss="modal" type="button">
                                     <i class="fas fa-times"></i>

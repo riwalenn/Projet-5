@@ -9,8 +9,9 @@ class User extends Post
     private $password;
     private $state;
 
-    const ADMIN = 1;
+    const ADMINISTRATEUR = 1;
     const USER = 2;
+    const ADMIN = "Riwalenn";
 
     const EN_ATTENTE = 0;
     const VALIDE = 1;
@@ -41,6 +42,9 @@ class User extends Post
 
     public function getPseudo()
     {
+        if ($this->pseudo == "Administrateur") {
+            return self::ADMIN;
+        }
         return $this->pseudo;
     }
 
@@ -77,7 +81,7 @@ class User extends Post
 
     public function setRole($role)
     {
-        if (in_array($role, [self::ADMIN, self::USER])) {
+        if (in_array($role, [self::ADMINISTRATEUR, self::USER])) {
             $this->role = $role;
         }
         $this->role = self::USER;

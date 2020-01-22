@@ -12,8 +12,8 @@ class Post
     private $modified_at;
     private $category;
     private $state;
-    private $img;
     private $comments;
+    private $categories;
 
     const EN_ATTENTE = 0;
     const VALIDE = 1;
@@ -94,15 +94,16 @@ class Post
         return $this->state;
     }
 
-    public function getImg()
-    {
-        return 'ressources/img/categories/' . $this->img;
-    }
-
     public function getComments()
     {
         return $this->comments;
     }
+
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
 
     // ----- Setters -----
     public function setId($id)
@@ -158,13 +159,13 @@ class Post
         $this->state = self::EN_ATTENTE;
     }
 
-    public function setImg($img)
-    {
-        $this->img = $img;
-    }
-
     public function setComments($comments)
     {
         $this->comments = $comments;
+    }
+
+    public function setCategories($categories)
+    {
+        $this->categories = $categories;
     }
 }
