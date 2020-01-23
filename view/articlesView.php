@@ -65,7 +65,6 @@
         ?>
         <div class="row">
             <?php
-            //print_r($listPosts);
             foreach ($listPosts as $post) {
                 ?>
                 <div class="col-md-4 col-sm-6 articles-item">
@@ -75,13 +74,7 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <picture>
-                            <?php foreach ($post->getCategories() as $category) {
-                                ?>
-                                <source srcset="<?= $category->getImgCategoryS() ?>" media="all">
-                                <img class="img-fluid" src="<?= $category->getImgCategoryWP() ?>" alt="">
-                            <?php } ?>
-                        </picture>
+                        <?= View::generatePictureTag($post) ?>
                     </a>
                     <div class="articles-caption">
                         <footer class="blockquote-footer">catégorie : <?= $post->getCategory() ?></footer>
@@ -94,21 +87,16 @@
         </div>
         <nav aria-label="...">
             <ul class="pagination justify-content-end pagination-sm">
-                <li class="page-item">
-                    <a class="page-link" href="index.php?action=articlesListe&page=1">1</a>
-                </li>
                 <?php
-                foreach ($nbPages as $nbPage) {
-                    for ($counter = 1; $counter <= $nbPage; $counter++) {
-                        if ($nbPage >= 1) :
-                            ?>
-                            <li class="page-item">
-                                <a class="page-link"
-                                   href="index.php?action=articlesListe&page=<?= $counter + 1 ?>"><?= $counter + 1 ?></a>
-                            </li>
-                        <?php
-                        endif;
+                for ($i = 0; $i < $nbPages; $i++) {
+                    $j = $i + 1;
+                    if ($j == $pageCourante) {
+                        echo '<li class="page-item active">';
+                    } else {
+                        echo '<li class="page-item">';
                     }
+                    echo '<a class="page-link" href="index.php?action=articlesListe&page=' . $j . '">' . $j . '</a>';
+                    echo '</li>';
                 }
                 ?>
             </ul>
@@ -138,14 +126,7 @@ foreach ($listPosts as $post) {
                                 <p class="item-intro text-muted"><?= $post->getKicker() ?></p>
                                 <cite title="Auteur" class="item-intro text-muted">Créé par <?= $post->getPseudo() ?> -
                                     le <?= $post->getCreated_at() ?> / Modifié le <?= $post->getModified_at() ?></cite>
-                                <picture>
-                                    <?php foreach ($post->getCategories() as $category) {
-                                        ?>
-                                        <source srcset="<?= $category->getImgCategoryWP() ?>" media="all">
-                                        <img class="img-fluid d-block mx-auto" src="<?= $category->getImgCategoryS() ?>"
-                                             alt="">
-                                    <?php } ?>
-                                </picture>
+                                <?= View::generatePictureTag($post) ?>
                                 <p><?= $post->getContent() ?></p>
                                 <button class="btn btn-primary" data-dismiss="modal" type="button">
                                     <i class="fas fa-times"></i>

@@ -38,102 +38,34 @@
   </section>
 
   <!-- Portfolio Grid -->
-  <section class="bg-light page-section" id="portfolio">
+<section class="bg-light page-section" id="portfolio">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12 text-center">
-          <h2 class="section-heading text-uppercase">Portfolio</h2>
-          <h3 class="section-subheading text-muted">Quelques projets sur lesquels j'ai travaillé.</h3>
-        </div>
-      </div>
-      <div class="row">
-          <div class="col-md-4 col-sm-6 portfolio-item">
-              <a class="portfolio-link" data-toggle="modal" href="#portfolioModal6">
-                  <div class="portfolio-hover">
-                      <div class="portfolio-hover-content">
-                          <i class="fas fa-plus fa-3x"></i>
-                      </div>
-                  </div>
-                  <img class="img-fluid" src="ressources/img/portfolio/06-thumbnail.jpg" alt="">
-              </a>
-              <div class="portfolio-caption">
-                  <h4>La cuisine de Cécile</h4>
-                  <p class="text-muted">Création site php</p>
-              </div>
-          </div>
-        <div class="col-md-4 col-sm-6 portfolio-item">
-          <a class="portfolio-link" data-toggle="modal" href="#portfolioModal1">
-            <div class="portfolio-hover">
-              <div class="portfolio-hover-content">
-                <i class="fas fa-plus fa-3x"></i>
-              </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading text-uppercase">Portfolio</h2>
+                <h3 class="section-subheading text-muted">Quelques projets sur lesquels j'ai travaillé.</h3>
             </div>
-            <img class="img-fluid" src="ressources/img/portfolio/01-thumbnail.jpg" alt="">
-          </a>
-          <div class="portfolio-caption">
-            <h4>Festival Jazz à Juan</h4>
-            <p class="text-muted">Intégration web</p>
-          </div>
         </div>
-        <div class="col-md-4 col-sm-6 portfolio-item">
-          <a class="portfolio-link" data-toggle="modal" href="#portfolioModal2">
-            <div class="portfolio-hover">
-              <div class="portfolio-hover-content">
-                <i class="fas fa-plus fa-3x"></i>
-              </div>
+        <div class="row">
+            <?php foreach ($portfolio as $folio) { ?>
+            <div class="col-md-4 col-sm-6 portfolio-item">
+                <a class="portfolio-link" data-toggle="modal" href="#portfolioModal<?= $folio->getId() ?>">
+                    <div class="portfolio-hover">
+                        <div class="portfolio-hover-content">
+                            <i class="fas fa-plus fa-3x"></i>
+                        </div>
+                    </div>
+                    <img class="img-fluid" src="<?= Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::THUMBNAIL . Constantes::EXTENSION_JPG ?>" alt="<?= $folio->getTitle() ?>">
+                </a>
+                <div class="portfolio-caption">
+                    <h4><?= $folio->getTitle() ?></h4>
+                    <p class="text-muted"><?= $folio->getKicker() ?></p>
+                </div>
             </div>
-            <img class="img-fluid" src="ressources/img/portfolio/02-thumbnail.jpg" alt="">
-          </a>
-          <div class="portfolio-caption">
-            <h4>Gîtes de France</h4>
-            <p class="text-muted">Intégration web</p>
-          </div>
+            <?php } ?>
         </div>
-        <div class="col-md-4 col-sm-6 portfolio-item">
-          <a class="portfolio-link" data-toggle="modal" href="#portfolioModal3">
-            <div class="portfolio-hover">
-              <div class="portfolio-hover-content">
-                <i class="fas fa-plus fa-3x"></i>
-              </div>
-            </div>
-            <img class="img-fluid" src="ressources/img/portfolio/03-thumbnail.jpg" alt="">
-          </a>
-          <div class="portfolio-caption">
-            <h4>Projet n°2 - OpenClassrooms</h4>
-            <p class="text-muted">Intégration thème wordpress</p>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6 portfolio-item">
-          <a class="portfolio-link" data-toggle="modal" href="#portfolioModal4">
-            <div class="portfolio-hover">
-              <div class="portfolio-hover-content">
-                <i class="fas fa-plus fa-3x"></i>
-              </div>
-            </div>
-            <img class="img-fluid" src="ressources/img/portfolio/04-thumbnail.jpg" alt="">
-          </a>
-          <div class="portfolio-caption">
-            <h4>Projet n°3 - OpenClassrooms</h4>
-            <p class="text-muted">Création site html 5 / css3</p>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6 portfolio-item">
-          <a class="portfolio-link" data-toggle="modal" href="#portfolioModal5">
-            <div class="portfolio-hover">
-              <div class="portfolio-hover-content">
-                <i class="fas fa-plus fa-3x"></i>
-              </div>
-            </div>
-            <img class="img-fluid" src="ressources/img/portfolio/05-thumbnail.jpg" alt="">
-          </a>
-          <div class="portfolio-caption">
-            <h4>Projet n°4 - OpenClassrooms</h4>
-            <p class="text-muted">Conception UML et modélisation Bdd</p>
-          </div>
-        </div>
-      </div>
     </div>
-  </section>
+</section>
 
   <!-- About -->
   <section class="page-section" id="about">
@@ -327,210 +259,40 @@
   </section>
 
   <!-- Portfolio Modals -->
-
-  <!-- Modal 1 -->
-  <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="close-modal" data-dismiss="modal">
-          <div class="lr">
-            <div class="rl"></div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <div class="modal-body">
-                <!-- Project Details Go Here -->
-                <h2 class="text-uppercase">Festival Jazz à Juan-les-pins</h2>
-                <p class="item-intro text-muted">Intégration web pour Constellation Network.</p>
-                <img class="img-fluid d-block mx-auto" src="ressources/img/portfolio/01-full.jpg" alt="">
-                <p>Intégration web en Xhtml à partir d'une maquette créée par le graphiste.</p>
-                <ul class="list-inline">
-                  <li>Date: 2011</li>
-                  <li>Client: ville de Juan-les-pins</li>
-                  <li>Category: Intégration</li>
-                </ul>
-                <button class="btn btn-primary" data-dismiss="modal" type="button">
-                  <i class="fas fa-times"></i>
-                  Close Project</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 2 -->
-  <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="close-modal" data-dismiss="modal">
-          <div class="lr">
-            <div class="rl"></div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <div class="modal-body">
-                <!-- Project Details Go Here -->
-                <h2 class="text-uppercase">Gîtes de France</h2>
-                <p class="item-intro text-muted">Intégration web pour Constellation Network.</p>
-                <img class="img-fluid d-block mx-auto" src="ressources/img/portfolio/02-full.jpg" alt="">
-                <p>Intégration web en Xhtml à partir de la charte graphique des Gîtes de France.</p>
-                <ul class="list-inline">
-                  <li>Date: 2011</li>
-                  <li>Client: Gîtes de France Ardèche</li>
-                  <li>Categorie : Intégration</li>
-                </ul>
-                <button class="btn btn-primary" data-dismiss="modal" type="button">
-                  <i class="fas fa-times"></i>
-                  Close Project</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 3 -->
-  <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="close-modal" data-dismiss="modal">
-          <div class="lr">
-            <div class="rl"></div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <div class="modal-body">
-                <!-- Project Details Go Here -->
-                <h2 class="text-uppercase">Projet n°2</h2>
-                <p class="item-intro text-muted">Intégration d'un thème wordpress.</p>
-                <img class="img-fluid d-block mx-auto" src="ressources/img/portfolio/03-full.jpg" alt="">
-                <p>Intégration d'un thème wordpress (au choix) pour le cadre d'un projet OpenClassrooms</p>
-                <ul class="list-inline">
-                  <li>Date: Mars 2017</li>
-                  <li>Client: Chalets & Caviar (projet fictif OpenClassrooms)</li>
-                  <li>Categorie : Intégration wordpress</li>
-                </ul>
-                <button class="btn btn-primary" data-dismiss="modal" type="button">
-                  <i class="fas fa-times"></i>
-Close Project</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 4 -->
-  <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="close-modal" data-dismiss="modal">
-          <div class="lr">
-            <div class="rl"></div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <div class="modal-body">
-                <!-- Project Details Go Here -->
-                <h2 class="text-uppercase">Projet n°3</h2>
-                <p class="item-intro text-muted">Création d'un site en html & css</p>
-                <img class="img-fluid d-block mx-auto" src="ressources/img/portfolio/04-full.jpg" alt="">
-                <p>Création d'un site web en html 5 et css 3, responsive pour le cadre d'un projet OpenClassrooms (j'ai aussi créé la maquette).</p>
-                <ul class="list-inline">
-                  <li>Date: Avril 2017</li>
-                  <li>Client: Festival des Films de Plein Air (projet fictif pour OpenClassrooms)</li>
-                  <li>Categorie : Html & Css</li>
-                </ul>
-                <button class="btn btn-primary" data-dismiss="modal" type="button">
-                  <i class="fas fa-times"></i>
-Close Project</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 5 -->
-  <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="close-modal" data-dismiss="modal">
-          <div class="lr">
-            <div class="rl"></div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <div class="modal-body">
-                <!-- Project Details Go Here -->
-                <h2 class="text-uppercase">Projet n°4</h2>
-                <p class="item-intro text-muted">Conception de solution technique d'une application.</p>
-                <img class="img-fluid d-block mx-auto" src="ressources/img/portfolio/05-full.jpg" alt="">
-                <p>Conception de diagrammes UML et modélisation de la base de données.</p>
-                <ul class="list-inline">
-                  <li>Date: Juin 2017</li>
-                  <li>Client: Express Food (projet fictif pour OpenClassrooms)</li>
-                  <li>Categorie: Conception UML</li>
-                </ul>
-                <button class="btn btn-primary" data-dismiss="modal" type="button">
-                  <i class="fas fa-times"></i>
-                  Close Project</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<!-- Modal 6 -->
-<div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl"></div>
+<?php foreach ($portfolio as $folio) { ?>
+    <div class="portfolio-modal modal fade" id="portfolioModal<?= $folio->getId() ?>" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <div class="modal-body">
-                            <!-- Project Details Go Here -->
-                            <h2 class="text-uppercase">La cuisine de cécile</h2>
-                            <p class="item-intro text-muted">Conception d'un site internet en php.</p>
-                            <img class="img-fluid d-block mx-auto" src="ressources/img/portfolio/06-full.jpg" alt="">
-                            <p>Conception d'un site en php pour un projet de fin d'études</p>
-                            <ul class="list-inline">
-                                <li>Date: Juin 2011</li>
-                                <li>Client: La cuisine de Cécile</li>
-                                <li>Categorie: Html/css/php</li>
-                            </ul>
-                            <button class="btn btn-primary" data-dismiss="modal" type="button">
-                                <i class="fas fa-times"></i>
-                                Close Project</button>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="modal-body">
+                                <!-- Project Details Go Here -->
+                                <h2 class="text-uppercase"><?= $folio->getTitle() ?></h2>
+                                <p class="item-intro text-muted"><?= $folio->getKicker() ?></p>
+                                <img class="img-fluid d-block mx-auto" src="<?= Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::FULLIMG . Constantes::EXTENSION_JPG ?>" alt="<?= $folio->getTitle() ?>">
+                                <p><?= $folio->getContent() ?></p>
+                                <ul class="list-inline">
+                                    <li>Date de conception: <?= $folio->getDateConception() ?></li>
+                                    <li>Client: <?= $folio->getClient() ?></li>
+                                    <li>Categorie(s): <i class="fas fa-check-square"></i> <?= $folio->getCategoriesFormatted() ?></li>
+                                </ul>
+                                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                    <i class="fas fa-times"></i>
+                                    Close Project</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+<?php } ?>
 
 <!-- Modal Conditions d'utilisation -->
 <div class="conditions-modal modal fade" id="conditionsModal" tabindex="-1" role="dialog" aria-hidden="true">

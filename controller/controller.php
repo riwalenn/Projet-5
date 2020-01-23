@@ -4,14 +4,19 @@ class Controller
 {
     public function voirIndex()
     {
+        $portfolioManager = new PortfolioManager();
+        $portfolio = $portfolioManager->getPortfolio();
+
         $view = new View('Index');
-        $view->render('view/indexView.php');
+        $view->render('view/indexView.php', ['portfolio' => $portfolio]);
     }
 
     public function voirListeArticles()
     {
+        $pageCourante = $_REQUEST['page'];
         $postManager = new PostManager();
-        $listPosts = $postManager->getPosts();
+        $listPosts = $postManager->getPosts($pageCourante);
+
         $userManager = new UserManager();
         $users = $userManager->usersUsed();
 
@@ -21,6 +26,7 @@ class Controller
         }
 
         $nbPages = $postManager->countPages();
+
         $categoryManager = new CategoryManager();
         $categories = $categoryManager->categoriesUsed();
         foreach ($listPosts as $post) {
@@ -28,7 +34,7 @@ class Controller
         }
 
         $view = new View('Liste des articles');
-        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'categories' => $categories, 'users' => $users, 'nbPages' => $nbPages]);
+        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'categories' => $categories, 'users' => $users, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
     }
 
     public function erreurPDO()

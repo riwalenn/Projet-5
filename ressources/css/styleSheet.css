@@ -23,6 +23,9 @@
     border-radius: 20px;
 }
 
+.portfolio-modal .modal-content ul.list-inline{text-align: left;}
+.fas.fa-check-square {color: green!important;}
+
 #articles .articles-item {
     right: 0;
     margin: 0 0 15px;

@@ -5,9 +5,6 @@ class Category extends Post
     private $id;
     private $category;
 
-    const ALLNAV = '.webp';
-    const SAFARI = '.png';
-
     public function __construct($donnees = null)
     {
         if (!empty($donnees)) {
@@ -34,16 +31,6 @@ class Category extends Post
     public function getCategory()
     {
         return $this->category;
-    }
-
-    public function getImgCategoryWP()
-    {
-        return 'ressources/img/categories/' . $this->getId() . self::ALLNAV;
-    }
-
-    public function getImgCategoryS()
-    {
-        return 'ressources/img/categories/' . $this->getId() . self::SAFARI;
     }
 
     // ----- Setters -----

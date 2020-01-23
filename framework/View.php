@@ -41,4 +41,16 @@ class View
         }
         throw new Exception("Mauvais paramètre renseigné ! => renderContent(path)");
     }
+
+    static public function generatePictureTag($post)
+    {
+        $tag = "<picture>";
+        foreach ($post->getCategories() as $category) {
+
+            $tag .= '<source srcset="'. Constantes::PATH_IMG_RESSOURCES . 'categories/' . $category->getId() . Constantes::EXTENSION_WEBP . '" media="all">';
+            $tag .=  '<img class="img-fluid d-block mx-auto" src="'. Constantes::PATH_IMG_RESSOURCES . 'categories/' . $category->getId() . Constantes::EXTENSION_PNG . '" alt="">';
+        }
+        $tag .= "</picture>";
+        return $tag;
+    }
 }
