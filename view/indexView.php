@@ -55,7 +55,7 @@
                             <i class="fas fa-plus fa-3x"></i>
                         </div>
                     </div>
-                    <img class="img-fluid" src="<?= Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::THUMBNAIL . Constantes::EXTENSION_JPG ?>" alt="<?= $folio->getTitle() ?>">
+                    <?= View::generatePortfolioThumbailTag($folio) ?>
                 </a>
                 <div class="portfolio-caption">
                     <h4><?= $folio->getTitle() ?></h4>
@@ -275,7 +275,7 @@
                                 <!-- Project Details Go Here -->
                                 <h2 class="text-uppercase"><?= $folio->getTitle() ?></h2>
                                 <p class="item-intro text-muted"><?= $folio->getKicker() ?></p>
-                                <img class="img-fluid d-block mx-auto" src="<?= Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::FULLIMG . Constantes::EXTENSION_JPG ?>" alt="<?= $folio->getTitle() ?>">
+                                    <?= View::generatePortfolioPictureTag($folio) ?>
                                 <p><?= $folio->getContent() ?></p>
                                 <ul class="list-inline">
                                     <li>Date de conception: <?= $folio->getDateConception() ?></li>
