@@ -6,54 +6,6 @@
                 <h2 class="section-heading text-uppercase">Articles</h2>
                 <h3 class="section-subheading text-muted">Ci-dessous quelques articles qui pourraient vous
                     intéresser.</h3>
-                <!-- Recherche : filtres -->
-                <button class="btn filtres btn-sm dropdown-toggle" type="button" data-toggle="collapse"
-                        data-target="#collapseExample"
-                        aria-expanded="false" aria-controls="collapseExample">
-                    <i class="fa fa-search"></i> Filtres
-                </button>
-                <div class="collapse" id="collapseExample">
-                    <div class="card bg-light mb-3 rounded" style="max-width: 18rem;">
-                        <form id="search-form">
-                            <div class="card-body text-center">
-                                <div class="row filtres-form">
-                                    <label>par auteur :</label>
-                                    <select class="form-control form-control-sm">
-                                        <option selected>---indifférent---</option>
-                                        <?php foreach ($users as $user) { ?>
-                                            <option><?= $user->getPseudo() ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                                <div class="row filtres-form">
-                                    <label>par catégorie :</label>
-                                    <select class="form-control form-control-sm">
-                                        <option selected>---indifférent---</option>
-                                        <?php foreach ($categories as $category) { ?>
-                                            <option><?= $category->getCategory() ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                                <div class="row filtres-form">
-                                    <label>par terme(s) :</label>
-                                    <input type="text" class="form-control form-control-sm">
-                                </div>
-                                <div class="row filtres-form">
-                                    <label>par dates :</label>
-                                    <input type="date" class="form-control form-control-sm"><input type="date"
-                                                                                                   class="form-control form-control-sm">
-                                </div>
-                            </div>
-                            <div class="card-footer text-muted">
-                                <button class="btn filtres-submit btn-sm " type="button" id="clear">Effacer
-                                </button>
-                                <button class="btn filtres-submit btn-sm " type="button">
-                                    Rechercher
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
         <?php

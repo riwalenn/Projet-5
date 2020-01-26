@@ -125,10 +125,10 @@ img::-moz-selection {
     color: #fec503
 }
 
-#mainNav .navbar-nav .nav-item .nav-link {
+#mainNav .navbar-nav .nav-item .nav-link, #mainNav .navbar-nav .nav-item .dropdown button {
     font-size: 90%;
     font-weight: 400;
-    padding: .75em 0;
+    padding: 1.1em 1em;
     letter-spacing: 1px;
     color: #11dbba;
     font-family: Montserrat, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'
