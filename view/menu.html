@@ -31,55 +31,6 @@
                     <a class="nav-link js-scroll-trigger" href="index.php?action=articlesListe&page=1">Articles</a>
                 </li>
                 <li class="nav-item">
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownConnexionButton" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false"><i class="fas fa-users-cog"></i></button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <p class="dropdown-item">Connexion :</p>
-                            <div class="dropdown-divider"></div>
-                            <form class="px-4 py-3">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon2"><i class="fas fa-lock"></i></span>
-                                    </div>
-                                    <input type="password" class="form-control" placeholder="password" id="exampleDropdownFormPassword1">
-                                </div>
-                                <button type="submit" class="btn btn-secondary btn-sm">Connexion</button>
-                            </form>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" data-toggle="modal" href="#inscriptionModal">S'inscrire</a>
-                            <a class="dropdown-item" href="#">Mot de passe oublié ?</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownSearchButton" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-search"></i>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <p class="dropdown-item">Recherche :</p>
-                            <div class="dropdown-divider"></div>
-                            <form class="px-4 py-3 form-inline d-none d-sm-flex searchForm">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon3"><i class="fa fa-search"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control" name="recherche" aria-label="recherche" aria-describedby="basic-addon3">
-                                </div>
-                                <button type="submit" class="btn btn-secondary btn-sm">Rechercher</button>
-                            </form>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="ressources/pdf/CV_Bas_Riwalenn.pdf" download><i
                                 class="fas fa-file-pdf"></i></a>
                 </li>
@@ -88,51 +39,3 @@
     </div>
     </div>
 </nav>
-
-
-<!-- Connexion admin Modal -->
-<div class="login-modal modal fade" id="inscriptionModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl"></div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <div class="modal-body">
-
-                            <div class="col-md-4">
-                                  <span class="fa-stack fa-4x">
-                                    <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                                      <i class="fas fa-user-plus fa-stack-1x fa-inverse"></i>
-                                  </span>
-                            </div>
-                            <h2>Inscription</h2>
-                            <form class="px-4 py-3">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon2"><i class="fas fa-lock"></i></span>
-                                    </div>
-                                    <input type="password" class="form-control" placeholder="password" id="exampleDropdownFormPassword1">
-                                </div>
-                                <button type="submit" class="btn btn-secondary btn-sm">Connexion</button>
-                            </form>
-                            <button class="btn btn-primary" data-dismiss="modal" type="button">
-                                <i class="fas fa-times"></i>
-                                Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

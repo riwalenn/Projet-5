@@ -7,25 +7,42 @@
     background-color: #11dbba;
 }
 
+#categories button.btn.btn-outline-info {
+    color: #00c0c7;
+    border: 1px solid #00c0c7;
+    margin: 5px 0;
+}
+
+#categories button.btn.btn-outline-info:hover {
+    background-color: #00c0c7;
+    color: #ffffff;
+}
+
+#categories {
+    margin-bottom: 2%;
+}
+
 form button {
     color: #ffffff !important;
 }
+
 form .btn-sm {
-    padding: .25rem .5rem!important;
-    font-size: .875rem!important;
-    line-height: 1.5!important;
-    border-radius: .2rem!important;
-    background-color: #dee2e6!important;
-    border: 1px solid #dee2e6!important;
-    color: #000!important;
+    padding: .25rem .5rem !important;
+    font-size: .875rem !important;
+    line-height: 1.5 !important;
+    border-radius: .2rem !important;
+    background-color: #dee2e6 !important;
+    border: 1px solid #dee2e6 !important;
+    color: #000 !important;
 }
 
-.input-group-text{
-    background-color: #fff!important;
-    border: 1px solid #ffffff!important;
+.input-group-text {
+    background-color: #fff !important;
+    border: 1px solid #ffffff !important;
 }
-.form-control{
-    border : none!important;
+
+.form-control {
+    border: none !important;
 }
 
 .btn.filtres-submit, .page-item.active .page-link {
@@ -33,8 +50,8 @@ form .btn-sm {
     background-color: #00c0c7;
 }
 
-.input-group{
-    border: 1px solid #dee2e6!important;
+.input-group {
+    border: 1px solid #dee2e6 !important;
 }
 
 .btn.filtres-submit:hover, .page-item.active:hover .page-link:hover {
