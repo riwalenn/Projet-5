@@ -11,6 +11,21 @@ class Controller
         $view->render('view/indexView.php', ['portfolio' => $portfolio]);
     }
 
+    public function voirFiltres()
+    {
+        $categoryManager = new CategoryManager();
+        $categories = $categoryManager->categoriesUsed();
+
+        $view = new View('Filtres');
+        $view->render('view/filtres.php', ['categories' => $categories]);
+    }
+
+    public function pageConnexion()
+    {
+        $view = new View('Connexion');
+        $view->render('view/connexionView.php');
+    }
+
     public function voirListeArticles()
     {
         $pageCourante = $_REQUEST['page'];
@@ -28,13 +43,12 @@ class Controller
         $nbPages = $postManager->countPages();
 
         $categoryManager = new CategoryManager();
-        $categories = $categoryManager->categoriesUsed();
         foreach ($listPosts as $post) {
             $categoryManager->fillCategoryInPost($post);
         }
 
         $view = new View('Liste des articles');
-        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'categories' => $categories, 'users' => $users, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
+        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'users' => $users, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
     }
 
     public function erreurPDO()

@@ -12,9 +12,16 @@ try
                 $controller->voirListeArticles();
                 break;
 
+            case 'filtres' :
+                $controller->voirFiltres();
+                break;
+
             default :
                 break;
         }
+    } elseif(isset($_REQUEST['connexion'])) {
+        $controller->pageConnexion();
+
     } else {
         $controller->voirIndex();
     }
