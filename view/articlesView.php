@@ -8,13 +8,27 @@
                     intéresser.</h3>
             </div>
         </div>
-        <?php
-        if (empty($listPosts)) {
-            ?>
-            <h6 class="alert alert-primary">Nous sommes désolés, la liste est vide ! Merci de revenir plus tard.</h6>
-            <?php
-        }
-        ?>
+    </div>
+    <div class="container">
+        <form>
+            <div class="row justify-content-center">
+                <div class="input-group input-group-sm mb-3">
+                    <input type="text" class="form-control" placeholder="Rechercher..." aria-label="Recherche" name="recherche">
+                    <div class="input-group-append">
+                        <button class="input-group-text" id="basic-addon" type="submit"><i class="fa fa-search fa-inverse"></i></button>
+                    </div>
+                </div>
+                <?php
+                if (empty($listPosts)) {
+                    ?>
+                    <h6 class="alert alert-primary">Nous sommes désolés, la liste est vide ! Merci de revenir plus tard.</h6>
+                    <?php
+                }
+                ?>
+            </div>
+        </form>
+    </div>
+    <div class="container">
         <div class="row">
             <?php
             foreach ($listPosts as $post) {

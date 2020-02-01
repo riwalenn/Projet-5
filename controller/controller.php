@@ -11,14 +11,24 @@ class Controller
         $view->render('view/indexView.php', ['portfolio' => $portfolio]);
     }
 
-    public function voirListeArticles()
+    public function loginPage()
+    {
+        $view = new View('Connexion');
+        $view->render('view/loginView.php');
+    }
+
+    public function userRegistration()
+    {
+        $view = new View('Inscription');
+        $view->render('view/registrationView.php');
+    }
+
+    public function getResultatRecherche()
     {
         $pageCourante = $_REQUEST['page'];
+        $recherche = $_REQUEST['recherche'];
         $postManager = new PostManager();
-        $listPosts = $postManager->getPosts($pageCourante);
-
-        $userManager = new UserManager();
-        $users = $userManager->usersUsed();
+        $listPosts = $postManager->getSearch($recherche, $pageCourante);
 
         $commentManager = new CommentManager();
         foreach ($listPosts as $post) {
@@ -28,13 +38,34 @@ class Controller
         $nbPages = $postManager->countPages();
 
         $categoryManager = new CategoryManager();
-        $categories = $categoryManager->categoriesUsed();
         foreach ($listPosts as $post) {
             $categoryManager->fillCategoryInPost($post);
         }
 
         $view = new View('Liste des articles');
-        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'categories' => $categories, 'users' => $users, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
+        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
+    }
+
+    public function voirListeArticles()
+    {
+        $pageCourante = $_REQUEST['page'];
+        $postManager = new PostManager();
+        $listPosts = $postManager->getPosts($pageCourante);
+
+        $commentManager = new CommentManager();
+        foreach ($listPosts as $post) {
+            $commentManager->fillCommentInPost($post);
+        }
+
+        $nbPages = $postManager->countPages();
+
+        $categoryManager = new CategoryManager();
+        foreach ($listPosts as $post) {
+            $categoryManager->fillCategoryInPost($post);
+        }
+
+        $view = new View('Liste des articles');
+        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
     }
 
     public function erreurPDO()

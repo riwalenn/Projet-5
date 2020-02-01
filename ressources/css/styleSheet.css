@@ -1,10 +1,7 @@
-.btn.filtres {
-    border: 2px solid #11dbba;
-    background-color: #ffffff;
-}
+.container.views{margin-top: 10%;}
 
-.btn.filtres:hover {
-    background-color: #11dbba;
+i.fa.fa-search.fa-inverse {
+    color: #00c0c7;
 }
 
 #categories button.btn.btn-outline-info {

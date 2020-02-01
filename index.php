@@ -12,9 +12,19 @@ try
                 $controller->voirListeArticles();
                 break;
 
+            case 'connexion' :
+                $controller->loginPage();
+                break;
+
+            case 'inscription' :
+                $controller->userRegistration();
+                break;
+
             default :
                 break;
         }
+    } elseif (isset($_REQUEST['recherche'])) {
+        $controller->getResultatRecherche();
     } else {
         $controller->voirIndex();
     }
