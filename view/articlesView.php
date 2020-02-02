@@ -61,7 +61,8 @@
                     } else {
                         echo '<li class="page-item">';
                     }
-                    echo '<a class="page-link" href="index.php?action=articlesListe&page=' . $j . '">' . $j . '</a>';
+                        echo '<a class="page-link" href="index.php?action=articlesListe&page=' . $j . '">' . $j . '</a>';
+                    
                     echo '</li>';
                 }
                 ?>

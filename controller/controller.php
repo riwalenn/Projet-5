@@ -35,7 +35,7 @@ class Controller
             $commentManager->fillCommentInPost($post);
         }
 
-        $nbPages = $postManager->countPages();
+        $nbPages = $postManager->countPagesSearchResult();
 
         $categoryManager = new CategoryManager();
         foreach ($listPosts as $post) {
@@ -43,7 +43,7 @@ class Controller
         }
 
         $view = new View('Liste des articles');
-        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
+        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante, 'recherche' => $recherche]);
     }
 
     public function voirListeArticles()
