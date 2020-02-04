@@ -17,8 +17,9 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
                 </div>
-                <input class="form-control form-control-sm" placeholder="entrez votre mot de passe ici" aria-label="password" type="password" name="password" required>
+                <input class="form-control form-control-sm password" placeholder="entrez votre mot de passe ici" aria-label="password" type="password" name="password" required>
             </div>
+            <?= $messagePassword ?>
             <div class="form-group">
                 <small><input type="checkbox" value="1" name="mentions" required>
                Je déclare avoir lu les <a href="#conditionsModal" data-toggle="modal">mentions légales</a> avant de m'être inscrit et en accepte les conditions d'utilisation.</small>

@@ -19,6 +19,17 @@ i.fa.fa-search.fa-inverse {
     margin-bottom: 2%;
 }
 
+.password-popup{
+    text-align: start;
+    line-break: auto;
+    font-size: .875rem;
+    word-wrap: break-word;
+    background-color: #ffffff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+}
+
 form button {
     color: #ffffff !important;
 }

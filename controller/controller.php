@@ -19,8 +19,11 @@ class Controller
 
     public function userRegistration()
     {
+        $userManager = new User();
+        $messagePassword = $userManager->helpPassword();
+
         $view = new View('Inscription');
-        $view->render('view/registrationView.php');
+        $view->render('view/registrationView.php', ['messagePassword' => $messagePassword]);
     }
 
     public function getResultatRecherche()
