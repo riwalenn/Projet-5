@@ -11,19 +11,42 @@ class Controller
         $view->render('view/indexView.php', ['portfolio' => $portfolio]);
     }
 
-    public function voirFiltres()
-    {
-        $categoryManager = new CategoryManager();
-        $categories = $categoryManager->categoriesUsed();
-
-        $view = new View('Filtres');
-        $view->render('view/filtres.php', ['categories' => $categories]);
-    }
-
-    public function pageConnexion()
+    public function loginPage()
     {
         $view = new View('Connexion');
-        $view->render('view/connexionView.php');
+        $view->render('view/loginView.php');
+    }
+
+    public function userRegistration()
+    {
+        $userManager = new User();
+        $messagePassword = $userManager->helpPassword();
+
+        $view = new View('Inscription');
+        $view->render('view/registrationView.php', ['messagePassword' => $messagePassword]);
+    }
+
+    public function getResultatRecherche()
+    {
+        $pageCourante = $_REQUEST['page'];
+        $recherche = $_REQUEST['recherche'];
+        $postManager = new PostManager();
+        $listPosts = $postManager->getSearch($recherche, $pageCourante);
+
+        $commentManager = new CommentManager();
+        foreach ($listPosts as $post) {
+            $commentManager->fillCommentInPost($post);
+        }
+
+        $nbPages = $postManager->countPagesSearchResult();
+
+        $categoryManager = new CategoryManager();
+        foreach ($listPosts as $post) {
+            $categoryManager->fillCategoryInPost($post);
+        }
+
+        $view = new View('Liste des articles');
+        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante, 'recherche' => $recherche]);
     }
 
     public function voirListeArticles()
@@ -31,9 +54,6 @@ class Controller
         $pageCourante = $_REQUEST['page'];
         $postManager = new PostManager();
         $listPosts = $postManager->getPosts($pageCourante);
-
-        $userManager = new UserManager();
-        $users = $userManager->usersUsed();
 
         $commentManager = new CommentManager();
         foreach ($listPosts as $post) {
@@ -48,7 +68,7 @@ class Controller
         }
 
         $view = new View('Liste des articles');
-        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'users' => $users, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
+        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
     }
 
     public function erreurPDO()

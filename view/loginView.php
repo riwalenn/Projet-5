@@ -1,24 +1,23 @@
-<!-- Footer -->
-<footer class="footer">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-4">
-                <span class="copyright">Copyright &copy; Riwalenn Bas 2019</span>
+<div class="container views">
+    <div class="row">
+        <form action="index.php?action=verifyUser">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
+                </div>
+                <input class="form-control form-control-sm" placeholder="entrez votre email ici" aria-label="email" type="email" name="email" required>
             </div>
-            <div class="col-md-4">
-                <img src="ressources/img/logos/logo.png" class="logo menu"/>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                </div>
+                <input class="form-control form-control-sm" placeholder="entrez votre mot de passe ici" aria-label="password" type="password" name="password" required>
             </div>
-            <div class="col-md-4">
-                <ul class="list-inline quicklinks">
-                    <li class="list-inline-item">
-                        <a class="conditions-link" data-toggle="modal" href="#conditionsModal">Conditions
-                            d'utilisation</a> | <a class="conditions-item" href="index.php?action=connexion">Panel d'admin</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+            <small>Si vous n'avez pas de compte, <a href="index.php?action=inscription">veuillez cliquer ici</a>.</small><br>
+            <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="connexion">connexion</button>
+        </form>
     </div>
-</footer>
+</div>
 <!-- Modal Conditions d'utilisation -->
 <div class="conditions-modal modal fade" id="conditionsModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -36,12 +35,12 @@
                             <h3>1. Présentation du site.</h3>
                             <p>En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans
                                 l'économie numérique, il est précisé aux utilisateurs du site <a
-                                        href="http://www.riwalennbas.com/">www.riwalennbas.com</a> l'identité des
+                                    href="http://www.riwalennbas.com/">www.riwalennbas.com</a> l'identité des
                                 différents intervenants dans le cadre de sa réalisation et de son suivi :</p>
                             <p><strong>Propriétaire</strong> : Riwalenn Bas – 1 rue françois arago<br/>
                                 <strong>Créateur</strong> : <a href="http://www.riwalennbas.com">Riwalenn Bas</a><br/>
                                 <strong>Template</strong> : <a
-                                        href="https://github.com/BlackrockDigital/startbootstrap-agency/blob/master/LICENSE">Blackrock
+                                    href="https://github.com/BlackrockDigital/startbootstrap-agency/blob/master/LICENSE">Blackrock
                                     Digital LLC</a><br/>
                                 <strong>Responsable publication</strong> : Riwalenn Bas – riwalenn@gmail.com<br/>
                                 Le responsable publication est une personne physique ou une personne morale.<br/>
@@ -125,10 +124,10 @@
                                 l'utilisateur.</p>
                             <p> En tout état de cause Riwalenn Bas ne collecte des informations personnelles relatives à
                                 l'utilisateur que pour le besoin de certains services proposés par le site <a
-                                        href="http://www.riwalennbas.com/">www.riwalennbas.com</a>. L'utilisateur
+                                    href="http://www.riwalennbas.com/">www.riwalennbas.com</a>. L'utilisateur
                                 fournit ces informations en toute connaissance de cause, notamment lorsqu'il procède par
                                 lui-même à leur saisie. Il est alors précisé à l'utilisateur du site <a
-                                        href="http://www.riwalennbas.com/">www.riwalennbas.com</a> l’obligation ou non
+                                    href="http://www.riwalennbas.com/">www.riwalennbas.com</a> l’obligation ou non
                                 de fournir ces informations.</p>
                             <p>Conformément aux dispositions des articles 38 et suivants de la loi 78-17 du 6 janvier
                                 1978 relative à l’informatique, aux fichiers et aux libertés, tout utilisateur dispose

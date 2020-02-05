@@ -12,16 +12,19 @@ try
                 $controller->voirListeArticles();
                 break;
 
-            case 'filtres' :
-                $controller->voirFiltres();
+            case 'connexion' :
+                $controller->loginPage();
+                break;
+
+            case 'inscription' :
+                $controller->userRegistration();
                 break;
 
             default :
                 break;
         }
-    } elseif(isset($_REQUEST['connexion'])) {
-        $controller->pageConnexion();
-
+    } elseif (isset($_REQUEST['recherche'])) {
+        $controller->getResultatRecherche();
     } else {
         $controller->voirIndex();
     }
