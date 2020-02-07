@@ -13,7 +13,8 @@
         <form>
             <div class="row justify-content-center">
                 <div class="input-group input-group-sm mb-3">
-                    <input type="text" class="form-control" placeholder="Rechercher..." aria-label="Recherche" name="recherche">
+                    <input type="hidden" name="action" value="recherche">
+                    <input type="text" class="form-control" placeholder="Rechercher..." aria-label="Recherche" name="submit">
                     <div class="input-group-append">
                         <button class="input-group-text" id="basic-addon" type="submit"><i class="fa fa-search fa-inverse"></i></button>
                     </div>
@@ -61,7 +62,12 @@
                     } else {
                         echo '<li class="page-item">';
                     }
+                    if (!empty($submitRecherche)) {
+                        echo '<a class="page-link" href="index.php?action=recherche&submit='. $submitRecherche .'&page=' . $j . '">' . $j . '</a>';
+                    } else {
                         echo '<a class="page-link" href="index.php?action=articlesListe&page=' . $j . '">' . $j . '</a>';
+                    }
+
                     
                     echo '</li>';
                 }

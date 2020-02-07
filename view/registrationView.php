@@ -1,6 +1,6 @@
 <div class="container views">
     <div class="row">
-        <form action="index.php?action=verifyUser">
+        <form action="index.php?action=inscription">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-secret"></i></span>

@@ -28,17 +28,17 @@ class Controller
 
     public function getResultatRecherche()
     {
-        $pageCourante = $_REQUEST['page'];
-        $recherche = $_REQUEST['recherche'];
+        $pageCourante = $_REQUEST['page'] ?? 1;
+        $submitRecherche = $_REQUEST['submit'] ?? "";
         $postManager = new PostManager();
-        $listPosts = $postManager->getSearch($recherche, $pageCourante);
+        $listPosts = $postManager->getSearch($submitRecherche, $pageCourante);
 
         $commentManager = new CommentManager();
         foreach ($listPosts as $post) {
             $commentManager->fillCommentInPost($post);
         }
 
-        $nbPages = $postManager->countPagesSearchResult();
+        $nbPages = $postManager->countPagesSearchResult($submitRecherche);
 
         $categoryManager = new CategoryManager();
         foreach ($listPosts as $post) {
@@ -46,12 +46,12 @@ class Controller
         }
 
         $view = new View('Liste des articles');
-        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante, 'recherche' => $recherche]);
+        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante, 'submitRecherche' => $submitRecherche]);
     }
 
     public function voirListeArticles()
     {
-        $pageCourante = $_REQUEST['page'];
+       $pageCourante = $_REQUEST['page'] ?? 1;
         $postManager = new PostManager();
         $listPosts = $postManager->getPosts($pageCourante);
 
@@ -71,13 +71,12 @@ class Controller
         $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
     }
 
-    public function erreurPDO()
+    public function erreurPDO($pdoException)
     {
-        $erreurManager = new PDOException();
-        $erreurMessage = $erreurManager->getMessage();
-        $erreurCode = $erreurManager->getCode();
-        $erreurLine = $erreurManager->getLine();
-        $erreurFile = $erreurManager->getFile();
+        $erreurMessage = $pdoException->getMessage();
+        $erreurCode = $pdoException->getCode();
+        $erreurLine = $pdoException->getLine();
+        $erreurFile = $pdoException->getFile();
 
         $view = new View('Erreur PDO');
         $view->render('view/errorView.php', ['erreurMessage' => $erreurMessage, 'erreurCode' => $erreurCode, 'erreurLine' => $erreurLine, 'erreurFile' => $erreurFile]);

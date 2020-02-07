@@ -20,18 +20,20 @@ try
                 $controller->userRegistration();
                 break;
 
+            case 'recherche' :
+                $controller->getResultatRecherche();
+                break;
+
             default :
                 break;
         }
-    } elseif (isset($_REQUEST['recherche'])) {
-        $controller->getResultatRecherche();
     } else {
         $controller->voirIndex();
     }
 }
 
 catch (PDOException $e){
-    $controller->erreurPDO();
+    $controller->erreurPDO($e);
 }
 
 catch (ExceptionOutput $e) {
