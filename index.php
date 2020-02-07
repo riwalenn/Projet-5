@@ -37,7 +37,7 @@ catch (PDOException $e){
 }
 
 catch (ExceptionOutput $e) {
-    $controller->erreurOutput();
+    $controller->erreurOutput($e);
 }
 
 catch (InvalidArgumentException $e)

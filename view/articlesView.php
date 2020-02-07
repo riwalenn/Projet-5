@@ -20,11 +20,11 @@
                     </div>
                 </div>
                 <?php
-                if (empty($listPosts)) {
+                if (empty($listPosts)) :
                     ?>
                     <h6 class="alert alert-primary">Nous sommes désolés, la liste est vide ! Merci de revenir plus tard.</h6>
                     <?php
-                }
+                endif;
                 ?>
             </div>
         </form>
@@ -57,16 +57,16 @@
                 <?php
                 for ($i = 0; $i < $nbPages; $i++) {
                     $j = $i + 1;
-                    if ($j == $pageCourante) {
+                    if ($j == $pageCourante) :
                         echo '<li class="page-item active">';
-                    } else {
+                    else :
                         echo '<li class="page-item">';
-                    }
-                    if (!empty($submitRecherche)) {
+                    endif;
+                    if (!empty($submitRecherche)) :
                         echo '<a class="page-link" href="index.php?action=recherche&submit='. $submitRecherche .'&page=' . $j . '">' . $j . '</a>';
-                    } else {
+                    else :
                         echo '<a class="page-link" href="index.php?action=articlesListe&page=' . $j . '">' . $j . '</a>';
-                    }
+                    endif;
 
                     
                     echo '</li>';
@@ -116,12 +116,12 @@ foreach ($listPosts as $post) {
                                 <h4>Commentaires</h4>
                                 <hr>
                                 <?php
-                                if (empty($post->getComments())) {
+                                if (empty($post->getComments())) :
                                     ?>
                                     <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire
                                         !</h6>
                                     <?php
-                                }
+                                endif;
                                 foreach ($post->getComments() as $comment) {
                                     ?>
                                     <h5 class="text-uppercase"><?= $comment->getTitle() ?></h5>

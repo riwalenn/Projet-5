@@ -82,13 +82,12 @@ class Controller
         $view->render('view/errorView.php', ['erreurMessage' => $erreurMessage, 'erreurCode' => $erreurCode, 'erreurLine' => $erreurLine, 'erreurFile' => $erreurFile]);
     }
 
-    public function erreurOutput()
+    public function erreurOutput($outputException)
     {
-        $erreurManager = new ExceptionOutput();
-        $erreurMessage = $erreurManager->getMessage();
-        $erreurCode = $erreurManager->getCode();
-        $erreurLine = $erreurManager->getLine();
-        $erreurFile = $erreurManager->getFile();
+        $erreurMessage = $outputException->getMessage();
+        $erreurCode = $outputException->getCode();
+        $erreurLine = $outputException->getLine();
+        $erreurFile = $outputException->getFile();
 
         $view = new View('Erreur Output');
         $view->render('view/errorView.php', ['erreurMessage' => $erreurMessage, 'erreurCode' => $erreurCode, 'erreurLine' => $erreurLine, 'erreurFile' => $erreurFile]);

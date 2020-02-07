@@ -23,18 +23,18 @@ class Post
 
     public function __construct($donnees = null)
     {
-        if (!empty($donnees)) {
+        if (!empty($donnees)) :
             $this->hydrate($donnees);
-        }
+        endif;
     }
 
     public function hydrate($donnees)
     {
         foreach ($donnees as $cle => $valeur) {
             $method = 'set' . ucfirst($cle);
-            if (method_exists($this, $method)) {
+            if (method_exists($this, $method)) :
                 $this->$method($valeur);
-            }
+            endif;
         }
     }
 
@@ -56,9 +56,9 @@ class Post
 
     public function getPseudo()
     {
-        if ($this->pseudo == "Administrateur") {
+        if ($this->pseudo == "Administrateur") :
             return self::ADMIN;
-        }
+        endif;
         return $this->pseudo;
     }
 
@@ -153,9 +153,9 @@ class Post
 
     public function setState($state)
     {
-        if (in_array($state, [self::EN_ATTENTE, self::VALIDE, self::ARCHIVE, self::SUPPRESSION])) {
+        if (in_array($state, [self::EN_ATTENTE, self::VALIDE, self::ARCHIVE, self::SUPPRESSION])) :
             $this->state = $state;
-        }
+        endif;
         $this->state = self::EN_ATTENTE;
     }
 

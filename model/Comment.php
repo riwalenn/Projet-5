@@ -16,18 +16,18 @@ class Comment
 
     public function __construct($donnees = null)
     {
-        if (!empty($donnees)) {
+        if (!empty($donnees)) :
             $this->hydrate($donnees);
-        }
+        endif;
     }
 
     public function hydrate($donnees)
     {
         foreach ($donnees as $cle => $valeur) {
             $method = 'set' . ucfirst($cle);
-            if (method_exists($this, $method)) {
+            if (method_exists($this, $method)) :
                 $this->$method($valeur);
-            }
+            endif;
         }
     }
 
