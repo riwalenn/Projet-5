@@ -9,26 +9,30 @@ try
         switch ($action)
         {
             case 'articlesListe' :
-                $controller->voirListeArticles();
+                $controller->afficherListeArticles();
                 break;
 
             case 'connexion' :
-                $controller->loginPage();
+                $controller->afficherLoginForm();
                 break;
 
-            case 'inscription' :
-                $controller->userRegistration();
+            case 'nouvelInscrit' :
+                $controller->afficherNewLoginForm();
+                break;
+
+            case 'ajouterNewLogin' :
+                $controller->ajouterNewLogin();
                 break;
 
             case 'recherche' :
-                $controller->getResultatRecherche();
+                $controller->afficherResultatRecherche();
                 break;
 
             default :
                 break;
         }
     } else {
-        $controller->voirIndex();
+        $controller->afficherIndex();
     }
 }
 

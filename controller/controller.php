@@ -2,7 +2,8 @@
 
 class Controller
 {
-    public function voirIndex()
+    // --------- Index ---------
+    public function afficherIndex()
     {
         $portfolioManager = new PortfolioManager();
         $portfolio = $portfolioManager->getPortfolio();
@@ -11,13 +12,15 @@ class Controller
         $view->render('view/indexView.php', ['portfolio' => $portfolio]);
     }
 
-    public function loginPage()
+    // --------- Connexion ---------
+
+    public function afficherLoginForm()
     {
         $view = new View('Connexion');
         $view->render('view/loginView.php');
     }
 
-    public function userRegistration()
+    public function afficherNewLoginForm()
     {
         $userManager = new User();
         $messagePassword = $userManager->helpPassword();
@@ -26,7 +29,20 @@ class Controller
         $view->render('view/registrationView.php', ['messagePassword' => $messagePassword]);
     }
 
-    public function getResultatRecherche()
+    public function ajouterNewLogin()
+    {
+        $user = new User($_REQUEST);
+        $user->setRole(2);
+        $user->setState(0);
+        $userManager = new UserManager();
+        $request = $userManager->registration($user);
+        $this->afficherLoginForm();
+
+    }
+
+    // --------- Recherche ---------
+
+    public function afficherResultatRecherche()
     {
         $pageCourante = $_REQUEST['page'] ?? 1;
         $submitRecherche = $_REQUEST['submit'] ?? "";
@@ -49,7 +65,9 @@ class Controller
         $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante, 'submitRecherche' => $submitRecherche]);
     }
 
-    public function voirListeArticles()
+    // --------- Articles ---------
+
+    public function afficherListeArticles()
     {
        $pageCourante = $_REQUEST['page'] ?? 1;
         $postManager = new PostManager();
@@ -70,6 +88,8 @@ class Controller
         $view = new View('Liste des articles');
         $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
     }
+
+    // --------- Erreurs ---------
 
     public function erreurPDO($pdoException)
     {

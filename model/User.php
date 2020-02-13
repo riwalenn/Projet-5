@@ -7,15 +7,16 @@ class User extends Post
     private $role;
     private $email;
     private $password;
+    private $date_inscription;
+    private $cgu;
     private $state;
 
-    const ADMINISTRATEUR = 1;
-    const USER = 2;
     const ADMIN = "Riwalenn";
 
     const EN_ATTENTE = 0;
-    const VALIDE = 1;
-    const SUPPRESSION = 2;
+    const ATTENTE_MODO = 1;
+    const VALIDE = 2;
+    const SUPPRESSION = 3;
 
     public function __construct($donnees = null)
     {
@@ -42,10 +43,7 @@ class User extends Post
 
     public function getPseudo()
     {
-        if ($this->pseudo == "Administrateur") :
-            return self::ADMIN;
-        endif;
-        return $this->pseudo;
+       return $this->pseudo;
     }
 
     public function getRole()
@@ -63,6 +61,17 @@ class User extends Post
         return $this->password;
     }
 
+    public function getDate_inscription()
+    {
+        $date = new DateTime($this->date_inscription);
+        return date_format($date,'d-m-Y');
+    }
+
+    public function getCgu()
+    {
+        return $this->cgu;
+    }
+
     public function getState()
     {
         return $this->state;
@@ -76,34 +85,63 @@ class User extends Post
 
     public function setPseudo($pseudo)
     {
-        $this->pseudo = $pseudo;
+        if ($this->pseudo == "Administrateur") :
+            $this->pseudo =  self::ADMIN;
+        endif;
+        if (strlen($pseudo) < 3) :
+           throw new ExceptionOutput("Votre pseudo doit faire 3 caractères minimum");
+        else:
+            if (preg_match('^[\W]^', $pseudo)) :
+                throw new ExceptionOutput("Votre pseudo ne peut contenir de caractères spéciaux");
+            else:
+                $this->pseudo = htmlspecialchars($pseudo);
+            endif;
+        endif;
     }
 
     public function setRole($role)
     {
-        if (in_array($role, [self::ADMINISTRATEUR, self::USER])) :
-            $this->role = $role;
-        endif;
-        $this->role = self::USER;
-
+        $this->role = $role;
     }
 
     public function setEmail($email)
     {
+        if (preg_match('#^[a-z0-9._-]{3,55}+@+[a-z0-9]{2,}\.[a-z]{3,4}$#', $email)) :
         $this->email = $email;
+        else:
+            throw new ExceptionOutput("Le format de votre email ne correspond pas !");
+        endif;
     }
 
     public function setPassword($password)
     {
+        if (preg_match('^\S*(?=\S{10,64})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$^', $password)):
         $this->password = password_hash($password, PASSWORD_DEFAULT);
+        else :
+            throw new ExceptionOutput("Le format du mot de passe n'est pas valide.");
+        endif;
+    }
+
+    public function setDate_inscription($date_inscription)
+    {
+        $this->date_inscription = $date_inscription;
+    }
+
+    public function setCgu($cgu)
+    {
+        if ($cgu == 1) :
+            $this->cgu = $cgu;
+        else:
+            throw new ExceptionOutput("Vous devez valider les conditions générales d'utilisation pour vous enregistrer");
+        endif;
     }
 
     public function setState($state)
     {
-        if (in_array($state, [self::EN_ATTENTE, self::VALIDE, self::SUPPRESSION])) :
-            $this->state = $state;
-        endif;
-        $this->state = self::EN_ATTENTE;
+        /*if ($state != 0 OR empty($state)) :
+            $state = self::EN_ATTENTE;
+        endif;*/
+        $this->state = $state;
     }
 
     static function helpPassword()
@@ -126,7 +164,14 @@ class User extends Post
             "(exemple : en ligne sur Internet), encore moins sur un papier facilement accessible ;" . "<br>\n" .
             "- Ne vous envoyez pas vos propres mots de passe <u>sur votre messagerie personnelle</u> ;" . "<br>\n" .
             "- Configurez les logiciels, y compris votre navigateur web, <u>pour qu’ils ne se « souviennent » pas" .
-            " des mots de passe choisis.</u>";
+            " des mots de passe choisis.</u>" . "<br>\n" .
+            "<b>Votre mot de passe doit obligatoirement contenir :</b> " . "<br>\n" .
+            "- des majuscules et minuscules," . "<br>\n" .
+            "- des caractères spéciaux indiqués ci-après : (@-_&*!:,;/#~^?)," . "<br>\n" .
+            "- les caractères tels que é,ç,+,à,è,`,[,],{,},°,|,\,',\" ne sont pas autorisés," . "<br>\n" .
+            "- des chiffres," . "<br>\n" .
+            "- il doit comporter au minimum 10 caractères et 64 au maximum.";
+
         $html .= "</div>";
         $html .= "</div>";
 
