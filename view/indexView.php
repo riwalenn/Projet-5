@@ -232,17 +232,21 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <input class="form-control" id="name" type="text" placeholder="Votre nom *" required="required" data-validation-required-message="Please enter your name.">
+                  <input class="form-control" id="name" type="text" placeholder="Votre nom *" required="required" data-validation-required-message="Veuillez entrer votre nom .">
                   <p class="help-block text-danger"></p>
                 </div>
                 <div class="form-group">
-                  <input class="form-control" id="email" type="email" placeholder="Votre Email *" required="required" data-validation-required-message="Please enter your email address.">
+                  <input class="form-control" id="email" type="email" placeholder="Votre Email *" required="required" data-validation-required-message="Veuillez entrer votre email.">
                   <p class="help-block text-danger"></p>
                 </div>
+                  <div class="form-group">
+                      <input class="form-control" id="sujet" type="text" placeholder="Sujet du mail *" required="required" data-validation-required-message="Veuillez entrer un sujet .">
+                      <p class="help-block text-danger"></p>
+                  </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <textarea class="form-control" id="message" placeholder="Message *" required="required" data-validation-required-message="Please enter a message."></textarea>
+                  <textarea class="form-control" id="message" placeholder="Message *" required="required" data-validation-required-message="Veuillez entrer un message."></textarea>
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
