@@ -42,7 +42,7 @@
 
         <!-- Custom scripts for this template -->
         <script src="ressources/js/agency.min.js"></script>
-        <script src="ressources/js/js.js"></script>
+        <script src="ressources/js/verifForm.js"></script>
 
     </body>
 </html>

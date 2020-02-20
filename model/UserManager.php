@@ -1,6 +1,5 @@
 <?php
 
-
 class UserManager extends Connexion
 {
     public function usersUsed()
@@ -11,11 +10,19 @@ class UserManager extends Connexion
         return $users->fetchAll(PDO::FETCH_CLASS, 'User');
     }
 
-    public function registration()
+    public function registration(User $user)
     {
         $bdd = $this->dbConnect();
-        $user = $bdd->prepare('INSERT INTO `users` (`pseudo`, `email`, `password`) VALUES (?, ?, ?) ');
-        $user->execute();
+        $statement = $bdd->prepare('INSERT INTO `users` (`pseudo`, `role`, `email`, `password`, `date_inscription`, `cgu`, `state`) VALUES (:pseudo, :role, :email, :password, NOW(), :cgu, :state) ');
+        $liste = $statement->execute(array(
+            'pseudo' => $user->getPseudo(),
+            'role' => $user->getRole(),
+            'email' => $user->getEmail(),
+            'password' => $user->getPassword(),
+            'cgu' => $user->getCgu(),
+            'state' => $user->getState()
+        ));
+        return $liste;
     }
 
     public function registration_confirmedByUser($token)
