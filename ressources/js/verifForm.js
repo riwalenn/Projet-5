@@ -2,17 +2,22 @@ $(".page-link").click(function () {
     console.log('click');
     $(".page-link").parent().addClass("active");
 });
-$('div.password-popup').hide();
+$('div p.password-popup').hide();
+$('div p.pseudo-popup').hide();
 
 $('input.password').click(function () {
-   $('div.password-popup').toggle();
+   $('div p.password-popup').toggle();
+});
+
+$('input.pseudo').click(function () {
+    $('div p.pseudo-popup').toggle();
 });
 
 function surligne(champ, erreur) {
     if (erreur) {
-        champ.style.borderColor = "red";
+        champ.style.color = "red";
     } else {
-        champ.style.borderColor = "green";
+        champ.style.color = "green";
     }
 }
 
@@ -21,6 +26,7 @@ function verifEmail(champ) {
     if(!regex.test(champ.value))
     {
         surligne(champ, true);
+        console.log("le champ email n'est pas bon !");
         return false;
     } else {
         surligne(champ, false);
@@ -29,9 +35,10 @@ function verifEmail(champ) {
 }
 
 function verifPseudo(champ) {
-    if(champ.value.length < 4 || champ.value.length > 25)
+    if(champ.value.length < 1 || champ.value.length > 30)
     {
         surligne(champ, true);
+        console.log("le champ pseudo n'est pas bon !");
         return false;
     } else {
         surligne(champ, false);
@@ -40,18 +47,25 @@ function verifPseudo(champ) {
 }
 
 function verifPassword(champ) {
-    if (champ.value.length < 10 || champ.value().length > 64)
+    var regex = /^\S*(?=\S{10,64})(?=\S+[a-z])(?=\S+[A-Z])(?=\S+[\d])(?=\S+[@\-()_&*!%:,;#~^])\S+$/;
+    var forbiddenRegex = /^(?=\S[éç+àè`[\]{,}°|\\'?"\/])\S+$/;
+    if (champ.value.length < 10 || champ.value.length > 64)
     {
         surligne(champ, true);
+        console.log("le champs password n'est pas bon");
         return false;
     } else {
-        surligne(champ, false);
-        return true;
+        if (!regex.test(champ.value)) {
+           console.log("Vous devez entrer au moins un caractère spécial de la liste");
+        } else {
+            surligne(champ, false);
+            return true;
+        }
     }
 }
 
 function verifCgu(champ) {
-    if (champ.value() === 1) {
+    if (champ.value === 1) {
         surligne(champ, false);
         return true;
      } else {
@@ -69,12 +83,8 @@ function verifForm(f) {
     if (pseudoOk && emailOk && passwordOk && cguOk) {
         return true;
     } else {
+        console.log(verifCgu().value);
         alert("Veuillez remplir correctement tous les champs");
         return false;
     }
 }
-
-var searchForm = document.getElementById('search-form');
-clearButton.addEventListener('click', function () {
-    searchForm.reset();
-});

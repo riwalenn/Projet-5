@@ -1,12 +1,13 @@
 <div class="container views">
     <div class="row">
-        <form action="index.php?action=ajouterNewLogin" method="post" onsubmit="return verifForm(this)" >
+        <form action="index.php?action=verifierNewLogin" method="post" onsubmit="return verifForm(this)" >
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-secret"></i></span>
                 </div>
-                <input type="text" id="pseudo" class="form-control form-control-sm" placeholder="entrez votre pseudonyme ici" name="pseudo" aria-label="Pseudonyme" aria-describedby="basic-addon1" onblur="verifPseudo(this)" required>
+                <input type="text" id="pseudo" class="form-control form-control-sm pseudo" placeholder="entrez votre pseudonyme ici" name="pseudo" aria-label="Pseudonyme" aria-describedby="basic-addon1" onblur="verifPseudo(this)" value="<?php if (isset($_REQUEST['pseudo'])) : return $_REQUEST['pseudo']; endif ?>" required>
             </div>
+
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
@@ -19,12 +20,20 @@
                 </div>
                 <input id="password" class="form-control form-control-sm password classeMdp" placeholder="entrez votre mot de passe ici" aria-label="password" type="password" name="password" maxlength="64" minlength="10" onblur="verifPassword(this)" required>
             </div>
-            <?= $messagePassword ?>
             <div class="form-group">
                 <small><input type="checkbox" id="invalidCheck" value="1" name="cgu" onblur="verifCgu(this)" required>
                Je déclare avoir lu les <a href="#conditionsModal" data-toggle="modal">mentions légales</a> avant de m'être inscrit et en accepte les conditions d'utilisation.</small>
             </div>
             <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="connexion">Inscription</button>
+            <div class='ui fluid hidden helpmessage'>
+                <div class='header'>
+                    <h3 class='popover-header'>Règles conçernant le pseudonyme et le mot de passe :</h3>
+                </div>
+                <div class='popover-body'>
+                    <p>Cliquez sur les champs du formulaire pour avoir plus d'informations.</p>
+                    <?= $messagePseudo ?>
+                    <?= $messagePassword ?>
+                </div>
         </form>
     </div>
 </div>

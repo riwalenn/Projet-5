@@ -24,12 +24,13 @@ class Controller
     {
         $userManager = new User();
         $messagePassword = $userManager->helpPassword();
+        $messagePseudo = $userManager->helpPseudo();
 
         $view = new View('Inscription');
-        $view->render('view/registrationView.php', ['messagePassword' => $messagePassword]);
+        $view->render('view/registrationView.php', ['messagePassword' => $messagePassword, 'messagePseudo' => $messagePseudo]);
     }
 
-    public function ajouterNewLogin()
+    public function verifierNewLogin()
     {
         $user = new User($_REQUEST);
         $user->setRole(2);
@@ -37,7 +38,6 @@ class Controller
         $userManager = new UserManager();
         $request = $userManager->registration($user);
         $this->afficherLoginForm();
-
     }
 
     // --------- Recherche ---------

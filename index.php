@@ -20,8 +20,8 @@ try
                 $controller->afficherNewLoginForm();
                 break;
 
-            case 'ajouterNewLogin' :
-                $controller->ajouterNewLogin();
+            case 'verifierNewLogin' :
+                $controller->verifierNewLogin();
                 break;
 
             case 'recherche' :
