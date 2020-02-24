@@ -119,9 +119,7 @@ function verifForm(f) {
 
 function verifFormContact(f) {
     var nameOk = verifName(f.name);
-    console.log(verifName(f.name));
     var emailOk = verifEmail(f.email);
-    console.log(verifEmail(f.email));
 
     if (nameOk && emailOk) {
         return true;
