@@ -15,7 +15,7 @@ class UserManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('INSERT INTO `users` (`pseudo`, `role`, `email`, `password`, `date_inscription`, `cgu`, `state`) VALUES (:pseudo, :role, :email, :password, NOW(), :cgu, :state) ');
         $liste = $statement->execute(array(
-            'pseudo' => $user->getPseudo(),
+            'pseudo' => htmlspecialchars($user->getPseudo()),
             'role' => $user->getRole(),
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),

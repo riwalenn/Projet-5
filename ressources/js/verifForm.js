@@ -21,12 +21,22 @@ function surligne(champ, erreur) {
     }
 }
 
+function verifPseudo(champ) {
+    if(champ.value.length < 3 || champ.value.length > 30)
+    {
+        surligne(champ, true);
+        return false;
+    } else {
+        surligne(champ, false);
+        return true;
+    }
+}
+
 function verifEmail(champ) {
-    var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
+    var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{3,4}$/;
     if(!regex.test(champ.value))
     {
         surligne(champ, true);
-        console.log("le champ email n'est pas bon !");
         return false;
     } else {
         surligne(champ, false);
@@ -34,29 +44,19 @@ function verifEmail(champ) {
     }
 }
 
-function verifPseudo(champ) {
-    if(champ.value.length < 1 || champ.value.length > 30)
+function verifName(champ) {
+    if (champ.value.length < 2 || champ.value.length > 40)
     {
         surligne(champ, true);
-        console.log("le champ pseudo n'est pas bon !");
+        console.log("Le nom est trop petit ou trop grand !");
         return false;
     } else {
-        surligne(champ, false);
-        return true;
-    }
-}
-
-function verifPassword(champ) {
-    var regex = /^\S*(?=\S{10,64})(?=\S+[a-z])(?=\S+[A-Z])(?=\S+[\d])(?=\S+[@\-()_&*!%:,;#~^])\S+$/;
-    var forbiddenRegex = /^(?=\S[éç+àè`[\]{,}°|\\'?"\/])\S+$/;
-    if (champ.value.length < 10 || champ.value.length > 64)
-    {
-        surligne(champ, true);
-        console.log("le champs password n'est pas bon");
-        return false;
-    } else {
-        if (!regex.test(champ.value)) {
-           console.log("Vous devez entrer au moins un caractère spécial de la liste");
+        regex = /[a-zA-Z]\s/;
+        if (!regex.test(champ.value))
+        {
+            surligne(champ, true);
+            console.log("Le nom ne doit ni contenir de caractères spéciaux ni de chiffres !");
+            return false;
         } else {
             surligne(champ, false);
             return true;
@@ -64,13 +64,41 @@ function verifPassword(champ) {
     }
 }
 
+function verifPassword(champ) {
+    var regex = /^\S*(?=\S{10,64})(?=\S+[a-z])(?=\S+[A-Z])(?=\S+[\W])\S+$/;
+    if (champ.value.length < 10 || champ.value.length > 64)
+    {
+        surligne(champ, true);
+        return false;
+    } else {
+        if (regex.test(champ.value)) {
+            surligne(champ, false);
+            return true;
+        } else {
+            surligne(champ, true);
+            return false;
+        }
+    }
+}
+
 function verifCgu(champ) {
-    if (champ.value === 1) {
+    if (champ.value === '1') {
         surligne(champ, false);
         return true;
      } else {
         surligne(champ, true);
         return false;
+    }
+}
+
+function verifMessage(champ) {
+    if (champ.value.length < 150 || champ.value.length > 700) {
+        surligne(champ, true);
+        console.log("Le message est trop petit ou trop grand !");
+        return false;
+    } else {
+        surligne(champ, false);
+        return true;
     }
 }
 
@@ -83,7 +111,21 @@ function verifForm(f) {
     if (pseudoOk && emailOk && passwordOk && cguOk) {
         return true;
     } else {
-        console.log(verifCgu().value);
+        alert("Veuillez remplir correctement tous les champs");
+        return false;
+    }
+}
+
+
+function verifFormContact(f) {
+    var nameOk = verifName(f.name);
+    console.log(verifName(f.name));
+    var emailOk = verifEmail(f.email);
+    console.log(verifEmail(f.email));
+
+    if (nameOk && emailOk) {
+        return true;
+    } else {
         alert("Veuillez remplir correctement tous les champs");
         return false;
     }

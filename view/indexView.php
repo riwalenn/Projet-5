@@ -228,15 +228,15 @@
       </div>
       <div class="row">
         <div class="col-lg-12">
-          <form id="contactForm" name="sentMessage" novalidate="novalidate">
+          <form id="contactForm" name="sentMessage" onsubmit="return verifFormContact(this)" novalidate="novalidate">
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <input class="form-control" id="name" type="text" placeholder="Votre nom *" required="required" data-validation-required-message="Veuillez entrer votre nom .">
+                  <input class="form-control" id="name" type="text" placeholder="Votre nom *" required="required" data-validation-required-message="Veuillez entrer votre nom sans espace." onblur="verifName(this)">
                   <p class="help-block text-danger"></p>
                 </div>
                 <div class="form-group">
-                  <input class="form-control" id="email" type="email" placeholder="Votre Email *" required="required" data-validation-required-message="Veuillez entrer votre email.">
+                  <input class="form-control" id="email" type="email" placeholder="Votre Email *" required="required" data-validation-required-message="Veuillez entrer votre email." onblur="verifEmail(this)">
                   <p class="help-block text-danger"></p>
                 </div>
                   <div class="form-group">

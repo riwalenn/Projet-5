@@ -109,11 +109,11 @@ class User extends Post
     public function setEmail($email)
     {
         $controller = new Controller();
-        if (preg_match('#^[a-z0-9._-]{3,55}+@+[a-z0-9]{2,}\.[a-z]{3,4}$#', $email)) :
+        if (preg_match('#^[a-z0-9._-]{3,55}+@+[a-z0-9]{2,}\.[a-z]{2,5}$#', $email)) :
             $this->email = $email;
         else:
-            //throw new Exception("Le format de votre email ne correspond pas !");
-            throw new ExceptionOutput($email);
+            $message = "Le format de votre email ne correspond pas ! (minimum 3 caractères, maximum 55 - 2 caractères minimum après l'arobase et 2 à 5 caractères pour l'extension";
+            throw new ExceptionOutput($message);
         endif;
     }
 
@@ -122,7 +122,8 @@ class User extends Post
         if (preg_match('/^\S*(?=\S{10,64})(?=\S+[a-z])(?=\S+[A-Z])(?=\S+[\d])(?=\S+[\W])\S+$/', $password)):
             $this->password = password_hash($password, PASSWORD_DEFAULT);
         else :
-            throw new ExceptionOutput($password);
+            $message = "Votre mot de passe doit contenir entre 10 et 64 caractères, avoir des majuscules, des chiffres ainsi que des caractères spéciaux";
+            throw new ExceptionOutput($message);
         endif;
     }
 
@@ -136,7 +137,8 @@ class User extends Post
         if ($cgu == 1) :
             $this->cgu = $cgu;
         else:
-            throw new Exception("Vous devez valider les conditions générales d'utilisation pour vous enregistrer");
+            $message = "Vous devez valider les conditions générales d'utilisation pour vous enregistrer";
+            throw new ExceptionOutput($message);
         endif;
     }
 
@@ -173,8 +175,8 @@ class User extends Post
             " des mots de passe choisis.</u>" . "<br>\n" .
             "<b>Votre mot de passe doit obligatoirement contenir :</b> " . "<br>\n" .
             "- des majuscules et minuscules," . "<br>\n" .
-            "- des caractères spéciaux indiqués ci-après : (@-_&*!%:,;#~^)" . "<br>\n" .
-            "- les caractères tels que é,ç,+,à,è,`,[,],{,},°,|,\,',\",/,?,\ et la , ne sont pas autorisés," . "<br>\n" .
+            "- des caractères spéciaux indiqués ci-après : @-_&*!%:;#~^" . "<br>\n" .
+            "- les caractères tels que é,ç,+,à,è,`,(,),[,],{,},°,|,\,',\",/,?,\ et la , ne sont pas autorisés," . "<br>\n" .
             "- des chiffres," . "<br>\n" .
             "- il doit comporter au minimum 10 caractères et 64 au maximum.</p>";
 

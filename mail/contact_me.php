@@ -1,10 +1,6 @@
 <?php
 // Check for empty fields
-if(empty($_REQUEST['name'])      ||
-   empty($_REQUEST['email'])     ||
-    empty($_REQUEST['sujet'])    ||
-   empty($_REQUEST['message'])   ||
-   !filter_var($_REQUEST['email'],FILTER_VALIDATE_EMAIL))
+if(empty($_REQUEST['name']) || empty($_REQUEST['email']) || empty($_REQUEST['sujet']) || empty($_REQUEST['message']) || !filter_var($_REQUEST['email'],FILTER_VALIDATE_EMAIL))
    {
    echo "Certains champs sont vides";
    return false;
@@ -15,11 +11,11 @@ $email_address = strip_tags(htmlspecialchars($_POST['email']));
 $sujet = strip_tags(htmlspecialchars($_REQUEST['sujet']));
 $message = strip_tags(htmlspecialchars($_POST['message']));
    
-// Create the email and send the message
-$to = 'riwalenn@gmail.com'; // Add your email address inbetween the '' replacing yourname@yourdomain.com - This is where the form will send a message to.
+
+$to = 'hello@riwalennbas.com';
 $email_subject = "$sujet:  $name";
 $email_body = "Vous avez reçu un email depuis votre blog.\n\nDétails du message ci-dessous :\n\nName: $name\n\nEmail: $email_address\n\nMessage:\n$message";
-$headers = "From: noreply@riwalennbas.com\n"; // This is the email address the generated message will be from. We recommend using something like noreply@yourdomain.com.
+$headers = "From: noreply@riwalennbas.com\n";
 $headers .= "Reply-To: $email_address";   
 mail($to,$email_subject,$email_body,$headers);
 return true;         
