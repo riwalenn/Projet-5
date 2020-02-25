@@ -13,6 +13,8 @@ class UserManager extends Connexion
     public function registration(User $user)
     {
         $bdd = $this->dbConnect();
+        $bdd->beginTransaction();
+
         $statement = $bdd->prepare('INSERT INTO `users` (`pseudo`, `role`, `email`, `password`, `date_inscription`, `cgu`, `state`) VALUES (:pseudo, :role, :email, :password, NOW(), :cgu, :state) ');
         $liste = $statement->execute(array(
             'pseudo' => htmlspecialchars($user->getPseudo()),
@@ -21,6 +23,20 @@ class UserManager extends Connexion
             'password' => $user->getPassword(),
             'cgu' => $user->getCgu(),
             'state' => $user->getState()
+        ));
+
+        $id_user = $bdd->lastInsertId();
+        $bdd->commit();
+
+        $userTokenManager = new User();
+        $token = $userTokenManager->generateToken();
+        $interval = 5 * 24 * 60;
+
+        $tokenStatement = $bdd->prepare('INSERT INTO `tokens` (`token`, `id_user`, `expiration_token`) VALUES (:token, :id_user, DATE_ADD(now(), INTERVAL :interval MINUTE))');
+        $liste = $tokenStatement->execute(array(
+            'token' => $token,
+            'interval' => $interval,
+            'id_user' => $id_user
         ));
         return $liste;
     }

@@ -8,7 +8,7 @@ class Controller
         $portfolioManager = new PortfolioManager();
         $portfolio = $portfolioManager->getPortfolio();
 
-        $view = new View('Index');
+        $view = new View('Riwalenn Bas - développeuse d\'applications PHP/Symfony');
         $view->render('view/indexView.php', ['portfolio' => $portfolio]);
     }
 

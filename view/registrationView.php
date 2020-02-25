@@ -5,9 +5,11 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-secret"></i></span>
                 </div>
-                <input type="text" id="pseudo" class="form-control form-control-sm pseudo" placeholder="entrez votre pseudonyme ici" name="pseudo" aria-label="Pseudonyme" aria-describedby="basic-addon1" onblur="verifPseudo(this)" value="<?php if (isset($_REQUEST['pseudo'])) : return $_REQUEST['pseudo']; endif ?>" required>
+                <input type="text" id="pseudo" class="form-control form-control-sm" placeholder="entrez votre pseudonyme ici" name="pseudo" aria-label="Pseudonyme" aria-describedby="basic-addon1" onblur="verifPseudo(this)" value="<?php if (isset($_REQUEST['pseudo'])) : return $_REQUEST['pseudo']; endif ?>" required>
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fas fa-info-circle pseudo" data-toggle="tooltip" data-placement="right" title="Cliquez ici pour avoir plus d'infos !"></i></span>
+                </div>
             </div>
-
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
@@ -18,7 +20,10 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
                 </div>
-                <input id="password" class="form-control form-control-sm password classeMdp" placeholder="entrez votre mot de passe ici" aria-label="password" type="password" name="password" maxlength="64" minlength="10" onblur="verifPassword(this)" required>
+                <input id="password" class="form-control form-control-sm classeMdp" placeholder="entrez votre mot de passe ici" aria-label="password" type="password" name="password" maxlength="64" minlength="10" onblur="verifPassword(this)" required>
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fas fa-info-circle password" data-toggle="tooltip" data-placement="right" title="Cliquez ici pour avoir plus d'infos !"></i></span>
+                </div>
             </div>
             <div class="form-group">
                 <small><input type="checkbox" id="invalidCheck" value="1" name="cgu" onblur="verifCgu(this)" required>

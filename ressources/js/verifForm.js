@@ -5,12 +5,15 @@ $(".page-link").click(function () {
 $('div p.password-popup').hide();
 $('div p.pseudo-popup').hide();
 
-$('input.password').click(function () {
+$('i.password').click(function () {
    $('div p.password-popup').toggle();
 });
 
-$('input.pseudo').click(function () {
+$('i.pseudo').click(function () {
     $('div p.pseudo-popup').toggle();
+});
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
 });
 
 function surligne(champ, erreur) {
@@ -104,9 +107,13 @@ function verifMessage(champ) {
 
 function verifForm(f) {
     var pseudoOk = verifPseudo(f.pseudo);
+    console.log(verifPseudo());
     var emailOk = verifEmail(f.email);
+    console.log(verifEmail());
     var passwordOk = verifPassword(f.password);
+    console.log(verifPassword());
     var cguOk = verifCgu(f.cgu);
+    console.log(verifCgu());
 
     if (pseudoOk && emailOk && passwordOk && cguOk) {
         return true;

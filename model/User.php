@@ -182,4 +182,15 @@ class User extends Post
 
         return $html;
     }
+
+    public function generateToken($length = 32) {
+        // generate random token
+        $message = "La taille n'est pas la bonne";
+        if ($length % 2 !== 0) {
+            throw new ExceptionOutput($message);
+        } else{
+            $token = random_bytes($length);
+            return bin2hex($token);
+        }
+    }
 }
