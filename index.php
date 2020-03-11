@@ -20,12 +20,16 @@ try
                 $controller->afficherNewLoginForm();
                 break;
 
-            case 'verifierNewLogin' :
-                $controller->verifierNewLogin();
+            case 'inscription' :
+                $controller->inscription();
                 break;
 
             case 'recherche' :
                 $controller->afficherResultatRecherche();
+                break;
+
+            case 'confirmationInscriptionByEmail' :
+               $controller->confirmationByToken();
                 break;
 
             default :

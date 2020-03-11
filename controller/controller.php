@@ -20,24 +20,39 @@ class Controller
         $view->render('view/loginView.php');
     }
 
+    // --------- Inscription ---------
+
     public function afficherNewLoginForm()
     {
-        $userManager = new User();
-        $messagePassword = $userManager->helpPassword();
-        $messagePseudo = $userManager->helpPseudo();
+        $userMessages = new User();
+        $messagePassword = $userMessages->helpPassword();
+        $messagePseudo = $userMessages->helpPseudo();
 
         $view = new View('Inscription');
         $view->render('view/registrationView.php', ['messagePassword' => $messagePassword, 'messagePseudo' => $messagePseudo]);
     }
 
-    public function verifierNewLogin()
+    public function inscription()
     {
         $user = new User($_REQUEST);
         $user->setRole(2);
         $user->setState(0);
         $userManager = new UserManager();
-        $request = $userManager->registration($user);
-        $this->afficherLoginForm();
+        $userManager->registration($user);
+        $list = $userManager->tokenRecuperation($user);
+        $user->sendToken($list);
+        $this->afficherIndex();
+    }
+
+    public function confirmationByToken()
+    {
+        $token = $_REQUEST['token'];
+        $userManager = new UserManager();
+        $user = new User($_REQUEST);
+        $user->setToken($token);
+        $updateUser = $userManager->registrationConfirmationByToken($user);
+
+        $this->afficherIndex();
     }
 
     // --------- Recherche ---------
