@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 02 fév. 2020 à 17:37
+-- Généré le :  mer. 11 mars 2020 à 19:55
 -- Version du serveur :  5.7.19
 -- Version de PHP :  7.1.9
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `category` varchar(155) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `category` (`category`)
-) ENGINE=MyISAM AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -52,8 +52,10 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `content` text NOT NULL,
   `state` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 en attente - 1 valide - 2 archive - 3 suppression',
   PRIMARY KEY (`id`),
-  KEY `state` (`state`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  KEY `state` (`state`),
+  KEY `lien_post_comment` (`id_post`),
+  KEY `lien_comment_author` (`id_user`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -96,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   KEY `modified_at` (`modified_at`),
   KEY `id_category` (`id_category`),
   KEY `created_at` (`created_at`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -106,11 +108,14 @@ CREATE TABLE IF NOT EXISTS `posts` (
 
 DROP TABLE IF EXISTS `tokens`;
 CREATE TABLE IF NOT EXISTS `tokens` (
-  `id_token` int(10) NOT NULL,
-  `token` char(50) NOT NULL,
+  `id_token` int(10) NOT NULL AUTO_INCREMENT,
+  `token` varchar(150) NOT NULL,
   `id_user` int(10) NOT NULL,
-  `expiration_token` datetime NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `expiration_token` datetime NOT NULL,
+  PRIMARY KEY (`id_token`),
+  UNIQUE KEY `id_user` (`id_user`),
+  UNIQUE KEY `token` (`token`,`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -125,13 +130,32 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role` tinyint(1) NOT NULL DEFAULT '2' COMMENT '1 - admin 2 - user',
   `email` varchar(155) NOT NULL,
   `password` varchar(155) NOT NULL,
-  `date_inscription` datetime NOT NULL,
-  `state` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 en attente - 1 valide - 2 suppression',
+  `date_modification` datetime NOT NULL,
+  `date_inscription` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `cgu` tinyint(1) NOT NULL,
+  `state` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 validation utilisateur demandée - 1 validation moderateur demandée - 2 - validé - 3 - suppression',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   KEY `state` (`state`),
   KEY `pseudo` (`pseudo`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `lien_comment_author` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `lien_post_comment` FOREIGN KEY (`id_post`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `tokens`
+--
+ALTER TABLE `tokens`
+  ADD CONSTRAINT `lien_user_token` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

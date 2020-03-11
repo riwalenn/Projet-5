@@ -1,6 +1,6 @@
 <div class="container views">
     <div class="row">
-        <form action="index.php?action=verifierNewLogin" method="post" onsubmit="return verifForm(this)" >
+        <form action="index.php?action=inscription" method="post" onsubmit="return verifForm(this)" >
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-secret"></i></span>
@@ -35,7 +35,7 @@
                     <h3 class='popover-header'>Règles conçernant le pseudonyme et le mot de passe :</h3>
                 </div>
                 <div class='popover-body'>
-                    <p>Cliquez sur les champs du formulaire pour avoir plus d'informations.</p>
+                    <p>Cliquez sur les <i class="fas fa-info-circle pseudo"></i> du formulaire pour avoir plus d'informations.</p>
                     <?= $messagePseudo ?>
                     <?= $messagePassword ?>
                 </div>

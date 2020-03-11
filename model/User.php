@@ -8,8 +8,13 @@ class User extends Post
     private $email;
     private $password;
     private $date_inscription;
+    private $date_modification;
     private $cgu;
     private $state;
+    private $id_token;
+    private $token;
+    private $id_user;
+    private $expiration_token;
 
     const ADMIN = "Riwalenn";
 
@@ -67,6 +72,12 @@ class User extends Post
         return date_format($date,'d-m-Y');
     }
 
+    public function getDate_modification()
+    {
+        $date = new DateTime($this->date_modification);
+        return date_format($date,'d-m-Y');
+    }
+
     public function getCgu()
     {
         return $this->cgu;
@@ -75,6 +86,25 @@ class User extends Post
     public function getState()
     {
         return $this->state;
+    }
+    public function getId_token()
+    {
+        return $this->id_token;
+    }
+
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    public function getId_user()
+    {
+        return $this->id_user;
+    }
+
+    public function getExpiration_token()
+    {
+        return $this->expiration_token;
     }
 
     // ----- Setters -----
@@ -132,6 +162,11 @@ class User extends Post
         $this->date_inscription = $date_inscription;
     }
 
+    public function setDate_modification($date_modification)
+    {
+        $this->date_modification = $date_modification;
+    }
+
     public function setCgu($cgu)
     {
         if ($cgu == 1) :
@@ -150,6 +185,26 @@ class User extends Post
         $this->state = $state;
     }
 
+    public function setId_token($id_token)
+    {
+        $this->id = $id_token;
+    }
+
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+    public function setId_user($id_user)
+    {
+        $this->id_user = $id_user;
+    }
+
+    public function setExpiration_token($expiration_token)
+    {
+        $this->expiration_token = $expiration_token;
+    }
+
     static function helpPseudo()
     {
         $html = "<p class='pseudo-popup'>Votre pseudo doit contenir au minimum 4 caractères, les caractères spéciaux sont interdits.</p>";
@@ -160,18 +215,18 @@ class User extends Post
     static function helpPassword()
     {
         $html = "<p class='password-popup'>Voici quelques conseils pour vous aider à mieux sécuriser votre vie dématérialisée." . "<br>\n" .
-            "- Utilisez un mot de passe <u>unique</u> pour chaque service. En particulier, l’utilisation d’un même" .
+            "- Utilisez un mot de passe <u>unique</u> pour chaque service. En particulier, l’utilisation d’un même " . "<br>\n" .
             "mot de passe entre sa messagerie professionnelle et sa messagerie personnelle est impérativement à proscrire ;" . "<br>\n" .
-            "- Choisissez un mot de passe <u>qui n’a pas de lien avec vous</u> (mot de passe composé d’un nom de société," .
+            "- Choisissez un mot de passe <u>qui n’a pas de lien avec vous</u> (mot de passe composé d’un nom de société," . "<br>\n" .
             "d’une date de naissance, etc.) ;" . "<br>\n" .
             "- Ne demandez <u>jamais</u> à un tiers de générer pour vous un mot de passe ;" . "<br>\n" .
             "- Modifiez systématiquement et au plus tôt les mots de passe par défaut lorsque les systèmes en contiennent ;" . "<br>\n" .
-            "- <u>Renouvelez vos mots de passe avec une fréquence raisonnable</u>. Tous les 90 jours est un bon compromis" .
+            "- <u>Renouvelez vos mots de passe avec une fréquence raisonnable</u>. Tous les 90 jours est un bon compromis" . "<br>\n" .
             "pour les systèmes contenant des données sensibles ;" . "<br>\n" .
-            "- <u>Ne stockez pas</u> les mots de passe dans un fichier sur un poste informatique particulièrement exposé au risque" .
+            "- <u>Ne stockez pas</u> les mots de passe dans un fichier sur un poste informatique particulièrement exposé au risque" . "<br>\n" .
             "(exemple : en ligne sur Internet), encore moins sur un papier facilement accessible ;" . "<br>\n" .
             "- Ne vous envoyez pas vos propres mots de passe <u>sur votre messagerie personnelle</u> ;" . "<br>\n" .
-            "- Configurez les logiciels, y compris votre navigateur web, <u>pour qu’ils ne se « souviennent » pas" .
+            "- Configurez les logiciels, y compris votre navigateur web, <u>pour qu’ils ne se « souviennent » pas" . "<br>\n" .
             " des mots de passe choisis.</u>" . "<br>\n" .
             "<b>Votre mot de passe doit obligatoirement contenir :</b> " . "<br>\n" .
             "- des majuscules et minuscules," . "<br>\n" .
@@ -184,13 +239,28 @@ class User extends Post
     }
 
     public function generateToken($length = 32) {
-        // generate random token
-        $message = "La taille n'est pas la bonne";
-        if ($length % 2 !== 0) {
-            throw new ExceptionOutput($message);
-        } else{
             $token = random_bytes($length);
             return bin2hex($token);
-        }
+    }
+
+    public function sendToken($list) {
+        foreach ($list as $value) :
+        if(empty($list)) :
+            echo "Le token ou l'email sont manquants !";
+            return false;
+        endif;
+        $email = strip_tags(htmlspecialchars($value->email));
+        $token = strip_tags(htmlspecialchars($value->token));
+        $sujet = "Confirmation de votre inscription sur le blog de Riwalenn Bas";
+        $message = "Pour confirmer votre inscription, veuillez cliquer sur le lien ci-dessous :\n\nhttp://riwalenn/index.php?action=confirmationInscriptionByEmail&token=$token";
+
+        $to = $email;
+        $email_subject = "$sujet";
+        $email_body = "$message";
+        $headers = "From: noreply@riwalennbas.com\n";
+        $headers .= "Reply-To: $email";
+        mail($to,$email_subject,$email_body,$headers);
+        endforeach;
+        return true;
     }
 }
