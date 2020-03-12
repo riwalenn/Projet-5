@@ -84,6 +84,29 @@ function verifPassword(champ) {
     }
 }
 
+function verifPasswordBis(champ) {
+    var regex = /^\S*(?=\S{10,64})(?=\S+[a-z])(?=\S+[A-Z])(?=\S+[\W])\S+$/;
+    if (champ.value.length < 10 || champ.value.length > 64)
+    {
+        surligne(champ, true);
+        return false;
+    } else {
+        if (regex.test(champ.value)) {
+            surligne(champ, false);
+            return true;
+        } else {
+            surligne(champ, true);
+            return false;
+        }
+    }
+}
+
+function comparePasswords(f) {
+    var password = this.verifPassword(f.password);
+    var passwordBis = this.verifPasswordBis(f.passwordBis);
+    console.log(password + passwordBis);
+}
+
 function verifCgu(champ) {
     if (champ.value === '1') {
         surligne(champ, false);
@@ -107,13 +130,9 @@ function verifMessage(champ) {
 
 function verifForm(f) {
     var pseudoOk = verifPseudo(f.pseudo);
-    console.log(verifPseudo());
     var emailOk = verifEmail(f.email);
-    console.log(verifEmail());
     var passwordOk = verifPassword(f.password);
-    console.log(verifPassword());
     var cguOk = verifCgu(f.cgu);
-    console.log(verifCgu());
 
     if (pseudoOk && emailOk && passwordOk && cguOk) {
         return true;
@@ -135,3 +154,25 @@ function verifFormContact(f) {
         return false;
     }
 }
+
+function verifFormMail(f) {
+    var emailOk = verifEmail(f.email);
+    if (emailOk) {
+        return true;
+    } else {
+        alert("Veuillez remplir le champ par votre email");
+        return false;
+    }
+}
+
+function verifFormPassword(f) {
+    var passwordOk = verifPassword(f.password);
+    var passwordOkBis = verifPasswordBis(f.passwordBis);
+    if (passwordOk && passwordOkBis) {
+        return !!comparePasswords(f);
+    } else {
+        alert("Veuillez remplir les champs par votre mot de passe");
+        return false;
+    }
+}
+

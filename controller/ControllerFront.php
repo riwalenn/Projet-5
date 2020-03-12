@@ -50,9 +50,54 @@ class ControllerFront
         $userManager = new UserManager();
         $user = new User($_REQUEST);
         $user->setToken($token);
-        $updateUser = $userManager->registrationConfirmationByToken($user);
+        $userManager->registrationConfirmationByToken($user);
+        $userManager->deleteToken($user);
 
         $this->afficherIndex();
+    }
+
+    // --------- Oubli password ---------
+
+    public function afficherMailForm()
+    {
+        $view = new View('Formulaire');
+        $view->render('view/mailFormView.php');
+    }
+
+    public function envoyerEmailForPassword()
+    {
+        $user = new User($_REQUEST);
+        $userManager = new UserManager();
+        $list = $userManager->idUserRecuperation($user); //Récupération id_user par l'email
+        $id_user = $list['id'];
+        $userManager->tokenCreation($id_user); //Création du token
+        $tokenList = $userManager->tokenRecuperation($user); //Récupération du token
+        $user->sendTokenForPassword($tokenList); //Envoi du token par email
+
+        $this->afficherIndex();
+    }
+
+    public function afficherPasswordForm()
+    {
+        $token = $_REQUEST['tokenForPassword'];
+        $user = new User($_REQUEST);
+        $user->setToken($token);
+        $messagePassword = $user->helpPassword();
+
+        $view = new View('Formulaire');
+        $view->render('view/passwordFormView.php', ['messagePassword' => $messagePassword, 'token' => $token]);
+    }
+
+    public function changerPassword()
+    {
+        $user = new User($_REQUEST);
+        $userManager = new UserManager();
+        $userManager->passwordModification($user);
+        $userManager->deleteToken($user);
+
+        $confirmationMessage = "Votre mot de passe a bien été modifié." ?? "";
+        $view = new View('Connexion');
+        $view->render('view/loginView.php', ['confirmationMessage' => $confirmationMessage]);
     }
 
     // --------- Recherche ---------
@@ -84,7 +129,7 @@ class ControllerFront
 
     public function afficherListeArticles()
     {
-       $pageCourante = $_REQUEST['page'] ?? 1;
+        $pageCourante = $_REQUEST['page'] ?? 1;
         $postManager = new PostManager();
         $listPosts = $postManager->getPosts($pageCourante);
 
