@@ -1,4 +1,13 @@
 <div class="container views">
+    <?php
+    if (isset($confirmationMessage)) :
+        ?>
+        <div class="alert alert-success" role="alert">
+            <?= $confirmationMessage ?>
+        </div>
+    <?php
+        endif;
+    ?>
     <div class="row">
         <form action="index.php?action=loginUser">
             <div class="input-group mb-3">

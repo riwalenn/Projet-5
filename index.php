@@ -12,6 +12,10 @@ try
                 $controller->afficherListeArticles();
                 break;
 
+            case 'recherche' :
+                $controller->afficherResultatRecherche();
+                break;
+
             case 'connexion' :
                 $controller->afficherLoginForm();
                 break;
@@ -24,12 +28,24 @@ try
                 $controller->inscription();
                 break;
 
-            case 'recherche' :
-                $controller->afficherResultatRecherche();
-                break;
-
             case 'confirmationInscriptionByEmail' :
                $controller->confirmationByToken();
+                break;
+
+            case 'forgotPassword' :
+                $controller->afficherMailForm();
+                break;
+
+            case 'forgotPasswordSendMail' :
+                $controller->envoyerEmailForPassword();
+                break;
+
+            case 'confirmationEmailForPassword' :
+                $controller->afficherPasswordForm();
+                break;
+
+            case 'modifierPassword' :
+                $controller->changerPassword();
                 break;
 
             default :

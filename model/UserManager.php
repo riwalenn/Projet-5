@@ -33,6 +33,33 @@ class UserManager extends Connexion
         $bdd->commit();
     }
 
+    //création token et inscription en bdd
+    public function tokenCreation($id_user)
+    {
+        $user = new User();
+        $bdd = $this->dbConnect();
+        $token = $user->generateToken();
+        $interval = 5 * 24 * 60;
+        $tokenStatement = $bdd->prepare('INSERT INTO `tokens` (`token`, `id_user`, `expiration_token`) VALUES (:token, :id_user, DATE_ADD(now(), INTERVAL :interval MINUTE))');
+        $tokenStatement->execute(array(
+            'token' => $token,
+            'interval' => $interval,
+            'id_user' => $id_user
+        ));
+        return $tokenStatement;
+    }
+
+    //récupération id_user avec l'email
+    public function idUserRecuperation(User $user)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT `id` FROM `users` WHERE `email` LIKE :email');
+        $statement->execute(array(
+            'email' => $user->getEmail()
+        ));
+        return $statement->fetch();
+    }
+
     //récupération du token avec l'email
     public function tokenRecuperation(User $user)
     {
@@ -49,10 +76,8 @@ class UserManager extends Connexion
     public function registrationConfirmationByToken(User $user)
     {
         $bdd = $this->dbConnect();
-            $statement = $bdd->prepare('UPDATE `users` SET `state` = 1 WHERE `id` = (SELECT `id_user` FROM `tokens` WHERE `token` = :token AND `expiration_token` > NOW())');
-            $statement->execute(array('token' =>$user->getToken()));
-            $statement = $bdd->prepare('DELETE FROM tokens WHERE token = :token');
-            $statement->execute(array('token' =>$user->getToken()));
+        $statement = $bdd->prepare('UPDATE `users` SET `state` = 1 WHERE `id` = (SELECT `id_user` FROM `tokens` WHERE `token` = :token AND `expiration_token` > NOW())');
+        $statement->execute(array('token' =>$user->getToken()));
     }
 
     //étape 3 : confirmation de l'inscription par l'administrateur
@@ -66,7 +91,26 @@ class UserManager extends Connexion
 
     }
 
+    //Modification du mot de passe s'il a été oublié
+    public function passwordModification(User $user)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('UPDATE `users` SET `password` = :password WHERE `id` = (SELECT `id_user` FROM `tokens` WHERE `token` = :token)');
+        $statement->execute(array(
+            'password' => $user->getPassword(),
+            'token' => $user->getToken()
+        ));
+    }
+
     /** SUPPRESSIONS UTILISATEURS ET TOKENS */
+
+    //Suppression du token à l'inscription & oubli du password
+    public function deleteToken(User $user)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('DELETE FROM tokens WHERE token = :token');
+        $statement->execute(array('token' =>$user->getToken()));
+    }
 
     //purge des utilisateurs n'ayant pas validé leur inscription
     public function deleteExpiredTokenAndUser()

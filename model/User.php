@@ -242,6 +242,28 @@ class User extends Post
         return bin2hex($token);
     }
 
+    //A voir si je peux passer un deuxième paramètre et supprimer cette fonction !
+    public function sendTokenForPassword($list) {
+        foreach ($list as $value) :
+            if(empty($list)) :
+                echo "Le token ou l'email sont manquants !";
+                return false;
+            endif;
+            $email = strip_tags(htmlspecialchars($value->email));
+            $token = strip_tags(htmlspecialchars($value->token));
+            $sujet = "Modification de mon mot de passe sur le blog de Riwalenn Bas";
+            $message = "Pour modifier votre mot de passe, veuillez cliquer sur le lien ci-dessous :\n\nhttp://riwalenn/index.php?action=confirmationEmailForPassword&tokenForPassword=$token";
+
+            $to = $email;
+            $email_subject = "$sujet";
+            $email_body = "$message";
+            $headers = "From: noreply@riwalennbas.com\n";
+            $headers .= "Reply-To: $email";
+            mail($to,$email_subject,$email_body,$headers);
+        endforeach;
+        return true;
+    }
+
     public function sendToken($list) {
         foreach ($list as $value) :
             if(empty($list)) :
