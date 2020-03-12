@@ -2,7 +2,7 @@
 require_once 'config/config.php';
 try
 {
-    $controller = new controller();
+    $controller = new ControllerFront();
     if (isset($_REQUEST['action']))
     {
         $action = $_REQUEST['action'];

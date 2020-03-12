@@ -138,7 +138,6 @@ class User extends Post
 
     public function setEmail($email)
     {
-        $controller = new Controller();
         if (preg_match('#^[a-z0-9._-]{3,55}+@+[a-z0-9]{2,}\.[a-z]{2,5}$#', $email)) :
             $this->email = $email;
         else:
@@ -239,27 +238,27 @@ class User extends Post
     }
 
     public function generateToken($length = 32) {
-            $token = random_bytes($length);
-            return bin2hex($token);
+        $token = random_bytes($length);
+        return bin2hex($token);
     }
 
     public function sendToken($list) {
         foreach ($list as $value) :
-        if(empty($list)) :
-            echo "Le token ou l'email sont manquants !";
-            return false;
-        endif;
-        $email = strip_tags(htmlspecialchars($value->email));
-        $token = strip_tags(htmlspecialchars($value->token));
-        $sujet = "Confirmation de votre inscription sur le blog de Riwalenn Bas";
-        $message = "Pour confirmer votre inscription, veuillez cliquer sur le lien ci-dessous :\n\nhttp://riwalenn/index.php?action=confirmationInscriptionByEmail&token=$token";
+            if(empty($list)) :
+                echo "Le token ou l'email sont manquants !";
+                return false;
+            endif;
+            $email = strip_tags(htmlspecialchars($value->email));
+            $token = strip_tags(htmlspecialchars($value->token));
+            $sujet = "Confirmation de votre inscription sur le blog de Riwalenn Bas";
+            $message = "Pour confirmer votre inscription, veuillez cliquer sur le lien ci-dessous :\n\nhttp://riwalenn/index.php?action=confirmationInscriptionByEmail&token=$token";
 
-        $to = $email;
-        $email_subject = "$sujet";
-        $email_body = "$message";
-        $headers = "From: noreply@riwalennbas.com\n";
-        $headers .= "Reply-To: $email";
-        mail($to,$email_subject,$email_body,$headers);
+            $to = $email;
+            $email_subject = "$sujet";
+            $email_body = "$message";
+            $headers = "From: noreply@riwalennbas.com\n";
+            $headers .= "Reply-To: $email";
+            mail($to,$email_subject,$email_body,$headers);
         endforeach;
         return true;
     }
