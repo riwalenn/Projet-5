@@ -31,6 +31,22 @@ i.fa.fa-search.fa-inverse {
     margin-top: 3%;
 }
 
+.label_password{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.container.views .row form label{
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-family: sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.7em;
+}
+
 form button {
     color: #ffffff !important;
 }

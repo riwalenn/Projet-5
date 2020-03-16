@@ -10,20 +10,23 @@
     ?>
     <div class="row">
         <form action="index.php?action=loginUser">
+            <div><label>Email :</label></div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
                 </div>
                 <input class="form-control form-control-sm" placeholder="entrez votre email ici" aria-label="email" type="email" name="email" required>
             </div>
+            <div class="label_password"><label>Mot de passe :</label><small><a href="index.php?action=forgotPassword">Perdu / Oublié ?</a></small></div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-unlock"></i></span>
                 </div>
                 <input class="form-control form-control-sm" placeholder="entrez votre mot de passe ici" aria-label="password" type="password" name="password" required>
             </div>
-            <small>Si vous n'avez pas de compte, <a href="index.php?action=nouvelInscrit">veuillez cliquer ici</a>.</small><br>
             <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="connexion">connexion</button>
+            <div>
+                <small>Pas encore de compte ? <a href="index.php?action=nouvelInscrit">Cliquer ici</a> pour en créer un.</small></div>
         </form>
     </div>
 </div>

@@ -35,7 +35,6 @@
                     <h3 class='popover-header'>Règles conçernant le pseudonyme et le mot de passe :</h3>
                 </div>
                 <div class='popover-body'>
-                    <small>- J'ai oublié mon mot de passe ! <a href="index.php?action=forgotPassword">Cliquez ici pour le changer</a>.</small>
                     <p>Cliquez sur les <i class="fas fa-info-circle pseudo"></i> du formulaire pour avoir plus d'informations.</p>
                     <?= $messagePseudo ?>
                     <?= $messagePassword ?>

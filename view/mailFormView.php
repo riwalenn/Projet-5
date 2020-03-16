@@ -10,7 +10,7 @@
             <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="connexion">Envoyer mon email</button>
         </form>
     </div>
-    <div class='ui fluid hidden helpmessage'>
+    <div class='row helpmessage'>
         <div class='header'>
             <h3 class='popover-header'>Changer mon mot de passe :</h3>
         </div>
