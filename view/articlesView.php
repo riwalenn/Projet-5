@@ -95,7 +95,7 @@ foreach ($listPosts as $post) {
                         <div class="col-lg-8 mx-auto">
                             <div class="modal-body">
                                 <!-- Project Details Go Here -->
-                                <h2 class="text-uppercase"><?= $post->getTitle() ?></h2>
+                                <h2 class="text-uppercase"><?= $post->getTitle() ?> <i class="far fa-star"></i><i class="fas fa-star" style="color: #fed136"></i></h2>
                                 <p class="item-intro text-muted"><?= $post->getKicker() ?></p>
                                 <cite title="Auteur" class="item-intro text-muted">Créé par <?= $post->getPseudo() ?> -
                                     le <?= $post->getCreated_at() ?> / Modifié le <?= $post->getModified_at() ?></cite>
