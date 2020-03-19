@@ -5,7 +5,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
                 </div>
-                <input id="email" class="form-control form-control-sm" placeholder="entrez votre email ici" aria-label="email" type="email" name="email" onblur="verifEmail(this)" required>
+                <input id="email" class="form-control form-control-sm" placeholder="entrez votre email ici" aria-label="email" type="email" name="email" onkeyup="verifEmail(this)" required>
             </div>
             <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="connexion">Envoyer mon email</button>
         </form>
