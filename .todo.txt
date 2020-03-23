@@ -1,0 +1,81 @@
+TODO:
+
+
+✔ faire une vue pour les erreurs
+✔ résoudre bug avec les erreurs (en local erreur ligne 15 et ne prends pas la vue - en ligne erreur PDO ligne 25 mais prends la vue)
+✔ mettre en place les commentaires (je n'arrive pas à récup l'id du post)
+✔ voir le responsive
+✔ images visibles dans safari
+✔ pagination
+✔ création table portfolio
+✔ foreach pour les portfolio
+
+✔ la pagination ne fonctionne pas
+✔ voir pour <picture>
+✔ filtres de recherche
+✔ formulaire de contact
+
+✔ modifier la requete postManager
+- créer une session
+- panel utilisateur (une page avec ses infos + articles favoris[à faire si je m'ennuie))
+- connexion admin
+- connexion utilisateur
+
+✔ insertion en bdd de l'utilisateur
+    ✔ création du token
+    ✔ récupération du dernier id user
+    ✔ insertion en bdd du token
+    ✔ envoi d'un email avec le token
+    ✔ validation de l’utilisateur en cliquant sur l'email
+    ✔ modification du statut de l'utilisateur de 0 à 1 en bdd
+    ✔ suppression du token
+
+- oubli du mot de passe
+    ✔ récupération de l'email
+    ✔ création d'un token
+    ✔ envoi d'un email avec le token + message si ce n'est pas l'utilisateur qui a fait la demande
+    ✔ validation du token par l'utilisateur
+    ✔ accès page "oubli password"
+    ✔ modification du password en bdd
+    ✔ envoi sur la page login avec message de confirmation
+    ✔ debugger javascript pour le double password sur la page de modification du password après oubli
+    ✔ changer les onblur contre des onkeyup dans les forms
+    ✔ faire la vérification du token (actuellement inexistante, je peux modifier mon mot de passe en boucle)
+
+- créer la partie admin
+    - créer une page pour valider l'utilisateur de 1 à 2 en bdd, archiver ou supprimer (users manager)
+    - créer une page pour les articles, création, modification, suppression, archivage (posts manager)
+    - créer une page pour le portfolio, création, modification, suppression (portfolio manager)
+
+
+- REFAIRE MES SCHEMAS UML
+✔ mettre les liens entre table sous phpMyAdmin
+
+
+
+
+       if (!empty($_REQUEST['page'])) :
+            $pageCourante = $_REQUEST['page'];
+        else:
+            $pageCourante = 1;
+        endif;
+        =
+
+       $pageCourante = $_REQUEST['page'] ?? 1;
+       ou
+       $pageCourante = !empty($_REQUEST['page']) ? $_REQUEST['page'] : 1;
+
+
+
+
+
+
+
+
+
+utilisateurs:
+   Utilisateur en attente : <a class="nav-link js-scroll-trigger" href="#"><i class="fas fa-user-secret"></i></a>
+      Utilisateur accepté : <a class="nav-link js-scroll-trigger" href="#"><i class="fas fa-user"></i></a>
+           Administrateur : <a class="nav-link js-scroll-trigger" href="#"><i class="fas fa-user-astronaut"></i></a>
+               Modérateur : <a class="nav-link js-scroll-trigger" href="#"><i class="fas fa-user-ninja"></i></a>
+                Connexion : <a class="nav-link js-scroll-trigger" href="#"><i class="fas fa-users-cog"></i></a>
