@@ -1,5 +1,4 @@
 $(".page-link").click(function () {
-    console.log('click');
     $(".page-link").parent().addClass("active");
 });
 $('div p.password-popup').hide();
@@ -51,14 +50,14 @@ function verifName(champ) {
     if (champ.value.length < 2 || champ.value.length > 40)
     {
         surligne(champ, true);
-        console.log("Le nom est trop petit ou trop grand !");
+        alert("Le nom est trop petit ou trop grand !");
         return false;
     } else {
         regex = /[a-zA-Z]\s/;
         if (!regex.test(champ.value))
         {
             surligne(champ, true);
-            console.log("Le nom ne doit ni contenir de caractères spéciaux ni de chiffres !");
+            alert("Le nom ne doit ni contenir de caractères spéciaux ni de chiffres !");
             return false;
         } else {
             surligne(champ, false);
@@ -104,7 +103,6 @@ function verifPasswordBis(champ) {
 function comparePasswords(f) {
     var password = this.verifPassword(f.password);
     var passwordBis = this.verifPasswordBis(f.passwordBis);
-    console.log(password + passwordBis);
 }
 
 function verifCgu(champ) {
@@ -120,7 +118,7 @@ function verifCgu(champ) {
 function verifMessage(champ) {
     if (champ.value.length < 150 || champ.value.length > 700) {
         surligne(champ, true);
-        console.log("Le message est trop petit ou trop grand !");
+        alert("Le message est trop petit ou trop grand !");
         return false;
     } else {
         surligne(champ, false);
