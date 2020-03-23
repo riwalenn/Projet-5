@@ -83,9 +83,7 @@ function verifPassword(champ) {
     }
 }
 
-function verifPasswordBis(idform) {
-    let f = document.getElementById(idform);
-    let champ = f.passwordBis;
+function verifPasswordBis(champ) {
     var regex = /^\S*(?=\S{10,64})(?=\S+[a-z])(?=\S+[A-Z])(?=\S+[\W])\S+$/;
     if (champ.value.length < 10 || champ.value.length > 64)
     {
@@ -93,17 +91,18 @@ function verifPasswordBis(idform) {
         return false;
     } else {
         if (regex.test(champ.value)) {
-            if (f.password.value === f.passwordBis.value) {
-                surligne(f.passwordBis, false);
-                return true;
-            }
-            surligne(f.passwordBis, true);
+            surligne(champ, false);
             return true;
         } else {
             surligne(champ, true);
             return false;
         }
     }
+}
+
+function comparePasswords(f) {
+    var password = this.verifPassword(f.password);
+    var passwordBis = this.verifPasswordBis(f.passwordBis);
 }
 
 function verifCgu(champ) {
@@ -119,6 +118,7 @@ function verifCgu(champ) {
 function verifMessage(champ) {
     if (champ.value.length < 150 || champ.value.length > 700) {
         surligne(champ, true);
+        alert("Le message est trop petit ou trop grand !");
         return false;
     } else {
         surligne(champ, false);
@@ -165,16 +165,12 @@ function verifFormMail(f) {
 
 function verifFormPassword(f) {
     var passwordOk = verifPassword(f.password);
-    var passwordOkBis = verifPassword(f.passwordBis);
+    var passwordOkBis = verifPasswordBis(f.passwordBis);
     if (passwordOk && passwordOkBis) {
-        if (f.password.value === f.passwordBis.value) {
-            return true;
-        }
-        surligne(f.passwordBis, true);
-        alert("Les deux mots de passe ne correspondent pas !");
+        return !!comparePasswords(f);
     } else {
         alert("Veuillez remplir les champs par votre mot de passe");
+        return false;
     }
-    return false;
 }
 
