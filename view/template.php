@@ -1,9 +1,4 @@
-<?php
-    session_start();
-    $_SESSION['prenom'] = 'Riwalenn';
-    $_SESSION['role'] = 'Admin';
-    $_SESSION['id'] = session_id();
-?>
+
 <!DOCTYPE html>
 <html lang="fr">
     <head>
@@ -34,15 +29,7 @@
     <body class="container-fluid" id="page-top">
         <?php include 'menu.html' ?>
         <?= $content ?>
-        <?php
-        echo $_SESSION['id'];
-        unset($_SESSION['id']);
-        unset($_SESSION['prenom']);
-        unset($_SESSION['role']);
-        session_destroy();
-        echo '<br>cookie : ' . $_COOKIE['PHPSESSID'];
-        echo '<br>id session : ' . $_SESSION['id'];
-        include 'footer.html' ?>
+        <?php include 'footer.html' ?>
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -51,6 +51,21 @@ TODO:
 - REFAIRE MES SCHEMAS UML
 ✔ mettre les liens entre table sous phpMyAdmin
 
+            //how to start a session
+            session_start();
+            $_SESSION['prenom'] = 'Riwalenn';
+            $_SESSION['role'] = 'Admin';
+            $_SESSION['id'] = session_id();
+
+            echo $_SESSION['id'];
+
+            //how to destroy session
+            unset($_SESSION['id']);
+            unset($_SESSION['prenom']);
+            unset($_SESSION['role']);
+            session_destroy();
+            echo '<br>cookie : ' . $_COOKIE['PHPSESSID'];
+            echo '<br>id session : ' . $_SESSION['id'];
 
 
 
