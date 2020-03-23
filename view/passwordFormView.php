@@ -1,4 +1,9 @@
 <div class="container views">
+    <?php if (isset($messageError)) : ?>
+    <div class="row">
+        <div class="alert alert-warning"><?= $messageError ?></div>
+    </div>
+    <?php endif; ?>
     <div class="row">
         <form action="index.php?action=modifierPassword" id="formModifPassword" method="post" onsubmit="return verifFormPassword(this)" >
             <input type="hidden" name="token" value="<?= $token ?>">

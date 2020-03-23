@@ -72,11 +72,21 @@ class UserManager extends Connexion
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
     }
 
+    //vérification de l'existence d'un token
+    public function countToken(User $user)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT COUNT(token) as nbToken FROM tokens WHERE id_user = (SELECT id FROM users, tokens WHERE token = :token AND tokens.id_user = users.id)');
+        $statement->execute(array('token' => $user->getToken()));
+        $result = $statement->fetch();
+        return $result['nbToken'];
+    }
+
     //étape 2 : confirmation de l'inscription via lien email & suppression token en bdd
     public function registrationConfirmationByToken(User $user)
     {
         $bdd = $this->dbConnect();
-        $statement = $bdd->prepare('UPDATE `users` SET `state` = 1 WHERE `id` = (SELECT `id_user` FROM `tokens` WHERE `token` = :token AND `expiration_token` > NOW())');
+        $statement = $bdd->prepare('UPDATE `users` SET `state` = 1, `date_modification` = NOW() WHERE `id` = (SELECT `id_user` FROM `tokens` WHERE `token` = :token AND `expiration_token` > NOW())');
         $statement->execute(array('token' =>$user->getToken()));
     }
 
@@ -84,7 +94,7 @@ class UserManager extends Connexion
     public function registrationConfirmationByAdmin(User $user)
     {
         $bdd = $this->dbConnect();
-            $statement = $bdd->prepare('UPDATE `users` SET `state` = :state');
+            $statement = $bdd->prepare('UPDATE `users` SET `state` = :state, `date_modification` = NOW()');
             $statement->execute(array(
                 'state' => $user->getState()
             ));
@@ -95,7 +105,7 @@ class UserManager extends Connexion
     public function passwordModification(User $user)
     {
         $bdd = $this->dbConnect();
-        $statement = $bdd->prepare('UPDATE `users` SET `password` = :password WHERE `id` = (SELECT `id_user` FROM `tokens` WHERE `token` = :token)');
+        $statement = $bdd->prepare('UPDATE `users` SET `password` = :password, `date_modification` = NOW() WHERE `id` = (SELECT `id_user` FROM `tokens` WHERE `token` = :token)');
         $statement->execute(array(
             'password' => $user->getPassword(),
             'token' => $user->getToken()
@@ -124,7 +134,7 @@ class UserManager extends Connexion
     public function deleteExpirateduser()
     {
         $bdd = $this->dbConnect();
-        $statement = $bdd->prepare('DELETE FROM users WHERE DATEDIFF(date_modification, date_inscription) > 90 AND role != 1');
+        $statement = $bdd->prepare('DELETE FROM users WHERE DATEDIFF(NOW(), date_modification) > 90 AND role != 1 AND email LIKE \'no-reply@riwalennbas.com\'');
         $statement->execute();
     }
 }

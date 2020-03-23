@@ -82,10 +82,19 @@ class ControllerFront
         $token = $_REQUEST['tokenForPassword'];
         $user = new User($_REQUEST);
         $user->setToken($token);
+        $userManager = new UserManager();
+        $tokenCount = $userManager->countToken($user); //Vérifie qu'il y a bien un token
+
         $messagePassword = $user->helpPassword();
 
+        if ($tokenCount != 1) :
+            $messageError = "Le token n'existe plus !";
+        endif;
+
         $view = new View('Formulaire');
-        $view->render('view/passwordFormView.php', ['messagePassword' => $messagePassword, 'token' => $token]);
+        $view->render('view/passwordFormView.php', ['messagePassword' => $messagePassword, 'token' => $token, 'messageError' => $messageError]);
+
+
     }
 
     public function changerPassword()
