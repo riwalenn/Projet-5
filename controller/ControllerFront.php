@@ -89,11 +89,14 @@ class ControllerFront
 
         if ($tokenCount != 1) :
             $messageError = "Le token n'existe plus !";
+
+            $view = new View('Formulaire');
+            $view->render('view/passwordFormView.php', ['messagePassword' => $messagePassword, 'token' => $token, 'messageError' => $messageError]);
+
+        else:
+            $view = new View('Formulaire');
+            $view->render('view/passwordFormView.php', ['messagePassword' => $messagePassword, 'token' => $token]);
         endif;
-
-        $view = new View('Formulaire');
-        $view->render('view/passwordFormView.php', ['messagePassword' => $messagePassword, 'token' => $token, 'messageError' => $messageError]);
-
 
     }
 

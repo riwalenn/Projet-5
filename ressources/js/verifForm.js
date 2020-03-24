@@ -83,18 +83,19 @@ function verifPassword(champ) {
     }
 }
 
-function verifPasswordBis(champ) {
+function verifPasswordBis(value) {
+    var form = document.getElementById('formModifPassword');
     var regex = /^\S*(?=\S{10,64})(?=\S+[a-z])(?=\S+[A-Z])(?=\S+[\W])\S+$/;
-    if (champ.value.length < 10 || champ.value.length > 64)
+    if (form.value.length < 10 || form.value.length > 64)
     {
-        surligne(champ, true);
+        surligne(form, true);
         return false;
     } else {
-        if (regex.test(champ.value)) {
-            surligne(champ, false);
+        if (regex.test(form.value)) {
+            surligne(form, false);
             return true;
         } else {
-            surligne(champ, true);
+            surligne(form, true);
             return false;
         }
     }
