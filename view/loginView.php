@@ -6,10 +6,16 @@
             <?= $confirmationMessage ?>
         </div>
     <?php
+        elseif (isset($message)) :
+    ?>
+            <div class="alert alert-warning" role="alert">
+                <?= $message ?>
+            </div>
+    <?php
         endif;
     ?>
     <div class="row">
-        <form action="index.php?action=loginUser">
+        <form action="index.php?action=loginUser" method="post">
             <div><label>Email :</label></div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -24,7 +30,7 @@
                 </div>
                 <input class="form-control form-control-sm" placeholder="entrez votre mot de passe ici" aria-label="password" type="password" name="password" required>
             </div>
-            <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="connexion">connexion</button>
+            <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="connexion"><i class="fas fa-sign-in-alt"></i> connexion</button>
             <div>
                 <small>Pas encore de compte ? <a href="index.php?action=nouvelInscrit">Cliquer ici</a> pour en créer un.</small></div>
         </form>

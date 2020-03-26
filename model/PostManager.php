@@ -23,6 +23,15 @@ class PostManager extends Connexion
         return $listPosts->fetchAll(PDO::FETCH_CLASS, 'Post');
     }
 
+    public function getLastsPosts($post = NULL)
+    {
+        $bdd = $this->dbConnect();
+        $listPosts = $bdd->prepare('SELECT `title`, `kicker` FROM `posts` WHERE state = 1 ORDER BY modified_at DESC LIMIT 0,:offset');
+        $listPosts->bindValue(':offset', intval($this->offset), PDO::PARAM_INT);
+        $listPosts->execute();
+        return $listPosts->fetchAll(PDO::FETCH_CLASS, 'Post');
+    }
+
     public function getSearch($recherche, $page, $post = NULL)
     {
         $bdd = $this->dbConnect();

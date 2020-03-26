@@ -149,7 +149,7 @@ class User extends Post
     public function setPassword($password)
     {
         if (preg_match('/^\S*(?=\S{10,64})(?=\S+[a-z])(?=\S+[A-Z])(?=\S+[\d])(?=\S+[\W])\S+$/', $password)):
-            $this->password = password_hash($password, PASSWORD_DEFAULT);
+            $this->password = $password;
         else :
             $message = "Votre mot de passe doit contenir entre 10 et 64 caractères, avoir des majuscules, des chiffres ainsi que des caractères spéciaux";
             throw new ExceptionOutput($message);

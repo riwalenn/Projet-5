@@ -20,6 +20,14 @@ try
                 $controller->afficherLoginForm();
                 break;
 
+            case 'loginUser' :
+                $controller->login();
+                break;
+
+            case 'logoutUser' :
+                $controller->logout();
+                break;
+
             case 'nouvelInscrit' :
                 $controller->afficherNewLoginForm();
                 break;

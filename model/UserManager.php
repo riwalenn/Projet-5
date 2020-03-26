@@ -15,7 +15,7 @@ class UserManager extends Connexion
             'pseudo' => htmlspecialchars($user->getPseudo()),
             'role' => $user->getRole(),
             'email' => $user->getEmail(),
-            'password' => $user->getPassword(),
+            'password' => password_hash($user->getPassword(), PASSWORD_DEFAULT),
             'cgu' => $user->getCgu(),
             'state' => $user->getState()
         ));
@@ -107,9 +107,21 @@ class UserManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('UPDATE `users` SET `password` = :password, `date_modification` = NOW() WHERE `id` = (SELECT `id_user` FROM `tokens` WHERE `token` = :token)');
         $statement->execute(array(
-            'password' => $user->getPassword(),
+            'password' => password_hash($user->getPassword(), PASSWORD_DEFAULT),
             'token' => $user->getToken()
         ));
+    }
+
+    /** CONNEXION - DECONNEXION */
+    //Connexion
+    public function login(User $user)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT * FROM `users` WHERE `email` LIKE :email');
+        $statement->execute(array(
+            'email' => $user->getEmail()
+        ));
+        return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
     }
 
     /** SUPPRESSIONS UTILISATEURS ET TOKENS */
