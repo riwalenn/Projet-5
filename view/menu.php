@@ -9,6 +9,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ml-auto">
+                <?php if (isset($_SESSION['id'])) :
+                    echo 'bonjour' . $_SESSION['id'];
+                endif;
+                ?>
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="index.php"><i class="fa fa-home"></i></a>
                 </li>

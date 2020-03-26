@@ -26,7 +26,7 @@
             <title><?= $title ?></title>
         </head>
     <body class="container-fluid" id="page-top">
-        <?php include 'menu.html' ?>
+        <?php include 'menu.php' ?>
         <?= $content ?>
         <?php include 'footer.html' ?>
         <!-- Bootstrap core JavaScript -->

@@ -22,40 +22,37 @@ class ControllerFront
 
     public function login()
     {
-        $user = new User($_REQUEST);
+        $email = $_REQUEST['email'];
         $userManager = new UserManager();
         $listPosts = new PostManager();
-        $liste = $userManager->login($user);
-        $lastPosts = $listPosts->getLastsPosts();
-        foreach ($liste as $value) :
-            $comparePassword = password_verify($user->getPassword(), $value->getPassword());
+        $user = $userManager->getUserByEmail($email);
+        if (!empty($user)) :
+            $lastPosts = $listPosts->getLastsPosts();
+            $comparePassword = password_verify($_REQUEST['password'], $user->getPassword());
             if ($comparePassword == true) :
-                session_start();
-                $_SESSION['id'] = session_id();
-                $id_user = $value->getid();
-                $date_inscription = $value->getDate_inscription();
-                $date_modification = $value->getDate_modification();
-                $pseudo = $value->getPseudo();
-                $email = $value->getEmail();
-                $role = $value->getRole();
-                $statut = $value->getState();
+                $_SESSION['id'] = $user->getId();
 
                 $view = new View('Tableau de bord');
-                $view->render('view/dashboardView.php', ['lastPosts' => $lastPosts, 'id' => $_SESSION['id'], 'role' => $role, 'id_user' => $id_user, 'date_inscription' => $date_inscription, 'date_modification' => $date_modification, 'pseudo' => $pseudo, 'email' => $email, 'statut' => $statut]);
+                $view->render('view/dashboardView.php', ['lastPosts' => $lastPosts, 'user' => $user]);
             else:
                 $message = 'Le mot de passe ne correspond pas avec celui utilisé à l\'inscription';
+
                 $view = new View('Connexion');
                 $view->render('view/loginView.php', ['message' => $message]);
             endif;
-        endforeach;
+        else:
+            $message = 'Le mot de passe ne correspond pas avec celui utilisé à l\'inscription';
+
+            $view = new View('Connexion');
+            $view->render('view/loginView.php', ['message' => $message]);
+        endif;
     }
     public function logout()
     {
-        $_SESSION['id'] = session_id();
         unset($_SESSION['id']);
         session_destroy();
 
-        self::afficherIndex();
+        $this->afficherIndex();
     }
 
     // --------- Inscription ---------

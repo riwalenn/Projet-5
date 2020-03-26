@@ -47,6 +47,10 @@ TODO:
     - créer une page pour les articles, création, modification, suppression, archivage (posts manager)
     - créer une page pour le portfolio, création, modification, suppression (portfolio manager)
 
+- Commentaires à faire !!!
+    - si non connecté => lecture des commentaires
+    - si connecté => possibilité de laisser un commentaire modéré par la suite
+
 
 - REFAIRE MES SCHEMAS UML
 ✔ mettre les liens entre table sous phpMyAdmin

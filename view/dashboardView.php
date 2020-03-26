@@ -1,6 +1,9 @@
 <?php
 if ((isset($_SESSION['id']))) {
-    if ($role == 2 && $statut == 2) {
+    if (false) :
+        $user = new User; //A supprimer !
+    endif;
+    if ($user->getRole() == 2 && $user->getState() == 2) {
         ?>
         <section class="page-profil" id="profil">
             <div class="container">
@@ -9,10 +12,10 @@ if ((isset($_SESSION['id']))) {
                         <img src="../ressources/img/dashboard/profil.jpg" class="img_dashboard"/>
                         <div class="articles-caption">
                             <h4>Profil</h4>
-                            <footer class="blockquote-footer"><b>Date d'inscription :</b> <?= $date_inscription ?></footer>
-                            <footer class="blockquote-footer"><b>Dernière connexion :</b> <?= $date_modification ?></footer>
-                            <h5>Bonjour <b><?= $pseudo ?></b></h5>
-                            <p class="text-muted"><b>Votre email :</b> <?= $email ?></p>
+                            <footer class="blockquote-footer"><b>Date d'inscription :</b> <?= $user->getDate_inscription() ?></footer>
+                            <footer class="blockquote-footer"><b>Dernière connexion :</b> <?= $user->getDate_modification() ?></footer>
+                            <h5>Bonjour <b><?= $user->getPseudo() ?></b></h5>
+                            <p class="text-muted"><b>Votre email :</b> <?= $user->getEmail() ?></p>
                             <p class="text-muted"><a href="index.php?action=logoutUser"><i class="fas fa-sign-out-alt"></i> Deconnexion</a></p>
                         </div>
                     </div>
@@ -29,7 +32,7 @@ if ((isset($_SESSION['id']))) {
                 </div>
         </section>
         <?php
-    } elseif ($role == 1 && $statut == 2) {
+    } elseif ($user->getRole() == 1 && $user->getState() == 2) {
         ?>
         <h1>Dashboard ADMIN</h1>
         <section class="page-profil" id="profil">
@@ -38,13 +41,13 @@ if ((isset($_SESSION['id']))) {
                     <div class="col-md-4 col-sm-6 card">
                         <img src="../ressources/img/dashboard/admin_profil.jpg" class="img_dashboard"/>
                         <div class="articles-caption">
-                            <footer class="blockquote-footer"><b>Date d'inscription :</b> <?= $date_inscription ?></footer>
-                            <footer class="blockquote-footer"><b>Dernière connexion :</b> <?= $date_modification ?></footer>
-                            <h4>Bonjour <b><?= $pseudo ?></b></h4>
-                            <p class="text-muted"><b>Votre email :</b> <?= $email ?><br>
-                                <b>Role :</b> <?= $role ?> - <b>Statut :</b> <?= $statut ?><br>
+                            <footer class="blockquote-footer"><b>Date d'inscription :</b> <?= $user->getDate_inscription() ?></footer>
+                            <footer class="blockquote-footer"><b>Dernière connexion :</b> <?= $user->getDate_modification() ?></footer>
+                            <h4>Bonjour <b><?= $user->getPseudo() ?></b></h4>
+                            <p class="text-muted"><b>Votre email :</b> <?= $user->getEmail() ?><br>
+                                <b>Role :</b> <?= $user->getRole() ?> - <b>Statut :</b> <?= $user->getState() ?><br>
                                 <b>Id Session :</b> <?= $_SESSION['id'] ?><br>
-                                <b>Votre email :</b> <?= $email ?>
+                                <b>Votre email :</b> <?= $user->getEmail() ?>
                             </p>
                             <p class="text-muted"><a href="index.php?action=logoutUser">Deconnexion</a></p>
                         </div>
@@ -79,13 +82,13 @@ if ((isset($_SESSION['id']))) {
                                     <i class="fas fa-user-astronaut fa-stack-1x fa-inverse"></i>
                                   </span>
                                 </div>
-                                <h5 class="card-title">Bonjour <b><?= $pseudo ?></b></h5>
-                                <p class="card-text"><b>Votre role :</b> <?= $role ?></b></p>
-                                <p class="card-text"><b>Votre statut :</b> <?= $statut ?></b></p>
+                                <h5 class="card-title">Bonjour <b><?= $user->getPseudo() ?></b></h5>
+                                <p class="card-text"><b>Votre role :</b> <?= $user->getRole() ?></b></p>
+                                <p class="card-text"><b>Votre statut :</b> <?= $user->getState() ?></b></p>
                                 <p class="card-text"><b>Id Session :</b> <?= $_SESSION['id'] ?></b></p>
-                                <p class="card-text"><b>Votre email :</b> <?= $email ?></p>
-                                <p class="card-text"><b>Date d'inscription :</b> <?= $date_inscription ?></p>
-                                <p class="card-text"><b>Dernière connexion :</b> <?= $date_modification ?></p>
+                                <p class="card-text"><b>Votre email :</b> <?= $user->getEmail() ?></p>
+                                <p class="card-text"><b>Date d'inscription :</b> <?= $user->getDate_inscription() ?></p>
+                                <p class="card-text"><b>Dernière connexion :</b> <?= $user->getDate_modification() ?></p>
                                 <p class="card-text"><a href="index.php?action=logoutUser">Deconnexion</a></p>
                             </div>
                         </div>
@@ -94,7 +97,7 @@ if ((isset($_SESSION['id']))) {
             </div>
         </section>
         <?php
-    } elseif ($role == 2 && $statut == 0) {
+    } elseif ($user->getRole() == 2 && $user->getState() == 0) {
         ?>
         <section class="page-profil">
             <div class="container">
@@ -107,7 +110,7 @@ if ((isset($_SESSION['id']))) {
             </div>
         </section>
         <?php
-    } elseif ($role == 2 && $statut == 1) {
+    } elseif ($user->getRole() == 2 && $user->getState() == 1) {
         ?>
         <section class="page-profil">
             <div class="container">

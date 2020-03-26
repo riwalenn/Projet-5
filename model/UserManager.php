@@ -114,14 +114,19 @@ class UserManager extends Connexion
 
     /** CONNEXION - DECONNEXION */
     //Connexion
-    public function login(User $user)
+    /**
+     * @param $email
+     * @return User
+     */
+    public function getUserByEmail($email)
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT * FROM `users` WHERE `email` LIKE :email');
         $statement->execute(array(
-            'email' => $user->getEmail()
+            'email' => $email
         ));
-        return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
+        $statement->setFetchMode(PDO::FETCH_CLASS, 'User');
+        return $statement->fetch();
     }
 
     /** SUPPRESSIONS UTILISATEURS ET TOKENS */
