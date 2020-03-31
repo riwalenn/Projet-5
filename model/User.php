@@ -178,9 +178,6 @@ class User extends Post
 
     public function setState($state)
     {
-        /*if ($state != 0 OR empty($state)) :
-            $state = self::EN_ATTENTE;
-        endif;*/
         $this->state = $state;
     }
 
