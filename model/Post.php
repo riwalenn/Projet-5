@@ -13,7 +13,6 @@ class Post
     private $category;
     private $state;
     private $comments;
-    private $categories;
 
     const EN_ATTENTE = 0;
     const VALIDE = 1;
@@ -64,7 +63,12 @@ class Post
 
     public function getContent()
     {
-        return $this->content . ' <a href="' . $this->getUrl() . '" target="_blank">[voir l\'article]</a>';
+        if (!empty($this->getUrl())) :
+            $url = ' <a href="' . $this->getUrl() . '" target="_blank">[voir l\'article]</a>';
+        else:
+            $url = '';
+        endif;
+        return $this->content . $url;
     }
 
     public function getUrl()
@@ -97,11 +101,6 @@ class Post
     public function getComments()
     {
         return $this->comments;
-    }
-
-    public function getCategories()
-    {
-        return $this->categories;
     }
 
 
@@ -146,7 +145,7 @@ class Post
         $this->modified_at = $modified_at;
     }
 
-    public function setCategory($category)
+    public function setCategory(Category $category)
     {
         $this->category = $category;
     }
@@ -162,10 +161,5 @@ class Post
     public function setComments($comments)
     {
         $this->comments = $comments;
-    }
-
-    public function setCategories($categories)
-    {
-        $this->categories = $categories;
     }
 }

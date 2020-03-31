@@ -44,7 +44,7 @@
                         <?= View::generatePictureTag($post) ?>
                     </a>
                     <div class="articles-caption">
-                        <footer class="blockquote-footer">catégorie : <?= $post->getCategory() ?></footer>
+                        <footer class="blockquote-footer">catégorie : <?= $post->getCategory()->getCategory() ?></footer>
                         <footer class="blockquote-footer">Créé le <?= $post->getCreated_at() ?></footer>
                         <h4><?= $post->getTitle() ?></h4>
                         <p class="text-muted"><?= $post->getKicker() ?></p>
@@ -95,7 +95,7 @@ foreach ($listPosts as $post) {
                         <div class="col-lg-8 mx-auto">
                             <div class="modal-body">
                                 <!-- Project Details Go Here -->
-                                <h2 class="text-uppercase"><?= $post->getTitle() ?> <i class="far fa-star"></i><i class="fas fa-star" style="color: #fed136"></i></h2>
+                                <h2 class="text-uppercase"><?= $post->getTitle() ?> <?php if ((isset($_SESSION['id']))) : ?> <i class="far fa-star"></i><i class="fas fa-star" style="color: #fed136"></i><?php endif; ?></h2>
                                 <p class="item-intro text-muted"><?= $post->getKicker() ?></p>
                                 <cite title="Auteur" class="item-intro text-muted">Créé par <?= $post->getPseudo() ?> -
                                     le <?= $post->getCreated_at() ?> / Modifié le <?= $post->getModified_at() ?></cite>
@@ -118,10 +118,9 @@ foreach ($listPosts as $post) {
                                 <?php
                                 if (empty($post->getComments())) :
                                     ?>
-                                    <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire
-                                        !</h6>
+                                    <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire !</h6>
                                     <?php
-                                endif;
+                                elseif (!empty($post->getComments())) :
                                 foreach ($post->getComments() as $comment) {
                                     ?>
                                     <h5 class="text-uppercase"><?= $comment->getTitle() ?></h5>
@@ -129,7 +128,9 @@ foreach ($listPosts as $post) {
                                         par <?= $comment->getPseudo() ?> -
                                         le <?= $comment->getCreated_at() ?></cite>
                                     <p><?= $comment->getContent() ?></p>
-                                <?php } ?>
+                                <?php }
+                                endif;
+                                ?>
                             </div>
                         </div>
                     </div>

@@ -1,154 +1,92 @@
 <?php
-if ((isset($_SESSION['id']))) {
-    if (false) :
-        $user = new User; //A supprimer !
-    endif;
-    if ($user->getRole() == 2 && $user->getState() == 2) {
-        ?>
-        <section class="page-profil" id="profil">
-            <div class="container">
-                <div class="row d-flex justify-content-around">
-                    <div class="col-md-4 col-sm-6 card" id="profil_Dash">
-                        <img src="../ressources/img/dashboard/profil.jpg" class="img_dashboard"/>
-                        <div class="articles-caption">
-                            <h4>Profil</h4>
-                            <footer class="blockquote-footer"><b>Date d'inscription :</b> <?= $user->getDate_inscription() ?></footer>
-                            <footer class="blockquote-footer"><b>Dernière connexion :</b> <?= $user->getDate_modification() ?></footer>
-                            <h5>Bonjour <b><?= $user->getPseudo() ?></b></h5>
-                            <p class="text-muted"><b>Votre email :</b> <?= $user->getEmail() ?></p>
-                            <p class="text-muted"><a href="index.php?action=logoutUser"><i class="fas fa-sign-out-alt"></i> Deconnexion</a></p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 card" id="articles_Dash">
-                        <img src="../ressources/img/dashboard/articles.jpg" class="img_dashboard"/>
-                        <div class="articles-caption">
-                            <h4>3 derniers articles parus</h4>
-                            <?php foreach ($lastPosts as $post) : ?>
-                                <h5><b><a href="#"><?= $post->getTitle() ?></a></b></h5>
-                                <p class="text-muted"><?= $post->getKicker() ?></p>
-                            <?php endforeach; ?>
-                        </div>
+if ((isset($_SESSION['id']))) : ?>
+    <section class="page-profil" id="profil">
+        <div class="container">
+            <div class="row d-flex justify-content-around">
+                <div class="col-md-4 col-sm-6 card" id="profil_Dash">
+                    <img src="../ressources/img/dashboard/profil.jpg" class="img_dashboard"/>
+                    <div class="articles-caption">
+                        <h4>Profil</h4>
+                        <footer class="blockquote-footer"><b>Date d'inscription :</b> <?= $user->getDate_inscription() ?></footer>
+                        <footer class="blockquote-footer"><b>Dernière connexion :</b> <?= $user->getDate_modification() ?></footer>
+                        <h5>Bonjour <b><?= $user->getPseudo() ?></b></h5>
+                        <i class="fas fa-ninja"></i>
+                        <p class="text-muted"><b>Votre email :</b> <?= $user->getEmail() ?></p>
+                        <p class="text-muted"><a href="index.php?action=logoutUser"><i class="fas fa-sign-out-alt"></i> Deconnexion</a></p>
                     </div>
                 </div>
-        </section>
-        <?php
-    } elseif ($user->getRole() == 1 && $user->getState() == 2) {
-        ?>
-        <h1>Dashboard ADMIN</h1>
-        <section class="page-profil" id="profil">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 col-sm-6 card">
-                        <img src="../ressources/img/dashboard/admin_profil.jpg" class="img_dashboard"/>
-                        <div class="articles-caption">
-                            <footer class="blockquote-footer"><b>Date d'inscription :</b> <?= $user->getDate_inscription() ?></footer>
-                            <footer class="blockquote-footer"><b>Dernière connexion :</b> <?= $user->getDate_modification() ?></footer>
-                            <h4>Bonjour <b><?= $user->getPseudo() ?></b></h4>
-                            <p class="text-muted"><b>Votre email :</b> <?= $user->getEmail() ?><br>
-                                <b>Role :</b> <?= $user->getRole() ?> - <b>Statut :</b> <?= $user->getState() ?><br>
-                                <b>Id Session :</b> <?= $_SESSION['id'] ?><br>
-                                <b>Votre email :</b> <?= $user->getEmail() ?>
-                            </p>
-                            <p class="text-muted"><a href="index.php?action=logoutUser">Deconnexion</a></p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 card">
-                        <img src="../ressources/img/dashboard/articles.jpg" class="img_dashboard"/>
-                        <div class="articles-caption">
-                            <h4>...</h4>
-                            <p class="text-muted"><b>... </b></p>
-                            <footer class="blockquote-footer">...</footer>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 card">
-                        <img src="../ressources/img/dashboard/social.jpg" class="img_dashboard"/>
-                        <div class="articles-caption">
-                            <h4>...</h4>
-                            <p class="text-muted">...</p>
-                        </div>
+                <div class="col-md-4 col-sm-6 card" id="articles_Dash">
+                    <img src="../ressources/img/dashboard/articles.jpg" class="img_dashboard"/>
+                    <div class="articles-caption">
+                        <h4>3 derniers articles parus</h4>
+                        <?php foreach ($lastPosts as $post) : ?>
+                            <h5><b><a class="articles-link" data-toggle="modal" href="#articlesModal<?= $post->getId() ?>"><?= $post->getTitle() ?></a></b></h5>
+                            <p class="text-muted"><?= $post->getKicker() ?></p>
+                        <?php endforeach; ?>
+                        <a href="index.php?action=articlesListe&page=1">Voir les autres articles.</a>
                     </div>
                 </div>
-        </section>
-        <section class="page-profil" id="profil">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card border-primary mb-3" style="max-width: 20rem;">
-                            <div class="card-header"><b>Tableau de bord Admin</b></div>
-                            <div class="card-body text-dark">
-                                <div class="col-md-4">
-                                  <span class="fa-stack fa-4x">
-                                    <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                                    <i class="fas fa-user-astronaut fa-stack-1x fa-inverse"></i>
-                                  </span>
+            </div>
+    </section>
+    <!-- Modal -->
+    <?php
+    foreach ($lastPosts as $post) {
+        ?>
+        <div class="articles-modal modal fade" id="articlesModal<?= $post->getId() ?>" tabindex="-1" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-dismiss="modal">
+                        <div class="lr">
+                            <div class="rl"></div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto">
+                                <div class="modal-body">
+                                    <!-- Project Details Go Here -->
+                                    <h2 class="text-uppercase"><?= $post->getTitle() ?> <i class="far fa-star"></i><i class="fas fa-star" style="color: #fed136"></i></h2>
+                                    <p class="item-intro text-muted"><?= $post->getKicker() ?></p>
+                                    <cite title="Auteur" class="item-intro text-muted">Créé par <?= $post->getPseudo() ?> -
+                                        le <?= $post->getCreated_at() ?> / Modifié le <?= $post->getModified_at() ?></cite>
+                                    <?= View::generatePictureTag($post) ?>
+                                    <p><?= $post->getContent() ?></p>
+                                    <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                        <i class="fas fa-times"></i>
+                                        Close Article
+                                    </button>
                                 </div>
-                                <h5 class="card-title">Bonjour <b><?= $user->getPseudo() ?></b></h5>
-                                <p class="card-text"><b>Votre role :</b> <?= $user->getRole() ?></b></p>
-                                <p class="card-text"><b>Votre statut :</b> <?= $user->getState() ?></b></p>
-                                <p class="card-text"><b>Id Session :</b> <?= $_SESSION['id'] ?></b></p>
-                                <p class="card-text"><b>Votre email :</b> <?= $user->getEmail() ?></p>
-                                <p class="card-text"><b>Date d'inscription :</b> <?= $user->getDate_inscription() ?></p>
-                                <p class="card-text"><b>Dernière connexion :</b> <?= $user->getDate_modification() ?></p>
-                                <p class="card-text"><a href="index.php?action=logoutUser">Deconnexion</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto">
+                                <div class="modal-body">
+                                    <h4>Commentaires</h4>
+                                    <hr>
+                                    <?php
+                                    if (empty($post->getComments())) :
+                                        ?>
+                                        <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire
+                                            !</h6>
+                                    <?php
+                                    endif;
+                                    foreach ($post->getComments() as $comment) {
+                                        ?>
+                                        <h5 class="text-uppercase"><?= $comment->getTitle() ?></h5>
+                                        <cite title="Auteur" class="item-intro text-muted">Créé
+                                            par <?= $comment->getPseudo() ?> -
+                                            le <?= $comment->getCreated_at() ?></cite>
+                                        <p><?= $comment->getContent() ?></p>
+                                    <?php } ?>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <?php
-    } elseif ($user->getRole() == 2 && $user->getState() == 0) {
-        ?>
-        <section class="page-profil">
-            <div class="container">
-                <div class="row">
-                    <div class="alert alert-warning" role="alert">
-                        <p>Vous n'avez pas activé votre compte (un email vous a été envoyé lors de votre
-                            inscription, merci de checker vos spams si besoin).</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <?php
-    } elseif ($user->getRole() == 2 && $user->getState() == 1) {
-        ?>
-        <section class="page-profil">
-            <div class="container">
-                <div class="row">
-                    <div class="alert alert-warning" role="alert">
-                        <p>Votre compte n'a pas encore été vérifié par un modérateur, la vérification devrait
-                            s'effectuer d'ici 24h.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <?php
-    } else {
-        ?>
-        <section class="page-profil">
-            <div class="container">
-                <div class="row">
-                    <div class="alert alert-warning" role="alert">
-                        <p>Vos informations de connexion ne sont pas valides, votre compte n'est pas/plus
-                            actif.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <?php
-    }
-} else {
-    ?>
-    <section class="page-profil">
-        <div class="container">
-            <div class="row">
-                <div class="alert alert-warning" role="alert">
-                    <p>Vos informations de connexion ne sont pas valides. Une erreur s'est produit lors de la
-                        connexion.</p>
-                </div>
-            </div>
         </div>
-    </section>
-    <?php
-}
-?>
+    <?php } ?>
+<?php endif; ?>

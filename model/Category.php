@@ -1,6 +1,6 @@
 <?php
 
-class Category extends Post
+class Category
 {
     private $id;
     private $category;

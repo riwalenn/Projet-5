@@ -129,6 +129,21 @@ class UserManager extends Connexion
         return $statement->fetch();
     }
 
+    /**
+     * @param $_SESSION['id']
+     * @return User
+     */
+    public function getUserBySessionId()
+    {
+        $bdd =$this->dbConnect();
+        $statement = $bdd->prepare('SELECT * FROM `users` WHERE `id` = :id');
+        $statement->execute(array(
+            'id' => $_SESSION['id']
+        ));
+        $statement->setFetchMode(PDO::FETCH_CLASS, 'User');
+        return $statement->fetch();
+    }
+
     /** SUPPRESSIONS UTILISATEURS ET TOKENS */
 
     //Suppression du token à l'inscription & oubli du password

@@ -8,13 +8,13 @@ class PostManager extends Connexion
     {
         $bdd = $this->dbConnect();
         if (!empty($page)) {
-            $listPosts = $bdd->prepare('SELECT posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at, categories.category, categories.id 
+            $listPosts = $bdd->prepare('SELECT posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at
                                                     FROM `posts` INNER JOIN categories ON posts.id_category = categories.id INNER JOIN users ON posts.author = users.id 
                                                     WHERE posts.state = 1 ORDER BY posts.created_at DESC LIMIT :page,:offset');
             $listPosts->bindValue(':page', intval(($page -1) * 3), PDO::PARAM_INT);
             $listPosts->bindValue(':offset', intval($this->offset), PDO::PARAM_INT);
         } else {
-            $listPosts = $bdd->prepare('SELECT posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at, categories.category, categories.id 
+            $listPosts = $bdd->prepare('SELECT posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at 
                                                     FROM `posts` INNER JOIN categories ON posts.id_category = categories.id INNER JOIN users ON posts.author = users.id 
                                                     WHERE posts.state = 1 ORDER BY posts.created_at DESC LIMIT 0,:offset');
             $listPosts->bindValue(':offset', intval($this->offset), PDO::PARAM_INT);
@@ -26,7 +26,9 @@ class PostManager extends Connexion
     public function getLastsPosts($post = NULL)
     {
         $bdd = $this->dbConnect();
-        $listPosts = $bdd->prepare('SELECT `title`, `kicker` FROM `posts` WHERE state = 1 ORDER BY modified_at DESC LIMIT 0,:offset');
+        $listPosts = $bdd->prepare('SELECT posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at
+                                                    FROM `posts` INNER JOIN categories ON posts.id_category = categories.id INNER JOIN users ON posts.author = users.id 
+                                                    WHERE posts.state = 1 ORDER BY posts.created_at DESC LIMIT 0,:offset');
         $listPosts->bindValue(':offset', intval($this->offset), PDO::PARAM_INT);
         $listPosts->execute();
         return $listPosts->fetchAll(PDO::FETCH_CLASS, 'Post');
@@ -37,7 +39,7 @@ class PostManager extends Connexion
         $bdd = $this->dbConnect();
         if (isset($recherche)) {
             if (isset($page)) {
-                $listPosts = $bdd->prepare("SELECT posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at, categories.category, categories.id
+                $listPosts = $bdd->prepare("SELECT posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at 
                                                         FROM `posts` INNER JOIN categories ON posts.id_category = categories.id INNER JOIN users ON posts.author = users.id 
                                                         WHERE posts.state = 1 AND posts.title LIKE CONCAT('%', :recherche, '%') OR posts.kicker LIKE CONCAT('%', :recherche, '%') OR posts.content LIKE CONCAT('%', :recherche, '%')
                                                         ORDER BY posts.created_at DESC LIMIT :page,:offset");
@@ -45,7 +47,7 @@ class PostManager extends Connexion
                 $listPosts->bindValue(':page', intval(($page -1) * 3), PDO::PARAM_INT);
                 $listPosts->bindValue(':offset', intval($this->offset), PDO::PARAM_INT);
             } else {
-                $listPosts = $bdd->prepare("SELECT posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at, categories.category, categories.id
+                $listPosts = $bdd->prepare("SELECT posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at
                                                         FROM `posts` INNER JOIN categories ON posts.id_category = categories.id INNER JOIN users ON posts.author = users.id 
                                                         WHERE posts.state = 1 AND posts.title LIKE CONCAT('%', :recherche, '%') OR posts.kicker LIKE CONCAT('%', :recherche, '%') OR posts.content LIKE CONCAT('%', :recherche, '%')
                                                         ORDER BY posts.created_at DESC LIMIT 0,:offset");

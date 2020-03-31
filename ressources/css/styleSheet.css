@@ -1,5 +1,7 @@
 .container.views{margin-top: 10%;}
 
+li.nav-item.dropdown.show{text-transform: initial;}
+
 i.fa.fa-search.fa-inverse {
     color: #00c0c7;
 }

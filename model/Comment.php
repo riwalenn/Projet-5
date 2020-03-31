@@ -1,18 +1,13 @@
 <?php
 
-
-class Comment
+class Comment extends Post
 {
+    private $id;
     private $id_post;
     private $pseudo;
     private $created_at;
     private $title;
     private $content;
-
-    const EN_ATTENTE = 0;
-    const VALIDE = 1;
-    const ARCHIVE = 2;
-    const SUPPRESSION = 3;
 
     public function __construct($donnees = null)
     {
@@ -32,6 +27,11 @@ class Comment
     }
 
     // ----- Getters -----
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function getId_post()
     {
@@ -60,6 +60,11 @@ class Comment
     }
 
     // ----- Setters -----
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     public function setId_post($id_post)
     {

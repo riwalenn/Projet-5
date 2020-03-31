@@ -24,6 +24,14 @@ try
                 $controller->login();
                 break;
 
+            case 'dashboard' :
+                $controller->getDashboardUser();
+                break;
+
+            case 'backendDashboard':
+                $controller->getBackendDashboard();
+                break;
+
             case 'logoutUser' :
                 $controller->logout();
                 break;

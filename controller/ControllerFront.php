@@ -26,30 +26,126 @@ class ControllerFront
         $userManager = new UserManager();
         $listPosts = new PostManager();
         $user = $userManager->getUserByEmail($email);
+
+        //si l'objet user n'est pas vide
         if (!empty($user)) :
             $lastPosts = $listPosts->getLastsPosts();
             $comparePassword = password_verify($_REQUEST['password'], $user->getPassword());
+
+            //si les mots de passe correspondent
             if ($comparePassword == true) :
                 $_SESSION['id'] = $user->getId();
+                $_SESSION['role'] = $user->getRole();
 
-                $view = new View('Tableau de bord');
-                $view->render('view/dashboardView.php', ['lastPosts' => $lastPosts, 'user' => $user]);
+            switch (true)
+            {
+                /** Role : Administrateur && Statut : actif */
+                case ($user->getRole() == 1 && $user->getState() == 2) :
+                    $view = new View('Tableau de bord');
+                    $view->render('view/dashboardAdminView.php', ['user' => $user]);
+                    break;
+
+                /** Role : Administrateur && Statut : inactif */
+                case ($user->getRole() == 1 && $user->getState() != 2) :
+                    $message = 'Vous n\'avez pas les autorisations pour accéder à cette page.';
+                    throw new ExceptionOutput($message);
+                    break;
+
+                /** Role : Utilisateur && Statut : en attente de validation */
+                case ($user->getRole() == 2 && $user->getState() == 0) :
+                    $message = 'Vous n\'avez pas validé votre inscription, un email vous a été envoyé avec un lien vous permettant de le faire ! (vérifiez vos spams) ';
+                    throw new ExceptionOutput($message);
+                    break;
+
+                /** Role : Utilisateur && Statut : en attente de validation d'un modérateur */
+                case ($user->getRole() == 2 && $user->getState() == 1) :
+                    $message = 'Vous n\'avez pas encore été validé par un modérateur, merci de patienter cela devrait se faire d\'ici 24 heures.';
+                    throw new ExceptionOutput($message);
+                    break;
+
+                /** Role : Utilisateur && Statut : actif */
+                case ($user->getRole() == 2 && $user->getState() == 2) :
+                    $commentManager = new CommentManager();
+                    $categoryManager = new CategoryManager();
+                    foreach ($lastPosts as $post) :
+                        $commentManager->fillCommentInPost($post);
+                        $categoryManager->fillCategoryInPost($post);
+                    endforeach;
+
+                    $view = new View('Tableau de bord');
+                    $view->render('view/dashboardView.php', ['lastPosts' => $lastPosts, 'user' => $user]);
+                    break;
+
+                /** Role : Utilisateur && Statut : supprimé */
+                case ($user->getRole() == 2 && $user->getState() == 3) :
+                    $message = 'Votre compte n\'existe plus/pas.';
+                    throw new ExceptionOutput($message);
+                    break;
+
+                /** Statut : inconnu */
+                case ($user->getState() > 3) :
+                    $message = 'Vos informations de connexion ne correspondent pas.';
+                    throw new ExceptionOutput($message);
+                    break;
+
+                /** Role : inconnu */
+                case ($user->getRole() < 1 || $user->getRole() > 2) :
+                    $message = 'Vos informations de connexion ne correspondent pas.';
+                    throw new ExceptionOutput($message);
+                    break;
+
+                case 'default':
+                    $this->afficherIndex();
+                    break;
+            }
+
+            /** si les mots de passe ne correspondent pas */
             else:
                 $message = 'Le mot de passe ne correspond pas avec celui utilisé à l\'inscription';
 
                 $view = new View('Connexion');
                 $view->render('view/loginView.php', ['message' => $message]);
             endif;
+
+        /** si l'objet user est vide */
         else:
-            $message = 'Le mot de passe ne correspond pas avec celui utilisé à l\'inscription';
+            $message = 'Vos informations de connexion ne correspondent pas.';
 
             $view = new View('Connexion');
             $view->render('view/loginView.php', ['message' => $message]);
         endif;
     }
+
+    public function getDashboardUser()
+    {
+        $userManager = new UserManager();
+        $user = $userManager->getUserBySessionId();
+        $listPosts = new PostManager();
+        $lastPosts = $listPosts->getLastsPosts();
+        $commentManager = new CommentManager();
+        $categoryManager = new CategoryManager();
+        foreach ($lastPosts as $post) :
+            $commentManager->fillCommentInPost($post);
+            $categoryManager->fillCategoryInPost($post);
+        endforeach;
+
+        $view = new View('Tableau de bord');
+        $view->render('view/dashboardView.php', ['lastPosts' => $lastPosts, 'user' => $user]);
+    }
+
+    public function getBackendDashboard()
+    {
+        $userManager = new UserManager();
+        $user = $userManager->getUserBySessionId();
+
+        $view = new View('Tableau de bord');
+        $view->render('view/dashboardAdminView.php', ['user' => $user]);
+    }
+
     public function logout()
     {
         unset($_SESSION['id']);
+        unset($_SESSION['role']);
         session_destroy();
 
         $this->afficherIndex();
@@ -181,16 +277,13 @@ class ControllerFront
         $listPosts = $postManager->getPosts($pageCourante);
 
         $commentManager = new CommentManager();
+        $categoryManager = new CategoryManager();
         foreach ($listPosts as $post) {
             $commentManager->fillCommentInPost($post);
+            $categoryManager->fillCategoryInPost($post);
         }
 
         $nbPages = $postManager->countPages();
-
-        $categoryManager = new CategoryManager();
-        foreach ($listPosts as $post) {
-            $categoryManager->fillCategoryInPost($post);
-        }
 
         $view = new View('Liste des articles');
         $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
@@ -216,7 +309,7 @@ class ControllerFront
         $erreurLine = $outputException->getLine();
         $erreurFile = $outputException->getFile();
 
-        $view = new View('Erreur Output');
+        $view = new View('Erreur');
         $view->render('view/errorView.php', ['erreurMessage' => $erreurMessage, 'erreurCode' => $erreurCode, 'erreurLine' => $erreurLine, 'erreurFile' => $erreurFile]);
     }
 
