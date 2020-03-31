@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 12 mars 2020 à 20:45
+-- Généré le :  mar. 31 mars 2020 à 11:59
 -- Version du serveur :  5.7.19
 -- Version de PHP :  7.1.9
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `oc_projets_n5`
 --
+CREATE DATABASE IF NOT EXISTS `oc_projets_n5` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `oc_projets_n5`;
 
 -- --------------------------------------------------------
 
@@ -55,7 +57,22 @@ CREATE TABLE IF NOT EXISTS `comments` (
   KEY `state` (`state`),
   KEY `lien_post_comment` (`id_post`),
   KEY `lien_comment_author` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `favorites_posts`
+--
+
+DROP TABLE IF EXISTS `favorites_posts`;
+CREATE TABLE IF NOT EXISTS `favorites_posts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL,
+  `id_post` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `lien_favorites_posts_author` (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -99,7 +116,34 @@ CREATE TABLE IF NOT EXISTS `posts` (
   KEY `id_category` (`id_category`),
   KEY `created_at` (`created_at`),
   KEY `lien_author_posts` (`author`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Doublure de structure pour la vue `posts_comments_view`
+-- (Voir ci-dessous la vue réelle)
+--
+DROP VIEW IF EXISTS `posts_comments_view`;
+CREATE TABLE IF NOT EXISTS `posts_comments_view` (
+`id` int(10)
+,`title` varchar(155)
+,`kicker` tinytext
+,`pseudo` varchar(155)
+,`content` longtext
+,`url` varchar(155)
+,`created_at` date
+,`modified_at` datetime
+,`state` tinyint(1)
+,`category` varchar(155)
+,`category_id` int(10)
+,`comments_id_post` int(10)
+,`comments_user` int(10)
+,`comments_created_at` datetime
+,`comments_title` varchar(155)
+,`comments_content` text
+,`comments_state` tinyint(4)
+);
 
 -- --------------------------------------------------------
 
@@ -116,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `tokens` (
   PRIMARY KEY (`id_token`),
   UNIQUE KEY `id_user` (`id_user`),
   UNIQUE KEY `token` (`token`,`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -139,7 +183,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `email` (`email`),
   KEY `state` (`state`),
   KEY `pseudo` (`pseudo`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la vue `posts_comments_view`
+--
+DROP TABLE IF EXISTS `posts_comments_view`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `posts_comments_view`  AS  select `posts`.`id` AS `id`,`posts`.`title` AS `title`,`posts`.`kicker` AS `kicker`,`users`.`pseudo` AS `pseudo`,`posts`.`content` AS `content`,`posts`.`url` AS `url`,`posts`.`created_at` AS `created_at`,`posts`.`modified_at` AS `modified_at`,`posts`.`state` AS `state`,`categories`.`category` AS `category`,`categories`.`id` AS `category_id`,`comments`.`id_post` AS `comments_id_post`,`comments`.`id_user` AS `comments_user`,`comments`.`created_at` AS `comments_created_at`,`comments`.`title` AS `comments_title`,`comments`.`content` AS `comments_content`,`comments`.`state` AS `comments_state` from (((`posts` join `categories` on((`posts`.`id_category` = `categories`.`id`))) join `users` on((`posts`.`author` = `users`.`id`))) left join `comments` on((`posts`.`id` = `comments`.`id_post`))) order by `posts`.`created_at` ;
 
 --
 -- Contraintes pour les tables déchargées
@@ -151,6 +204,12 @@ CREATE TABLE IF NOT EXISTS `users` (
 ALTER TABLE `comments`
   ADD CONSTRAINT `lien_comment_author` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `lien_post_comment` FOREIGN KEY (`id_post`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `favorites_posts`
+--
+ALTER TABLE `favorites_posts`
+  ADD CONSTRAINT `lien_favorites_posts_author` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `posts`

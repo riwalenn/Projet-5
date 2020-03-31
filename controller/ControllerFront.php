@@ -14,12 +14,14 @@ class ControllerFront
 
     // --------- Connexion ---------
 
+    //Affichage page du formulaire de login
     public function afficherLoginForm()
     {
         $view = new View('Connexion');
         $view->render('view/loginView.php');
     }
 
+    //Fonction de connexion
     public function login()
     {
         $email = $_REQUEST['email'];
@@ -29,7 +31,7 @@ class ControllerFront
 
         //si l'objet user n'est pas vide
         if (!empty($user)) :
-            $lastPosts = $listPosts->getLastsPosts();
+            $lastPosts = $listPosts->getPosts(1);
             $comparePassword = password_verify($_REQUEST['password'], $user->getPassword());
 
             //si les mots de passe correspondent
@@ -40,31 +42,31 @@ class ControllerFront
             switch (true)
             {
                 /** Role : Administrateur && Statut : actif */
-                case ($user->getRole() == 1 && $user->getState() == 2) :
+                case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::ACTIVE) :
                     $view = new View('Tableau de bord');
                     $view->render('view/dashboardAdminView.php', ['user' => $user]);
                     break;
 
                 /** Role : Administrateur && Statut : inactif */
-                case ($user->getRole() == 1 && $user->getState() != 2) :
+                case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() != Constantes::ACTIVE) :
                     $message = 'Vous n\'avez pas les autorisations pour accéder à cette page.';
                     throw new ExceptionOutput($message);
                     break;
 
                 /** Role : Utilisateur && Statut : en attente de validation */
-                case ($user->getRole() == 2 && $user->getState() == 0) :
+                case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == 0) :
                     $message = 'Vous n\'avez pas validé votre inscription, un email vous a été envoyé avec un lien vous permettant de le faire ! (vérifiez vos spams) ';
                     throw new ExceptionOutput($message);
                     break;
 
                 /** Role : Utilisateur && Statut : en attente de validation d'un modérateur */
-                case ($user->getRole() == 2 && $user->getState() == 1) :
+                case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == 1) :
                     $message = 'Vous n\'avez pas encore été validé par un modérateur, merci de patienter cela devrait se faire d\'ici 24 heures.';
                     throw new ExceptionOutput($message);
                     break;
 
                 /** Role : Utilisateur && Statut : actif */
-                case ($user->getRole() == 2 && $user->getState() == 2) :
+                case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::ACTIVE) :
                     $commentManager = new CommentManager();
                     $categoryManager = new CategoryManager();
                     foreach ($lastPosts as $post) :
@@ -77,7 +79,7 @@ class ControllerFront
                     break;
 
                 /** Role : Utilisateur && Statut : supprimé */
-                case ($user->getRole() == 2 && $user->getState() == 3) :
+                case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == 3) :
                     $message = 'Votre compte n\'existe plus/pas.';
                     throw new ExceptionOutput($message);
                     break;
@@ -116,12 +118,13 @@ class ControllerFront
         endif;
     }
 
+    //Affichage le tableau de bord de l'utilisateur
     public function getDashboardUser()
     {
         $userManager = new UserManager();
         $user = $userManager->getUserBySessionId();
         $listPosts = new PostManager();
-        $lastPosts = $listPosts->getLastsPosts();
+        $lastPosts = $listPosts->getPosts(1);
         $commentManager = new CommentManager();
         $categoryManager = new CategoryManager();
         foreach ($lastPosts as $post) :
@@ -133,6 +136,7 @@ class ControllerFront
         $view->render('view/dashboardView.php', ['lastPosts' => $lastPosts, 'user' => $user]);
     }
 
+    //Affiche le backend Admin
     public function getBackendDashboard()
     {
         $userManager = new UserManager();
@@ -142,6 +146,7 @@ class ControllerFront
         $view->render('view/dashboardAdminView.php', ['user' => $user]);
     }
 
+    //Fonction de déconnection
     public function logout()
     {
         unset($_SESSION['id']);
@@ -152,7 +157,7 @@ class ControllerFront
     }
 
     // --------- Inscription ---------
-
+    //Affichage de la page de formulaire d'une nouvelle inscription
     public function afficherNewLoginForm()
     {
         $userMessages = new User();
@@ -163,10 +168,11 @@ class ControllerFront
         $view->render('view/registrationView.php', ['messagePassword' => $messagePassword, 'messagePseudo' => $messagePseudo]);
     }
 
+    //Fonction d'inscription
     public function inscription()
     {
         $user = new User($_REQUEST);
-        $user->setRole(2);
+        $user->setRole(Constantes::ROLE_USER);
         $user->setState(0);
         $userManager = new UserManager();
         $userManager->registration($user);
@@ -175,6 +181,7 @@ class ControllerFront
         $this->afficherIndex();
     }
 
+    //Fonction de confirmation de l'inscription via token
     public function confirmationByToken()
     {
         $token = $_REQUEST['token'];
@@ -188,13 +195,14 @@ class ControllerFront
     }
 
     // --------- Oubli password ---------
-
+    //Affichage de la page de formulaire d'oubli de mot de passe
     public function afficherMailForm()
     {
         $view = new View('Formulaire');
         $view->render('view/mailFormView.php');
     }
 
+    //Fonction d'envoi de mail pour l'oubli du mot de passe
     public function envoyerEmailForPassword()
     {
         $user = new User($_REQUEST);
@@ -208,6 +216,7 @@ class ControllerFront
         $this->afficherIndex();
     }
 
+    //Affichage du formulaire pour modifier le mot de passe
     public function afficherPasswordForm()
     {
         $token = $_REQUEST['tokenForPassword'];
@@ -231,6 +240,7 @@ class ControllerFront
 
     }
 
+    //Fonction de modification du mot de passe
     public function changerPassword()
     {
         $user = new User($_REQUEST);
@@ -243,8 +253,8 @@ class ControllerFront
         $view->render('view/loginView.php', ['confirmationMessage' => $confirmationMessage]);
     }
 
-    // --------- Recherche ---------
-
+    // --------- Articles ---------
+    //Affichage de la page des résultats de recherche des articles
     public function afficherResultatRecherche()
     {
         $pageCourante = $_REQUEST['page'] ?? 1;
@@ -268,8 +278,7 @@ class ControllerFront
         $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante, 'submitRecherche' => $submitRecherche]);
     }
 
-    // --------- Articles ---------
-
+    //Affichage de la page des articles
     public function afficherListeArticles()
     {
         $pageCourante = $_REQUEST['page'] ?? 1;

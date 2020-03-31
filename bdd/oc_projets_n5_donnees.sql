@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 02 fév. 2020 à 17:38
+-- Généré le :  mar. 31 mars 2020 à 12:01
 -- Version du serveur :  5.7.19
 -- Version de PHP :  7.1.9
 
@@ -27,32 +27,43 @@ SET time_zone = "+00:00";
 --
 
 INSERT INTO `categories` (`id`, `category`) VALUES
-(1, 'graphismes, design'),
-(2, 'prototypage'),
-(3, 'landing page'),
+(11, 'administratif'),
+(10, 'applications mobiles'),
+(16, 'autres'),
 (4, 'e-commerce'),
-(5, 'social media'),
 (6, 'emailing'),
 (7, 'gestion de projet'),
-(8, 'vente'),
-(10, 'applications mobiles'),
-(11, 'administratif'),
-(12, 'ressources humaines'),
-(13, 'marketing, analytique'),
+(1, 'graphismes, design'),
 (14, 'growth hacking'),
+(3, 'landing page'),
+(13, 'marketing, analytique'),
 (15, 'médias'),
-(16, 'autres'),
-(17, 'wordpress'),
 (18, 'php & sql'),
-(99, 'sécurité');
+(2, 'prototypage'),
+(12, 'ressources humaines'),
+(100, 'Sans catégorie'),
+(99, 'sécurité'),
+(5, 'social media'),
+(8, 'vente'),
+(17, 'wordpress');
 
 --
 -- Déchargement des données de la table `comments`
 --
 
 INSERT INTO `comments` (`id`, `id_post`, `id_user`, `created_at`, `title`, `content`, `state`) VALUES
-(5, 1, 1, '2020-01-27 17:25:00', 'nop', 'retest', 1),
-(4, 1, 2, '2020-01-26 16:24:00', 'TinEye ?', 'test', 1);
+(1, 7, 2, '2020-03-26 14:15:00', 'Test', 'cxvbgrdtbb rdstgb rt dfsgdbt r drstgert ', 1),
+(2, 7, 1, '2020-03-26 15:07:00', 'Réponse test', 'jdslqfjk kdhk hisuh fqisdhf ihi hqhdsh', 1),
+(3, 7, 1, '2020-03-26 08:00:00', 'test etat 0', 'dq fs ef', 0),
+(4, 7, 1, '2020-03-26 13:12:00', 'test état 2', 'dsqfdsfdsf', 2),
+(5, 7, 1, NULL, 'test état 3', 'djsfjqdsfjdsf', 3);
+
+--
+-- Déchargement des données de la table `favorites_posts`
+--
+
+INSERT INTO `favorites_posts` (`id`, `id_user`, `id_post`) VALUES
+(1, 1, 7);
 
 --
 -- Déchargement des données de la table `portfolio`
@@ -82,12 +93,20 @@ INSERT INTO `posts` (`id`, `title`, `kicker`, `author`, `content`, `url`, `creat
 (7, 'Le mot de passe', 'Le mot de passe est un élément important de notre vie quotidienne, que ce soit de l\'ordre du privé ou du professionnel.', 1, 'Après 20 ans d\'expérience en informatique, je peux affirmer une chose. Les personnes ne prennent pas assez sérieusement la sécurité de leurs mots de passe.<br>\r\nCréer un mot de passe à partir d\'éléments de votre vie privée revient à laisser la porte de votre maison grande ouverte avec votre carte bleue posée sur la table.<br>\r\nÇa n\'a aucun sens de laisser sa porte ouverte comme ça n\'en a pas d\'avoir un mot de passe facile à craquer. Et pourtant je dirais que plus de 90% des utilisateurs ont un mot de passe facile à craquer.<br>\r\nVoici donc quelques conseils pour vous aider à mieux sécuriser votre vie dématérialisée. <a href=\"https://www.ssi.gouv.fr/guide/mot-de-passe/\">Quelques conseils de l\'ANSSI</a> :<br>\r\n- Utilisez un mot de passe unique pour chaque service. En particulier, l’utilisation d’un même mot de passe entre sa messagerie professionnelle et sa messagerie personnelle est impérativement à proscrire ;<br>\r\n- Choisissez un mot de passe qui n’a pas de lien avec vous (mot de passe composé d’un nom de société, d’une date de naissance, etc.) ;<br>\r\n- Ne demandez jamais à un tiers de générer pour vous un mot de passe ;<br>\r\n- Modifiez systématiquement et au plus tôt les mots de passe par défaut lorsque les systèmes en contiennent ;<br>\r\n-Renouvelez vos mots de passe avec une fréquence raisonnable. Tous les 90 jours est un bon compromis pour les systèmes contenant des données sensibles ;<br>\r\n- Ne stockez pas les mots de passe dans un fichier sur un poste informatique particulièrement exposé au risque (exemple : en ligne sur Internet), encore moins sur un papier facilement accessible ;<br>\r\n- Ne vous envoyez pas vos propres mots de passe sur votre messagerie personnelle ;<br>\r\n- Configurez les logiciels, y compris votre navigateur web, pour qu’ils ne se « souviennent » pas des mots de passe choisis.<br>\r\n\r\nJe vous conseille soit d\'avoir ce que l\'on appelle un coffre-fort (qui gérera tous vos mots de passe au même endroit et sécurisés par un seul mot de passe - exemple : LastPass), soit de faire des phrases (si le site vous le permet) qui n\'ont pas de sens avec bien entendu, capitales, caractères spéciaux et chiffres dedans et des espaces si cela est possible => par exemple (non ce n\'est pas mon mot de passe) : Ilnepl3utJ@maisSurP3rpignan66<br>\r\nAttention à ne pas trop vouloir en faire, par exemple à trop vouloir remplacer vos lettres, cela pourrait avoir l\'effet inverse. Plus la phrase sera longue et mieux ce sera (malheureusement beaucoup de sites n\'autorisent pas de longs mots de passe) et une phrase non sens aura plus de difficulté à être craquée qu\'un mot de passe de 6 caractères (même si se sont des caractères spéciaux !). Pourquoi ?<br>\r\nPlus le temps passe et plus les ordinateurs sont performants et plus les hackers ont de facilitées à craquer des mots de passe de plus en plus longs, en même temps si vous mettez des informations personnelles que l\'on peut retrouver sur votre facebook, tweeter, instagram, snap...<br>\r\nVous devez savoir que les hackers disposent de ce que l\'on appelle d\'un dictionnaire des mots de passe contenant des millions de mots et ils leurs suffit de rentrer ce dico dans l\'algorithme de l\'ordinateur pour vérifier si votre mot de passe à vous en fait parti (ce qui est un gain de temps pour eux), et ce dictionnaire s\'étoffe jour après jour.<br>\r\nVous avez des sites qui vous permettent de vérifier de la complexité de votre mot de passe : <br>\r\n- <a href=\"https://inforisque.fr/fiches-pratiques/tester-mot-de-passe.php\">Inforisque</a>,<br>\r\n- <a href=\"https://howsecureismypassword.net/\">How secure is my password</a>,<br>\r\n- <a href=\"https://www.undernews.fr/nos-services/tester-la-force-de-votre-mot-de-passe\">Undernews</a>,<br>\r\n- <a href=\"https://pwdtest.bee-secure.lu/\">BeeSecure</a>(clairement mon préféré car il ne vous demande pas votre mot de passe).<br>\r\n<br>\r\nPour résumer je dirais, n\'utilisez pas le même mot de passe un peu partout, vous n\'avez plus aucune excuse avec l\'utilisation des coffres fort (et si les coffres fort ne vous vont pas il existe des clés usb de sécurité), et n\'oubliez pas d\'avoir un mot de passe long et diversifié !', '', '2020-02-02', '2020-02-02 16:20:00', 99, 1);
 
 --
+-- Déchargement des données de la table `tokens`
+--
+
+INSERT INTO `tokens` (`id_token`, `token`, `id_user`, `expiration_token`) VALUES
+(2, 'aa5ab2910107e9428cbfa0cbd161d9c722400972e1e2435865babef36f4932d2', 4, '2020-01-13 15:04:47');
+
+--
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`id`, `pseudo`, `role`, `email`, `password`, `date_inscription`, `state`) VALUES
-(1, 'Administrateur', 1, 'riwalenn@gmail.com', '', '2019-12-15 00:00:00', 1),
-(2, 'Morgane', 2, 'usved66@gmail.com', '', '2020-01-01 00:00:00', 1);
+INSERT INTO `users` (`id`, `pseudo`, `role`, `email`, `password`, `date_modification`, `date_inscription`, `cgu`, `state`) VALUES
+(1, 'Riwalenn', 1, 'riwalenn@gmail.com', '$2y$10$.OHr3sDgWEl584HxBfFCyOdDtulIT.m1.utSA3otTjGheuC518Ssy', '2020-03-25 10:01:35', '2019-12-01 16:37:47', 1, 2),
+(2, 'Anonyme', 2, 'no-reply@riwalennbas.com', '$2y$10$sT/NGEIrb8z5XwCvPv9NpeeF3fuge7Vyyf4AWIEQPr7ZWmuJIS2gC', '2019-12-01 00:00:00', '2019-12-01 21:48:31', 1, 2),
+(4, 'test', 2, 'test@gmail.com', '', '2019-12-02 15:04:47', '2019-12-01 15:04:47', 1, 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
