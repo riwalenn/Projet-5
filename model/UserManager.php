@@ -112,6 +112,19 @@ class UserManager extends Connexion
         ));
     }
 
+    //modification des données par l'utilisateur via dashboard
+    public function userDataModification(User $user)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('UPDATE `users` SET `pseudo` = :pseudo, `email` = :email, `password` = :password, `date_modification` = NOW() WHERE `id` = :id');
+        $statement->execute(array(
+            'id' => $user->getId(),
+            'pseudo' => htmlspecialchars($user->getPseudo()),
+            'email' => $user->getEmail(),
+            'password' => password_hash($user->getPassword(), PASSWORD_DEFAULT),
+        ));
+    }
+
     /** CONNEXION - DECONNEXION */
     //Connexion
     /**

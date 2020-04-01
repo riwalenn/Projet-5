@@ -121,33 +121,6 @@ CREATE TABLE IF NOT EXISTS `posts` (
 -- --------------------------------------------------------
 
 --
--- Doublure de structure pour la vue `posts_comments_view`
--- (Voir ci-dessous la vue réelle)
---
-DROP VIEW IF EXISTS `posts_comments_view`;
-CREATE TABLE IF NOT EXISTS `posts_comments_view` (
-`id` int(10)
-,`title` varchar(155)
-,`kicker` tinytext
-,`pseudo` varchar(155)
-,`content` longtext
-,`url` varchar(155)
-,`created_at` date
-,`modified_at` datetime
-,`state` tinyint(1)
-,`category` varchar(155)
-,`category_id` int(10)
-,`comments_id_post` int(10)
-,`comments_user` int(10)
-,`comments_created_at` datetime
-,`comments_title` varchar(155)
-,`comments_content` text
-,`comments_state` tinyint(4)
-);
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `tokens`
 --
 
@@ -186,13 +159,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
-
---
--- Structure de la vue `posts_comments_view`
---
-DROP TABLE IF EXISTS `posts_comments_view`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `posts_comments_view`  AS  select `posts`.`id` AS `id`,`posts`.`title` AS `title`,`posts`.`kicker` AS `kicker`,`users`.`pseudo` AS `pseudo`,`posts`.`content` AS `content`,`posts`.`url` AS `url`,`posts`.`created_at` AS `created_at`,`posts`.`modified_at` AS `modified_at`,`posts`.`state` AS `state`,`categories`.`category` AS `category`,`categories`.`id` AS `category_id`,`comments`.`id_post` AS `comments_id_post`,`comments`.`id_user` AS `comments_user`,`comments`.`created_at` AS `comments_created_at`,`comments`.`title` AS `comments_title`,`comments`.`content` AS `comments_content`,`comments`.`state` AS `comments_state` from (((`posts` join `categories` on((`posts`.`id_category` = `categories`.`id`))) join `users` on((`posts`.`author` = `users`.`id`))) left join `comments` on((`posts`.`id` = `comments`.`id_post`))) order by `posts`.`created_at` ;
 
 --
 -- Contraintes pour les tables déchargées
