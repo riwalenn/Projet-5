@@ -32,6 +32,10 @@ try
                 $controller->getBackendDashboard();
                 break;
 
+            case 'modifDataUser':
+                $controller->modificationDataByUser();
+                break;
+
             case 'logoutUser' :
                 $controller->logout();
                 break;

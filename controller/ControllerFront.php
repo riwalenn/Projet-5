@@ -18,7 +18,7 @@ class ControllerFront
     public function afficherLoginForm()
     {
         $view = new View('Connexion');
-        $view->render('view/loginView.php');
+        $view->render('view/formLoginView.php');
     }
 
     //Fonction de connexion
@@ -106,7 +106,7 @@ class ControllerFront
                 $message = 'Le mot de passe ne correspond pas avec celui utilisé à l\'inscription';
 
                 $view = new View('Connexion');
-                $view->render('view/loginView.php', ['message' => $message]);
+                $view->render('view/formLoginView.php', ['message' => $message]);
             endif;
 
         /** si l'objet user est vide */
@@ -114,7 +114,7 @@ class ControllerFront
             $message = 'Vos informations de connexion ne correspondent pas.';
 
             $view = new View('Connexion');
-            $view->render('view/loginView.php', ['message' => $message]);
+            $view->render('view/formLoginView.php', ['message' => $message]);
         endif;
     }
 
@@ -146,6 +146,25 @@ class ControllerFront
         $view->render('view/dashboardAdminView.php', ['user' => $user]);
     }
 
+    public function modificationDataByUser()
+    {
+        if (!empty($_SESSION['id'] == $_REQUEST['id'])) :
+            $user = new User($_REQUEST);
+            $userManager = new UserManager();
+            $userBdd = $userManager->getUserBySessionId();
+            $comparePassword = password_verify($_REQUEST['password'], $userBdd->getPassword());
+
+            if ($comparePassword == true) :
+                $userManager->userDataModification($user);
+                $this->getDashboardUser();
+            endif;
+            $message = 'Votre mot de passe ne correspond pas';
+            throw new ExceptionOutput($message);
+            endif;
+        $message = 'Votre identification de session ne correspond pas !';
+        throw new ExceptionOutput($message);
+    }
+
     //Fonction de déconnection
     public function logout()
     {
@@ -165,7 +184,7 @@ class ControllerFront
         $messagePseudo = $userMessages->helpPseudo();
 
         $view = new View('Inscription');
-        $view->render('view/registrationView.php', ['messagePassword' => $messagePassword, 'messagePseudo' => $messagePseudo]);
+        $view->render('view/formRegistrationView.php', ['messagePassword' => $messagePassword, 'messagePseudo' => $messagePseudo]);
     }
 
     //Fonction d'inscription
@@ -199,7 +218,7 @@ class ControllerFront
     public function afficherMailForm()
     {
         $view = new View('Formulaire');
-        $view->render('view/mailFormView.php');
+        $view->render('view/formMailView.php');
     }
 
     //Fonction d'envoi de mail pour l'oubli du mot de passe
@@ -231,11 +250,11 @@ class ControllerFront
             $messageError = "Le token n'existe plus !";
 
             $view = new View('Formulaire');
-            $view->render('view/passwordFormView.php', ['messagePassword' => $messagePassword, 'token' => $token, 'messageError' => $messageError]);
+            $view->render('view/formPasswordView.php', ['messagePassword' => $messagePassword, 'token' => $token, 'messageError' => $messageError]);
 
         else:
             $view = new View('Formulaire');
-            $view->render('view/passwordFormView.php', ['messagePassword' => $messagePassword, 'token' => $token]);
+            $view->render('view/formPasswordView.php', ['messagePassword' => $messagePassword, 'token' => $token]);
         endif;
 
     }
@@ -250,7 +269,7 @@ class ControllerFront
 
         $confirmationMessage = "Votre mot de passe a bien été modifié." ?? "";
         $view = new View('Connexion');
-        $view->render('view/loginView.php', ['confirmationMessage' => $confirmationMessage]);
+        $view->render('view/formLoginView.php', ['confirmationMessage' => $confirmationMessage]);
     }
 
     // --------- Articles ---------
