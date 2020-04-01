@@ -81,7 +81,7 @@ if ((isset($_SESSION['id']))) : ?>
                                         <span class="input-group-text"><i class="fas fa-pen" data-toggle="tooltip" data-placement="right" title="Cliquez ici pour avoir plus d'infos !"></i></span>
                                     </div>
                                 </div>
-                                <p>Si vous avez oublié votre mot de passe merci d'utiliser le <a href="index.php?action=forgotPassword">formulaire dédié</a>.<br> Le champ ci-dessus n'étant utilisé que pour valider vos informations.</p>
+                                <p>Si vous avez oublié votre mot de passe ou que vous souhaitez le changer<br> merci d'utiliser le <a href="index.php?action=forgotPassword">formulaire dédié</a>.<br> Le champ ci-dessus n'étant utilisé que pour valider vos informations.</p>
                                 <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="connexion">Modifier mes données</button>
                             </form>
                         </div>
