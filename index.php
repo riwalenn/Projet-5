@@ -32,6 +32,10 @@ try
                 $controller->getBackendDashboard();
                 break;
 
+            case 'deleteFavorite' :
+                $controller->deleteFavoritePost();
+                break;
+
             case 'modifDataUser':
                 $controller->modificationDataByUser();
                 break;

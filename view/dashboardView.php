@@ -8,8 +8,7 @@ if ((isset($_SESSION['id']))) : ?>
                         <img src="../ressources/img/dashboard/profil.jpg" class="img_dashboard"/>
                         <div class="card-header">
                             <blockquote class="blockquote mb-0">
-                            <footer class="blockquote-footer"><u>Date d'inscription :</u> <?= $user->getDate_inscription() ?></footer>
-                            <footer class="blockquote-footer"><u>Dernière connexion :</u> <?= $user->getDate_modification() ?></footer>
+                            <footer class="blockquote-footer">Dernière connexion : <?= $user->getDate_modification() ?></footer>
                             </blockquote>
                         </div>
                         <div class="card-body articles-caption">
@@ -17,6 +16,7 @@ if ((isset($_SESSION['id']))) : ?>
                             <h5>Bonjour <b><?= $user->getPseudo() ?></b></h5>
                             <i class="fas fa-ninja"></i>
                             <p class="text-muted"><b>Votre email :</b> <?= $user->getEmail() ?></p>
+                            <p class="text-muted"><b>Date d'inscription :</b> <?= $user->getDate_inscription() ?></p>
                             <p class="text-muted"><a href="index.php?action=logoutUser"><i class="fas fa-sign-out-alt"></i> Deconnexion</a></p>
                         </div>
                         <div class="card-footer">
@@ -24,15 +24,55 @@ if ((isset($_SESSION['id']))) : ?>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6 card" id="articles_Dash">
-                    <img src="../ressources/img/dashboard/articles.jpg" class="img_dashboard"/>
-                    <div class="articles-caption">
-                        <h4>3 derniers articles parus</h4>
-                        <?php foreach ($lastPosts as $post) : ?>
-                            <h5><b><a class="articles-link" data-toggle="modal" href="#articlesModal<?= $post->getId() ?>"><?= $post->getTitle() ?></a></b></h5>
-                            <p class="text-muted"><?= $post->getKicker() ?></p>
-                        <?php endforeach; ?>
-                        <a href="index.php?action=articlesListe&page=1">Voir les autres articles.</a>
+                <div class="card-deck">
+                    <div class="card" id="profil_Dash">
+                        <img src="../ressources/img/dashboard/favorite.jpg" class="img_dashboard"/>
+                        <div class="card-header">
+                            <blockquote class="blockquote mb-0">
+                                <footer class="blockquote-footer">Favoris (triés par ordre de date décroissant)</footer>
+                            </blockquote>
+                        </div>
+                        <div class="card-body articles-caption">
+                            <h4>Mes 7 articles favoris</h4>
+                            <table width="100%">
+                                <thead><tr><th></th><th></th> </tr></thead>
+                                <tbody>
+                            <?php foreach ($favoritesPosts as $post) : ?>
+                                <form action="index.php?action=deleteFavorite" method="post">
+                                    <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
+                                        <tr>
+                                            <td><p class="favorites-posts-links"><a class="articles-link" data-toggle="modal" href="#articlesModal<?= $post->getId() ?>"><i class="fas fa-star" style="color: #fed136"></i> <?= $post->getTitle() ?></a></p></td>
+                                            <td><button class="btn btn-link" aria-label="supprimer" type="submit" value="deletion"><i class="far fa-trash-alt" style="color: red;"></i></button></td>
+                                        </tr>
+                                </form>
+                            <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted"><a class="articles-link" data-toggle="modal" href="index.php?action=articlesListe&page=1" ><i class="fas fa-eye"></i> Voir la liste des articles disponibles</a></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-deck">
+                    <div class="card" id="profil_Dash">
+                        <img src="../ressources/img/dashboard/articles.jpg" class="img_dashboard"/>
+                        <div class="card-header">
+                            <blockquote class="blockquote mb-0">
+                            <footer class="blockquote-footer">Articles (triés par ordre de date décroissant)</footer>
+                            </blockquote>
+                        </div>
+                        <div class="card-body articles-caption">
+                            <h4>3 derniers articles parus</h4>
+                            <?php foreach ($lastPosts as $post) : ?>
+                                <h5><b><a class="articles-link" data-toggle="modal" href="#articlesModal<?= $post->getId() ?>"><?= $post->getTitle() ?></a></b></h5>
+                                <footer class="blockquote-footer">Modifié le : <?= $post->getModified_at() ?></footer>
+                                <p class="text-muted"><?= substr($post->getKicker(), 0, 50) . "..." ?></p>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted"><a class="articles-link" data-toggle="modal" href="index.php?action=articlesListe&page=1" ><i class="fas fa-eye"></i> Voir la liste des articles disponibles</a></small>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -82,7 +122,7 @@ if ((isset($_SESSION['id']))) : ?>
                                     </div>
                                 </div>
                                 <p>Si vous avez oublié votre mot de passe ou que vous souhaitez le changer<br> merci d'utiliser le <a href="index.php?action=forgotPassword">formulaire dédié</a>.<br> Le champ ci-dessus n'étant utilisé que pour valider vos informations.</p>
-                                <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="connexion">Modifier mes données</button>
+                                <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="Modification">Modifier mes données</button>
                             </form>
                         </div>
                     </div>
@@ -92,9 +132,71 @@ if ((isset($_SESSION['id']))) : ?>
         </div>
     </div>
 </div>
-    <!-- Modal -->
+    <!-- Modal 3 derniers posts -->
     <?php
     foreach ($lastPosts as $post) {
+        ?>
+        <div class="articles-modal modal fade" id="articlesModal<?= $post->getId() ?>" tabindex="-1" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-dismiss="modal">
+                        <div class="lr">
+                            <div class="rl"></div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto">
+                                <div class="modal-body">
+                                    <!-- Project Details Go Here -->
+                                    <h2 class="text-uppercase"><?= $post->getTitle() ?> <i class="far fa-star"></i><i class="fas fa-star" style="color: #fed136"></i></h2>
+                                    <p class="item-intro text-muted"><?= $post->getKicker() ?></p>
+                                    <cite title="Auteur" class="item-intro text-muted">Créé par <?= $post->getPseudo() ?> -
+                                        le <?= $post->getCreated_at() ?> / Modifié le <?= $post->getModified_at() ?></cite>
+                                    <?= View::generatePictureTag($post) ?>
+                                    <p><?= $post->getContent() ?></p>
+                                    <button class="btn btn-primary" data-dismiss="modal" type="button">
+                                        <i class="fas fa-times"></i>
+                                        Close Article
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto">
+                                <div class="modal-body">
+                                    <h4>Commentaires</h4>
+                                    <hr>
+                                    <?php
+                                    if (empty($post->getComments())) :
+                                        ?>
+                                        <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire
+                                            !</h6>
+                                    <?php
+                                    endif;
+                                    foreach ($post->getComments() as $comment) {
+                                        ?>
+                                        <h5 class="text-uppercase"><?= $comment->getTitle() ?></h5>
+                                        <cite title="Auteur" class="item-intro text-muted">Créé
+                                            par <?= $comment->getPseudo() ?> -
+                                            le <?= $comment->getCreated_at() ?></cite>
+                                        <p><?= $comment->getContent() ?></p>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+
+ <!-- Modal posts favoris -->
+    <?php
+        foreach ($favoritesPosts as $post)  {
         ?>
         <div class="articles-modal modal fade" id="articlesModal<?= $post->getId() ?>" tabindex="-1" role="dialog"
              aria-hidden="true">

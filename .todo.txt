@@ -16,10 +16,11 @@ TODO:
 ✔ formulaire de contact
 
 ✔ modifier la requete postManager
-- créer une session
+✔ créer une session
 - panel utilisateur (une page avec ses infos + articles favoris[à faire si je m'ennuie))
-- connexion admin
-- connexion utilisateur
+    - n'autoriser que 7 articles favoris (faire un verif count avant d'autoriser l'insert du post favoris)
+✔ connexion admin
+✔ connexion utilisateur
 
 ✔ insertion en bdd de l'utilisateur
     ✔ création du token

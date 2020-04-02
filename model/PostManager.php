@@ -3,7 +3,6 @@
 class PostManager extends Connexion
 {
     private $offset = 3;
-
     public function getPosts($page, $post = NULL)
     {
         $bdd = $this->dbConnect();
@@ -38,6 +37,29 @@ class PostManager extends Connexion
         } else {
             $this->getPosts(1);
         }
+    }
+
+    public function getFavoritePostByIdUser(User $user)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT id_post, posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at 
+                                                FROM `favorites_posts` LEFT JOIN posts ON favorites_posts.id_post = posts.id 
+                                                    INNER JOIN users ON posts.author = users.id 
+                                                WHERE id_user = :id ORDER BY posts.modified_at DESC');
+        $statement->execute(array(
+            'id' => $user->getId()
+        ));
+        return $statement->fetchAll(PDO::FETCH_CLASS, 'Post');
+    }
+
+    public function deleteFavoritePostByIdSession(User $user, Favorites_posts $favorites)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('DELETE FROM `favorites_posts` WHERE id_user = :id_user AND id_post = :id_post');
+        $statement->execute(array(
+            'id_user' => $user->getId(),
+            'id_post' => $favorites->getId_post()
+        ));
     }
 
     public function countPages()

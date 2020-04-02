@@ -67,15 +67,8 @@ class ControllerFront
 
                 /** Role : Utilisateur && Statut : actif */
                 case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::ACTIVE) :
-                    $commentManager = new CommentManager();
-                    $categoryManager = new CategoryManager();
-                    foreach ($lastPosts as $post) :
-                        $commentManager->fillCommentInPost($post);
-                        $categoryManager->fillCategoryInPost($post);
-                    endforeach;
-
-                    $view = new View('Tableau de bord');
-                    $view->render('view/dashboardView.php', ['lastPosts' => $lastPosts, 'user' => $user]);
+                    $this->getDashboardUser();
+                    $userManager->newConnexionDate();
                     break;
 
                 /** Role : Utilisateur && Statut : supprimé */
@@ -122,18 +115,25 @@ class ControllerFront
     public function getDashboardUser()
     {
         $userManager = new UserManager();
-        $user = $userManager->getUserBySessionId();
         $listPosts = new PostManager();
-        $lastPosts = $listPosts->getPosts(1);
         $commentManager = new CommentManager();
         $categoryManager = new CategoryManager();
+
+        $user = $userManager->getUserBySessionId();
+        $favoritesPosts = $listPosts->getFavoritePostByIdUser($user);
+        foreach ($favoritesPosts as $post) :
+            $commentManager->fillCommentInPost($post);
+            $categoryManager->fillCategoryInPost($post);
+        endforeach;
+
+        $lastPosts = $listPosts->getPosts(1);
         foreach ($lastPosts as $post) :
             $commentManager->fillCommentInPost($post);
             $categoryManager->fillCategoryInPost($post);
         endforeach;
 
         $view = new View('Tableau de bord');
-        $view->render('view/dashboardView.php', ['lastPosts' => $lastPosts, 'user' => $user]);
+        $view->render('view/dashboardView.php', ['favoritesPosts' => $favoritesPosts, 'lastPosts' => $lastPosts, 'user' => $user]);
     }
 
     //Affiche le backend Admin
@@ -144,6 +144,19 @@ class ControllerFront
 
         $view = new View('Tableau de bord');
         $view->render('view/dashboardAdminView.php', ['user' => $user]);
+    }
+
+    public function deleteFavoritePost()
+    {
+        if (!empty($_SESSION['id']) && ($_REQUEST['id_post'])) :
+            $user = new User($_SESSION);
+            $favorites = new Favorites_posts($_REQUEST);
+            $postManager = new PostManager();
+            $postManager->deleteFavoritePostByIdSession($user, $favorites);
+            $this->getDashboardUser();
+        endif;
+        $message = 'Votre identification de session ne correspond pas !';
+        throw new ExceptionOutput($message);
     }
 
     public function modificationDataByUser()

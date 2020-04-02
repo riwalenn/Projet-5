@@ -11,6 +11,7 @@ class Post
     private $created_at;
     private $modified_at;
     private $category;
+    private $favorites;
     private $state;
     private $comments;
 
@@ -37,10 +38,14 @@ class Post
         }
     }
 
-    // ----- Getters -----
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     public function getTitle()
@@ -48,9 +53,19 @@ class Post
         return $this->title;
     }
 
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
     public function getKicker()
     {
         return $this->kicker;
+    }
+
+    public function setKicker($kicker)
+    {
+        $this->kicker = $kicker;
     }
 
     public function getPseudo()
@@ -59,6 +74,11 @@ class Post
             return self::ADMIN;
         endif;
         return $this->pseudo;
+    }
+
+    public function setPseudo($pseudo)
+    {
+        $this->pseudo = $pseudo;
     }
 
     public function getContent()
@@ -71,9 +91,19 @@ class Post
         return $this->content . $url;
     }
 
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
     public function getUrl()
     {
         return $this->url;
+    }
+
+    public function setUrl($url)
+    {
+        $this->url = $url;
     }
 
     public function getCreated_at()
@@ -82,62 +112,15 @@ class Post
         return date_format($date, 'd-m-Y');
     }
 
+    public function setCreated_at($created_at)
+    {
+        $this->created_at = $created_at;
+    }
+
     public function getModified_at()
     {
         $date = new DateTime($this->modified_at);
         return date_format($date, 'd-m-Y H:m:s');
-    }
-
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    public function getState()
-    {
-        return $this->state;
-    }
-
-    public function getComments()
-    {
-        return $this->comments;
-    }
-
-
-    // ----- Setters -----
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    public function setKicker($kicker)
-    {
-        $this->kicker = $kicker;
-    }
-
-    public function setPseudo($pseudo)
-    {
-        $this->pseudo = $pseudo;
-    }
-
-    public function setContent($content)
-    {
-        $this->content = $content;
-    }
-
-    public function setUrl($url)
-    {
-        $this->url = $url;
-    }
-
-    public function setCreated_at($created_at)
-    {
-        $this->created_at = $created_at;
     }
 
     public function setModified_at($modified_at)
@@ -145,9 +128,29 @@ class Post
         $this->modified_at = $modified_at;
     }
 
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
     public function setCategory(Category $category)
     {
         $this->category = $category;
+    }
+
+    public function getFavorites()
+    {
+        return $this->favorites;
+    }
+
+    public function setFavorites(Favorites_posts $favorites)
+    {
+        $this->favorites = $favorites;
+    }
+
+    public function getState()
+    {
+        return $this->state;
     }
 
     public function setState($state)
@@ -156,6 +159,11 @@ class Post
             $this->state = $state;
         endif;
         $this->state = self::EN_ATTENTE;
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
     }
 
     public function setComments($comments)

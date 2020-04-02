@@ -28,10 +28,14 @@ class Portfolio
         }
     }
 
-    // ----- Getters -----
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     public function getTitle()
@@ -39,9 +43,19 @@ class Portfolio
         return $this->title;
     }
 
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
     public function getKicker()
     {
         return $this->kicker;
+    }
+
+    public function setKicker($kicker)
+    {
+        $this->kicker = $kicker;
     }
 
     public function getContent()
@@ -49,18 +63,39 @@ class Portfolio
         return $this->content;
     }
 
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
     public function getDateConception()
     {
         return $this->date_conception;
+    }
+
+    public function setDateConception($date_conception)
+    {
+        $this->date_conception = $date_conception;
     }
 
     public function getClient()
     {
         return $this->client;
     }
+
+    public function setClient($client)
+    {
+        $this->client = $client;
+    }
+
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    public function setCategories($categories)
+    {
+        $this->categories = $categories;
     }
 
     public function getCategoriesFormatted()
@@ -69,41 +104,5 @@ class Portfolio
         $categoriesexploded = explode( '/', $categories );
         $categoriesFormatted = implode(' - <i class="fas fa-check-square"></i> ', $categoriesexploded);
         return $categoriesFormatted;
-    }
-
-    // ----- Setters -----
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    public function setKicker($kicker)
-    {
-        $this->kicker = $kicker;
-    }
-
-    public function setContent($content)
-    {
-        $this->content = $content;
-    }
-
-    public function setDateConception($date_conception)
-    {
-        $this->date_conception = $date_conception;
-    }
-
-    public function setClient($client)
-    {
-        $this->client = $client;
-    }
-
-    public function setCategories($categories)
-    {
-        $this->categories = $categories;
     }
 }
