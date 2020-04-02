@@ -12,6 +12,7 @@ class Post
     private $modified_at;
     private $category;
     private $favorites;
+    private $statut_favorite;
     private $state;
     private $comments;
 
@@ -169,5 +170,15 @@ class Post
     public function setComments($comments)
     {
         $this->comments = $comments;
+    }
+
+    public function getStatut_favorite()
+    {
+        return $this->statut_favorite;
+    }
+
+    public function setStatut_favorite($statut_favorite)
+    {
+        $this->statut_favorite = $statut_favorite;
     }
 }

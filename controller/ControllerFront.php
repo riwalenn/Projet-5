@@ -130,13 +130,8 @@ class ControllerFront
         foreach ($lastPosts as $post) :
             $commentManager->fillCommentInPost($post);
             $categoryManager->fillCategoryInPost($post);
+            $listPosts->fillFavoriteInPost($user, $post);
         endforeach;
-
-
-        $postManager = new PostManager();
-        $nbFavorites = $postManager->countFavoritesPostUser($user);
-
-        Debug::printr($nbFavorites);
 
         $view = new View('Tableau de bord');
         $view->render('view/dashboardView.php', ['favoritesPosts' => $favoritesPosts, 'lastPosts' => $lastPosts, 'user' => $user]);
@@ -331,10 +326,13 @@ class ControllerFront
         }
 
         $nbPages = $postManager->countPagesSearchResult($submitRecherche);
+        $userManager = new UserManager();
+        $user = $userManager->getUserBySessionId();
 
         $categoryManager = new CategoryManager();
         foreach ($listPosts as $post) {
             $categoryManager->fillCategoryInPost($post);
+            $postManager->fillFavoriteInPost($user, $post);
         }
 
         $view = new View('Liste des articles');
@@ -350,9 +348,12 @@ class ControllerFront
 
         $commentManager = new CommentManager();
         $categoryManager = new CategoryManager();
+        $userManager = new UserManager();
+        $user = $userManager->getUserBySessionId();
         foreach ($listPosts as $post) {
             $commentManager->fillCommentInPost($post);
             $categoryManager->fillCategoryInPost($post);
+            $postManager->fillFavoriteInPost($user, $post);
         }
 
         $nbPages = $postManager->countPages();

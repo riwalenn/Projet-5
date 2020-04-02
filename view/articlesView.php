@@ -47,15 +47,18 @@
                         <footer class="blockquote-footer">catégorie : <?= $post->getCategory()->getCategory() ?></footer>
                         <footer class="blockquote-footer">Créé le <?= $post->getCreated_at() ?></footer>
                         <?php if ((isset($_SESSION['id']))) : ?>
-                            <footer class="blockquote-footer">
-                                Cet article fait parti de vos favoris <i class="fas fa-star" style="color: #fed136"></i><br>
-                            </footer>
-                            <form action="index.php?action=addFavorite" method="post">
-                                <input type="hidden" name="id_post" value="<?= $post->getid() ?>">
+                            <?php  if ($post->getStatut_favorite() == 1) : ?>
                                 <footer class="blockquote-footer">
-                                    Ajouter l'article à vos favoris :  <button class="btn btn-light" data-dismiss="modal" type="submit"><i class="fa fa-plus-square" style="color:#11dbba; "></i></button><br>
+                                    Cet article fait parti de vos favoris <i class="fas fa-star" style="color: #fed136"></i><br>
                                 </footer>
-                            </form>
+                            <?php elseif ($post->getStatut_favorite() != 1) : ?>
+                                <form action="index.php?action=addFavorite" method="post">
+                                    <input type="hidden" name="id_post" value="<?= $post->getid() ?>">
+                                    <footer class="blockquote-footer">
+                                        Ajouter l'article à vos favoris :  <button class="btn btn-light" data-dismiss="modal" type="submit"><i class="fa fa-plus-square" style="color:#11dbba; "></i></button><br>
+                                    </footer>
+                                </form>
+                            <?php endif; ?>
                         <?php endif; ?>
 
                         <h4><?= $post->getTitle() ?></h4>

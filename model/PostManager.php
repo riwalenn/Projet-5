@@ -80,17 +80,23 @@ class PostManager extends Connexion
     }
 
     //Recherche si l'article est dans les favoris
-    public function getFavorite(User $user, Favorites_posts $favorites)
+    public function getFavorite($id_user, $id_post)
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT COUNT(id) as nb_favorites FROM `favorites_posts` WHERE id_user = :id_user AND id_post = :id_post');
         $statement->execute(array(
-            'id_user' => $user->getId(),
-            'id_post' => $favorites->getId_post()
+            'id_user' => $id_user,
+            'id_post' => $id_post
         ));
         $resultat = $statement->fetch();
         return $resultat['nb_favorites'];
     }
+
+     public function fillFavoriteInPost(User $user, Post $post)
+     {
+         $favorite = $this->getFavorite($user->getId(), $post->getId());
+         $post->setStatut_favorite($favorite);
+     }
 
     //Supprime un article des favoris par l'utilisateur connecté
     public function deleteFavoritePostByIdUser(User $user, Favorites_posts $favorites)

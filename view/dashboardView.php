@@ -67,15 +67,18 @@ if ((isset($_SESSION['id']))) : ?>
                             <?php foreach ($lastPosts as $post) : ?>
                                 <h5><b><a class="articles-link" data-toggle="modal" href="#articlesModal<?= $post->getId() ?>"><?= $post->getTitle() ?></a></b></h5>
                                 <footer class="blockquote-footer">Modifié le : <?= $post->getModified_at() ?></footer>
+                            <?php  if ($post->getStatut_favorite() == 1) : ?>
                                 <footer class="blockquote-footer">
                                     Cet article fait parti de vos favoris <i class="fas fa-star" style="color: #fed136"></i><br>
                                 </footer>
+                            <?php elseif ($post->getStatut_favorite() != 1) : ?>
                                 <form action="index.php?action=addFavorite" method="post">
                                     <input type="hidden" name="id_post" value="<?= $post->getid() ?>">
                                     <footer class="blockquote-footer">
                                         Ajouter l'article à vos favoris :  <button class="btn btn-light" data-dismiss="modal" type="submit"><i class="fa fa-plus-square" style="color:#11dbba; "></i></button><br>
                                     </footer>
                                 </form>
+                                <?php endif; ?>
                                 <p class="text-muted"><?= substr($post->getKicker(), 0, 50) . "..." ?></p>
                             <?php endforeach; ?>
                         </div>
@@ -99,7 +102,6 @@ if ((isset($_SESSION['id']))) : ?>
                 <div class="row">
                     <div class="col-lg-8 mx-auto">
                         <div class="modal-body">
-                            <!-- FORMULAIRE A METTRE ICI -->
                             <h5>Modification de mes données</h5>
                             <form id="formDataUser" action="index.php?action=modifDataUser" method="post" onsubmit="return verifForm(this)">
                                 <input type="hidden" value="<?= $_SESSION['id'] ?>" name="id" id="id">
