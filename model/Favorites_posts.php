@@ -1,7 +1,7 @@
 <?php
 
 
-class favorites_posts
+class Favorites_posts
 {
     private $id;
     private $id_user;

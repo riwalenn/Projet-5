@@ -132,6 +132,12 @@ class ControllerFront
             $categoryManager->fillCategoryInPost($post);
         endforeach;
 
+
+        $postManager = new PostManager();
+        $nbFavorites = $postManager->countFavoritesPostUser($user);
+
+        Debug::printr($nbFavorites);
+
         $view = new View('Tableau de bord');
         $view->render('view/dashboardView.php', ['favoritesPosts' => $favoritesPosts, 'lastPosts' => $lastPosts, 'user' => $user]);
     }
@@ -146,19 +152,43 @@ class ControllerFront
         $view->render('view/dashboardAdminView.php', ['user' => $user]);
     }
 
+    //Ajout d'un post favoris, limité à 7
+    public function addFavoritePost()
+    {
+        if (!empty($_SESSION['id']) && ($_REQUEST['id_post'])) :
+            $user = new User($_SESSION);
+            $postFavoris = new Favorites_posts($_REQUEST);
+            $postManager = new PostManager();
+            $nbFavorites = $postManager->countFavoritesPostUser($user);
+            if ($nbFavorites < 7) :
+            $postManager->addFavoritePostByIdUser($user, $postFavoris);
+            elseif($nbFavorites >= 7) :
+                $message = 'Vous avez atteint le nombre maximal de favoris.';
+                throw new ExceptionOutput($message);
+            endif;
+            $this->getDashboardUser();
+        else:
+            $message = 'Votre identification de session ne correspond pas !';
+            throw new ExceptionOutput($message);
+        endif;
+    }
+
+    //Suppression d'un favoris
     public function deleteFavoritePost()
     {
         if (!empty($_SESSION['id']) && ($_REQUEST['id_post'])) :
             $user = new User($_SESSION);
             $favorites = new Favorites_posts($_REQUEST);
             $postManager = new PostManager();
-            $postManager->deleteFavoritePostByIdSession($user, $favorites);
+            $postManager->deleteFavoritePostByIdUser($user, $favorites);
             $this->getDashboardUser();
+        else:
+            $message = 'Votre identification de session ne correspond pas !';
+            throw new ExceptionOutput($message);
         endif;
-        $message = 'Votre identification de session ne correspond pas !';
-        throw new ExceptionOutput($message);
     }
 
+    //Modification des données utilisateurs
     public function modificationDataByUser()
     {
         if (!empty($_SESSION['id'] == $_REQUEST['id'])) :
@@ -173,9 +203,10 @@ class ControllerFront
             endif;
             $message = 'Votre mot de passe ne correspond pas';
             throw new ExceptionOutput($message);
-            endif;
-        $message = 'Votre identification de session ne correspond pas !';
-        throw new ExceptionOutput($message);
+        else:
+            $message = 'Votre identification de session ne correspond pas !';
+            throw new ExceptionOutput($message);
+        endif;
     }
 
     //Fonction de déconnection

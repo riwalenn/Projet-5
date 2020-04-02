@@ -29,11 +29,11 @@ if ((isset($_SESSION['id']))) : ?>
                         <img src="../ressources/img/dashboard/favorite.jpg" class="img_dashboard"/>
                         <div class="card-header">
                             <blockquote class="blockquote mb-0">
-                                <footer class="blockquote-footer">Favoris (triés par ordre de date décroissant)</footer>
+                                <footer class="blockquote-footer">7 Favoris (triés par ordre de date décroissant)</footer>
                             </blockquote>
                         </div>
                         <div class="card-body articles-caption">
-                            <h4>Mes 7 articles favoris</h4>
+                            <h4>Ma bibliothèque</h4>
                             <table width="100%">
                                 <thead><tr><th></th><th></th> </tr></thead>
                                 <tbody>
@@ -63,10 +63,19 @@ if ((isset($_SESSION['id']))) : ?>
                             </blockquote>
                         </div>
                         <div class="card-body articles-caption">
-                            <h4>3 derniers articles parus</h4>
+                            <h4>3 dernières parutions</h4>
                             <?php foreach ($lastPosts as $post) : ?>
                                 <h5><b><a class="articles-link" data-toggle="modal" href="#articlesModal<?= $post->getId() ?>"><?= $post->getTitle() ?></a></b></h5>
                                 <footer class="blockquote-footer">Modifié le : <?= $post->getModified_at() ?></footer>
+                                <footer class="blockquote-footer">
+                                    Cet article fait parti de vos favoris <i class="fas fa-star" style="color: #fed136"></i><br>
+                                </footer>
+                                <form action="index.php?action=addFavorite" method="post">
+                                    <input type="hidden" name="id_post" value="<?= $post->getid() ?>">
+                                    <footer class="blockquote-footer">
+                                        Ajouter l'article à vos favoris :  <button class="btn btn-light" data-dismiss="modal" type="submit"><i class="fa fa-plus-square" style="color:#11dbba; "></i></button><br>
+                                    </footer>
+                                </form>
                                 <p class="text-muted"><?= substr($post->getKicker(), 0, 50) . "..." ?></p>
                             <?php endforeach; ?>
                         </div>
@@ -150,7 +159,7 @@ if ((isset($_SESSION['id']))) : ?>
                             <div class="col-lg-8 mx-auto">
                                 <div class="modal-body">
                                     <!-- Project Details Go Here -->
-                                    <h2 class="text-uppercase"><?= $post->getTitle() ?> <i class="far fa-star"></i><i class="fas fa-star" style="color: #fed136"></i></h2>
+                                    <h2 class="text-uppercase"><?= $post->getTitle() ?></h2>
                                     <p class="item-intro text-muted"><?= $post->getKicker() ?></p>
                                     <cite title="Auteur" class="item-intro text-muted">Créé par <?= $post->getPseudo() ?> -
                                         le <?= $post->getCreated_at() ?> / Modifié le <?= $post->getModified_at() ?></cite>
@@ -158,7 +167,7 @@ if ((isset($_SESSION['id']))) : ?>
                                     <p><?= $post->getContent() ?></p>
                                     <button class="btn btn-primary" data-dismiss="modal" type="button">
                                         <i class="fas fa-times"></i>
-                                        Close Article
+                                        Fermer l'article
                                     </button>
                                 </div>
                             </div>
@@ -212,7 +221,7 @@ if ((isset($_SESSION['id']))) : ?>
                             <div class="col-lg-8 mx-auto">
                                 <div class="modal-body">
                                     <!-- Project Details Go Here -->
-                                    <h2 class="text-uppercase"><?= $post->getTitle() ?> <i class="far fa-star"></i><i class="fas fa-star" style="color: #fed136"></i></h2>
+                                    <h2 class="text-uppercase"><?= $post->getTitle() ?></h2>
                                     <p class="item-intro text-muted"><?= $post->getKicker() ?></p>
                                     <cite title="Auteur" class="item-intro text-muted">Créé par <?= $post->getPseudo() ?> -
                                         le <?= $post->getCreated_at() ?> / Modifié le <?= $post->getModified_at() ?></cite>
@@ -220,7 +229,7 @@ if ((isset($_SESSION['id']))) : ?>
                                     <p><?= $post->getContent() ?></p>
                                     <button class="btn btn-primary" data-dismiss="modal" type="button">
                                         <i class="fas fa-times"></i>
-                                        Close Article
+                                        Fermer l'article
                                     </button>
                                 </div>
                             </div>

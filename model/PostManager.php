@@ -3,6 +3,8 @@
 class PostManager extends Connexion
 {
     private $offset = 3;
+
+    //Recherche des articles avec le statut actif
     public function getPosts($page, $post = NULL)
     {
         $bdd = $this->dbConnect();
@@ -19,6 +21,7 @@ class PostManager extends Connexion
         return $listPosts->fetchAll(PDO::FETCH_CLASS, 'Post');
     }
 
+    //Résultat d'une recherche sur les articles avec le statut actif
     public function getSearch($recherche, $page, $post = NULL)
     {
         $bdd = $this->dbConnect();
@@ -39,6 +42,7 @@ class PostManager extends Connexion
         }
     }
 
+    //Liste des articles favoris retrouvé par l'id de l'utilisateur
     public function getFavoritePostByIdUser(User $user)
     {
         $bdd = $this->dbConnect();
@@ -52,7 +56,44 @@ class PostManager extends Connexion
         return $statement->fetchAll(PDO::FETCH_CLASS, 'Post');
     }
 
-    public function deleteFavoritePostByIdSession(User $user, Favorites_posts $favorites)
+    //Ajout d'un article en favoris par l'utilisateur connecté
+    public function addFavoritePostByIdUser(User $user, Favorites_posts $favorites)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('INSERT INTO `favorites_posts`(id_user, id_post) VALUES (:id_user, :id_post)');
+        $statement->execute(array(
+            'id_user' => $user->getId(),
+            'id_post' => $favorites->getId_post()
+        ));
+    }
+
+    //Compte le nombre de favoris pour un utilisateur
+    public function countFavoritesPostUser(User $user)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT COUNT(id_user) as nb_favorites FROM `favorites_posts` WHERE id_user=:id_user');
+        $statement->execute(array(
+            'id_user' => $user->getId()
+        ));
+        $resultat = $statement->fetch();
+        return $resultat['nb_favorites'];
+    }
+
+    //Recherche si l'article est dans les favoris
+    public function getFavorite(User $user, Favorites_posts $favorites)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT COUNT(id) as nb_favorites FROM `favorites_posts` WHERE id_user = :id_user AND id_post = :id_post');
+        $statement->execute(array(
+            'id_user' => $user->getId(),
+            'id_post' => $favorites->getId_post()
+        ));
+        $resultat = $statement->fetch();
+        return $resultat['nb_favorites'];
+    }
+
+    //Supprime un article des favoris par l'utilisateur connecté
+    public function deleteFavoritePostByIdUser(User $user, Favorites_posts $favorites)
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('DELETE FROM `favorites_posts` WHERE id_user = :id_user AND id_post = :id_post');
@@ -62,15 +103,17 @@ class PostManager extends Connexion
         ));
     }
 
+    //Compte le nombre de page d'articles
     public function countPages()
     {
         $bdd = $this->dbConnect();
-        $countPages = $bdd->prepare('SELECT COUNT(*)/3 AS nb_pages FROM `posts`');
+        $countPages = $bdd->prepare('SELECT COUNT(*)/3 AS nb_pages FROM `posts` WHERE posts.state = 1');
         $countPages->execute();
         $resultat = $countPages->fetch();
         return $resultat['nb_pages'];
     }
 
+    //Compte le nombre de page d'articles résultant d'une recherche
     public function countPagesSearchResult($recherche)
     {
         $bdd = $this->dbConnect();

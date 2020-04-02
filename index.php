@@ -32,6 +32,10 @@ try
                 $controller->getBackendDashboard();
                 break;
 
+            case 'addFavorite' :
+                $controller->addFavoritePost();
+                break;
+
             case 'deleteFavorite' :
                 $controller->deleteFavoritePost();
                 break;
