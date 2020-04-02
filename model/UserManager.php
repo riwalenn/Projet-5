@@ -160,7 +160,7 @@ class UserManager extends Connexion
     public function getUserBySessionId()
     {
         $bdd =$this->dbConnect();
-        $statement = $bdd->prepare('SELECT `id`, `email`, `pseudo`, `role`, `date_inscription`, `date_modification`, `state` FROM `users` WHERE `id` = :id');
+        $statement = $bdd->prepare('SELECT `id`, `password`, `email`, `pseudo`, `role`, `date_inscription`, `date_modification`, `state` FROM `users` WHERE `id` = :id');
         $statement->execute(array(
             'id' => $_SESSION['id']
         ));

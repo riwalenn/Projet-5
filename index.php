@@ -16,6 +16,7 @@ try
                 $controller->afficherResultatRecherche();
                 break;
 
+            // Affiche le formulaire
             case 'connexion' :
                 $controller->afficherLoginForm();
                 break;
@@ -32,14 +33,17 @@ try
                 $controller->getBackendDashboard();
                 break;
 
+            // Ajoute un article dans les favoris de l'utilisateur
             case 'addFavorite' :
                 $controller->addFavoritePost();
                 break;
 
+            // Supprime un article des favoris de l'utilisateur
             case 'deleteFavorite' :
                 $controller->deleteFavoritePost();
                 break;
 
+            // Modifie les données de l'utilisateur (pseudo, email)
             case 'modifDataUser':
                 $controller->modificationDataByUser();
                 break;
@@ -48,6 +52,7 @@ try
                 $controller->logout();
                 break;
 
+            // Affiche le formulaire
             case 'nouvelInscrit' :
                 $controller->afficherNewLoginForm();
                 break;
@@ -60,6 +65,7 @@ try
                $controller->confirmationByToken();
                 break;
 
+            // Affiche le formulaire
             case 'forgotPassword' :
                 $controller->afficherMailForm();
                 break;
@@ -68,6 +74,7 @@ try
                 $controller->envoyerEmailForPassword();
                 break;
 
+            // Affiche le formulaire
             case 'confirmationEmailForPassword' :
                 $controller->afficherPasswordForm();
                 break;

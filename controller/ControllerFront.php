@@ -2,7 +2,10 @@
 
 class ControllerFront
 {
-    // --------- Index ---------
+    /**
+     * --------- INDEX ---------
+     */
+
     public function afficherIndex()
     {
         $portfolioManager = new PortfolioManager();
@@ -12,7 +15,9 @@ class ControllerFront
         $view->render('view/indexView.php', ['portfolio' => $portfolio]);
     }
 
-    // --------- Connexion ---------
+    /**
+     * --------- CONNEXION && DASHBOARD ---------
+     */
 
     //Affichage page du formulaire de login
     public function afficherLoginForm()
@@ -137,15 +142,41 @@ class ControllerFront
         $view->render('view/dashboardView.php', ['favoritesPosts' => $favoritesPosts, 'lastPosts' => $lastPosts, 'user' => $user]);
     }
 
-    //Affiche le backend Admin
-    public function getBackendDashboard()
+    //Modification des données utilisateurs
+    public function modificationDataByUser()
     {
-        $userManager = new UserManager();
-        $user = $userManager->getUserBySessionId();
+        if (!empty($_SESSION['id'] == $_REQUEST['id'])) :
+            $user = new User($_REQUEST);
+            $userManager = new UserManager();
+            $userBdd = $userManager->getUserBySessionId();
+            $comparePassword = password_verify($_REQUEST['password'], $userBdd->getPassword());
 
-        $view = new View('Tableau de bord');
-        $view->render('view/dashboardAdminView.php', ['user' => $user]);
+            if ($comparePassword == true) :
+                $userManager->userDataModification($user);
+                $this->getDashboardUser();
+            else:
+                $message = 'Votre mot de passe ne correspond pas';
+                throw new ExceptionOutput($message);
+            endif;
+        else:
+            $message = 'Votre identification de session ne correspond pas !';
+            throw new ExceptionOutput($message);
+        endif;
     }
+
+    //Fonction de déconnection
+    public function logout()
+    {
+        unset($_SESSION['id']);
+        unset($_SESSION['role']);
+        session_destroy();
+
+        $this->afficherIndex();
+    }
+
+    /**
+     * --------- FAVORIS DE L'UTILISATEUR ---------
+     */
 
     //Ajout d'un post favoris, limité à 7
     public function addFavoritePost()
@@ -183,38 +214,10 @@ class ControllerFront
         endif;
     }
 
-    //Modification des données utilisateurs
-    public function modificationDataByUser()
-    {
-        if (!empty($_SESSION['id'] == $_REQUEST['id'])) :
-            $user = new User($_REQUEST);
-            $userManager = new UserManager();
-            $userBdd = $userManager->getUserBySessionId();
-            $comparePassword = password_verify($_REQUEST['password'], $userBdd->getPassword());
+    /**
+     * --------- INSCRIPTION ---------
+     */
 
-            if ($comparePassword == true) :
-                $userManager->userDataModification($user);
-                $this->getDashboardUser();
-            endif;
-            $message = 'Votre mot de passe ne correspond pas';
-            throw new ExceptionOutput($message);
-        else:
-            $message = 'Votre identification de session ne correspond pas !';
-            throw new ExceptionOutput($message);
-        endif;
-    }
-
-    //Fonction de déconnection
-    public function logout()
-    {
-        unset($_SESSION['id']);
-        unset($_SESSION['role']);
-        session_destroy();
-
-        $this->afficherIndex();
-    }
-
-    // --------- Inscription ---------
     //Affichage de la page de formulaire d'une nouvelle inscription
     public function afficherNewLoginForm()
     {
@@ -252,7 +255,10 @@ class ControllerFront
         $this->afficherIndex();
     }
 
-    // --------- Oubli password ---------
+    /**
+     * --------- OUBLI PASSWORD ---------
+     */
+
     //Affichage de la page de formulaire d'oubli de mot de passe
     public function afficherMailForm()
     {
@@ -311,7 +317,10 @@ class ControllerFront
         $view->render('view/formLoginView.php', ['confirmationMessage' => $confirmationMessage]);
     }
 
-    // --------- Articles ---------
+    /**
+     * --------- ARTICLES & RECHERCHE ---------
+     */
+
     //Affichage de la page des résultats de recherche des articles
     public function afficherResultatRecherche()
     {
@@ -367,7 +376,23 @@ class ControllerFront
         $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
     }
 
-    // --------- Erreurs ---------
+    /**
+     * --------- BACKEND ADMIN ---------
+     */
+
+    //Affiche le backend Admin
+    public function getBackendDashboard()
+    {
+        $userManager = new UserManager();
+        $user = $userManager->getUserBySessionId();
+
+        $view = new View('Tableau de bord');
+        $view->render('view/dashboardAdminView.php', ['user' => $user]);
+    }
+
+    /**
+     * --------- ERREURS ---------
+     */
 
     public function erreurPDO($pdoException)
     {
