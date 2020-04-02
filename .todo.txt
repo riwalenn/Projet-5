@@ -17,8 +17,8 @@ TODO:
 
 ✔ modifier la requete postManager
 ✔ créer une session
-- panel utilisateur (une page avec ses infos + articles favoris[à faire si je m'ennuie))
-    - n'autoriser que 7 articles favoris (faire un verif count avant d'autoriser l'insert du post favoris)
+✔ panel utilisateur (une page avec ses infos + articles favoris[à faire si je m'ennuie))
+    ✔ n'autoriser que 7 articles favoris (faire un verif count avant d'autoriser l'insert du post favoris)
 ✔ connexion admin
 ✔ connexion utilisateur
 
@@ -49,7 +49,7 @@ TODO:
     - créer une page pour le portfolio, création, modification, suppression (portfolio manager)
 
 - Commentaires à faire !!!
-    - si non connecté => lecture des commentaires
+    ✔ si non connecté => lecture des commentaires
     - si connecté => possibilité de laisser un commentaire modéré par la suite
 
 

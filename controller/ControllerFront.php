@@ -332,7 +332,10 @@ class ControllerFront
         $categoryManager = new CategoryManager();
         foreach ($listPosts as $post) {
             $categoryManager->fillCategoryInPost($post);
-            $postManager->fillFavoriteInPost($user, $post);
+            if (!empty($_SESSION['id'])) :
+                $user = $userManager->getUserBySessionId();
+                $postManager->fillFavoriteInPost($user, $post);
+            endif;
         }
 
         $view = new View('Liste des articles');
@@ -349,11 +352,13 @@ class ControllerFront
         $commentManager = new CommentManager();
         $categoryManager = new CategoryManager();
         $userManager = new UserManager();
-        $user = $userManager->getUserBySessionId();
         foreach ($listPosts as $post) {
             $commentManager->fillCommentInPost($post);
             $categoryManager->fillCategoryInPost($post);
-            $postManager->fillFavoriteInPost($user, $post);
+            if (!empty($_SESSION['id'])) :
+                $user = $userManager->getUserBySessionId();
+                $postManager->fillFavoriteInPost($user, $post);
+            endif;
         }
 
         $nbPages = $postManager->countPages();
