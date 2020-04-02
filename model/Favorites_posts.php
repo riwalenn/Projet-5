@@ -1,9 +1,12 @@
 <?php
 
-class Category
+
+class Favorites_posts
 {
     private $id;
-    private $category;
+    private $id_user;
+    private $id_post;
+    private $title;
 
     public function __construct($donnees = null)
     {
@@ -22,7 +25,6 @@ class Category
         }
     }
 
-
     public function getId()
     {
         return $this->id;
@@ -33,13 +35,34 @@ class Category
         $this->id = $id;
     }
 
-    public function getCategory()
+    public function getId_user()
     {
-        return $this->category;
+        return $this->id_user;
     }
 
-    public function setCategory($category)
+    public function setId_user($id_user)
     {
-        $this->category = $category;
+        $this->id_user = $id_user;
+    }
+
+    public function getId_post()
+    {
+        return $this->id_post;
+    }
+
+    public function setId_post($id_post)
+    {
+        $this->id_post = $id_post;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function setTitle()
+    {
+        $post = new Post();
+        $this->title = $post->getTitle();
     }
 }

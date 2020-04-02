@@ -2,7 +2,10 @@
 
 class ControllerFront
 {
-    // --------- Index ---------
+    /**
+     * --------- INDEX ---------
+     */
+
     public function afficherIndex()
     {
         $portfolioManager = new PortfolioManager();
@@ -12,7 +15,9 @@ class ControllerFront
         $view->render('view/indexView.php', ['portfolio' => $portfolio]);
     }
 
-    // --------- Connexion ---------
+    /**
+     * --------- CONNEXION && DASHBOARD ---------
+     */
 
     //Affichage page du formulaire de login
     public function afficherLoginForm()
@@ -67,15 +72,8 @@ class ControllerFront
 
                 /** Role : Utilisateur && Statut : actif */
                 case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::ACTIVE) :
-                    $commentManager = new CommentManager();
-                    $categoryManager = new CategoryManager();
-                    foreach ($lastPosts as $post) :
-                        $commentManager->fillCommentInPost($post);
-                        $categoryManager->fillCategoryInPost($post);
-                    endforeach;
-
-                    $view = new View('Tableau de bord');
-                    $view->render('view/dashboardView.php', ['lastPosts' => $lastPosts, 'user' => $user]);
+                    $this->getDashboardUser();
+                    $userManager->newConnexionDate();
                     break;
 
                 /** Role : Utilisateur && Statut : supprimé */
@@ -122,30 +120,29 @@ class ControllerFront
     public function getDashboardUser()
     {
         $userManager = new UserManager();
-        $user = $userManager->getUserBySessionId();
         $listPosts = new PostManager();
-        $lastPosts = $listPosts->getPosts(1);
         $commentManager = new CommentManager();
         $categoryManager = new CategoryManager();
-        foreach ($lastPosts as $post) :
+
+        $user = $userManager->getUserBySessionId();
+        $favoritesPosts = $listPosts->getFavoritePostByIdUser($user);
+        foreach ($favoritesPosts as $post) :
             $commentManager->fillCommentInPost($post);
             $categoryManager->fillCategoryInPost($post);
         endforeach;
 
-        $view = new View('Tableau de bord');
-        $view->render('view/dashboardView.php', ['lastPosts' => $lastPosts, 'user' => $user]);
-    }
-
-    //Affiche le backend Admin
-    public function getBackendDashboard()
-    {
-        $userManager = new UserManager();
-        $user = $userManager->getUserBySessionId();
+        $lastPosts = $listPosts->getPosts(1);
+        foreach ($lastPosts as $post) :
+            $commentManager->fillCommentInPost($post);
+            $categoryManager->fillCategoryInPost($post);
+            $listPosts->fillFavoriteInPost($user, $post);
+        endforeach;
 
         $view = new View('Tableau de bord');
-        $view->render('view/dashboardAdminView.php', ['user' => $user]);
+        $view->render('view/dashboardView.php', ['favoritesPosts' => $favoritesPosts, 'lastPosts' => $lastPosts, 'user' => $user]);
     }
 
+    //Modification des données utilisateurs
     public function modificationDataByUser()
     {
         if (!empty($_SESSION['id'] == $_REQUEST['id'])) :
@@ -157,12 +154,14 @@ class ControllerFront
             if ($comparePassword == true) :
                 $userManager->userDataModification($user);
                 $this->getDashboardUser();
+            else:
+                $message = 'Votre mot de passe ne correspond pas';
+                throw new ExceptionOutput($message);
             endif;
-            $message = 'Votre mot de passe ne correspond pas';
+        else:
+            $message = 'Votre identification de session ne correspond pas !';
             throw new ExceptionOutput($message);
-            endif;
-        $message = 'Votre identification de session ne correspond pas !';
-        throw new ExceptionOutput($message);
+        endif;
     }
 
     //Fonction de déconnection
@@ -175,7 +174,50 @@ class ControllerFront
         $this->afficherIndex();
     }
 
-    // --------- Inscription ---------
+    /**
+     * --------- FAVORIS DE L'UTILISATEUR ---------
+     */
+
+    //Ajout d'un post favoris, limité à 7
+    public function addFavoritePost()
+    {
+        if (!empty($_SESSION['id']) && ($_REQUEST['id_post'])) :
+            $user = new User($_SESSION);
+            $postFavoris = new Favorites_posts($_REQUEST);
+            $postManager = new PostManager();
+            $nbFavorites = $postManager->countFavoritesPostUser($user);
+            if ($nbFavorites < 7) :
+            $postManager->addFavoritePostByIdUser($user, $postFavoris);
+            elseif($nbFavorites >= 7) :
+                $message = 'Vous avez atteint le nombre maximal de favoris.';
+                throw new ExceptionOutput($message);
+            endif;
+            $this->getDashboardUser();
+        else:
+            $message = 'Votre identification de session ne correspond pas !';
+            throw new ExceptionOutput($message);
+        endif;
+    }
+
+    //Suppression d'un favoris
+    public function deleteFavoritePost()
+    {
+        if (!empty($_SESSION['id']) && ($_REQUEST['id_post'])) :
+            $user = new User($_SESSION);
+            $favorites = new Favorites_posts($_REQUEST);
+            $postManager = new PostManager();
+            $postManager->deleteFavoritePostByIdUser($user, $favorites);
+            $this->getDashboardUser();
+        else:
+            $message = 'Votre identification de session ne correspond pas !';
+            throw new ExceptionOutput($message);
+        endif;
+    }
+
+    /**
+     * --------- INSCRIPTION ---------
+     */
+
     //Affichage de la page de formulaire d'une nouvelle inscription
     public function afficherNewLoginForm()
     {
@@ -213,7 +255,10 @@ class ControllerFront
         $this->afficherIndex();
     }
 
-    // --------- Oubli password ---------
+    /**
+     * --------- OUBLI PASSWORD ---------
+     */
+
     //Affichage de la page de formulaire d'oubli de mot de passe
     public function afficherMailForm()
     {
@@ -272,7 +317,10 @@ class ControllerFront
         $view->render('view/formLoginView.php', ['confirmationMessage' => $confirmationMessage]);
     }
 
-    // --------- Articles ---------
+    /**
+     * --------- ARTICLES & RECHERCHE ---------
+     */
+
     //Affichage de la page des résultats de recherche des articles
     public function afficherResultatRecherche()
     {
@@ -287,10 +335,16 @@ class ControllerFront
         }
 
         $nbPages = $postManager->countPagesSearchResult($submitRecherche);
+        $userManager = new UserManager();
+        $user = $userManager->getUserBySessionId();
 
         $categoryManager = new CategoryManager();
         foreach ($listPosts as $post) {
             $categoryManager->fillCategoryInPost($post);
+            if (!empty($_SESSION['id'])) :
+                $user = $userManager->getUserBySessionId();
+                $postManager->fillFavoriteInPost($user, $post);
+            endif;
         }
 
         $view = new View('Liste des articles');
@@ -306,9 +360,14 @@ class ControllerFront
 
         $commentManager = new CommentManager();
         $categoryManager = new CategoryManager();
+        $userManager = new UserManager();
         foreach ($listPosts as $post) {
             $commentManager->fillCommentInPost($post);
             $categoryManager->fillCategoryInPost($post);
+            if (!empty($_SESSION['id'])) :
+                $user = $userManager->getUserBySessionId();
+                $postManager->fillFavoriteInPost($user, $post);
+            endif;
         }
 
         $nbPages = $postManager->countPages();
@@ -317,7 +376,23 @@ class ControllerFront
         $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
     }
 
-    // --------- Erreurs ---------
+    /**
+     * --------- BACKEND ADMIN ---------
+     */
+
+    //Affiche le backend Admin
+    public function getBackendDashboard()
+    {
+        $userManager = new UserManager();
+        $user = $userManager->getUserBySessionId();
+
+        $view = new View('Tableau de bord');
+        $view->render('view/dashboardAdminView.php', ['user' => $user]);
+    }
+
+    /**
+     * --------- ERREURS ---------
+     */
 
     public function erreurPDO($pdoException)
     {

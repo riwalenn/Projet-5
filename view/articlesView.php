@@ -23,7 +23,7 @@
                 if (empty($listPosts)) :
                     ?>
                     <h6 class="alert alert-primary">Nous sommes désolés, la liste est vide ! Merci de revenir plus tard.</h6>
-                    <?php
+                <?php
                 endif;
                 ?>
             </div>
@@ -46,6 +46,21 @@
                     <div class="articles-caption">
                         <footer class="blockquote-footer">catégorie : <?= $post->getCategory()->getCategory() ?></footer>
                         <footer class="blockquote-footer">Créé le <?= $post->getCreated_at() ?></footer>
+                        <?php if ((isset($_SESSION['id']))) : ?>
+                            <?php  if ($post->getStatut_favorite() == 1) : ?>
+                                <footer class="blockquote-footer">
+                                    Cet article fait parti de vos favoris <i class="fas fa-star" style="color: #fed136"></i><br>
+                                </footer>
+                            <?php elseif ($post->getStatut_favorite() != 1) : ?>
+                                <form action="index.php?action=addFavorite" method="post">
+                                    <input type="hidden" name="id_post" value="<?= $post->getid() ?>">
+                                    <footer class="blockquote-footer">
+                                        Ajouter l'article à vos favoris :  <button class="btn btn-light" data-dismiss="modal" type="submit"><i class="fa fa-plus-square" style="color:#11dbba; "></i></button><br>
+                                    </footer>
+                                </form>
+                            <?php endif; ?>
+                        <?php endif; ?>
+
                         <h4><?= $post->getTitle() ?></h4>
                         <p class="text-muted"><?= $post->getKicker() ?></p>
                     </div>
@@ -68,7 +83,7 @@
                         echo '<a class="page-link" href="index.php?action=articlesListe&page=' . $j . '">' . $j . '</a>';
                     endif;
 
-                    
+
                     echo '</li>';
                 }
                 ?>
@@ -95,15 +110,15 @@ foreach ($listPosts as $post) {
                         <div class="col-lg-8 mx-auto">
                             <div class="modal-body">
                                 <!-- Project Details Go Here -->
-                                <h2 class="text-uppercase"><?= $post->getTitle() ?> <?php if ((isset($_SESSION['id']))) : ?> <i class="far fa-star"></i><i class="fas fa-star" style="color: #fed136"></i><?php endif; ?></h2>
+                                <h2 class="text-uppercase"><?= $post->getTitle() ?></h2>
                                 <p class="item-intro text-muted"><?= $post->getKicker() ?></p>
                                 <cite title="Auteur" class="item-intro text-muted">Créé par <?= $post->getPseudo() ?> -
-                                    le <?= $post->getCreated_at() ?> / Modifié le <?= $post->getModified_at() ?></cite>
+                                    le <?= $post->getCreated_at() ?> / Modifié le <?= $post->getModified_at() ?><br></cite>
                                 <?= View::generatePictureTag($post) ?>
                                 <p><?= $post->getContent() ?></p>
                                 <button class="btn btn-primary" data-dismiss="modal" type="button">
                                     <i class="fas fa-times"></i>
-                                    Close Article
+                                    Fermer l'article
                                 </button>
                             </div>
                         </div>
@@ -119,16 +134,16 @@ foreach ($listPosts as $post) {
                                 if (empty($post->getComments())) :
                                     ?>
                                     <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire !</h6>
-                                    <?php
+                                <?php
                                 elseif (!empty($post->getComments())) :
-                                foreach ($post->getComments() as $comment) {
-                                    ?>
-                                    <h5 class="text-uppercase"><?= $comment->getTitle() ?></h5>
-                                    <cite title="Auteur" class="item-intro text-muted">Créé
-                                        par <?= $comment->getPseudo() ?> -
-                                        le <?= $comment->getCreated_at() ?></cite>
-                                    <p><?= $comment->getContent() ?></p>
-                                <?php }
+                                    foreach ($post->getComments() as $comment) {
+                                        ?>
+                                        <h5 class="text-uppercase"><?= $comment->getTitle() ?></h5>
+                                        <cite title="Auteur" class="item-intro text-muted">Créé
+                                            par <?= $comment->getPseudo() ?> -
+                                            le <?= $comment->getCreated_at() ?></cite>
+                                        <p><?= $comment->getContent() ?></p>
+                                    <?php }
                                 endif;
                                 ?>
                             </div>

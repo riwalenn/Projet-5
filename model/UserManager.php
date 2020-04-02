@@ -142,6 +142,17 @@ class UserManager extends Connexion
         return $statement->fetch();
     }
 
+    //modification de "date_modification" pour connaitre la dernière date de connexion
+    //"date_modification" sert à plusieurs choses => connexion, modifications sur le compte
+    public function newConnexionDate()
+    {
+        $bdd =$this->dbConnect();
+        $statement = $bdd->prepare('UPDATE `users` SET `date_modification` = NOW() WHERE id = :id');
+        $statement->execute(array(
+            'id' => $_SESSION['id']
+        ));
+    }
+
     /**
      * @param $_SESSION['id']
      * @return User
@@ -149,7 +160,7 @@ class UserManager extends Connexion
     public function getUserBySessionId()
     {
         $bdd =$this->dbConnect();
-        $statement = $bdd->prepare('SELECT * FROM `users` WHERE `id` = :id');
+        $statement = $bdd->prepare('SELECT `id`, `password`, `email`, `pseudo`, `role`, `date_inscription`, `date_modification`, `state` FROM `users` WHERE `id` = :id');
         $statement->execute(array(
             'id' => $_SESSION['id']
         ));

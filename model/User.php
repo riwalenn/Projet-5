@@ -40,77 +40,19 @@ class User extends Post
         }
     }
 
-    // ----- Getters -----
     public function getId()
     {
         return $this->id;
     }
 
-    public function getPseudo()
-    {
-       return $this->pseudo;
-    }
-
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function getDate_inscription()
-    {
-        $date = new DateTime($this->date_inscription);
-        return date_format($date,'d-m-Y');
-    }
-
-    public function getDate_modification()
-    {
-        $date = new DateTime($this->date_modification);
-        return date_format($date,'d-m-Y');
-    }
-
-    public function getCgu()
-    {
-        return $this->cgu;
-    }
-
-    public function getState()
-    {
-        return $this->state;
-    }
-    public function getId_token()
-    {
-        return $this->id_token;
-    }
-
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    public function getId_user()
-    {
-        return $this->id_user;
-    }
-
-    public function getExpiration_token()
-    {
-        return $this->expiration_token;
-    }
-
-    // ----- Setters -----
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    public function getPseudo()
+    {
+       return $this->pseudo;
     }
 
     public function setPseudo($pseudo)
@@ -126,14 +68,24 @@ class User extends Post
                 $message = "Votre pseudo ne doit pas contenir de caractères spéciaux : " . $pseudo;
                 throw new ExceptionOutput($message);
             else:
-               $this->pseudo = $pseudo;
+                $this->pseudo = $pseudo;
             endif;
         endif;
+    }
+
+    public function getRole()
+    {
+        return $this->role;
     }
 
     public function setRole($role)
     {
         $this->role = $role;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
     }
 
     public function setEmail($email)
@@ -146,6 +98,11 @@ class User extends Post
         endif;
     }
 
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
     public function setPassword($password)
     {
         if (preg_match('/^\S*(?=\S{10,64})(?=\S+[a-z])(?=\S+[A-Z])(?=\S+[\d])(?=\S+[\W])\S+$/', $password)):
@@ -156,14 +113,31 @@ class User extends Post
         endif;
     }
 
+    public function getDate_inscription()
+    {
+        $date = new DateTime($this->date_inscription);
+        return date_format($date,'d-m-Y');
+    }
+
     public function setDate_inscription($date_inscription)
     {
         $this->date_inscription = $date_inscription;
     }
 
+    public function getDate_modification()
+    {
+        $date = new DateTime($this->date_modification);
+        return date_format($date,'d-m-Y à H:m');
+    }
+
     public function setDate_modification($date_modification)
     {
         $this->date_modification = $date_modification;
+    }
+
+    public function getCgu()
+    {
+        return $this->cgu;
     }
 
     public function setCgu($cgu)
@@ -176,9 +150,19 @@ class User extends Post
         endif;
     }
 
+    public function getState()
+    {
+        return $this->state;
+    }
+
     public function setState($state)
     {
         $this->state = $state;
+    }
+
+    public function getId_token()
+    {
+        return $this->id_token;
     }
 
     public function setId_token($id_token)
@@ -186,9 +170,19 @@ class User extends Post
         $this->id = $id_token;
     }
 
+    public function getToken()
+    {
+        return $this->token;
+    }
+
     public function setToken($token)
     {
         $this->token = $token;
+    }
+
+    public function getId_user()
+    {
+        return $this->id_user;
     }
 
     public function setId_user($id_user)
@@ -196,50 +190,23 @@ class User extends Post
         $this->id_user = $id_user;
     }
 
+    public function getExpiration_token()
+    {
+        return $this->expiration_token;
+    }
+
     public function setExpiration_token($expiration_token)
     {
         $this->expiration_token = $expiration_token;
     }
 
-    static function helpPseudo()
-    {
-        $html = "<p class='pseudo-popup'>Votre pseudo doit contenir au minimum 4 caractères, les caractères spéciaux sont interdits.</p>";
 
-        return $html;
-    }
-
-    static function helpPassword()
-    {
-        $html = "<p class='password-popup'>Voici quelques conseils pour vous aider à mieux sécuriser votre vie dématérialisée." . "<br>\n" .
-            "- Utilisez un mot de passe <u>unique</u> pour chaque service. En particulier, l’utilisation d’un même " . "<br>\n" .
-            "mot de passe entre sa messagerie professionnelle et sa messagerie personnelle est impérativement à proscrire ;" . "<br>\n" .
-            "- Choisissez un mot de passe <u>qui n’a pas de lien avec vous</u> (mot de passe composé d’un nom de société," . "<br>\n" .
-            "d’une date de naissance, etc.) ;" . "<br>\n" .
-            "- Ne demandez <u>jamais</u> à un tiers de générer pour vous un mot de passe ;" . "<br>\n" .
-            "- Modifiez systématiquement et au plus tôt les mots de passe par défaut lorsque les systèmes en contiennent ;" . "<br>\n" .
-            "- <u>Renouvelez vos mots de passe avec une fréquence raisonnable</u>. Tous les 90 jours est un bon compromis" . "<br>\n" .
-            "pour les systèmes contenant des données sensibles ;" . "<br>\n" .
-            "- <u>Ne stockez pas</u> les mots de passe dans un fichier sur un poste informatique particulièrement exposé au risque" . "<br>\n" .
-            "(exemple : en ligne sur Internet), encore moins sur un papier facilement accessible ;" . "<br>\n" .
-            "- Ne vous envoyez pas vos propres mots de passe <u>sur votre messagerie personnelle</u> ;" . "<br>\n" .
-            "- Configurez les logiciels, y compris votre navigateur web, <u>pour qu’ils ne se « souviennent » pas" . "<br>\n" .
-            " des mots de passe choisis.</u>" . "<br>\n" .
-            "<b>Votre mot de passe doit obligatoirement contenir :</b> " . "<br>\n" .
-            "- des majuscules et minuscules," . "<br>\n" .
-            "- des caractères spéciaux indiqués ci-après : @-_&*!%:;#~^" . "<br>\n" .
-            "- les caractères tels que é,ç,+,à,è,`,(,),[,],{,},°,|,\,',\",/,?,\ et la , ne sont pas autorisés," . "<br>\n" .
-            "- des chiffres," . "<br>\n" .
-            "- il doit comporter au minimum 10 caractères et 64 au maximum.</p>";
-
-        return $html;
-    }
 
     public function generateToken($length = 32) {
         $token = random_bytes($length);
         return bin2hex($token);
     }
 
-    //A voir si je peux passer un deuxième paramètre et supprimer cette fonction !
     public function sendTokenForPassword($list) {
         foreach ($list as $value) :
             if(empty($list)) :
@@ -280,5 +247,40 @@ class User extends Post
             mail($to,$email_subject,$email_body,$headers);
         endforeach;
         return true;
+    }
+
+    // --- Statics functions
+
+    static function helpPseudo()
+    {
+        $html = "<p class='pseudo-popup'>Votre pseudo doit contenir au minimum 4 caractères, les caractères spéciaux sont interdits.</p>";
+
+        return $html;
+    }
+
+    static function helpPassword()
+    {
+        $html = "<p class='password-popup'>Voici quelques conseils pour vous aider à mieux sécuriser votre vie dématérialisée." . "<br>\n" .
+            "- Utilisez un mot de passe <u>unique</u> pour chaque service. En particulier, l’utilisation d’un même " . "<br>\n" .
+            "mot de passe entre sa messagerie professionnelle et sa messagerie personnelle est impérativement à proscrire ;" . "<br>\n" .
+            "- Choisissez un mot de passe <u>qui n’a pas de lien avec vous</u> (mot de passe composé d’un nom de société," . "<br>\n" .
+            "d’une date de naissance, etc.) ;" . "<br>\n" .
+            "- Ne demandez <u>jamais</u> à un tiers de générer pour vous un mot de passe ;" . "<br>\n" .
+            "- Modifiez systématiquement et au plus tôt les mots de passe par défaut lorsque les systèmes en contiennent ;" . "<br>\n" .
+            "- <u>Renouvelez vos mots de passe avec une fréquence raisonnable</u>. Tous les 90 jours est un bon compromis" . "<br>\n" .
+            "pour les systèmes contenant des données sensibles ;" . "<br>\n" .
+            "- <u>Ne stockez pas</u> les mots de passe dans un fichier sur un poste informatique particulièrement exposé au risque" . "<br>\n" .
+            "(exemple : en ligne sur Internet), encore moins sur un papier facilement accessible ;" . "<br>\n" .
+            "- Ne vous envoyez pas vos propres mots de passe <u>sur votre messagerie personnelle</u> ;" . "<br>\n" .
+            "- Configurez les logiciels, y compris votre navigateur web, <u>pour qu’ils ne se « souviennent » pas" . "<br>\n" .
+            " des mots de passe choisis.</u>" . "<br>\n" .
+            "<b>Votre mot de passe doit obligatoirement contenir :</b> " . "<br>\n" .
+            "- des majuscules et minuscules," . "<br>\n" .
+            "- des caractères spéciaux indiqués ci-après : @-_&*!%:;#~^" . "<br>\n" .
+            "- les caractères tels que é,ç,+,à,è,`,(,),[,],{,},°,|,\,',\",/,?,\ et la , ne sont pas autorisés," . "<br>\n" .
+            "- des chiffres," . "<br>\n" .
+            "- il doit comporter au minimum 10 caractères et 64 au maximum.</p>";
+
+        return $html;
     }
 }
