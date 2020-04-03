@@ -12,6 +12,10 @@ try
                 $controller->afficherListeArticles();
                 break;
 
+            case 'addComment' :
+                $controller->ajoutCommentaire();
+                break;
+
             case 'recherche' :
                 $controller->afficherResultatRecherche();
                 break;

@@ -179,23 +179,77 @@ if ((isset($_SESSION['id']))) : ?>
                         <div class="row">
                             <div class="col-lg-8 mx-auto">
                                 <div class="modal-body">
-                                    <h4>Commentaires</h4>
-                                    <hr>
                                     <?php
                                     if (empty($post->getComments())) :
                                         ?>
-                                        <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire
-                                            !</h6>
-                                    <?php
-                                    endif;
-                                    foreach ($post->getComments() as $comment) {
+                                        <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire !</h6>
+                                        <?php
+                                        if (!empty($_SESSION['id']) && $_SESSION['role']) :
+                                            ?>
+                                            <hr>
+                                            <hr>
+                                            <h5>Ecrire un commentaire</h5>
+                                            <div class="comment-form">
+                                                <form action="index.php?action=addComment" method="post">
+                                                    <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
+                                                    <div><label>Titre du commentaire :</label></div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="far fa-file-alt"></i></span>
+                                                        </div>
+                                                        <input class="form-control form-control-sm" placeholder="entrez titre de commentaire ici" aria-label="title" type="text" name="title" required>
+                                                    </div>
+                                                    <div><label>Commentaire :</label></div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-comments"></i></span>
+                                                        </div>
+                                                        <input class="form-control form-control-sm" placeholder="entrez votre commentaire ici" aria-label="commentaire" type="text" name="content" required>
+                                                    </div>
+                                                    <button class="btn btn-primary my-2 my-sm-0" aria-label="envoyer" type="submit" value="commentaire">envoyer mon commentaire</button>
+                                                </form>
+                                            </div>
+                                        <?php
+                                        endif;
+                                    elseif (!empty($post->getComments())) :
+                                        if (!empty($_SESSION['id']) && $_SESSION['role']) :
+                                            ?>
+                                            <hr>
+                                            <hr>
+                                            <h5>Ecrire un commentaire</h5>
+                                            <div class="comment-form">
+                                                <form action="index.php?action=addComment" method="post">
+                                                    <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
+                                                    <div><label>Titre du commentaire :</label></div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="far fa-file-alt"></i></span>
+                                                        </div>
+                                                        <input class="form-control form-control-sm" placeholder="entrez titre de commentaire ici" aria-label="title" type="text" name="title" required>
+                                                    </div>
+                                                    <div><label>Commentaire :</label></div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-comments"></i></span>
+                                                        </div>
+                                                        <input class="form-control form-control-sm" placeholder="entrez votre commentaire ici" aria-label="commentaire" type="text" name="content" required>
+                                                    </div>
+                                                    <button class="btn btn-primary my-2 my-sm-0" aria-label="envoyer" type="submit" value="commentaire">envoyer mon commentaire</button>
+                                                </form>
+                                            </div>
+                                        <?php
+                                        endif;
                                         ?>
-                                        <h5 class="text-uppercase"><?= $comment->getTitle() ?></h5>
-                                        <cite title="Auteur" class="item-intro text-muted">Créé
-                                            par <?= $comment->getPseudo() ?> -
-                                            le <?= $comment->getCreated_at() ?></cite>
-                                        <p><?= $comment->getContent() ?></p>
-                                    <?php } ?>
+                                        <hr>
+                                        <hr>
+                                        <h4>Commentaires</h4>
+                                        <?php
+                                        foreach ($post->getComments() as $comment) {
+                                            ?>
+                                            <p><?= $comment->getCreated_at() ?> - <b><?= $comment->getTitle() ?> : </b><?= $comment->getContent() ?> <cite title="Auteur" class="item-intro text-muted">// par <?= $comment->getPseudo() ?></cite></p>
+                                        <?php }
+                                    endif;
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -241,23 +295,77 @@ if ((isset($_SESSION['id']))) : ?>
                         <div class="row">
                             <div class="col-lg-8 mx-auto">
                                 <div class="modal-body">
-                                    <h4>Commentaires</h4>
-                                    <hr>
                                     <?php
                                     if (empty($post->getComments())) :
                                         ?>
-                                        <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire
-                                            !</h6>
-                                    <?php
-                                    endif;
-                                    foreach ($post->getComments() as $comment) {
+                                        <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire !</h6>
+                                        <?php
+                                        if (!empty($_SESSION['id']) && $_SESSION['role']) :
+                                            ?>
+                                            <hr>
+                                            <hr>
+                                            <h5>Ecrire un commentaire</h5>
+                                            <div class="comment-form">
+                                                <form action="index.php?action=addComment" method="post">
+                                                    <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
+                                                    <div><label>Titre du commentaire :</label></div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="far fa-file-alt"></i></span>
+                                                        </div>
+                                                        <input class="form-control form-control-sm" placeholder="entrez titre de commentaire ici" aria-label="title" type="text" name="title" required>
+                                                    </div>
+                                                    <div><label>Commentaire :</label></div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-comments"></i></span>
+                                                        </div>
+                                                        <input class="form-control form-control-sm" placeholder="entrez votre commentaire ici" aria-label="commentaire" type="text" name="content" required>
+                                                    </div>
+                                                    <button class="btn btn-primary my-2 my-sm-0" aria-label="envoyer" type="submit" value="commentaire">envoyer mon commentaire</button>
+                                                </form>
+                                            </div>
+                                        <?php
+                                        endif;
+                                    elseif (!empty($post->getComments())) :
+                                        if (!empty($_SESSION['id']) && $_SESSION['role']) :
+                                            ?>
+                                            <hr>
+                                            <hr>
+                                            <h5>Ecrire un commentaire</h5>
+                                            <div class="comment-form">
+                                                <form action="index.php?action=addComment" method="post">
+                                                    <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
+                                                    <div><label>Titre du commentaire :</label></div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="far fa-file-alt"></i></span>
+                                                        </div>
+                                                        <input class="form-control form-control-sm" placeholder="entrez titre de commentaire ici" aria-label="title" type="text" name="title" required>
+                                                    </div>
+                                                    <div><label>Commentaire :</label></div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-comments"></i></span>
+                                                        </div>
+                                                        <input class="form-control form-control-sm" placeholder="entrez votre commentaire ici" aria-label="commentaire" type="text" name="content" required>
+                                                    </div>
+                                                    <button class="btn btn-primary my-2 my-sm-0" aria-label="envoyer" type="submit" value="commentaire">envoyer mon commentaire</button>
+                                                </form>
+                                            </div>
+                                        <?php
+                                        endif;
                                         ?>
-                                        <h5 class="text-uppercase"><?= $comment->getTitle() ?></h5>
-                                        <cite title="Auteur" class="item-intro text-muted">Créé
-                                            par <?= $comment->getPseudo() ?> -
-                                            le <?= $comment->getCreated_at() ?></cite>
-                                        <p><?= $comment->getContent() ?></p>
-                                    <?php } ?>
+                                        <hr>
+                                        <hr>
+                                        <h4>Commentaires</h4>
+                                        <?php
+                                        foreach ($post->getComments() as $comment) {
+                                            ?>
+                                            <p><?= $comment->getCreated_at() ?> - <b><?= $comment->getTitle() ?> : </b><?= $comment->getContent() ?> <cite title="Auteur" class="item-intro text-muted">// par <?= $comment->getPseudo() ?></cite></p>
+                                        <?php }
+                                    endif;
+                                    ?>
                                 </div>
                             </div>
                         </div>

@@ -376,6 +376,19 @@ class ControllerFront
         $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
     }
 
+    // Ajout d'un commentaire pour un utilisateur connecté
+    public function ajoutCommentaire()
+    {
+        $comment = new Comment($_REQUEST);
+        $comment->setPseudo($_SESSION['id']);
+        $comment->setState(0);
+
+        $commentManager = new CommentManager();
+        $commentManager->addComment($comment);
+
+        $this->afficherListeArticles();
+    }
+
     /**
      * --------- BACKEND ADMIN ---------
      */
