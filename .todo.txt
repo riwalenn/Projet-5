@@ -50,7 +50,8 @@ TODO:
 
 - Commentaires à faire !!!
     ✔ si non connecté => lecture des commentaires
-    - si connecté => possibilité de laisser un commentaire modéré par la suite
+    ✔ si connecté => possibilité de laisser un commentaire modéré par la suite
+    - ajout d'un commentaire depuis le dashboard
 
 
 - REFAIRE MES SCHEMAS UML

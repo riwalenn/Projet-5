@@ -12,6 +12,10 @@ try
                 $controller->afficherListeArticles();
                 break;
 
+            case 'addComment' :
+                $controller->ajoutCommentaire();
+                break;
+
             case 'recherche' :
                 $controller->afficherResultatRecherche();
                 break;
@@ -62,7 +66,7 @@ try
                 break;
 
             case 'confirmationInscriptionByEmail' :
-               $controller->confirmationByToken();
+                $controller->confirmationByToken();
                 break;
 
             // Affiche le formulaire
@@ -101,7 +105,7 @@ catch (ExceptionOutput $e) {
 
 catch (InvalidArgumentException $e)
 {
-   $controller->erreur();
+    $controller->erreur();
 }
 
 catch (Exception $e) {

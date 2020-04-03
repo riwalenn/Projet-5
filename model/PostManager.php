@@ -92,11 +92,11 @@ class PostManager extends Connexion
         return $resultat['nb_favorites'];
     }
 
-     public function fillFavoriteInPost(User $user, Post $post)
-     {
-         $favorite = $this->getFavorite($user->getId(), $post->getId());
-         $post->setStatut_favorite($favorite);
-     }
+    public function fillFavoriteInPost(User $user, Post $post)
+    {
+        $favorite = $this->getFavorite($user->getId(), $post->getId());
+        $post->setStatut_favorite($favorite);
+    }
 
     //Supprime un article des favoris par l'utilisateur connecté
     public function deleteFavoritePostByIdUser(User $user, Favorites_posts $favorites)

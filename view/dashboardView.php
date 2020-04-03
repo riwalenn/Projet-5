@@ -8,7 +8,7 @@ if ((isset($_SESSION['id']))) : ?>
                         <img src="../ressources/img/dashboard/profil.jpg" class="img_dashboard"/>
                         <div class="card-header">
                             <blockquote class="blockquote mb-0">
-                            <footer class="blockquote-footer">Dernière connexion : <?= $user->getDate_modification() ?></footer>
+                                <footer class="blockquote-footer">Dernière connexion : <?= $user->getDate_modification() ?></footer>
                             </blockquote>
                         </div>
                         <div class="card-body articles-caption">
@@ -37,15 +37,15 @@ if ((isset($_SESSION['id']))) : ?>
                             <table width="100%">
                                 <thead><tr><th></th><th></th> </tr></thead>
                                 <tbody>
-                            <?php foreach ($favoritesPosts as $post) : ?>
-                                <form action="index.php?action=deleteFavorite" method="post">
-                                    <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
+                                <?php foreach ($favoritesPosts as $post) : ?>
+                                    <form action="index.php?action=deleteFavorite" method="post">
+                                        <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
                                         <tr>
                                             <td><p class="favorites-posts-links"><a class="articles-link" data-toggle="modal" href="#articlesModal<?= $post->getId() ?>"><i class="fas fa-star" style="color: #fed136"></i> <?= $post->getTitle() ?></a></p></td>
                                             <td><button class="btn btn-link" aria-label="supprimer" type="submit" value="deletion"><i class="far fa-trash-alt" style="color: red;"></i></button></td>
                                         </tr>
-                                </form>
-                            <?php endforeach; ?>
+                                    </form>
+                                <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -59,7 +59,7 @@ if ((isset($_SESSION['id']))) : ?>
                         <img src="../ressources/img/dashboard/articles.jpg" class="img_dashboard"/>
                         <div class="card-header">
                             <blockquote class="blockquote mb-0">
-                            <footer class="blockquote-footer">Articles (triés par ordre de date décroissant)</footer>
+                                <footer class="blockquote-footer">Articles (triés par ordre de date décroissant)</footer>
                             </blockquote>
                         </div>
                         <div class="card-body articles-caption">
@@ -67,17 +67,17 @@ if ((isset($_SESSION['id']))) : ?>
                             <?php foreach ($lastPosts as $post) : ?>
                                 <h5><b><a class="articles-link" data-toggle="modal" href="#articlesModal<?= $post->getId() ?>"><?= $post->getTitle() ?></a></b></h5>
                                 <footer class="blockquote-footer">Modifié le : <?= $post->getModified_at() ?></footer>
-                            <?php  if ($post->getStatut_favorite() == 1) : ?>
-                                <footer class="blockquote-footer">
-                                    Cet article fait parti de vos favoris <i class="fas fa-star" style="color: #fed136"></i><br>
-                                </footer>
-                            <?php elseif ($post->getStatut_favorite() != 1) : ?>
-                                <form action="index.php?action=addFavorite" method="post">
-                                    <input type="hidden" name="id_post" value="<?= $post->getid() ?>">
+                                <?php  if ($post->getStatut_favorite() == 1) : ?>
                                     <footer class="blockquote-footer">
-                                        Ajouter l'article à vos favoris :  <button class="btn btn-light" data-dismiss="modal" type="submit"><i class="fa fa-plus-square" style="color:#11dbba; "></i></button><br>
+                                        Cet article fait parti de vos favoris <i class="fas fa-star" style="color: #fed136"></i><br>
                                     </footer>
-                                </form>
+                                <?php elseif ($post->getStatut_favorite() != 1) : ?>
+                                    <form action="index.php?action=addFavorite" method="post">
+                                        <input type="hidden" name="id_post" value="<?= $post->getid() ?>">
+                                        <footer class="blockquote-footer">
+                                            Ajouter l'article à vos favoris :  <button class="btn btn-light" data-dismiss="modal" type="submit"><i class="fa fa-plus-square" style="color:#11dbba; "></i></button><br>
+                                        </footer>
+                                    </form>
                                 <?php endif; ?>
                                 <p class="text-muted"><?= substr($post->getKicker(), 0, 50) . "..." ?></p>
                             <?php endforeach; ?>
@@ -90,59 +90,59 @@ if ((isset($_SESSION['id']))) : ?>
             </div>
     </section>
     <!-- Modal modifs user -->
-<div class="articles-modal modal fade" id="formModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl"></div>
+    <div class="articles-modal modal fade" id="formModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <div class="modal-body">
-                            <h5>Modification de mes données</h5>
-                            <form id="formDataUser" action="index.php?action=modifDataUser" method="post" onsubmit="return verifForm(this)">
-                                <input type="hidden" value="<?= $_SESSION['id'] ?>" name="id" id="id">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-ninja"></i></span>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="modal-body">
+                                <h5>Modification de mes données</h5>
+                                <form id="formDataUser" action="index.php?action=modifDataUser" method="post" onsubmit="return verifForm(this)">
+                                    <input type="hidden" value="<?= $_SESSION['id'] ?>" name="id" id="id">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-ninja"></i></span>
+                                        </div>
+                                        <input type="text" id="pseudo" class="form-control form-control-sm" placeholder="entrez votre pseudonyme ici" name="pseudo" aria-label="Pseudonyme" aria-describedby="basic-addon1" onkeyup="verifPseudo(this)" value="<?= $user->getPseudo() ?>" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="fas fa-pen" data-toggle="tooltip" data-placement="right"></i></span>
+                                        </div>
                                     </div>
-                                    <input type="text" id="pseudo" class="form-control form-control-sm" placeholder="entrez votre pseudonyme ici" name="pseudo" aria-label="Pseudonyme" aria-describedby="basic-addon1" onkeyup="verifPseudo(this)" value="<?= $user->getPseudo() ?>" required>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fas fa-pen" data-toggle="tooltip" data-placement="right"></i></span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
+                                        </div>
+                                        <input id="email" class="form-control form-control-sm" placeholder="entrez votre email ici" aria-label="email" type="email" name="email" value="<?= $user->getEmail() ?>" onkeyup="verifEmail(this)" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="fas fa-pen" data-toggle="tooltip" data-placement="right"></i></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+                                        </div>
+                                        <input id="password" class="form-control form-control-sm classeMdp" placeholder="merci d'entrer votre mot de passe pour valider vos informations" aria-label="password" type="password" name="password" maxlength="64" minlength="10" onkeyup="verifPassword(this)" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="fas fa-pen" data-toggle="tooltip" data-placement="right" title="Cliquez ici pour avoir plus d'infos !"></i></span>
+                                        </div>
                                     </div>
-                                    <input id="email" class="form-control form-control-sm" placeholder="entrez votre email ici" aria-label="email" type="email" name="email" value="<?= $user->getEmail() ?>" onkeyup="verifEmail(this)" required>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fas fa-pen" data-toggle="tooltip" data-placement="right"></i></span>
-                                    </div>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
-                                    </div>
-                                    <input id="password" class="form-control form-control-sm classeMdp" placeholder="merci d'entrer votre mot de passe pour valider vos informations" aria-label="password" type="password" name="password" maxlength="64" minlength="10" onkeyup="verifPassword(this)" required>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fas fa-pen" data-toggle="tooltip" data-placement="right" title="Cliquez ici pour avoir plus d'infos !"></i></span>
-                                    </div>
-                                </div>
-                                <p>Si vous avez oublié votre mot de passe ou que vous souhaitez le changer<br> merci d'utiliser le <a href="index.php?action=forgotPassword">formulaire dédié</a>.<br> Le champ ci-dessus n'étant utilisé que pour valider vos informations.</p>
-                                <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="Modification">Modifier mes données</button>
-                            </form>
+                                    <p>Si vous avez oublié votre mot de passe ou que vous souhaitez le changer<br> merci d'utiliser le <a href="index.php?action=forgotPassword">formulaire dédié</a>.<br> Le champ ci-dessus n'étant utilisé que pour valider vos informations.</p>
+                                    <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="Modification">Modifier mes données</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
-</div>
     <!-- Modal 3 derniers posts -->
     <?php
     foreach ($lastPosts as $post) {
@@ -179,23 +179,77 @@ if ((isset($_SESSION['id']))) : ?>
                         <div class="row">
                             <div class="col-lg-8 mx-auto">
                                 <div class="modal-body">
-                                    <h4>Commentaires</h4>
-                                    <hr>
                                     <?php
                                     if (empty($post->getComments())) :
                                         ?>
-                                        <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire
-                                            !</h6>
-                                    <?php
-                                    endif;
-                                    foreach ($post->getComments() as $comment) {
+                                        <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire !</h6>
+                                        <?php
+                                        if (!empty($_SESSION['id']) && $_SESSION['role']) :
+                                            ?>
+                                            <hr>
+                                            <hr>
+                                            <h5>Ecrire un commentaire</h5>
+                                            <div class="comment-form">
+                                                <form action="index.php?action=addComment" method="post">
+                                                    <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
+                                                    <div><label>Titre du commentaire :</label></div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="far fa-file-alt"></i></span>
+                                                        </div>
+                                                        <input class="form-control form-control-sm" placeholder="entrez titre de commentaire ici" aria-label="title" type="text" name="title" required>
+                                                    </div>
+                                                    <div><label>Commentaire :</label></div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-comments"></i></span>
+                                                        </div>
+                                                        <input class="form-control form-control-sm" placeholder="entrez votre commentaire ici" aria-label="commentaire" type="text" name="content" required>
+                                                    </div>
+                                                    <button class="btn btn-primary my-2 my-sm-0" aria-label="envoyer" type="submit" value="commentaire">envoyer mon commentaire</button>
+                                                </form>
+                                            </div>
+                                        <?php
+                                        endif;
+                                    elseif (!empty($post->getComments())) :
+                                        if (!empty($_SESSION['id']) && $_SESSION['role']) :
+                                            ?>
+                                            <hr>
+                                            <hr>
+                                            <h5>Ecrire un commentaire</h5>
+                                            <div class="comment-form">
+                                                <form action="index.php?action=addComment" method="post">
+                                                    <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
+                                                    <div><label>Titre du commentaire :</label></div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="far fa-file-alt"></i></span>
+                                                        </div>
+                                                        <input class="form-control form-control-sm" placeholder="entrez titre de commentaire ici" aria-label="title" type="text" name="title" required>
+                                                    </div>
+                                                    <div><label>Commentaire :</label></div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-comments"></i></span>
+                                                        </div>
+                                                        <input class="form-control form-control-sm" placeholder="entrez votre commentaire ici" aria-label="commentaire" type="text" name="content" required>
+                                                    </div>
+                                                    <button class="btn btn-primary my-2 my-sm-0" aria-label="envoyer" type="submit" value="commentaire">envoyer mon commentaire</button>
+                                                </form>
+                                            </div>
+                                        <?php
+                                        endif;
                                         ?>
-                                        <h5 class="text-uppercase"><?= $comment->getTitle() ?></h5>
-                                        <cite title="Auteur" class="item-intro text-muted">Créé
-                                            par <?= $comment->getPseudo() ?> -
-                                            le <?= $comment->getCreated_at() ?></cite>
-                                        <p><?= $comment->getContent() ?></p>
-                                    <?php } ?>
+                                        <hr>
+                                        <hr>
+                                        <h4>Commentaires</h4>
+                                        <?php
+                                        foreach ($post->getComments() as $comment) {
+                                            ?>
+                                            <p><?= $comment->getCreated_at() ?> - <b><?= $comment->getTitle() ?> : </b><?= $comment->getContent() ?> <cite title="Auteur" class="item-intro text-muted">// par <?= $comment->getPseudo() ?></cite></p>
+                                        <?php }
+                                    endif;
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -205,9 +259,9 @@ if ((isset($_SESSION['id']))) : ?>
         </div>
     <?php } ?>
 
- <!-- Modal posts favoris -->
+    <!-- Modal posts favoris -->
     <?php
-        foreach ($favoritesPosts as $post)  {
+    foreach ($favoritesPosts as $post)  {
         ?>
         <div class="articles-modal modal fade" id="articlesModal<?= $post->getId() ?>" tabindex="-1" role="dialog"
              aria-hidden="true">
@@ -241,23 +295,77 @@ if ((isset($_SESSION['id']))) : ?>
                         <div class="row">
                             <div class="col-lg-8 mx-auto">
                                 <div class="modal-body">
-                                    <h4>Commentaires</h4>
-                                    <hr>
                                     <?php
                                     if (empty($post->getComments())) :
                                         ?>
-                                        <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire
-                                            !</h6>
-                                    <?php
-                                    endif;
-                                    foreach ($post->getComments() as $comment) {
+                                        <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire !</h6>
+                                        <?php
+                                        if (!empty($_SESSION['id']) && $_SESSION['role']) :
+                                            ?>
+                                            <hr>
+                                            <hr>
+                                            <h5>Ecrire un commentaire</h5>
+                                            <div class="comment-form">
+                                                <form action="index.php?action=addComment" method="post">
+                                                    <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
+                                                    <div><label>Titre du commentaire :</label></div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="far fa-file-alt"></i></span>
+                                                        </div>
+                                                        <input class="form-control form-control-sm" placeholder="entrez titre de commentaire ici" aria-label="title" type="text" name="title" required>
+                                                    </div>
+                                                    <div><label>Commentaire :</label></div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-comments"></i></span>
+                                                        </div>
+                                                        <input class="form-control form-control-sm" placeholder="entrez votre commentaire ici" aria-label="commentaire" type="text" name="content" required>
+                                                    </div>
+                                                    <button class="btn btn-primary my-2 my-sm-0" aria-label="envoyer" type="submit" value="commentaire">envoyer mon commentaire</button>
+                                                </form>
+                                            </div>
+                                        <?php
+                                        endif;
+                                    elseif (!empty($post->getComments())) :
+                                        if (!empty($_SESSION['id']) && $_SESSION['role']) :
+                                            ?>
+                                            <hr>
+                                            <hr>
+                                            <h5>Ecrire un commentaire</h5>
+                                            <div class="comment-form">
+                                                <form action="index.php?action=addComment" method="post">
+                                                    <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
+                                                    <div><label>Titre du commentaire :</label></div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="far fa-file-alt"></i></span>
+                                                        </div>
+                                                        <input class="form-control form-control-sm" placeholder="entrez titre de commentaire ici" aria-label="title" type="text" name="title" required>
+                                                    </div>
+                                                    <div><label>Commentaire :</label></div>
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-comments"></i></span>
+                                                        </div>
+                                                        <input class="form-control form-control-sm" placeholder="entrez votre commentaire ici" aria-label="commentaire" type="text" name="content" required>
+                                                    </div>
+                                                    <button class="btn btn-primary my-2 my-sm-0" aria-label="envoyer" type="submit" value="commentaire">envoyer mon commentaire</button>
+                                                </form>
+                                            </div>
+                                        <?php
+                                        endif;
                                         ?>
-                                        <h5 class="text-uppercase"><?= $comment->getTitle() ?></h5>
-                                        <cite title="Auteur" class="item-intro text-muted">Créé
-                                            par <?= $comment->getPseudo() ?> -
-                                            le <?= $comment->getCreated_at() ?></cite>
-                                        <p><?= $comment->getContent() ?></p>
-                                    <?php } ?>
+                                        <hr>
+                                        <hr>
+                                        <h4>Commentaires</h4>
+                                        <?php
+                                        foreach ($post->getComments() as $comment) {
+                                            ?>
+                                            <p><?= $comment->getCreated_at() ?> - <b><?= $comment->getTitle() ?> : </b><?= $comment->getContent() ?> <cite title="Auteur" class="item-intro text-muted">// par <?= $comment->getPseudo() ?></cite></p>
+                                        <?php }
+                                    endif;
+                                    ?>
                                 </div>
                             </div>
                         </div>

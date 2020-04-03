@@ -50,7 +50,7 @@
                             <a class="dropdown-item" href="index.php?action=backendDashboard">Voir profil</a>
                         <?php endif; ?>
                         <div class="dropdown-divider"></div>
-                            <a class="nav-link js-scroll-trigger deco" href="index.php?action=logoutUser">Se déconnecter</a>
+                        <a class="nav-link js-scroll-trigger deco" href="index.php?action=logoutUser">Se déconnecter</a>
                         <?php endif; ?>
                     </div>
                 </li>
