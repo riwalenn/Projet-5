@@ -94,10 +94,10 @@ class UserManager extends Connexion
     public function registrationConfirmationByAdmin(User $user)
     {
         $bdd = $this->dbConnect();
-            $statement = $bdd->prepare('UPDATE `users` SET `state` = :state, `date_modification` = NOW()');
-            $statement->execute(array(
-                'state' => $user->getState()
-            ));
+        $statement = $bdd->prepare('UPDATE `users` SET `state` = :state, `date_modification` = NOW()');
+        $statement->execute(array(
+            'state' => $user->getState()
+        ));
 
     }
 

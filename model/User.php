@@ -52,7 +52,7 @@ class User extends Post
 
     public function getPseudo()
     {
-       return $this->pseudo;
+        return $this->pseudo;
     }
 
     public function setPseudo($pseudo)

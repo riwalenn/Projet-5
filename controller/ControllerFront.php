@@ -44,60 +44,60 @@ class ControllerFront
                 $_SESSION['id'] = $user->getId();
                 $_SESSION['role'] = $user->getRole();
 
-            switch (true)
-            {
-                /** Role : Administrateur && Statut : actif */
-                case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::ACTIVE) :
-                    $view = new View('Tableau de bord');
-                    $view->render('view/dashboardAdminView.php', ['user' => $user]);
-                    break;
+                switch (true)
+                {
+                    /** Role : Administrateur && Statut : actif */
+                    case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::ACTIVE) :
+                        $view = new View('Tableau de bord');
+                        $view->render('view/dashboardAdminView.php', ['user' => $user]);
+                        break;
 
-                /** Role : Administrateur && Statut : inactif */
-                case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() != Constantes::ACTIVE) :
-                    $message = 'Vous n\'avez pas les autorisations pour accéder à cette page.';
-                    throw new ExceptionOutput($message);
-                    break;
+                    /** Role : Administrateur && Statut : inactif */
+                    case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() != Constantes::ACTIVE) :
+                        $message = 'Vous n\'avez pas les autorisations pour accéder à cette page.';
+                        throw new ExceptionOutput($message);
+                        break;
 
-                /** Role : Utilisateur && Statut : en attente de validation */
-                case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == 0) :
-                    $message = 'Vous n\'avez pas validé votre inscription, un email vous a été envoyé avec un lien vous permettant de le faire ! (vérifiez vos spams) ';
-                    throw new ExceptionOutput($message);
-                    break;
+                    /** Role : Utilisateur && Statut : en attente de validation */
+                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == 0) :
+                        $message = 'Vous n\'avez pas validé votre inscription, un email vous a été envoyé avec un lien vous permettant de le faire ! (vérifiez vos spams) ';
+                        throw new ExceptionOutput($message);
+                        break;
 
-                /** Role : Utilisateur && Statut : en attente de validation d'un modérateur */
-                case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == 1) :
-                    $message = 'Vous n\'avez pas encore été validé par un modérateur, merci de patienter cela devrait se faire d\'ici 24 heures.';
-                    throw new ExceptionOutput($message);
-                    break;
+                    /** Role : Utilisateur && Statut : en attente de validation d'un modérateur */
+                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == 1) :
+                        $message = 'Vous n\'avez pas encore été validé par un modérateur, merci de patienter cela devrait se faire d\'ici 24 heures.';
+                        throw new ExceptionOutput($message);
+                        break;
 
-                /** Role : Utilisateur && Statut : actif */
-                case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::ACTIVE) :
-                    $this->getDashboardUser();
-                    $userManager->newConnexionDate();
-                    break;
+                    /** Role : Utilisateur && Statut : actif */
+                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::ACTIVE) :
+                        $this->getDashboardUser();
+                        $userManager->newConnexionDate();
+                        break;
 
-                /** Role : Utilisateur && Statut : supprimé */
-                case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == 3) :
-                    $message = 'Votre compte n\'existe plus/pas.';
-                    throw new ExceptionOutput($message);
-                    break;
+                    /** Role : Utilisateur && Statut : supprimé */
+                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == 3) :
+                        $message = 'Votre compte n\'existe plus/pas.';
+                        throw new ExceptionOutput($message);
+                        break;
 
-                /** Statut : inconnu */
-                case ($user->getState() > 3) :
-                    $message = 'Vos informations de connexion ne correspondent pas.';
-                    throw new ExceptionOutput($message);
-                    break;
+                    /** Statut : inconnu */
+                    case ($user->getState() > 3) :
+                        $message = 'Vos informations de connexion ne correspondent pas.';
+                        throw new ExceptionOutput($message);
+                        break;
 
-                /** Role : inconnu */
-                case ($user->getRole() < 1 || $user->getRole() > 2) :
-                    $message = 'Vos informations de connexion ne correspondent pas.';
-                    throw new ExceptionOutput($message);
-                    break;
+                    /** Role : inconnu */
+                    case ($user->getRole() < 1 || $user->getRole() > 2) :
+                        $message = 'Vos informations de connexion ne correspondent pas.';
+                        throw new ExceptionOutput($message);
+                        break;
 
-                case 'default':
-                    $this->afficherIndex();
-                    break;
-            }
+                    case 'default':
+                        $this->afficherIndex();
+                        break;
+                }
 
             /** si les mots de passe ne correspondent pas */
             else:
@@ -187,7 +187,7 @@ class ControllerFront
             $postManager = new PostManager();
             $nbFavorites = $postManager->countFavoritesPostUser($user);
             if ($nbFavorites < 7) :
-            $postManager->addFavoritePostByIdUser($user, $postFavoris);
+                $postManager->addFavoritePostByIdUser($user, $postFavoris);
             elseif($nbFavorites >= 7) :
                 $message = 'Vous avez atteint le nombre maximal de favoris.';
                 throw new ExceptionOutput($message);

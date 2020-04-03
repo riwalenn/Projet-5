@@ -27,7 +27,7 @@
             </div>
             <div class="form-group">
                 <small><input type="checkbox" id="invalidCheck" value="1" name="cgu" onkeyup="verifCgu(this)" required>
-               Je déclare avoir lu les <a href="#conditionsModal" data-toggle="modal">mentions légales</a> avant de m'être inscrit et en accepte les conditions d'utilisation.</small>
+                    Je déclare avoir lu les <a href="#conditionsModal" data-toggle="modal">mentions légales</a> avant de m'être inscrit et en accepte les conditions d'utilisation.</small>
             </div>
             <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="connexion">Inscription</button>
             <div class='ui fluid hidden helpmessage'>
@@ -60,12 +60,12 @@
                             <h3>1. Présentation du site.</h3>
                             <p>En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans
                                 l'économie numérique, il est précisé aux utilisateurs du site <a
-                                    href="http://www.riwalennbas.com/">www.riwalennbas.com</a> l'identité des
+                                        href="http://www.riwalennbas.com/">www.riwalennbas.com</a> l'identité des
                                 différents intervenants dans le cadre de sa réalisation et de son suivi :</p>
                             <p><strong>Propriétaire</strong> : Riwalenn Bas – 1 rue françois arago<br/>
                                 <strong>Créateur</strong> : <a href="http://www.riwalennbas.com">Riwalenn Bas</a><br/>
                                 <strong>Template</strong> : <a
-                                    href="https://github.com/BlackrockDigital/startbootstrap-agency/blob/master/LICENSE">Blackrock
+                                        href="https://github.com/BlackrockDigital/startbootstrap-agency/blob/master/LICENSE">Blackrock
                                     Digital LLC</a><br/>
                                 <strong>Responsable publication</strong> : Riwalenn Bas – riwalenn@gmail.com<br/>
                                 Le responsable publication est une personne physique ou une personne morale.<br/>
@@ -149,10 +149,10 @@
                                 l'utilisateur.</p>
                             <p> En tout état de cause Riwalenn Bas ne collecte des informations personnelles relatives à
                                 l'utilisateur que pour le besoin de certains services proposés par le site <a
-                                    href="http://www.riwalennbas.com/">www.riwalennbas.com</a>. L'utilisateur
+                                        href="http://www.riwalennbas.com/">www.riwalennbas.com</a>. L'utilisateur
                                 fournit ces informations en toute connaissance de cause, notamment lorsqu'il procède par
                                 lui-même à leur saisie. Il est alors précisé à l'utilisateur du site <a
-                                    href="http://www.riwalennbas.com/">www.riwalennbas.com</a> l’obligation ou non
+                                        href="http://www.riwalennbas.com/">www.riwalennbas.com</a> l’obligation ou non
                                 de fournir ces informations.</p>
                             <p>Conformément aux dispositions des articles 38 et suivants de la loi 78-17 du 6 janvier
                                 1978 relative à l’informatique, aux fichiers et aux libertés, tout utilisateur dispose
@@ -161,7 +161,7 @@
                                 d’identité avec signature du titulaire de la pièce, en précisant l’adresse à laquelle la
                                 réponse doit être envoyée.</p>
                             <p>Aucune information personnelle de l'utilisateur du site <a
-                                    href="http://www.riwalennbas.com/">www.riwalennbas.com</a> n'est publiée à l'insu de
+                                        href="http://www.riwalennbas.com/">www.riwalennbas.com</a> n'est publiée à l'insu de
                                 l'utilisateur, échangée, transférée, cédée ou vendue sur un support quelconque à des
                                 tiers. Seule l'hypothèse du rachat de Riwalenn Bas et de ses droits permettrait la
                                 transmission des dites informations à l'éventuel acquéreur qui serait à son tour tenu de

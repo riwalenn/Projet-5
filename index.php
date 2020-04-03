@@ -62,7 +62,7 @@ try
                 break;
 
             case 'confirmationInscriptionByEmail' :
-               $controller->confirmationByToken();
+                $controller->confirmationByToken();
                 break;
 
             // Affiche le formulaire
@@ -101,7 +101,7 @@ catch (ExceptionOutput $e) {
 
 catch (InvalidArgumentException $e)
 {
-   $controller->erreur();
+    $controller->erreur();
 }
 
 catch (Exception $e) {
