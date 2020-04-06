@@ -22,12 +22,12 @@ if ((isset($_SESSION['id']))) :
                             <p class="text-muted"><a href="index.php?action=logoutUser"><i class="fas fa-sign-out-alt"></i> Deconnexion</a></p>
                             <hr>
                             <p>
-                                <small class="text-muted"><a class="articles-link" data-toggle="modal" href="#" ><i class="fa fa-plus-square"></i> ajouter un utilisateur</a></small><br>
-                                <small class="text-muted"><a class="articles-link" data-toggle="modal" href="#" ><i class="fa fa-history"></i> liste des utilisateurs en attente de validation</a> (3)</small><br>
-                                <small class="text-muted"><a class="articles-link" data-toggle="modal" href="#" ><i class="fa fa-trash"></i> vider la liste des utilisateurs non connecté depuis 3 mois</a> (2)</small><br>
-                                <small class="text-muted"><a class="articles-link" data-toggle="modal" href="#" ><i class="fa fa-trash"></i> vider la liste des utilisateurs n'ayant pas validé leurs token</a> (1)</small>
+                                <small class="text-muted"><i class="fa fa-plus-square" style="color: #0056b3"></i> <a class="articles-link" data-toggle="modal" href="#" >ajouter un utilisateur</a></small><br>
+                                <small class="text-muted"><i class="fa fa-history" style="color: #ffc107"></i> <a class="articles-link" data-toggle="modal" href="#" >liste des utilisateurs en attente de validation</a> <span class="badge badge-info"> <?= $nbUsersWaitingList ?> </span></small><br>
+                                <small class="text-muted"><i class="fa fa-trash" style="color: red"></i> <a class="articles-link" data-toggle="modal" href="#" >vider la liste des utilisateurs non connecté depuis 3 mois</a> <span class="badge badge-danger"> <?= $nbUsersConnexionExpired ?> </span></small><br>
+                                <small class="text-muted"><i class="fa fa-eye" style="color: #ffc107"></i> <a class="articles-link" data-toggle="modal" href="#" >voir la liste des utilisateurs n'ayant pas validé leurs token</a> <span class="badge badge-warning"> <?= $nbUsersTokenNotValidate ?> </span></small><br>
+                                <small class="text-muted"><i class="fa fa-trash" style="color: red"></i> <a class="articles-link" data-toggle="modal" href="#" >vider la liste des utilisateurs avec un token expiré</a> <span class="badge badge-danger"> <?= $nbUsersTokenExpired ?> </span></small>
                             </p>
-                        <hr>
                         </div>
                         <div class="card-footer">
                             <small class="text-muted"><a class="articles-link" data-toggle="modal" href="#" ><i class="fas fa-eye"></i> voir la liste des utilisateurs</a></small>

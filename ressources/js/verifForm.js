@@ -35,7 +35,7 @@ function verifPseudo(champ) {
 }
 
 function verifEmail(champ) {
-    var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{3,4}$/;
+    var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
     if(!regex.test(champ.value))
     {
         surligne(champ, true);

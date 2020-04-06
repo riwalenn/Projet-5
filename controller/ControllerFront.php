@@ -48,8 +48,8 @@ class ControllerFront
                 {
                     /** Role : Administrateur && Statut : actif */
                     case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::ACTIVE) :
-                        $view = new View('Tableau de bord');
-                        $view->render('view/dashboardAdminView.php', ['user' => $user]);
+                        $this->getBackendDashboard();
+                        $userManager->newConnexionDate();
                         break;
 
                     /** Role : Administrateur && Statut : inactif */
@@ -398,9 +398,18 @@ class ControllerFront
     {
         $userManager = new UserManager();
         $user = $userManager->getUserBySessionId();
+        if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::ACTIVE) :
+            $nbUsersWaitingList = $userManager->nbUsersModoNotValidated();
+            $nbUsersConnexionExpired = $userManager->nbusersConnexionExpired();
+            $nbUsersTokenExpired = $userManager->nbUsersTokenExpired();
+            $nbUsersTokenNotValidate = $userManager->nbUsersTokenNotValidated();
 
-        $view = new View('Tableau de bord');
-        $view->render('view/dashboardAdminView.php', ['user' => $user]);
+            $view = new View('Tableau de bord');
+            $view->render('view/dashboardAdminView.php', ['user' => $user, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate]);
+        else:
+            $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
+            throw new ExceptionOutput($message);
+        endif;
     }
 
     /**

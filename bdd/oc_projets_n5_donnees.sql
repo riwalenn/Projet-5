@@ -52,18 +52,25 @@ INSERT INTO `categories` (`id`, `category`) VALUES
 --
 
 INSERT INTO `comments` (`id`, `id_post`, `id_user`, `created_at`, `title`, `content`, `state`) VALUES
-(1, 7, 2, '2020-03-26 14:15:00', 'Test', 'cxvbgrdtbb rdstgb rt dfsgdbt r drstgert ', 1),
-(2, 7, 1, '2020-03-26 15:07:00', 'Réponse test', 'jdslqfjk kdhk hisuh fqisdhf ihi hqhdsh', 1),
+(1, 7, 2, '2020-03-26 14:15:00', 'Test', 'test de messagerie', 1),
+(2, 7, 1, '2020-03-26 15:07:00', 'Réponse test', 'réponse au test de la messagerie', 1),
 (3, 7, 1, '2020-03-26 08:00:00', 'test etat 0', 'dq fs ef', 0),
 (4, 7, 1, '2020-03-26 13:12:00', 'test état 2', 'dsqfdsfdsf', 2),
-(5, 7, 1, NULL, 'test état 3', 'djsfjqdsfjdsf', 3);
+(5, 7, 1, NULL, 'test état 3', 'djsfjqdsfjdsf', 3),
+(9, 7, 1, '2020-04-03 15:24:08', 'Hello', 'Y\'a quelqu\'un ici ?', 1),
+(11, 7, 1, '2020-04-03 15:33:57', 'Test intval()', 'test &lt;b&gt;code&lt;/b&gt; &lt;html&gt;&lt;br&gt;djflk', 1),
+(12, 6, 1, '2020-04-03 15:46:14', 'test pour proto', 'comment prototype', 1);
 
 --
 -- Déchargement des données de la table `favorites_posts`
 --
 
 INSERT INTO `favorites_posts` (`id`, `id_user`, `id_post`) VALUES
-(1, 1, 7);
+(33, 1, 1),
+(32, 1, 2),
+(38, 1, 5),
+(37, 1, 6),
+(36, 1, 7);
 
 --
 -- Déchargement des données de la table `portfolio`
@@ -97,16 +104,26 @@ INSERT INTO `posts` (`id`, `title`, `kicker`, `author`, `content`, `url`, `creat
 --
 
 INSERT INTO `tokens` (`id_token`, `token`, `id_user`, `expiration_token`) VALUES
-(2, 'aa5ab2910107e9428cbfa0cbd161d9c722400972e1e2435865babef36f4932d2', 4, '2020-01-13 15:04:47');
+(2, 'aa5ab2910107e9428cbfa0cbd161d9c722400972e1e2435865babef36f4932d2', 4, '2020-01-13 15:04:47'),
+(3, '046280e85dc8fef38b2565f29dc8d602da0137370d9cd4cde184be5fdf335265', 5, '2020-04-11 10:58:42'),
+(4, '29ce0d6d8a0bd739c0454d617f6418ef82f03744c777c4871a5bc31633c3c6a8', 10, '2020-04-05 11:06:51'),
+(5, '2c7a19c94fe568689ca7f11785dc5ff11ded91595ec85f081949689f37e9bd10', 11, '2020-04-11 11:08:51');
 
 --
 -- Déchargement des données de la table `users`
 --
 
 INSERT INTO `users` (`id`, `pseudo`, `role`, `email`, `password`, `date_modification`, `date_inscription`, `cgu`, `state`) VALUES
-(1, 'Riwalenn', 1, 'riwalenn@gmail.com', '$2y$10$.OHr3sDgWEl584HxBfFCyOdDtulIT.m1.utSA3otTjGheuC518Ssy', '2020-03-25 10:01:35', '2019-12-01 16:37:47', 1, 2),
+(1, 'Riwalenn', 1, 'riwalenn@gmail.com', '$2y$10$my4B/iIYpeoURnvrH6mYLOYpIXcu1xD6EzoS74bA5CSrA5mu.J8PG', '2020-04-06 14:12:52', '2019-12-01 16:37:47', 1, 2),
 (2, 'Anonyme', 2, 'no-reply@riwalennbas.com', '$2y$10$sT/NGEIrb8z5XwCvPv9NpeeF3fuge7Vyyf4AWIEQPr7ZWmuJIS2gC', '2019-12-01 00:00:00', '2019-12-01 21:48:31', 1, 2),
-(4, 'test', 2, 'test@gmail.com', '', '2019-12-02 15:04:47', '2019-12-01 15:04:47', 1, 0);
+(4, 'test', 2, 'test@gmail.com', '', '2019-12-02 15:04:47', '2019-12-01 15:04:47', 1, 0),
+(5, 'test1', 2, 'test1@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-04-06 10:58:42', '2020-04-06 10:58:42', 1, 0),
+(6, 'test2', 2, 'test2@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-01-01 10:58:42', '2019-12-01 10:58:42', 1, 2),
+(7, 'test3', 2, 'test3@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-01-01 10:58:42', '2019-12-01 10:58:42', 1, 2),
+(8, 'test4', 2, 'test4@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-04-06 10:58:42', '2020-04-06 10:58:42', 1, 1),
+(9, 'test5', 2, 'test5@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-04-06 10:58:42', '2020-04-06 10:58:42', 1, 1),
+(10, 'test10', 2, 'test10@gmail.com', '$2y$10$S2iKEUblMHfugYaVtRpPmOj/zf74MuEYZRu5HzRS3DVGFG0zOHccG', '2020-01-01 11:06:51', '2019-12-01 11:06:51', 1, 0),
+(11, 'test11', 2, 'test11@gmail.ru', '$2y$10$Rwr7jt.njVYBgcTkpAuJ/emBcfd4QRSFFm0/stMxt8CfpQ4t9Hq5C', '2020-04-06 11:08:51', '2020-04-06 11:08:51', 1, 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

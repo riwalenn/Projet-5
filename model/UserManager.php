@@ -82,7 +82,7 @@ class UserManager extends Connexion
         return $result['nbToken'];
     }
 
-    //étape 2 : confirmation de l'inscription via lien email & suppression token en bdd
+    /**  étape 2 : confirmation de l'inscription via lien email & suppression token en bdd */
     public function registrationConfirmationByToken(User $user)
     {
         $bdd = $this->dbConnect();
@@ -90,7 +90,15 @@ class UserManager extends Connexion
         $statement->execute(array('token' =>$user->getToken()));
     }
 
-    //étape 3 : confirmation de l'inscription par l'administrateur
+    //Suppression du token à l'inscription & oubli du password
+    public function deleteToken(User $user)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('DELETE FROM tokens WHERE token = :token');
+        $statement->execute(array('token' =>$user->getToken()));
+    }
+
+    /** étape 3 : confirmation de l'inscription par l'administrateur */
     public function registrationConfirmationByAdmin(User $user)
     {
         $bdd = $this->dbConnect();
@@ -168,29 +176,89 @@ class UserManager extends Connexion
         return $statement->fetch();
     }
 
-    /** SUPPRESSIONS UTILISATEURS ET TOKENS */
+    /** DASHBOARD ADMIN */
 
-    //Suppression du token à l'inscription & oubli du password
-    public function deleteToken(User $user)
+    //Nombre d'utilisateurs en attente de validation via token => OK (4)
+    public function nbUsersTokenNotValidated()
     {
         $bdd = $this->dbConnect();
-        $statement = $bdd->prepare('DELETE FROM tokens WHERE token = :token');
-        $statement->execute(array('token' =>$user->getToken()));
+        $statement = $bdd->prepare('SELECT COUNT(id) as nbUsers FROM `users` RIGHT JOIN tokens ON tokens.id_user = users.id WHERE `state` = 0');
+        $statement->execute();
+        $resultat = $statement->fetch();
+        return $resultat['nbUsers'];
     }
 
-    //purge des utilisateurs n'ayant pas validé leur inscription
+    //Nombre d'utilisateurs en attente de validation via modérateur => OK (2)
+    public function nbUsersModoNotValidated()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT COUNT(id) as nbUsers FROM `users` WHERE `state` = 1');
+        $statement->execute();
+        $resultat = $statement->fetch();
+        return $resultat['nbUsers'];
+    }
+
+    //liste des utilisateurs en attente de validation => OK (2)
+    public function usersModoWaitingList()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT * FROM `users` WHERE `state` = 1');
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
+    }
+
+    //Nombre d'utilisateurs n'ayant pas validés leurs token (token expiré) => OK (2)
+    public function nbUsersTokenExpired()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT COUNT(id_token) as nbUsers FROM `tokens` LEFT JOIN users ON tokens.id_user = users.id WHERE expiration_token < NOW() AND state = 0');
+        $statement->execute();
+        $resultat = $statement->fetch();
+        return $resultat['nbUsers'];
+    }
+
+    //Liste des utilisateurs n'ayant pas validés leurs token (token expiré) => OK (2)
+    public function usersTokenExpiredList()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT * FROM `tokens` RIGHT JOIN users ON tokens.id_user = users.id WHERE expiration_token < NOW() AND state = 0');
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
+    }
+
+    //purge des utilisateurs n'ayant pas validé leur inscription (token expiré) => OK (2)
     public function deleteExpiredTokenAndUser()
     {
         $bdd = $this->dbConnect();
-        $statement = $bdd->prepare('DELETE FROM `users` WHERE `id` = (SELECT `id_user` FROM `tokens` WHERE `expiration_token` < NOW()) AND state = 0');
+        $statement = $bdd->prepare('DELETE users FROM `users` INNER JOIN tokens ON users.id = tokens.id_user WHERE tokens.expiration_token < NOW() AND users.state = 0');
         $statement->execute();
     }
 
-    //purge des utilisateurs ne s'étant pas connectés depuis 3 mois
+    //Nombre d'utilisateurs ne s'étant pas connectés depuis 3 mois => OK
+    public function nbusersConnexionExpired()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT COUNT(id) as nbUsers FROM `users` WHERE state = 2 AND DATEDIFF(NOW(), date_modification) > 90 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\')');
+        $statement->execute();
+        $resultat = $statement->fetch();
+        return $resultat['nbUsers'];
+    }
+
+    //Liste des utilisateurs ne s'étant pas connectés depuis 3 mois => OK
+    public function usersConnexionExpiredList()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT * FROM `users` WHERE state = 2 AND DATEDIFF(NOW(), date_modification) > 90 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\')');
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
+    }
+
+
+    //purge des utilisateurs ne s'étant pas connectés depuis 3 mois => OK
     public function deleteExpirateduser()
     {
         $bdd = $this->dbConnect();
-        $statement = $bdd->prepare('DELETE FROM users WHERE DATEDIFF(NOW(), date_modification) > 90 AND role != 1 AND email LIKE \'no-reply@riwalennbas.com\'');
+        $statement = $bdd->prepare('DELETE FROM users WHERE DATEDIFF(NOW(), date_modification) > 90 AND role != 1 AND email NOT LIKE \'no-reply@riwalennbas.com\' AND state = 2');
         $statement->execute();
     }
 }
