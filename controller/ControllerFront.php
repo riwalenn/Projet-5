@@ -125,21 +125,26 @@ class ControllerFront
         $categoryManager = new CategoryManager();
 
         $user = $userManager->getUserBySessionId();
-        $favoritesPosts = $listPosts->getFavoritePostByIdUser($user);
-        foreach ($favoritesPosts as $post) :
-            $commentManager->fillCommentInPost($post);
-            $categoryManager->fillCategoryInPost($post);
-        endforeach;
+        if ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::ACTIVE) :
+            $favoritesPosts = $listPosts->getFavoritePostByIdUser($user);
+            foreach ($favoritesPosts as $post) :
+                $commentManager->fillCommentInPost($post);
+                $categoryManager->fillCategoryInPost($post);
+            endforeach;
 
-        $lastPosts = $listPosts->getPosts(1);
-        foreach ($lastPosts as $post) :
-            $commentManager->fillCommentInPost($post);
-            $categoryManager->fillCategoryInPost($post);
-            $listPosts->fillFavoriteInPost($user, $post);
-        endforeach;
+            $lastPosts = $listPosts->getPosts(1);
+            foreach ($lastPosts as $post) :
+                $commentManager->fillCommentInPost($post);
+                $categoryManager->fillCategoryInPost($post);
+                $listPosts->fillFavoriteInPost($user, $post);
+            endforeach;
 
-        $view = new View('Tableau de bord');
-        $view->render('view/dashboardView.php', ['favoritesPosts' => $favoritesPosts, 'lastPosts' => $lastPosts, 'user' => $user]);
+            $view = new View('Tableau de bord');
+            $view->render('view/dashboardView.php', ['favoritesPosts' => $favoritesPosts, 'lastPosts' => $lastPosts, 'user' => $user]);
+        else:
+            $message = "Vous n'avez pas les autorisations pour accéder à cette page.";
+            throw new ExceptionOutput($message);
+        endif;
     }
 
     //Modification des données utilisateurs
@@ -399,17 +404,79 @@ class ControllerFront
         $userManager = new UserManager();
         $user = $userManager->getUserBySessionId();
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::ACTIVE) :
-            $nbUsersWaitingList = $userManager->nbUsersModoNotValidated();
-            $nbUsersConnexionExpired = $userManager->nbusersConnexionExpired();
-            $nbUsersTokenExpired = $userManager->nbUsersTokenExpired();
-            $nbUsersTokenNotValidate = $userManager->nbUsersTokenNotValidated();
+            if (isset($_REQUEST['value']))
+            {
+                $value = $_REQUEST['value'];
+                switch ($value)
+                {
+                    case 'tokenExpired':
+                        $userManager->deleteUsersExpiredToken();
+                        break;
+
+                    case 'connexionExpired':
+                        $userManager->deleteUsersExpiredConnection();
+                        break;
+                }
+            }
+            $nbUsersTotal = $userManager->countAllUsers();
+            $nbUsersWaitingList = $userManager->countUsersUncheckedByModo();
+            $nbUsersConnexionExpired = $userManager->countUsersExpiredConnection();
+            $nbUsersTokenExpired = $userManager->countUsersExpiredToken();
+            $nbUsersTokenNotValidate = $userManager->countUsersTokenUnchecked();
 
             $view = new View('Tableau de bord');
-            $view->render('view/dashboardAdminView.php', ['user' => $user, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate]);
+            $view->render('view/dashboardAdminView.php', ['user' => $user, 'nbUsersTotal' => $nbUsersTotal, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate]);
         else:
             $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
             throw new ExceptionOutput($message);
         endif;
+    }
+
+    //Affiche le panneaux de management utilisateurs
+    public function getUsersDashboardManager()
+    {
+        $userManager = new UserManager();
+        $user = $userManager->getUserBySessionId();
+        if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::ACTIVE) {
+            $dtz = new DateTimeZone("Europe/Madrid");
+            $now = new DateTime(date("Y-m-d H:i:s"), $dtz);
+            $usersList = [];
+            if (isset($_REQUEST['value']))
+            {
+                $value = $_REQUEST['value'];
+                switch ($value)
+                {
+                    case 'uncheckedUsers':
+                        $usersList = $userManager->selectUsersUncheckedByModo();
+                        $filArianne = 'Utilisateurs à valider';
+                        break;
+
+                    case 'uncheckedTokenUsers':
+                        $usersList = $userManager->selectUsersTokenUnchecked();
+                        $filArianne = 'Tokens non validés';
+                        break;
+
+                    case 'all':
+                        $usersList = $userManager->selectAllUsers();
+                        $filArianne = 'Tous les utilisateurs';
+                        break;
+
+                    case 'referents':
+                        $usersList = $userManager->selectReferents();
+                        $filArianne = 'Utilisateurs référents';
+                        break;
+
+                    default:
+                        $usersList = $userManager->selectAllUsers();
+                        break;
+                }
+                $view = new View('Liste des utilisateurs');
+                $view->render('view/managerUsersView.php', ['usersList' => $usersList, 'now' => $now, 'filArianne' => $filArianne]);
+            }
+        } else {
+            $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
+            throw new ExceptionOutput($message);
+        }
     }
 
     /**

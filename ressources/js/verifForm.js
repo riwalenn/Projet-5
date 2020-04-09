@@ -15,6 +15,22 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 });
 
+function ConfirmMessage() {
+    if (confirm("Etes-vous sûr de vouloir supprimer ce favori ?")) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function ConfirmMessageAdmin() {
+    if (confirm("Etes-vous sûr de vouloir purger cette liste ?")) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function surligne(champ, erreur) {
     if (erreur) {
         champ.style.color = "red";

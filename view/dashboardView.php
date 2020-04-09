@@ -38,7 +38,7 @@ if ((isset($_SESSION['id']))) : ?>
                                 <thead><tr><th></th><th></th> </tr></thead>
                                 <tbody>
                                 <?php foreach ($favoritesPosts as $post) : ?>
-                                    <form action="index.php?action=deleteFavorite" method="post">
+                                    <form action="index.php?action=deleteFavorite" method="post" onsubmit="return ConfirmMessage()">
                                         <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
                                         <tr>
                                             <td><p class="favorites-posts-links"><a class="articles-link" data-toggle="modal" href="#articlesModal<?= $post->getId() ?>"><i class="fas fa-star" style="color: #fed136"></i> <?= $post->getTitle() ?></a></p></td>

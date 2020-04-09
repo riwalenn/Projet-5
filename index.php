@@ -37,6 +37,18 @@ try
                 $controller->getBackendDashboard();
                 break;
 
+            case 'add':
+                $controller->getBackendDashboard();
+                break;
+
+            case 'delete':
+                $controller->getBackendDashboard();
+                break;
+
+            case 'usersManager':
+                $controller->getUsersDashboardManager();
+                break;
+
             // Ajoute un article dans les favoris de l'utilisateur
             case 'addFavorite' :
                 $controller->addFavoritePost();

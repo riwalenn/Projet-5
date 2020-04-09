@@ -16,7 +16,8 @@ class User extends Post
     private $id_user;
     private $expiration_token;
 
-    const ADMIN = "Riwalenn";
+    const ADMIN = 1;
+    const USER = 2;
 
     const EN_ATTENTE = 0;
     const ATTENTE_MODO = 1;
@@ -57,9 +58,6 @@ class User extends Post
 
     public function setPseudo($pseudo)
     {
-        if ($this->pseudo == "Administrateur") :
-            $this->pseudo =  self::ADMIN;
-        endif;
         if (strlen($pseudo) <= 3) :
             $message = "Votre pseudo doit contenir au minimum 4 caractères : " . $pseudo;
             throw new ExceptionOutput($message);
@@ -83,6 +81,24 @@ class User extends Post
         $this->role = $role;
     }
 
+    public function getRoleName()
+    {
+        if ($this->role == 1) :
+            return 'Administrateur';
+        elseif ($this->role == 2) :
+            return 'Utilisateur';
+        endif;
+    }
+
+    public function getRoleClass()
+    {
+        if ($this->role == 1) :
+            return 'role-dash-table';
+        elseif ($this->role == 2) :
+            return '';
+        endif;
+    }
+
     public function getEmail()
     {
         return $this->email;
@@ -95,6 +111,15 @@ class User extends Post
         else:
             $message = "Le format de votre email ne correspond pas ! (minimum 3 caractères, maximum 55 - 2 caractères minimum après l'arobase et 2 à 5 caractères pour l'extension";
             throw new ExceptionOutput($message);
+        endif;
+    }
+
+    public function getEmailClass()
+    {
+        if ($this->email === 'no-reply@riwalennbas.com') :
+            return 'email-dash-table';
+        else:
+            return '';
         endif;
     }
 
@@ -137,7 +162,11 @@ class User extends Post
 
     public function getCgu()
     {
-        return $this->cgu;
+        if ($this->cgu == 1) :
+            return '<i class="fa fa-check-square" style="color: green;"></i>';
+        else:
+            return $this->cgu;
+        endif;
     }
 
     public function setCgu($cgu)
@@ -158,6 +187,19 @@ class User extends Post
     public function setState($state)
     {
         $this->state = $state;
+    }
+
+    public function getStateName($state)
+    {
+        if ($state == 0) :
+            return $this->state = 'Compte non validé';
+        elseif ($state == 1) :
+            return $this->state = 'Token validé';
+        elseif ($state == 2) :
+            return $this->state = 'Compte validé';
+        else:
+            return $this->state = 'Compte supprimé';
+        endif;
     }
 
     public function getId_token()
@@ -192,7 +234,12 @@ class User extends Post
 
     public function getExpiration_token()
     {
+        if ($this->expiration_token == NULL) :
         return $this->expiration_token;
+        else:
+        $date = new DateTime($this->expiration_token);
+        return date_format($date,'d-m-Y à H:m');
+        endif;
     }
 
     public function setExpiration_token($expiration_token)
