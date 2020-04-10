@@ -78,7 +78,7 @@ if ((isset($_SESSION['id']))) :
                         <div class="col-lg-8 mx-auto">
                             <div class="modal-body">
                                 <h5><i class="fa fa-user-cog"></i> Ajouter un utilisateur</h5>
-                                <form id="formDataUser" action="index.php?action=add&value=user" method="post" onsubmit="return verifForm(this)">
+                                <form id="formDataUser" action="index.php?action=addUser" method="post" onsubmit="return verifForm(this)">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-caret-right"></i></span>
@@ -110,20 +110,19 @@ if ((isset($_SESSION['id']))) :
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-caret-right"></i></span>
                                         </div>
-                                        <select id="role" class="form-control form-control-sm" name="state">
+                                        <select id="state" class="form-control form-control-sm" name="state">
                                             <option value="0">Compte non validé</option>
                                             <option value="1">Token validé</option>
                                             <option value="2">Compte validé</option>
                                             <option value="3">Compte à supprimer</option>
                                         </select>
                                     </div>
-                                   <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="Modification">Ajouter un utilisateur</button>
+                                   <button class="btn btn-primary my-2 my-sm-0" aria-label="ajouter" type="submit" value="add">Ajouter un utilisateur</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

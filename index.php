@@ -37,8 +37,8 @@ try
                 $controller->getBackendDashboard();
                 break;
 
-            case 'add':
-                $controller->getBackendDashboard();
+            case 'addUser':
+                $controller->addUser();
                 break;
 
             case 'delete':

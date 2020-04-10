@@ -240,6 +240,10 @@ tr.email-dash-table {
     border: 1px solid #ff7700 !important;
 }
 
+i.cgu-green {
+    color: green!important;
+}
+
 /** 767px */
 @media (min-width: 767px) {
     #articles .articles-item {

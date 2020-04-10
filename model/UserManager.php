@@ -207,7 +207,7 @@ class UserManager extends Connexion
     public function selectUsersTokenUnchecked()
     {
         $bdd = $this->dbConnect();
-        $statement = $bdd->prepare('SELECT users.* 
+        $statement = $bdd->prepare('SELECT users.* , tokens.expiration_token
                                                 FROM `tokens` RIGHT JOIN users 
                                                     ON tokens.id_user = users.id 
                                                 WHERE expiration_token > NOW() 

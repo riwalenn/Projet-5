@@ -162,8 +162,13 @@ class User extends Post
 
     public function getCgu()
     {
+        return $this->cgu;
+    }
+
+    public function getCguClass()
+    {
         if ($this->cgu == 1) :
-            return '<i class="fa fa-check-square" style="color: green;"></i>';
+            return '<i class="fa fa-check-square cgu-green"></i>';
         else:
             return $this->cgu;
         endif;
@@ -189,17 +194,110 @@ class User extends Post
         $this->state = $state;
     }
 
-    public function getStateName($state)
+    public function getStateName()
     {
-        if ($state == 0) :
-            return $this->state = 'Compte non validé';
-        elseif ($state == 1) :
-            return $this->state = 'Token validé';
-        elseif ($state == 2) :
-            return $this->state = 'Compte validé';
-        else:
-            return $this->state = 'Compte supprimé';
+        if ($this->state == 0) :
+            return 'Compte non validé';
+        elseif ($this->state == 1) :
+            return 'Token validé';
+        elseif ($this->state == 2) :
+            return 'Compte validé';
+        elseif ($this->state == 3):
+            return 'Compte supprimé';
         endif;
+    }
+
+    public function getStateClass()
+    {
+        switch ($this->state)
+        {
+            case 0:
+                return 'user-status-red';
+                break;
+
+            case 1:
+                return 'user-status-orange';
+                break;
+
+            case 2:
+                return 'user-status-green';
+                break;
+
+            case 3:
+                return 'user-status-red';
+                break;
+
+            default:
+                return 'user-status-red';
+                break;
+
+        }
+    }
+
+    public function getStateOptionSelect()
+    {
+        $i = 0;
+        $j = 4;
+        do {
+            switch ($i)
+            {
+                case 0:
+                    if ($i == $this->state) {
+                        return '<option value=' . $this->state . ' selected>'. $this->getStateName() .'</option>';
+                    } else {
+                        return '<option value='.$i.'>Compte non validé</option>';
+                    }
+                    break;
+
+                case 1:
+                    if ($i == $this->state) {
+                        return '<option value=' . $this->state . ' selected>'. $this->getStateName() .'</option>';
+                    } else {
+                        return '<option value='.$i.'>Token Validé</option>';
+                    }
+                    break;
+
+                case 2:
+                    if ($i == $this->state) {
+                        return '<option value=' . $this->state . ' selected>'. $this->getStateName() .'</option>';
+                    } else {
+                        return '<option value='.$i.'>Compte validé</option>';
+                    }
+                    break;
+
+                case 3:
+                    if ($i == $this->state) {
+                        return '<option value=' . $this->state . ' selected>'. $this->getStateName() .'</option>';
+                    } else {
+                        return '<option value='.$i.'>Compte supprimé</option>';
+                    }
+                    break;
+            }
+            do {
+                if ($j > $this->state){
+                    switch ($j)
+                    {
+                        case 0:
+                            return '<option value='.$j.'>Compte non validé</option>';
+                            break;
+
+                        case 1:
+                            return '<option value='.$j.'>Token Validé</option>';
+                            break;
+
+                        case 2:
+                            return '<option value='.$j.'>Compte validé</option>';
+                            break;
+
+                        case 3:
+                            return '<option value='.$j.'>Compte supprimé</option>';
+                            break;
+                    }
+                }
+                $j--;
+            } while ($j > $this->state);
+            $i++;
+        } while ($i <= $this->state);
     }
 
     public function getId_token()

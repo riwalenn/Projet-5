@@ -57,34 +57,74 @@
                                     <td><?= $user->getEmail() ?></td>
                                     <td><?= $user->getDate_modification() ?></td>
                                     <td><?= $user->getDate_inscription() ?></td>
-                                    <td><?= $user->getCgu() ?></td>
+                                    <td><?= $user->getCguClass() ?></td>
                                     <td>
-                                        <?php if ($user->getState() == 0) : ?>
-                                            <select name="role" class="form-control form-control-sm user-status-red">
-                                                <option value="<?= $user->getState() ?> selected"><?= $user->getStateName($user->getState()) ?></option>
-                                                <option value="1">Token validé</option>
-                                                <option value="2">Compte validé</option>
-                                                <option value="3">Refusé</option>
-                                            </select>
-                                        <?php elseif ($user->getState() == 1) : ?>
-                                            <select name="role" class="form-control form-control-sm user-status-orange">
-                                                <option value="<?= $user->getState() ?> selected"><?= $user->getStateName($user->getState()) ?></option>
-                                                <option value="2">Compte validé</option>
-                                                <option value="3">Refusé</option>
-                                            </select>
-                                        <?php elseif ($user->getState() == 2) : ?>
-                                            <select name="role" class="form-control form-control-sm user-status-green">
-                                                <option value="<?= $user->getState() ?> selected"><?= $user->getStateName($user->getState()) ?></option>
-                                                <option value="1">Token validé</option>
-                                                <option value="3">Refusé</option>
-                                            </select>
-                                        <?php else: ?>
-                                            <select name="role" class="form-control form-control-sm user-status-red">
-                                                <option value="<?= $user->getState() ?> selected"><?= $user->getStateName($user->getState()) ?></option>
-                                                <option value="1">Token validé</option>
-                                                <option value="2">Compte validé</option>
-                                            </select>
-                                        <?php endif; ?>
+                                        <select name="state" class="form-control form-control-sm <?= $user->getStateClass() ?>">
+                                            <?php
+                                            $i = 0;
+                                            $j = 4;
+                                            do {
+                                                switch ($i)
+                                                {
+                                                    case 0:
+                                                        if ($i == $user->getState()) {
+                                                            echo '<option value=' . $user->getState() . ' selected>'. $user->getStateName() .'</option>';
+                                                        } else {
+                                                            echo '<option value='.$i.'>Compte non validé</option>';
+                                                        }
+                                                        break;
+
+                                                    case 1:
+                                                        if ($i == $user->getState()) {
+                                                            echo '<option value=' . $user->getState() . ' selected>'. $user->getStateName() .'</option>';
+                                                        } else {
+                                                            echo '<option value='.$i.'>Token Validé</option>';
+                                                        }
+                                                        break;
+
+                                                    case 2:
+                                                        if ($i == $user->getState()) {
+                                                            echo '<option value=' . $user->getState() . ' selected>'. $user->getStateName() .'</option>';
+                                                        } else {
+                                                            echo '<option value='.$i.'>Compte validé</option>';
+                                                        }
+                                                        break;
+
+                                                    case 3:
+                                                        if ($i == $user->getState()) {
+                                                            echo '<option value=' . $user->getState() . ' selected>'. $user->getStateName() .'</option>';
+                                                        } else {
+                                                            echo '<option value='.$i.'>Compte supprimé</option>';
+                                                        }
+                                                        break;
+                                                }
+                                                do {
+                                                    if ($j > $user->getState()){
+                                                        switch ($j)
+                                                        {
+                                                            case 0:
+                                                                echo '<option value='.$j.'>Compte non validé</option>';
+                                                                break;
+
+                                                            case 1:
+                                                                echo '<option value='.$j.'>Token Validé</option>';
+                                                                break;
+
+                                                            case 2:
+                                                                echo '<option value='.$j.'>Compte validé</option>';
+                                                                break;
+
+                                                            case 3:
+                                                                echo '<option value='.$j.'>Compte supprimé</option>';
+                                                                break;
+                                                        }
+                                                    }
+                                                    $j--;
+                                                } while ($j > $user->getState());
+                                                $i++;
+                                            } while ($i <= $user->getState())
+                                            ?>
+                                        </select>
                                     </td>
                                     <td><?= $user->getExpiration_token() ?></td>
                                     <td><button class="btn btn-primary adm-users" type="submit">Appliquer les modifications</button></td>
@@ -93,9 +133,6 @@
                             </form>
                             </tbody>
                         </table>
-                        <?php foreach ($usersList as $user) : ?>
-
-                        <?php endforeach; ?>
                     </div>
                     <div class="card-footer">
                     </div>

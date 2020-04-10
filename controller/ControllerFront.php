@@ -432,11 +432,21 @@ class ControllerFront
         endif;
     }
 
+    public function addUser()
+    {
+        $user = new User($_REQUEST);
+        $user->setCgu(1);
+        $userManager = new UserManager();
+        $userManager->registration($user);
+        $this->getBackendDashboard();
+    }
+
     //Affiche le panneaux de management utilisateurs
     public function getUsersDashboardManager()
     {
         $userManager = new UserManager();
         $user = $userManager->getUserBySessionId();
+
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::ACTIVE) {
             $dtz = new DateTimeZone("Europe/Madrid");
             $now = new DateTime(date("Y-m-d H:i:s"), $dtz);
@@ -470,8 +480,10 @@ class ControllerFront
                         $usersList = $userManager->selectAllUsers();
                         break;
                 }
+                $options = $user->getStateOptionSelect();
+
                 $view = new View('Liste des utilisateurs');
-                $view->render('view/managerUsersView.php', ['usersList' => $usersList, 'now' => $now, 'filArianne' => $filArianne]);
+                $view->render('view/managerUsersView.php', ['usersList' => $usersList, 'options' => $options, 'now' => $now, 'filArianne' => $filArianne]);
             }
         } else {
             $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
