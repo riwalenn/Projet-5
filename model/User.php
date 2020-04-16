@@ -16,13 +16,17 @@ class User extends Post
     private $id_user;
     private $expiration_token;
 
-    const ADMIN = 1;
-    const USER = 2;
-
-    const EN_ATTENTE = 0;
-    const ATTENTE_MODO = 1;
-    const VALIDE = 2;
-    const SUPPRESSION = 3;
+    static public $listeStatut = [
+        Constantes::USER_PENDING_STATUS => 'Compte non validé',
+        Constantes::USER_PENDING_STATUS_MODO => 'token validé',
+        Constantes::USER_STATUS_VALIDATED => 'compte validé',
+        Constantes::USER_STATUS_DELETED => 'compte supprimé'
+    ];
+    
+    static public $listeRole = [
+        Constantes::ROLE_ADMIN => 'Administrateur',
+        Constantes::ROLE_USER => 'Utilisateur'
+    ];
 
     public function __construct($donnees = null)
     {
@@ -83,11 +87,7 @@ class User extends Post
 
     public function getRoleName()
     {
-        if ($this->role == 1) :
-            return 'Administrateur';
-        elseif ($this->role == 2) :
-            return 'Utilisateur';
-        endif;
+        return self::$listeRole[$this->getRole()];
     }
 
     public function getRoleClass()
@@ -196,34 +196,26 @@ class User extends Post
 
     public function getStateName()
     {
-        if ($this->state == 0) :
-            return 'Compte non validé';
-        elseif ($this->state == 1) :
-            return 'Token validé';
-        elseif ($this->state == 2) :
-            return 'Compte validé';
-        elseif ($this->state == 3):
-            return 'Compte supprimé';
-        endif;
+       return self::$listeStatut[$this->getState()];
     }
 
     public function getStateClass()
     {
         switch ($this->state)
         {
-            case 0:
+            case Constantes::USER_PENDING_STATUS:
                 return 'user-status-red';
                 break;
 
-            case 1:
+            case Constantes::USER_PENDING_STATUS_MODO:
                 return 'user-status-orange';
                 break;
 
-            case 2:
+            case Constantes::USER_STATUS_VALIDATED:
                 return 'user-status-green';
                 break;
 
-            case 3:
+            case Constantes::USER_STATUS_DELETED:
                 return 'user-status-red';
                 break;
 
@@ -232,72 +224,6 @@ class User extends Post
                 break;
 
         }
-    }
-
-    public function getStateOptionSelect()
-    {
-        $i = 0;
-        $j = 4;
-        do {
-            switch ($i)
-            {
-                case 0:
-                    if ($i == $this->state) {
-                        return '<option value=' . $this->state . ' selected>'. $this->getStateName() .'</option>';
-                    } else {
-                        return '<option value='.$i.'>Compte non validé</option>';
-                    }
-                    break;
-
-                case 1:
-                    if ($i == $this->state) {
-                        return '<option value=' . $this->state . ' selected>'. $this->getStateName() .'</option>';
-                    } else {
-                        return '<option value='.$i.'>Token Validé</option>';
-                    }
-                    break;
-
-                case 2:
-                    if ($i == $this->state) {
-                        return '<option value=' . $this->state . ' selected>'. $this->getStateName() .'</option>';
-                    } else {
-                        return '<option value='.$i.'>Compte validé</option>';
-                    }
-                    break;
-
-                case 3:
-                    if ($i == $this->state) {
-                        return '<option value=' . $this->state . ' selected>'. $this->getStateName() .'</option>';
-                    } else {
-                        return '<option value='.$i.'>Compte supprimé</option>';
-                    }
-                    break;
-            }
-            do {
-                if ($j > $this->state){
-                    switch ($j)
-                    {
-                        case 0:
-                            return '<option value='.$j.'>Compte non validé</option>';
-                            break;
-
-                        case 1:
-                            return '<option value='.$j.'>Token Validé</option>';
-                            break;
-
-                        case 2:
-                            return '<option value='.$j.'>Compte validé</option>';
-                            break;
-
-                        case 3:
-                            return '<option value='.$j.'>Compte supprimé</option>';
-                            break;
-                    }
-                }
-                $j--;
-            } while ($j > $this->state);
-            $i++;
-        } while ($i <= $this->state);
     }
 
     public function getId_token()

@@ -243,6 +243,9 @@ tr.email-dash-table {
 i.cgu-green {
     color: green!important;
 }
+.danger {
+    color: red;
+}
 
 /** 767px */
 @media (min-width: 767px) {

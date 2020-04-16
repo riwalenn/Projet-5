@@ -16,11 +16,12 @@ class Post
     private $state;
     private $comments;
 
-    const EN_ATTENTE = 0;
-    const VALIDE = 1;
-    const ARCHIVE = 2;
-    const SUPPRESSION = 3;
-    const ADMIN = "Riwalenn";
+    static public $listeStatut = [
+      Constantes::POST_PENDING_STATUS => 'Article en attente',
+      Constantes::POST_STATUS_VALIDATED => 'Article validé',
+      Constantes::POST_STATUS_ARCHIVED => 'Article archivé',
+      Constantes::POST_STATUS_DELETED => 'Article supprimé'
+    ];
 
     public function __construct($donnees = null)
     {
@@ -71,9 +72,6 @@ class Post
 
     public function getPseudo()
     {
-        if ($this->pseudo == "Administrateur") :
-            return self::ADMIN;
-        endif;
         return $this->pseudo;
     }
 
@@ -156,10 +154,10 @@ class Post
 
     public function setState($state)
     {
-        if (in_array($state, [self::EN_ATTENTE, self::VALIDE, self::ARCHIVE, self::SUPPRESSION])) :
+        if (in_array($state, [Constantes::POST_PENDING_STATUS, Constantes::POST_STATUS_VALIDATED, Constantes::POST_STATUS_ARCHIVED, Constantes::POST_STATUS_DELETED])) :
             $this->state = $state;
         endif;
-        $this->state = self::EN_ATTENTE;
+        $this->state = Constantes::POST_PENDING_STATUS;
     }
 
     public function getComments()

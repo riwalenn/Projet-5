@@ -43,10 +43,14 @@ TODO:
     ✔ changer les onblur contre des onkeyup dans les forms
     ✔ faire la vérification du token (actuellement inexistante, je peux modifier mon mot de passe en boucle)
 
+- sessions
+    - créer un timeout
+
 - créer la partie admin
-    - créer une page pour valider l'utilisateur de 1 à 2 en bdd, archiver ou supprimer (users manager)
-    - créer une page pour les articles, création, modification, suppression, archivage (posts manager)
-    - créer une page pour le portfolio, création, modification, suppression (portfolio manager)
+    ✔ créer une page pour les CRUD users manager
+    - créer une page pour les CRUD posts manager
+    - créer une page pour les CRUD portfolio manager
+    - SI utilisateur supprimé (state 3) && SI commentaires par l'utilisateurs ALORS id commentaires utilisateur UPDATE en id anonyme
 
 - Commentaires à faire !!!
     ✔ si non connecté => lecture des commentaires

@@ -129,16 +129,15 @@ class UserManager extends Connexion
     }
 
     //modification des données par l'utilisateur via dashboard
-    public function userDataModification(User $user)
+    public function updateUserByUser(User $user)
     {
         $bdd = $this->dbConnect();
-        $statement = $bdd->prepare('UPDATE `users` SET `pseudo` = :pseudo, `email` = :email, `password` = :password, `date_modification` = NOW() 
+        $statement = $bdd->prepare('UPDATE `users` SET `pseudo` = :pseudo, `email` = :email, `date_modification` = NOW() 
                                                 WHERE `id` = :id');
         $statement->execute(array(
             'id' => $user->getId(),
             'pseudo' => htmlspecialchars($user->getPseudo()),
             'email' => $user->getEmail(),
-            'password' => password_hash($user->getPassword(), PASSWORD_DEFAULT),
         ));
     }
 
@@ -344,5 +343,33 @@ class UserManager extends Connexion
                                                 ORDER BY state ASC, date_inscription DESC');
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
+    }
+
+    //Modifie l'utilisateur
+    public function updateUser(User $user)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('UPDATE `users` SET `pseudo` = :pseudo, `role` = :role, `email` = :email, `state` = :state, `date_modification` = NOW() 
+                                                WHERE `id` = :id');
+        $statement->execute(array(
+            'id' => $user->getId(),
+            'pseudo' => $user->getPseudo(),
+            'role' => $user->getRole(),
+            'email' => $user->getEmail(),
+            'state' => $user->getState()
+        ));
+    }
+
+    //Supprime l'utilisateur
+    public function deleteUser(User $user)
+    {
+        /*
+         * vérifier que le state est 3 && dernière modification > à 7 jours
+         * si vérification pas ok => renvoyer une erreur
+         * si vérification ok =>
+         * si commentaires => update id_user (current en anonyme [2])
+         * si pas de commentaires => supprimer le compte
+         */
+
     }
 }

@@ -100,7 +100,7 @@ class Portfolio
 
     public function getCategoriesFormatted()
     {
-        $categories = self::getCategories();
+        $categories = $this->getCategories();
         $categoriesexploded = explode( '/', $categories );
         $categoriesFormatted = implode(' - <i class="fas fa-check-square"></i> ', $categoriesexploded);
         return $categoriesFormatted;

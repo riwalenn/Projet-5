@@ -47,49 +47,49 @@ class ControllerFront
                 switch (true)
                 {
                     /** Role : Administrateur && Statut : actif */
-                    case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::ACTIVE) :
+                    case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
                         $this->getBackendDashboard();
                         $userManager->newConnexionDate();
                         break;
 
                     /** Role : Administrateur && Statut : inactif */
-                    case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() != Constantes::ACTIVE) :
+                    case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() != Constantes::USER_STATUS_VALIDATED) :
                         $message = 'Vous n\'avez pas les autorisations pour accéder à cette page.';
                         throw new ExceptionOutput($message);
                         break;
 
                     /** Role : Utilisateur && Statut : en attente de validation */
-                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == 0) :
+                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::USER_PENDING_STATUS) :
                         $message = 'Vous n\'avez pas validé votre inscription, un email vous a été envoyé avec un lien vous permettant de le faire ! (vérifiez vos spams) ';
                         throw new ExceptionOutput($message);
                         break;
 
                     /** Role : Utilisateur && Statut : en attente de validation d'un modérateur */
-                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == 1) :
+                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::USER_PENDING_STATUS_MODO) :
                         $message = 'Vous n\'avez pas encore été validé par un modérateur, merci de patienter cela devrait se faire d\'ici 24 heures.';
                         throw new ExceptionOutput($message);
                         break;
 
                     /** Role : Utilisateur && Statut : actif */
-                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::ACTIVE) :
+                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
                         $this->getDashboardUser();
                         $userManager->newConnexionDate();
                         break;
 
                     /** Role : Utilisateur && Statut : supprimé */
-                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == 3) :
+                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::USER_STATUS_DELETED) :
                         $message = 'Votre compte n\'existe plus/pas.';
                         throw new ExceptionOutput($message);
                         break;
 
                     /** Statut : inconnu */
-                    case ($user->getState() > 3) :
+                    case ($user->getState() > Constantes::USER_STATUS_DELETED) :
                         $message = 'Vos informations de connexion ne correspondent pas.';
                         throw new ExceptionOutput($message);
                         break;
 
                     /** Role : inconnu */
-                    case ($user->getRole() < 1 || $user->getRole() > 2) :
+                    case ($user->getRole() < Constantes::ROLE_ADMIN || $user->getRole() > Constantes::ROLE_USER) :
                         $message = 'Vos informations de connexion ne correspondent pas.';
                         throw new ExceptionOutput($message);
                         break;
@@ -117,7 +117,7 @@ class ControllerFront
     }
 
     //Affichage le tableau de bord de l'utilisateur
-    public function getDashboardUser()
+    public function getDashboardUser($errorMessage = NULL)
     {
         $userManager = new UserManager();
         $listPosts = new PostManager();
@@ -125,7 +125,7 @@ class ControllerFront
         $categoryManager = new CategoryManager();
 
         $user = $userManager->getUserBySessionId();
-        if ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::ACTIVE) :
+        if ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
             $favoritesPosts = $listPosts->getFavoritePostByIdUser($user);
             foreach ($favoritesPosts as $post) :
                 $commentManager->fillCommentInPost($post);
@@ -140,7 +140,7 @@ class ControllerFront
             endforeach;
 
             $view = new View('Tableau de bord');
-            $view->render('view/dashboardView.php', ['favoritesPosts' => $favoritesPosts, 'lastPosts' => $lastPosts, 'user' => $user]);
+            $view->render('view/dashboardView.php', ['favoritesPosts' => $favoritesPosts, 'errorMessage' => $errorMessage, 'lastPosts' => $lastPosts, 'user' => $user]);
         else:
             $message = "Vous n'avez pas les autorisations pour accéder à cette page.";
             throw new ExceptionOutput($message);
@@ -148,7 +148,7 @@ class ControllerFront
     }
 
     //Modification des données utilisateurs
-    public function modificationDataByUser()
+    public function UpdateDataByUser()
     {
         if (!empty($_SESSION['id'] == $_REQUEST['id'])) :
             $user = new User($_REQUEST);
@@ -157,7 +157,7 @@ class ControllerFront
             $comparePassword = password_verify($_REQUEST['password'], $userBdd->getPassword());
 
             if ($comparePassword == true) :
-                $userManager->userDataModification($user);
+                $userManager->updateUserByUser($user);
                 $this->getDashboardUser();
             else:
                 $message = 'Votre mot de passe ne correspond pas';
@@ -191,13 +191,17 @@ class ControllerFront
             $postFavoris = new Favorites_posts($_REQUEST);
             $postManager = new PostManager();
             $nbFavorites = $postManager->countFavoritesPostUser($user);
-            if ($nbFavorites < 7) :
-                $postManager->addFavoritePostByIdUser($user, $postFavoris);
-            elseif($nbFavorites >= 7) :
-                $message = 'Vous avez atteint le nombre maximal de favoris.';
-                throw new ExceptionOutput($message);
+            $result = $postManager->searchFavorite($user, $postFavoris);
+            if ($nbFavorites < 11) :
+                if ($result == true) {
+                    $errorMessage = '<div class="alert alert-warning" role="alert">Vous avez déjà ajouté ce favoris.</div>';
+                }else{
+                    $postManager->addFavoritePostByIdUser($user, $postFavoris);
+                }
+            else:
+                $errorMessage = '<div class="alert alert-warning" role="alert">Vous avez atteint le nombre maximal de favoris.</div>';
             endif;
-            $this->getDashboardUser();
+            $this->getDashboardUser($errorMessage);
         else:
             $message = 'Votre identification de session ne correspond pas !';
             throw new ExceptionOutput($message);
@@ -239,7 +243,7 @@ class ControllerFront
     {
         $user = new User($_REQUEST);
         $user->setRole(Constantes::ROLE_USER);
-        $user->setState(0);
+        $user->setState(Constantes::USER_PENDING_STATUS);
         $userManager = new UserManager();
         $userManager->registration($user);
         $list = $userManager->tokenRecuperation($user);
@@ -327,7 +331,7 @@ class ControllerFront
      */
 
     //Affichage de la page des résultats de recherche des articles
-    public function afficherResultatRecherche()
+    public function afficherResultatRecherche($errorMessage = NULL)
     {
         $pageCourante = $_REQUEST['page'] ?? 1;
         $submitRecherche = $_REQUEST['submit'] ?? "";
@@ -353,11 +357,11 @@ class ControllerFront
         }
 
         $view = new View('Liste des articles');
-        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante, 'submitRecherche' => $submitRecherche]);
+        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'errorMessage' => $errorMessage, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante, 'submitRecherche' => $submitRecherche]);
     }
 
     //Affichage de la page des articles
-    public function afficherListeArticles()
+    public function afficherListeArticles($errorMessage = NULL)
     {
         $pageCourante = $_REQUEST['page'] ?? 1;
         $postManager = new PostManager();
@@ -378,7 +382,7 @@ class ControllerFront
         $nbPages = $postManager->countPages();
 
         $view = new View('Liste des articles');
-        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
+        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'errorMessage' => $errorMessage, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
     }
 
     // Ajout d'un commentaire pour un utilisateur connecté
@@ -403,7 +407,7 @@ class ControllerFront
     {
         $userManager = new UserManager();
         $user = $userManager->getUserBySessionId();
-        if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::ACTIVE) :
+        if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
             if (isset($_REQUEST['value']))
             {
                 $value = $_REQUEST['value'];
@@ -432,22 +436,13 @@ class ControllerFront
         endif;
     }
 
-    public function addUser()
-    {
-        $user = new User($_REQUEST);
-        $user->setCgu(1);
-        $userManager = new UserManager();
-        $userManager->registration($user);
-        $this->getBackendDashboard();
-    }
-
     //Affiche le panneaux de management utilisateurs
     public function getUsersDashboardManager()
     {
         $userManager = new UserManager();
         $user = $userManager->getUserBySessionId();
 
-        if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::ACTIVE) {
+        if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
             $dtz = new DateTimeZone("Europe/Madrid");
             $now = new DateTime(date("Y-m-d H:i:s"), $dtz);
             $usersList = [];
@@ -480,14 +475,39 @@ class ControllerFront
                         $usersList = $userManager->selectAllUsers();
                         break;
                 }
-                $options = $user->getStateOptionSelect();
+                if (isset($_REQUEST['CRUD']))
+                {
+                    $this->crudUserManager($_REQUEST['CRUD']);
+                }
 
                 $view = new View('Liste des utilisateurs');
-                $view->render('view/managerUsersView.php', ['usersList' => $usersList, 'options' => $options, 'now' => $now, 'filArianne' => $filArianne]);
+                $view->render('view/managerUsersView.php', ['usersList' => $usersList, 'value' => $value, 'now' => $now, 'filArianne' => $filArianne]);
             }
         } else {
             $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
             throw new ExceptionOutput($message);
+        }
+    }
+
+    //Create, Read, Update, Delete
+    public function crudUserManager($crud)
+    {
+        $userManager = new UserManager();
+        $user = new User($_REQUEST);
+        switch ($crud)
+        {
+            case 'U':
+                $userManager->updateUser($user);
+                break;
+
+            case 'C':
+                $user->setCgu(1);
+                $userManager->registration($user);
+                break;
+
+            case 'D':
+                $userManager->deleteUser($user);
+                break;
         }
     }
 

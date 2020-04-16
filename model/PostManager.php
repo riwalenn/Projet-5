@@ -92,6 +92,19 @@ class PostManager extends Connexion
         return $resultat['nb_favorites'];
     }
 
+    //Recherche si le favoris existe déjà
+    public function searchFavorite(User $user, Favorites_posts $favorites)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT EXISTS(SELECT 1 FROM `favorites_posts` WHERE id_user = :id_user AND id_post = :id_post LIMIT 1) as result');
+        $statement->execute(array(
+            'id_user' => $user->getId(),
+            'id_post' => $favorites->getId_post()
+        ));
+        $resultat = $statement->fetch();
+        return $resultat['result'];
+    }
+
     public function fillFavoriteInPost(User $user, Post $post)
     {
         $favorite = $this->getFavorite($user->getId(), $post->getId());

@@ -37,10 +37,6 @@ try
                 $controller->getBackendDashboard();
                 break;
 
-            case 'addUser':
-                $controller->addUser();
-                break;
-
             case 'delete':
                 $controller->getBackendDashboard();
                 break;
@@ -61,7 +57,7 @@ try
 
             // Modifie les données de l'utilisateur (pseudo, email)
             case 'modifDataUser':
-                $controller->modificationDataByUser();
+                $controller->UpdateDataByUser();
                 break;
 
             case 'logoutUser' :
