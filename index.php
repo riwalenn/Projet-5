@@ -45,6 +45,10 @@ try
                 $controller->getUsersDashboardManager();
                 break;
 
+            case 'postsManager':
+                $controller->getPostsDashboardManager();
+                break;
+
             // Ajoute un article dans les favoris de l'utilisateur
             case 'addFavorite' :
                 $controller->addFavoritePost();

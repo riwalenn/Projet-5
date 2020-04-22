@@ -5,20 +5,96 @@ class PostManager extends Connexion
     private $offset = 3;
 
     //Recherche des articles avec le statut actif
-    public function getPosts($page, $post = NULL)
+    public function getPosts($page, $state, $post = NULL)
     {
         $bdd = $this->dbConnect();
         $listPosts = $bdd->prepare('SELECT posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at
                                                     FROM `posts` INNER JOIN users ON posts.author = users.id 
-                                                    WHERE posts.state = 1 ORDER BY posts.created_at DESC LIMIT :page,:offset');
+                                                    WHERE posts.state = :state ORDER BY posts.created_at DESC LIMIT :page,:offset');
         if (!empty($page)) {
             $listPosts->bindValue(':page', intval(($page -1) * 3), PDO::PARAM_INT);
         } else {
             $listPosts->bindValue(':page', intval(0), PDO::PARAM_INT);
         }
+        $listPosts->bindValue(':state', $state);
         $listPosts->bindValue(':offset', intval($this->offset), PDO::PARAM_INT);
         $listPosts->execute();
         return $listPosts->fetchAll(PDO::FETCH_CLASS, 'Post');
+    }
+
+    //Affichage de tous les articles selon le statut
+    public function getAllPosts($page, $state, $offset, $post = NULL)
+    {
+        $bdd = $this->dbConnect();
+        $listPosts = $bdd->prepare('SELECT posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at, posts.state
+                                                    FROM `posts` INNER JOIN users ON posts.author = users.id
+                                                    WHERE posts.state IN (:state) ORDER BY posts.created_at DESC LIMIT :page, :offset');
+        if (!empty($page)) {
+            $listPosts->bindValue(':page', intval(($page -1) * $offset), PDO::PARAM_INT);
+        } else {
+            $listPosts->bindValue(':page', intval(0), PDO::PARAM_INT);
+        }
+        $listPosts->bindValue(':state', $state);
+        $listPosts->bindValue(':offset', intval($offset), PDO::PARAM_INT);
+        $listPosts->execute();
+        return $listPosts->fetchAll(PDO::FETCH_CLASS, 'Post');
+    }
+
+    //Affichage de tous les articles à supprimer
+    public function getAllTrashPosts($page, $post = NULL)
+    {
+        $offset = 10;
+        $bdd = $this->dbConnect();
+        $listPosts = $bdd->prepare('SELECT posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at, posts.state
+                                                    FROM `posts` INNER JOIN users ON posts.author = users.id
+                                                    WHERE posts.state = 3 ORDER BY posts.created_at DESC LIMIT :page,:offset');
+        if (!empty($page)) {
+            $listPosts->bindValue(':page', intval(($page -1) * 10), PDO::PARAM_INT);
+        } else {
+            $listPosts->bindValue(':page', intval(0), PDO::PARAM_INT);
+        }
+        $listPosts->bindValue(':offset', intval($offset), PDO::PARAM_INT);
+        $listPosts->execute();
+        return $listPosts->fetchAll(PDO::FETCH_CLASS, 'Post');
+    }
+
+    //Compte le nombre d'articles total
+    public function countAllPosts()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT COUNT(id) as nbPosts FROM `posts` WHERE state = 1');
+        $statement->execute();
+        $resultat = $statement->fetch();
+        return $resultat['nbPosts'];
+    }
+
+    //Compte le nombre d'articles en attente de validation
+    public function countPostsUnckecked()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT COUNT(id) as nbPosts FROM `posts` WHERE state = 0');
+        $statement->execute();
+        $resultat = $statement->fetch();
+        return $resultat['nbPosts'];
+    }
+    //Compte le nombre d'articles à supprimer
+    public function countPostsToDelete()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT COUNT(id) as nbPosts FROM `posts` WHERE state = 3');
+        $statement->execute();
+        $resultat = $statement->fetch();
+        return $resultat['nbPosts'];
+    }
+
+    //Compte le nombre d'articles à archiver
+    public function countPostsArchived()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT COUNT(id) as nbPosts FROM `posts` WHERE state = 2');
+        $statement->execute();
+        $resultat = $statement->fetch();
+        return $resultat['nbPosts'];
     }
 
     //Résultat d'une recherche sur les articles avec le statut actif
@@ -28,17 +104,18 @@ class PostManager extends Connexion
         if (isset($recherche)) {
             $listPosts = $bdd->prepare("SELECT posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at 
                                                         FROM `posts` INNER JOIN users ON posts.author = users.id 
-                                                        WHERE posts.state = 1 AND posts.title LIKE CONCAT('%', :recherche, '%') OR posts.kicker LIKE CONCAT('%', :recherche, '%') OR posts.content LIKE CONCAT('%', :recherche, '%')
+                                                        WHERE posts.state = :state AND (posts.title LIKE CONCAT('%', :recherche, '%') OR posts.kicker LIKE CONCAT('%', :recherche, '%') OR posts.content LIKE CONCAT('%', :recherche, '%'))
                                                         ORDER BY posts.created_at DESC LIMIT :page,:offset");
             if (isset($page)) {
                 $listPosts->bindValue(':page', intval(($page -1) * 3), PDO::PARAM_INT);
             }
+            $listPosts->bindValue(':state', intval(1), PDO::PARAM_INT);
             $listPosts->bindValue(':offset', intval($this->offset), PDO::PARAM_INT);
             $listPosts->bindValue(':recherche',  htmlspecialchars($recherche), PDO::PARAM_STR);
             $listPosts->execute();
             return $listPosts->fetchAll(PDO::FETCH_CLASS, 'Post');
         } else {
-            $this->getPosts(1);
+            $this->getPosts(1, 1);
         }
     }
 
@@ -123,11 +200,14 @@ class PostManager extends Connexion
     }
 
     //Compte le nombre de page d'articles
-    public function countPages()
+    public function countPages($nbPosts, $state)
     {
         $bdd = $this->dbConnect();
-        $countPages = $bdd->prepare('SELECT COUNT(*)/3 AS nb_pages FROM `posts` WHERE posts.state = 1');
-        $countPages->execute();
+        $countPages = $bdd->prepare('SELECT COUNT(*)/:nbPosts AS nb_pages FROM `posts` WHERE posts.state IN (:state)');
+        $countPages->execute(array(
+            'nbPosts' => $nbPosts,
+            'state' => $state
+        ));
         $resultat = $countPages->fetch();
         return $resultat['nb_pages'];
     }

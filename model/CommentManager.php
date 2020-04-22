@@ -33,4 +33,13 @@ class CommentManager extends Connexion
         ));
 
     }
+
+    public function countCommentsUncheked()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT COUNT(id) as nbComments FROM `comments` WHERE state = 0');
+        $statement->execute();
+        $resultat = $statement->fetch();
+        return $resultat['nbComments'];
+    }
 }

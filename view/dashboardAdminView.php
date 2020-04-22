@@ -32,8 +32,11 @@ if ((isset($_SESSION['id']))) :
                                     <a class="articles-link" data-toggle="modal" href="#formModalAdd">
                                         <i class="fa fa-plus-square"></i> ajouter</a>
                                 </small><br>
-                                <small class="text-muted">* utilisateur(s) référents -
+                                <small class="text-muted"><span class="badge badge-success"><?= $nbUsersReferent ?></span> utilisateur(s) référents -
                                     <a class="articles-link" href="index.php?action=usersManager&value=referents">
+                                        <i class="fa fa-eye"></i> voir liste</a></small><br>
+                                <small class="text-muted"><span class="badge badge-danger"> <?= $nbUsersToDelete ?> </span> utilisateur(s) à supprimer -
+                                    <a class="articles-link" href="index.php?action=usersManager&value=trash">
                                         <i class="fa fa-eye"></i> voir liste</a></small><br>
                                 <small class="text-muted">
                                     <span class="badge badge-warning"> <?= $nbUsersWaitingList ?> </span>
@@ -72,40 +75,56 @@ if ((isset($_SESSION['id']))) :
                         <div class="card-header">
                             <blockquote class="blockquote mb-0">
                                 <footer class="blockquote-footer" style="color: #00c0c7">
-                                    <i class="fa fa-file"></i> Coup d'oeil - Articles
+                                    <i class="fa fa-file"></i> Coup d'oeil - Articles <span class="badge badge-success"><?= $nbPostTotal ?></span>
                                 </footer>
                             </blockquote>
                         </div>
                         <div class="card-body articles-caption">
                             <p>
                                 <small class="text-muted">
-                                    <a class="articles-link" href="#"><i class="fa fa-plus-square"></i> ajouter un article</a>
+                                    * ajouter un article -
+                                    <a class="articles-link" data-toggle="modal" href="#formModalAddPost">
+                                        <i class="fa fa-plus-square"></i> ajouter</a>
                                 </small><br>
                                 <small class="text-muted">
-                                    <a class="articles-link" href="#"><i class="fa fa-history"></i> liste des articles en attente de
-                                        validation</a> (1)
+                                    <span class="badge badge-warning"><?= $nbPostsUnchecked ?> </span>
+                                    article(s) en attente de validation -
+                                    <a class="articles-link" href="index.php?action=postsManager&value=uncheckedPosts">
+                                        <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
                                 <small class="text-muted">
-                                    <a class="articles-link" href="#"><i class="fa fa-trash"></i> vider la liste des articles non validés</a> (0)
+                                    <span class="badge badge-warning"><?= $nbPostsArchived ?> </span>
+                                    article(s) archivés -
+                                    <a class="articles-link" href="index.php?action=postsManager&value=archived">
+                                        <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
-                            </p>
-                            <hr>
-                            <p>
                                 <small class="text-muted">
-                                    <a class="articles-link" href="#"><i class="fa fa-history"></i> liste des commentaires en attente de
-                                        validation</a> (5)
+                                    <span class="badge badge-danger"><?= $nbPostsToDelete ?> </span> article(s) à supprimer - <i class="fas fa-exclamation-triangle danger"></i>
+                                    <a class="articles-link" href="index.php?action=delete&value=post" onclick="return ConfirmMessageAdmin()">
+                                        <i class="fa fa-trash"></i>
+                                        purger la liste</a>
                                 </small>
                             </p>
                             <hr>
                             <p>
                                 <small class="text-muted">
-                                    <a class="articles-link" data-toggle="modal" href="#"><i class="fa fa-plus-square"></i> ajouter un portfolio</a>
+                                    <span class="badge badge-warning"><?= $nbCommentsUnchecked ?> </span>
+                                    commentaire(s) en attente de validation -
+                                    <a class="articles-link" href="index.php?action=commentsManager">
+                                        <i class="fa fa-history"></i> voir liste</a>
+                                </small><br>
+                            </p>
+                            <hr>
+                            <p>
+                                <small class="text-muted">
+                                    <a class="articles-link" href="index.php?action=portFolioManager">
+                                        <i class="fa fa-history"></i> voir le portfolio</a>
                                 </small><br>
                             </p>
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">
-                                <a class="nav-link" data-toggle="modal" href="#"><i class="fas fa-eye"></i> voir la liste des articles</a>
+                                <a class="nav-link" href="index.php?action=postsManager&value=all"><i class="fas fa-eye"></i> voir la liste des articles</a>
                             </small>
                         </div>
                     </div>
@@ -193,6 +212,9 @@ if ((isset($_SESSION['id']))) :
             </div>
         </div>
     </div>
+    <!-- Modal add Post -->
+<div class="articles-modal modal fade" id="formModalAddPost" tabindex="-1" role="dialog" aria-hidden="true">
+</div>
 <?php
 endif;
 ?>

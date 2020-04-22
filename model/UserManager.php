@@ -326,7 +326,7 @@ class UserManager extends Connexion
         $statement = $bdd->prepare('SELECT users.*, tokens.token, tokens.expiration_token 
                                                 FROM `users` LEFT JOIN tokens 
                                                     ON users.id = tokens.id_user 
-                                                WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\')
+                                                WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') AND state != 3
                                                 ORDER BY state ASC, date_inscription DESC');
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
@@ -340,6 +340,29 @@ class UserManager extends Connexion
                                                 FROM `users` LEFT JOIN tokens 
                                                     ON users.id = tokens.id_user 
                                                 WHERE role = 1 OR email IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\')
+                                                ORDER BY state ASC, date_inscription DESC');
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
+    }
+
+    //Compte le nombre de référents
+    public function countReferents()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT COUNT(id) as nbUsers FROM `users` WHERE role = 1 OR email IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\')');
+        $statement->execute();
+        $resultat = $statement->fetch();
+        return $resultat['nbUsers'];
+    }
+
+    //sélectionne les utilisateurs avec le statut à supprimer
+    public function selectUsersInTrash()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT users.*, tokens.token, tokens.expiration_token 
+                                                FROM `users` LEFT JOIN tokens 
+                                                    ON users.id = tokens.id_user 
+                                                WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') AND state = 3
                                                 ORDER BY state ASC, date_inscription DESC');
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
@@ -360,16 +383,39 @@ class UserManager extends Connexion
         ));
     }
 
+    //Modifie l'id du compte à supprimer dans la table commentaires
+    public function updateIdUserInComments(User $user)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('UPDATE `comments`
+                                                INNER JOIN users ON users.id = comments.id_user
+                                                SET `id_user`= 2  
+                                                WHERE users.id = :id AND DATEDIFF(NOW(), date_modification) > 7');
+        $statement->execute(array(
+            'id' => $user->getId()
+        ));
+    }
+
     //Supprime l'utilisateur
     public function deleteUser(User $user)
     {
-        /*
-         * vérifier que le state est 3 && dernière modification > à 7 jours
-         * si vérification pas ok => renvoyer une erreur
-         * si vérification ok =>
-         * si commentaires => update id_user (current en anonyme [2])
-         * si pas de commentaires => supprimer le compte
-         */
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('DELETE FROM users WHERE DATEDIFF(NOW(), date_modification) > 7 AND state = 3 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\')');
+        $statement->execute(array(
+            'id' => $user->getId(),
+            'state' => $user->getState(),
+            'date_modification' => $user->getDate_modification()
+        ));
+    }
 
+    //Compte les utilisateurs à supprimer
+    public function countUsersToDelete()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT COUNT(id) as nbUsers FROM `users` 
+                                                WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') AND DATEDIFF(NOW(), date_modification) > 7 AND state = 3');
+        $statement->execute();
+        $resultat = $statement->fetch();
+        return $resultat['nbUsers'];
     }
 }

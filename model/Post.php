@@ -154,10 +154,39 @@ class Post
 
     public function setState($state)
     {
-        if (in_array($state, [Constantes::POST_PENDING_STATUS, Constantes::POST_STATUS_VALIDATED, Constantes::POST_STATUS_ARCHIVED, Constantes::POST_STATUS_DELETED])) :
-            $this->state = $state;
-        endif;
-        $this->state = Constantes::POST_PENDING_STATUS;
+        $this->state = $state;
+    }
+
+    public function getStateName()
+    {
+        return self::$listeStatut[$this->getState()];
+    }
+
+    public function getStateClass()
+    {
+        switch ($this->state)
+        {
+            case Constantes::POST_PENDING_STATUS:
+                return 'user-status-orange';
+                break;
+
+            case Constantes::POST_STATUS_ARCHIVED:
+                return 'user-status-orange';
+                break;
+
+            case Constantes::POST_STATUS_VALIDATED:
+                return 'user-status-green';
+                break;
+
+            case Constantes::POST_STATUS_DELETED:
+                return 'user-status-red';
+                break;
+
+            default:
+                return 'user-status-red';
+                break;
+
+        }
     }
 
     public function getComments()
