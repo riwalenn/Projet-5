@@ -4,7 +4,7 @@
         <div class="row d-flex justify-content-around">
             <div class="card-deck">
                 <div class="card" id="profil_Dash">
-                    <img src="../ressources/img/dashboard/users.jpg" class="img_users_dashboard"/>
+                    <?= View::generateDashboardPictureTag("users", "Users management", "img_users_dashboard") ?>
                     <div class="card-header d-flex justify-content-between">
                         <blockquote class="blockquote mb-0">
                             <footer class="blockquote-footer" style="color: #00c0c7"><i class="fa fa-user"></i> Users Manager</footer>
@@ -16,7 +16,12 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
                                 <li class="breadcrumb-item"><a href="index.php?action=backendDashboard">Tableau de bord</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><a href="index.php?action=usersManager&value=<?= $value ?>"><?= $filArianne ?></a></li>
+                                <li class="breadcrumb-item">
+                                    <a class="dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <?= $filArianne ?>
+                                    </a>
+                                    <?= View::generateDropdown($allValues, "usersManager") ?>
+                                </li>
                             </ol>
                         </nav>
                         <table class="table table-striped">
@@ -38,13 +43,14 @@
                             <tbody>
                             <?php foreach ($usersList as $user) : ?>
                             <?php if ($user->getState() != 3) : ?>
-                            <form action="index.php?action=usersManager&value=<?= $value ?>&CRUD=U" method="post">
-                                <?php else: ?>
-                                <form action="index.php?action=usersManager&value=<?= $value ?>&CRUD=D" method="post">
-                                    <?php endif; ?>
-                                    <input type="hidden" name="id" value="<?= $user->getid() ?>">
+                                <form action="index.php?action=usersManager&value=<?= $value ?>&CRUD=U" method="post">
                                     <input type="hidden" name="pseudo" value="<?= $user->getPseudo() ?>">
                                     <input type="hidden" name="email" value="<?= $user->getEmail() ?>">
+                            <?php else: ?>
+                                <form action="index.php?action=usersManager&value=<?= $value ?>&CRUD=D" method="post">
+                                    <input type="hidden" name="date_modification" value="<?= $user->getDate_modification() ?>">
+                            <?php endif; ?>
+                                    <input type="hidden" name="id" value="<?= $user->getId() ?>">
                                     <tr>
                                         <td>
                                             <?php if ($user->getState() != 3) : ?>
@@ -54,34 +60,38 @@
                                         <td><?= $user->getId() ?></td>
                                         <td><?= $user->getPseudo() ?></td>
                                         <td>
-                                            <select name="role" class="form-control form-control-sm">
-                                                <?php
-                                                foreach (User::$listeRole as $key => $value) :
-                                                    $selected = '';
-                                                    if ($user->getRole() == $key) :
-                                                        $selected = 'selected';
-                                                    endif;
-                                                    echo '<option value="' . $key .'" ' . $selected . '>' . $value .'</option>';
-                                                endforeach;
-                                                ?>
-                                            </select>
+                                            <label>
+                                                <select name="role" class="form-control form-control-sm">
+                                                    <?php
+                                                    foreach (User::$listeRole as $key => $val) {
+                                                        $selected = '';
+                                                        if ($user->getRole() == $key) :
+                                                            $selected = 'selected';
+                                                        endif;
+                                                        echo '<option value="' . $key . '" ' . $selected . '>' . $val . '</option>';
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </label>
                                         </td>
                                         <td><?= $user->getEmail() ?></td>
-                                        <td><?= $user->getDate_modification() ?></td>
-                                        <td><?= $user->getDate_inscription() ?></td>
+                                        <td><?= $user->getDate_modification_fr() ?></td>
+                                        <td><?= $user->getDate_inscription_fr() ?></td>
                                         <td><?= $user->getCguClass() ?></td>
                                         <td>
-                                            <select name="state" class="form-control form-control-sm <?= $user->getStateClass() ?>">
-                                                <?php
-                                                foreach (User::$listeStatut as $key => $value) :
-                                                    $selected = '';
-                                                    if ($user->getState() == $key) :
-                                                        $selected = 'selected';
-                                                    endif;
-                                                    echo '<option value="' . $key .'" ' . $selected . '>' . $value .'</option>';
-                                                endforeach;
-                                                ?>
-                                            </select>
+                                            <label>
+                                                <select name="state" class="form-control form-control-sm <?= $user->getStateClass() ?>">
+                                                    <?php
+                                                    foreach (User::$listeStatut as $key => $val) {
+                                                        $selected = '';
+                                                        if ($user->getState() == $key) :
+                                                            $selected = 'selected';
+                                                        endif;
+                                                        echo '<option value="' . $key . '" ' . $selected . '>' . $val . '</option>';
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </label>
                                         </td>
                                         <td><?= $user->getExpiration_token() ?></td>
                                         <?php if ($user->getState() != 3) : ?>

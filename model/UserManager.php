@@ -390,7 +390,7 @@ class UserManager extends Connexion
         $statement = $bdd->prepare('UPDATE `comments`
                                                 INNER JOIN users ON users.id = comments.id_user
                                                 SET `id_user`= 2  
-                                                WHERE users.id = :id AND DATEDIFF(NOW(), date_modification) > 7');
+                                                WHERE users.id = :id');
         $statement->execute(array(
             'id' => $user->getId()
         ));
@@ -400,11 +400,9 @@ class UserManager extends Connexion
     public function deleteUser(User $user)
     {
         $bdd = $this->dbConnect();
-        $statement = $bdd->prepare('DELETE FROM users WHERE DATEDIFF(NOW(), date_modification) > 7 AND state = 3 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\')');
+        $statement = $bdd->prepare('DELETE FROM users WHERE id = :id');
         $statement->execute(array(
-            'id' => $user->getId(),
-            'state' => $user->getState(),
-            'date_modification' => $user->getDate_modification()
+            'id' => $user->getId()
         ));
     }
 

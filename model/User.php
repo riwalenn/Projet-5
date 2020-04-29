@@ -138,10 +138,15 @@ class User extends Post
         endif;
     }
 
-    public function getDate_inscription()
+    public function getDate_inscription_fr()
     {
         $date = new DateTime($this->date_inscription);
         return date_format($date,'d-m-Y');
+    }
+
+    public function getDate_inscription()
+    {
+        return $this->date_inscription;
     }
 
     public function setDate_inscription($date_inscription)
@@ -149,10 +154,15 @@ class User extends Post
         $this->date_inscription = $date_inscription;
     }
 
-    public function getDate_modification()
+    public function getDate_modification_fr()
     {
         $date = new DateTime($this->date_modification);
         return date_format($date,'d-m-Y à H:m');
+    }
+
+    public function getDate_modification()
+    {
+        return $this->date_modification;
     }
 
     public function setDate_modification($date_modification)

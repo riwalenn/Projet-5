@@ -5,11 +5,13 @@ class Post
     private $id;
     private $title;
     private $kicker;
+    private $author;
     private $pseudo;
     private $content;
     private $url;
     private $created_at;
     private $modified_at;
+    private $id_category;
     private $category;
     private $favorites;
     private $statut_favorite;
@@ -70,6 +72,16 @@ class Post
         $this->kicker = $kicker;
     }
 
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+    }
+
     public function getPseudo()
     {
         return $this->pseudo;
@@ -125,6 +137,15 @@ class Post
     public function setModified_at($modified_at)
     {
         $this->modified_at = $modified_at;
+    }
+
+    public function getId_Category()
+    {
+        return $this->id_category;
+    }
+    public function setId_Category($id_category)
+    {
+        $this->id_category = $id_category;
     }
 
     public function getCategory()

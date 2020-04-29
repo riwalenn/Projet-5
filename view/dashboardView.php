@@ -17,7 +17,7 @@ if ((isset($_SESSION['id']))) : ?>
                             <i class="fas fa-ninja"></i>
                             <p class="text-muted"><b>Votre email :</b> <?= $user->getEmail() ?></p>
                             <p class="text-muted"><b>Date d'inscription :</b> <?= $user->getDate_inscription() ?></p>
-                            <p class="text-muted"><a href="index.php?action=logoutUser"><i class="fas fa-sign-out-alt"></i> Deconnexion</a></p>
+                            <p class="text-muted"><a href="index.php?action=logoutUser" onclick="return ConfirmDeconnexion()"><i class="fas fa-sign-out-alt"></i> Deconnexion</a></p>
                         </div>
                         <div class="card-footer">
                             <small class="text-muted"><a class="articles-link" data-toggle="modal" href="#formModal" ><i class="fas fa-pen"></i> Modifier mes informations</a></small>

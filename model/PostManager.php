@@ -23,36 +23,37 @@ class PostManager extends Connexion
     }
 
     //Affichage de tous les articles selon le statut
-    public function getAllPosts($page, $state, $offset, $post = NULL)
+    public function getAllPosts($page, $offset)
     {
         $bdd = $this->dbConnect();
-        $listPosts = $bdd->prepare('SELECT posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at, posts.state
+
+        $listPosts = $bdd->prepare('SELECT posts.id, posts.title, posts.kicker, posts.author, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at, posts.state
                                                     FROM `posts` INNER JOIN users ON posts.author = users.id
-                                                    WHERE posts.state IN (:state) ORDER BY posts.created_at DESC LIMIT :page, :offset');
+                                                    WHERE posts.state IN (0, 1, 2) ORDER BY posts.modified_at DESC LIMIT :page, :offset');
         if (!empty($page)) {
             $listPosts->bindValue(':page', intval(($page -1) * $offset), PDO::PARAM_INT);
         } else {
             $listPosts->bindValue(':page', intval(0), PDO::PARAM_INT);
         }
-        $listPosts->bindValue(':state', $state);
         $listPosts->bindValue(':offset', intval($offset), PDO::PARAM_INT);
         $listPosts->execute();
         return $listPosts->fetchAll(PDO::FETCH_CLASS, 'Post');
     }
 
-    //Affichage de tous les articles à supprimer
-    public function getAllTrashPosts($page, $post = NULL)
+    public function getPostsByState($page, $state, $offset)
     {
-        $offset = 10;
         $bdd = $this->dbConnect();
-        $listPosts = $bdd->prepare('SELECT posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at, posts.state
+
+        $listPosts = $bdd->prepare('SELECT posts.id, posts.title, posts.kicker, posts.author, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at, posts.state
                                                     FROM `posts` INNER JOIN users ON posts.author = users.id
-                                                    WHERE posts.state = 3 ORDER BY posts.created_at DESC LIMIT :page,:offset');
+                                                    WHERE posts.state = :state ORDER BY posts.modified_at DESC LIMIT :page, :offset');
         if (!empty($page)) {
-            $listPosts->bindValue(':page', intval(($page -1) * 10), PDO::PARAM_INT);
+            $listPosts->bindValue(':page', intval(($page -1) * $offset), PDO::PARAM_INT);
         } else {
             $listPosts->bindValue(':page', intval(0), PDO::PARAM_INT);
         }
+
+        $listPosts->bindValue(':state', $state);
         $listPosts->bindValue(':offset', intval($offset), PDO::PARAM_INT);
         $listPosts->execute();
         return $listPosts->fetchAll(PDO::FETCH_CLASS, 'Post');
@@ -200,13 +201,24 @@ class PostManager extends Connexion
     }
 
     //Compte le nombre de page d'articles
-    public function countPages($nbPosts, $state)
+    public function countPagesByState($nbPosts, $state)
     {
         $bdd = $this->dbConnect();
         $countPages = $bdd->prepare('SELECT COUNT(*)/:nbPosts AS nb_pages FROM `posts` WHERE posts.state IN (:state)');
         $countPages->execute(array(
             'nbPosts' => $nbPosts,
             'state' => $state
+        ));
+        $resultat = $countPages->fetch();
+        return $resultat['nb_pages'];
+    }
+
+    public function countPagesByAllStates($nbPosts)
+    {
+        $bdd = $this->dbConnect();
+        $countPages = $bdd->prepare('SELECT COUNT(*)/:nbPosts AS nb_pages FROM `posts` WHERE posts.state IN (0, 1, 2)');
+        $countPages->execute(array(
+            'nbPosts' => $nbPosts
         ));
         $resultat = $countPages->fetch();
         return $resultat['nb_pages'];
@@ -225,7 +237,75 @@ class PostManager extends Connexion
             $resultat = $countPages->fetch();
             return $resultat['nb_pages'];
         } else {
-            $this->countPages();
+            $this->countPagesByState();
         }
+    }
+
+    /*
+     * CRUD
+     */
+    //Ajoute l'article
+    public function createPost(Post $post)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('INSERT INTO `posts` (`title`, `kicker`, `author`, `content`, `url`, `created_at`, `modified_at`, `id_category`, `state`) 
+                                                VALUES (:title, :kicker, :author, :content, :url, NOW(), NOW(), :id_category, :state)');
+        $statement->execute(array(
+            'title' => $post->getTitle(),
+            'kicker' => $post->getKicker(),
+            'author' => $post->getAuthor(),
+            'content' => $post->getContent(),
+            'url' => $post->getUrl(),
+            'id_category' => $post->getId_Category(),
+            'state' => $post->getState()
+        ));
+    }
+
+    //Modifie rapidement l'article
+    public function updatePost(Post $post)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('UPDATE `posts` SET id_category = :id_category, state = :state, modified_at = NOW()
+                                                WHERE id = :id');
+        $statement->execute(array(
+            'id' => $post->getId(),
+            'id_category' => $post->getId_Category(),
+            'state' => $post->getState()
+        ));
+    }
+
+    //Modification complète de l'article
+    public function fullUpdatePost(Post $post)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('UPDATE `posts` SET title = :title, kicker = :kicker, author = :author, content = :content, url = :url, modified_at = NOW(), id_category = :id_category, state = :state
+                                                WHERE id = :id');
+        $statement->execute(array(
+            'id' => $post->getId(),
+            'title' => $post->getTitle(),
+            'kicker' => $post->getKicker(),
+            'author' => $post->getAuthor(),
+            'content' => $post->getContent(),
+            'url' => $post->getUrl(),
+            'id_category' => $post->getId_Category(),
+            'state' => $post->getState()
+        ));
+    }
+
+    //Supprime l'article
+    public function deletePost(Post $post)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('DELETE FROM `posts` WHERE id = :id');
+        $statement->execute(array(
+            'id' => $post->getId(),
+        ));
+    }
+
+    public function deletePosts()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('DELETE FROM `posts` WHERE state = :state');
+        $statement->execute(array('state' => Constantes::POST_STATUS_DELETED));
     }
 }

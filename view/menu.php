@@ -45,12 +45,19 @@
                     <?php if ((isset($_SESSION['id']))) : ?>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <?php if ($_SESSION['role'] == Constantes::ROLE_USER) : ?>
-                            <a class="dropdown-item" href="index.php?action=dashboard">Voir profil</a>
+                            <a class="dropdown-item" href="index.php?action=dashboard">Tableau de bord</a>
                         <?php elseif ($_SESSION['role'] == Constantes::ROLE_ADMIN) : ?>
-                            <a class="dropdown-item" href="index.php?action=backendDashboard">Voir profil</a>
+                            <a class="dropdown-item" href="index.php?action=backendDashboard">Tableau de bord</a>
+                        <?php endif; ?>
+                        <?php if ($_SESSION['role'] == Constantes::ROLE_ADMIN) : ?>
+                        <div class="dropdown-divider"></div>
+                        <h6 class="dropdown-header">Managers</h6>
+                        <a class="dropdown-item" href="index.php?action=usersManager&value=all">Utilisateurs</a>
+                        <a class="dropdown-item" href="index.php?action=postsManager&value=all">Articles</a>
+                        <a class="dropdown-item" href="#">Portfolio</a>
                         <?php endif; ?>
                         <div class="dropdown-divider"></div>
-                        <a class="nav-link js-scroll-trigger deco" href="index.php?action=logoutUser">Se déconnecter</a>
+                        <a class="nav-link js-scroll-trigger deco" href="index.php?action=logoutUser" onclick="return ConfirmDeconnexion()">Se déconnecter</a>
                         <?php endif; ?>
                     </div>
                 </li>

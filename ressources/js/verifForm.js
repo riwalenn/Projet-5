@@ -31,6 +31,14 @@ function ConfirmMessageAdmin() {
     }
 }
 
+function ConfirmDeconnexion() {
+    if (confirm("Etes-vous sûr de vouloir vous déconnecter ?")) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function surligne(champ, erreur) {
     if (erreur) {
         champ.style.color = "red";

@@ -64,7 +64,7 @@ Insert pour les tests utilisateurs =>
 INSERT INTO `users` (`id`, `pseudo`, `role`, `email`, `password`, `date_modification`, `date_inscription`, `cgu`, `state`) VALUES
 (1, 'Riwalenn', 1, 'riwalenn@gmail.com', '$2y$10$my4B/iIYpeoURnvrH6mYLOYpIXcu1xD6EzoS74bA5CSrA5mu.J8PG', '2020-04-03 15:54:30', '2019-12-01 16:37:47', 1, 2),
 (2, 'Anonyme', 2, 'no-reply@riwalennbas.com', '$2y$10$sT/NGEIrb8z5XwCvPv9NpeeF3fuge7Vyyf4AWIEQPr7ZWmuJIS2gC', '2019-12-01 00:00:00', '2019-12-01 21:48:31', 1, 2),
-(4, 'test', 2, 'test@gmail.com', '', '2019-12-02 15:04:47', '2019-12-01 15:04:47', 1, 0),
+(4, 'test', 2, 'test@gmail.com', '$2y$10$my4B/iIYpeoURnvrH6mYLOYpIXcu1xD6EzoS74bA5CSrA5mu.J8PG', '2019-12-02 15:04:47', '2019-12-01 15:04:47', 1, 0),
 (5, 'test1', 2, 'test1@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-04-06 10:58:42', '2020-04-06 10:58:42', 1, 0),
 (6, 'test2', 2, 'test2@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-01-01 10:58:42', '2019-12-01 10:58:42', 1, 2),
 (7, 'test3', 2, 'test3@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-01-01 10:58:42', '2019-12-01 10:58:42', 1, 2),
@@ -78,6 +78,10 @@ INSERT INTO `tokens` (`id_token`, `token`, `id_user`, `expiration_token`) VALUES
 (3, '046280e85dc8fef38b2565f29dc8d602da0137370d9cd4cde184be5fdf335265', 5, '2020-04-11 10:58:42'),
 (4, '29ce0d6d8a0bd739c0454d617f6418ef82f03744c777c4871a5bc31633c3c6a8', 10, '2020-04-05 11:06:51'),
 (5, '2c7a19c94fe568689ca7f11785dc5ff11ded91595ec85f081949689f37e9bd10', 11, '2020-04-11 11:08:51');
+
+INSERT INTO `comments` (`id`, `id_post`, `id_user`, `created_at`, `title`, `content`, `state`) VALUES
+(1, 7, 4, '2020-04-29 00:00:00', 'test', 'test', 1),
+(2, 7, 10, '2020-04-29 10:00:00', 'retest', 'retest', 1);
 
 
 

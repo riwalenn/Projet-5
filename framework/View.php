@@ -47,7 +47,7 @@ class View
         $category = $post->getCategory();
         $tag = "<picture>";
         $tag .= '<source srcset="'. Constantes::PATH_IMG_RESSOURCES . 'categories/' . $category->getId() . Constantes::EXTENSION_WEBP . '" media="all">';
-        $tag .=  '<img class="img-fluid d-block mx-auto" src="'. Constantes::PATH_IMG_RESSOURCES . 'categories/' . $category->getId() . Constantes::EXTENSION_PNG . '" alt="">';
+        $tag .=  '<img class="img-fluid d-block mx-auto" src="'. Constantes::PATH_IMG_RESSOURCES . 'categories/' . $category->getId() . Constantes::EXTENSION_PNG . '" alt="' . $category->getCategory() . '">';
         $tag .= "</picture>";
         return $tag;
     }
@@ -67,6 +67,25 @@ class View
         $tag .= '<source srcset="'. Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::THUMBNAIL . Constantes::EXTENSION_WEBP . '" alt="' . $folio->getTitle() . '">';
         $tag .= '<img class="img-fluid d-block mx-auto" src="' . Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::THUMBNAIL . Constantes::EXTENSION_JPG . '" alt="' . $folio->getTitle() . '">';
         $tag .= "</picture>";
+        return $tag;
+    }
+
+    static public function generateDashboardPictureTag($name, $alt, $classe)
+    {
+        $tag = "<picture>";
+        $tag .= '<source srcset="'. Constantes::PATH_IMG_RESSOURCES . 'dashboard/' . $name . Constantes::EXTENSION_WEBP . '" media="all" class="'. $classe .'">';
+        $tag .=  '<img class="img-fluid d-block mx-auto ' . $classe . '" src="'. Constantes::PATH_IMG_RESSOURCES . 'dashboard/' . $name . Constantes::EXTENSION_PNG . '" alt="' . $alt . '">';
+        $tag .= "</picture>";
+        return $tag;
+    }
+
+    static public function generateDropdown($allValues, $manager)
+    {
+        $tag = "<div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdownMenuLink\">";
+        foreach ($allValues as $key => $value) {
+            $tag .= "<a class=\"dropdown-item\" href=\"index.php?action=".$manager."&value=" . $key . "\">" . $value . "</a>";
+        }
+        $tag .= "</div>";
         return $tag;
     }
 }

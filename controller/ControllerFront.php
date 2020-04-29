@@ -380,7 +380,7 @@ class ControllerFront
             endif;
         }
 
-        $nbPages = $postManager->countPages(3, 1);
+        $nbPages = $postManager->countPagesByState(3, 1);
 
         $view = new View('Liste des articles');
         $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'errorMessage' => $errorMessage, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
@@ -409,6 +409,8 @@ class ControllerFront
         $userManager = new UserManager();
         $postManager = new PostManager();
         $commentManager = new CommentManager();
+        $categoryManager = new CategoryManager();
+
         $user = $userManager->getUserBySessionId();
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
             if (isset($_REQUEST['value']))
@@ -422,6 +424,10 @@ class ControllerFront
 
                     case 'connexionExpired':
                         $userManager->deleteUsersExpiredConnection();
+                        break;
+
+                    case 'postsToDelete':
+                        $postManager->deletePosts();
                         break;
                 }
             }
@@ -444,8 +450,10 @@ class ControllerFront
             //Compteur commentaires
             $nbCommentsUnchecked = $commentManager->countCommentsUncheked();
 
+            $categories = $categoryManager->selectAllCategories();
+
             $view = new View('Tableau de bord');
-            $view->render('view/dashboardAdminView.php', ['user' => $user, 'nbPostsUnchecked' => $nbPostsUnchecked, 'nbPostsArchived' => $nbPostsArchived, 'nbPostsToDelete' => $nbPostsToDelete, 'nbUsersTotal' => $nbUsersTotal, 'nbUsersReferent' =>$nbUsersReferent, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate, 'nbUsersToDelete' => $nbUsersToDelete, 'nbPostTotal' => $nbPostTotal, 'nbCommentsUnchecked' => $nbCommentsUnchecked]);
+            $view->render('view/dashboardAdminView.php', ['user' => $user, 'nbPostsUnchecked' => $nbPostsUnchecked, 'nbPostsArchived' => $nbPostsArchived, 'nbPostsToDelete' => $nbPostsToDelete, 'nbUsersTotal' => $nbUsersTotal, 'nbUsersReferent' =>$nbUsersReferent, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate, 'nbUsersToDelete' => $nbUsersToDelete, 'nbPostTotal' => $nbPostTotal, 'nbCommentsUnchecked' => $nbCommentsUnchecked, 'categories' => $categories]);
         else:
             $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
             throw new ExceptionOutput($message);
@@ -459,9 +467,25 @@ class ControllerFront
         $user = $userManager->getUserBySessionId();
 
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
+
+            if (isset($_REQUEST['CRUD']))
+            {
+                $errorMessage = '';
+                $this->crudUserManager($_REQUEST['CRUD']);
+            }
+
             $dtz = new DateTimeZone("Europe/Madrid");
             $now = new DateTime(date("Y-m-d H:i:s"), $dtz);
+
             $usersList = [];
+            $allValues = [
+                "all" => "Tous les utilisateurs",
+                "uncheckedUsers" => "Utilisateurs à valider",
+                "uncheckedTokenUsers" => "Tokens non validés",
+                "referents" => "Utilisateurs référents",
+                "trash" => "Comptes à supprimer"
+            ];
+            $filArianne = '';
             if (isset($_REQUEST['value']))
             {
                 $value = $_REQUEST['value'];
@@ -494,15 +518,12 @@ class ControllerFront
 
                     default:
                         $usersList = $userManager->selectAllUsers();
+                        $filArianne = 'Tous les utilisateurs';
                         break;
-                }
-                if (isset($_REQUEST['CRUD']))
-                {
-                    $this->crudUserManager($_REQUEST['CRUD']);
                 }
 
                 $view = new View('Liste des utilisateurs');
-                $view->render('view/managerUsersView.php', ['usersList' => $usersList, 'errorMessage' => $errorMessage, 'value' => $value, 'now' => $now, 'filArianne' => $filArianne]);
+                $view->render('view/managerUsersView.php', ['usersList' => $usersList, 'allValues' => $allValues, 'errorMessage' => $errorMessage, 'value' => $value, 'now' => $now, 'filArianne' => $filArianne]);
             }
         } else {
             $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
@@ -516,19 +537,25 @@ class ControllerFront
         $userManager = new UserManager();
         $user = new User($_REQUEST);
         switch ($crud) {
+            //Update
             case 'U':
                 $userManager->updateUser($user);
                 $errorMessage = '<small class="alert alert-success" role="alert">L\'utilisateur a été édité avec succès.</small>';
                 break;
 
+             //Create
             case 'C':
                 $user->setCgu(1);
                 $userManager->registration($user);
                 $errorMessage = '<small class="alert alert-success" role="alert">L\'utilisateur a été créé avec succès.</small>';
                 break;
 
+            //Delete
             case 'D':
-                if ($user->getState() == Constantes::USER_STATUS_DELETED) :
+                $date_user = new DateTime($user->getDate_modification());
+                $now = new DateTime();
+                $interval = $date_user->diff($now);
+                if ($user->getState() == 3 && ($interval->format('%R%a days') > 7)) :
                     $userManager->updateIdUserInComments($user);
                     $userManager->deleteUser($user);
                     $errorMessage = '<small class="alert alert-success" role="alert">L\'utilisateur a été supprimé avec succès.</small>';
@@ -543,58 +570,114 @@ class ControllerFront
     //Affiche le panneaux de management des articles
     public function getPostsDashboardManager($errorMessage = NULL)
     {
-        $postManager = new PostManager();
-        $categoryManager = new CategoryManager();
-        $categories = $categoryManager->selectAllCategories();
-        $pageCourante = $_REQUEST['page'] ?? 1;
-        $allStates = array(0, 1, 2, 3);
-        $nbPosts = 10;
-        if (isset($_REQUEST['value']))
-        {
-            $value = $_REQUEST['value'];
-            $categoryManager = new CategoryManager();
-            switch ($value)
+        $userManager = new UserManager();
+        $user = $userManager->getUserBySessionId();
+
+        if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
+
+            if (isset($_REQUEST['CRUD']))
             {
-                case 'all':
-                    $postsList = $postManager->getAllPosts($pageCourante, $allStates[1], $nbPosts);
-                    $nbPages = $postManager->countPages($nbPosts, $allStates[1]);
-                    $filArianne = 'Tous les articles';
-                    break;
-
-                case 'uncheckedPosts':
-                    $postsList = $postManager->getAllPosts($pageCourante, $allStates[0], $nbPosts);
-                    $nbPages = $postManager->countPages($nbPosts, $allStates[0]);
-                    $filArianne = 'Articles à valider';
-                    break;
-
-                case 'checkedPosts':
-                    $postsList = $postManager->getAllPosts($pageCourante, $allStates[1], $nbPosts);
-                    $nbPages = $postManager->countPages($nbPosts, $allStates[1]);
-                    break;
-
-                case 'archived':
-                    $postsList = $postManager->getAllPosts($pageCourante, $allStates[2], $nbPosts);
-                    $nbPages = $postManager->countPages($nbPosts, $allStates[2]);
-                    $filArianne = 'Articles archivés';
-                    break;
-
-                case 'trash':
-                    $postsList = $postManager->getAllPosts($pageCourante, $allStates[3], $nbPosts);
-                    $nbPages = $postManager->countPages($nbPosts, $allStates[3]);
-                    $filArianne = 'Articles à supprimer';
-                    break;
-
-                default:
-                    $postsList = $postManager->getAllPosts($pageCourante, $allStates[1], $nbPosts);
-                    $nbPages = $postManager->countPages($nbPosts, $allStates[1]);
-                    break;
+                $this->crudPostManager($_REQUEST['CRUD']);
             }
+
+            $postManager = new PostManager();
+            $categoryManager = new CategoryManager();
+            $categories = $categoryManager->selectAllCategories();
+            $pageCourante = $_REQUEST['page'] ?? 1;
+            $allValues = [
+                "all" => "Tous les articles",
+                "uncheckedPosts" => "Articles à valider",
+                "checkedPosts" => "Articles validés",
+                "archived" => "Articles archivés",
+                "trash" => "Articles à supprimer"
+            ];
+            $nbPosts = 10;
+            if (isset($_REQUEST['value']))
+            {
+                $value = $_REQUEST['value'];
+                $categoryManager = new CategoryManager();
+                switch ($value)
+                {
+                    case 'all':
+                        $postsList = $postManager->getAllPosts($pageCourante, $nbPosts);
+                        $nbPages = $postManager->countPagesByAllStates($nbPosts);
+                        $filArianne = 'Tous les articles';
+                        break;
+
+                    case 'uncheckedPosts':
+                        $postsList = $postManager->getPostsByState($pageCourante, 0, $nbPosts);
+                        $nbPages = $postManager->countPagesByState($nbPosts, 0);
+                        $filArianne = 'Articles à valider';
+                        break;
+
+                    case 'checkedPosts':
+                        $postsList = $postManager->getPostsByState($pageCourante, 1, $nbPosts);
+                        $nbPages = $postManager->countPagesByState($nbPosts, 1);
+                        $filArianne = 'Articles validés';
+                        break;
+
+                    case 'archived':
+                        $postsList = $postManager->getPostsByState($pageCourante, 2, $nbPosts);
+                        $nbPages = $postManager->countPagesByState($nbPosts, 2);
+                        $filArianne = 'Articles archivés';
+                        break;
+
+                    case 'trash':
+                        $postsList = $postManager->getPostsByState($pageCourante, 3, $nbPosts);
+                        $nbPages = $postManager->countPagesByState($nbPosts, 3);
+                        $filArianne = 'Articles à supprimer';
+                        break;
+
+                    default:
+                        $postsList = $postManager->getPostsByState($pageCourante, 1, $nbPosts);
+                        $nbPages = $postManager->countPagesByState($nbPosts, 1);
+                        $filArianne = 'Tous les articles';
+                        break;
+                }
+            }
+            foreach ($postsList as $post) {
+                $categoryManager->fillCategoryInPost($post);
+            }
+            $view = new View('Liste des articles');
+            $view->render('view/managerPostsView.php', ['errorMessage' => $errorMessage, 'allValues' => $allValues, 'categories' => $categories, 'pageCourante' => $pageCourante, 'nbPages' => $nbPages, 'value' => $value, 'filArianne' => $filArianne, 'postsList' => $postsList]);
+        } else {
+            $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
+            throw new ExceptionOutput($message);
         }
-        foreach ($postsList as $post) {
-            $categoryManager->fillCategoryInPost($post);
+    }
+
+    public function crudPostManager($crud)
+    {
+        $postManager = new PostManager();
+        $post = new Post($_REQUEST);
+        $userManager = new UserManager();
+        $user = $userManager->getUserBySessionId();
+        switch ($crud) {
+            case 'U':
+                $postManager->updatePost($post);
+                $errorMessage = '<small class="alert alert-success" role="alert">L\'article a été édité avec succès.</small>';
+                break;
+
+            case 'FU':
+                $postManager->fullUpdatePost($post);
+                $errorMessage = '<small class="alert alert-success" role="alert">L\'article a été édité avec succès.</small>';
+                break;
+
+            case 'C':
+                $post->setAuthor($user->getId());
+                $postManager->createPost($post);
+                $errorMessage = '<small class="alert alert-success" role="alert">L\'article a été créé avec succès.</small>';
+                break;
+
+            case 'D':
+                if ($post->getState() == Constantes::POST_STATUS_DELETED) :
+                    $postManager->deletePost($post);
+                    $errorMessage = '<small class="alert alert-success" role="alert">L\'article a été supprimé avec succès.</small>';
+                else:
+                    $errorMessage = '<small class="alert alert-danger" role="alert">L\'utilisateur n\'a pas le status "supprimé"</small>';
+                endif;
+                break;
         }
-        $view = new View('Liste des articles');
-        $view->render('view/managerPostsView.php', ['errorMessage' => $errorMessage, 'categories' => $categories, 'pageCourante' => $pageCourante, 'nbPages' => $nbPages, 'value' => $value, 'filArianne' => $filArianne, 'postsList' => $postsList]);
     }
 
     /**
