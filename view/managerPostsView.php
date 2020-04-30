@@ -173,7 +173,8 @@
                                             <span class="input-group-text" id="basic-addon1"><i
                                                         class="fas fa-caret-right"></i></span>
                                     </div>
-                                    <label for="content"></label><textarea class="form-control" id="content" rows="10" name="content" placeholder="entrez le contenu de l'article ici" required><?= $post->getContent() ?></textarea>
+
+                                        <label for="content"></label><textarea class="form-control summernote" id="content" rows="10" name="content" placeholder="entrez le contenu de l'article ici" required><?= $post->getContent() ?></textarea>
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">

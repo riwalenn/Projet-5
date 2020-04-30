@@ -248,7 +248,7 @@ if ((isset($_SESSION['id']))) :
                                             <span class="input-group-text" id="basic-addon1"><i
                                                         class="fas fa-caret-right"></i></span>
                                     </div>
-                                    <label for="content"></label><textarea class="form-control" id="content" rows="5" name="content" placeholder="entrez le contenu de l'article ici" required></textarea>
+                                    <label for="content"></label><textarea class="form-control" id="summernote" rows="5" name="content" placeholder="entrez le contenu de l'article ici" required></textarea>
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
