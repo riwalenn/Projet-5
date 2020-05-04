@@ -128,9 +128,7 @@ class PostManager extends Connexion
                                                 FROM `favorites_posts` LEFT JOIN posts ON favorites_posts.id_post = posts.id 
                                                     INNER JOIN users ON posts.author = users.id 
                                                 WHERE id_user = :id ORDER BY posts.modified_at DESC');
-        $statement->execute(array(
-            'id' => $user->getId()
-        ));
+        $statement->execute(array('id' => intval($user->getId())));
         return $statement->fetchAll(PDO::FETCH_CLASS, 'Post');
     }
 
@@ -140,8 +138,8 @@ class PostManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('INSERT INTO `favorites_posts`(id_user, id_post) VALUES (:id_user, :id_post)');
         $statement->execute(array(
-            'id_user' => $user->getId(),
-            'id_post' => $favorites->getId_post()
+            'id_user' => intval($user->getId()),
+            'id_post' => intval($favorites->getId_post())
         ));
     }
 
@@ -150,9 +148,7 @@ class PostManager extends Connexion
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT COUNT(id_user) as nb_favorites FROM `favorites_posts` WHERE id_user=:id_user');
-        $statement->execute(array(
-            'id_user' => $user->getId()
-        ));
+        $statement->execute(array('id_user' => intval($user->getId())));
         $resultat = $statement->fetch();
         return $resultat['nb_favorites'];
     }
@@ -163,8 +159,8 @@ class PostManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT COUNT(id) as nb_favorites FROM `favorites_posts` WHERE id_user = :id_user AND id_post = :id_post');
         $statement->execute(array(
-            'id_user' => $id_user,
-            'id_post' => $id_post
+            'id_user' => intval($id_user),
+            'id_post' => intval($id_post)
         ));
         $resultat = $statement->fetch();
         return $resultat['nb_favorites'];
@@ -176,8 +172,8 @@ class PostManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT EXISTS(SELECT 1 FROM `favorites_posts` WHERE id_user = :id_user AND id_post = :id_post LIMIT 1) as result');
         $statement->execute(array(
-            'id_user' => $user->getId(),
-            'id_post' => $favorites->getId_post()
+            'id_user' => intval($user->getId()),
+            'id_post' => intval($favorites->getId_post())
         ));
         $resultat = $statement->fetch();
         return $resultat['result'];
@@ -195,8 +191,8 @@ class PostManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('DELETE FROM `favorites_posts` WHERE id_user = :id_user AND id_post = :id_post');
         $statement->execute(array(
-            'id_user' => $user->getId(),
-            'id_post' => $favorites->getId_post()
+            'id_user' => intval($user->getId()),
+            'id_post' => intval($favorites->getId_post())
         ));
     }
 
@@ -206,8 +202,8 @@ class PostManager extends Connexion
         $bdd = $this->dbConnect();
         $countPages = $bdd->prepare('SELECT COUNT(*)/:nbPosts AS nb_pages FROM `posts` WHERE posts.state IN (:state)');
         $countPages->execute(array(
-            'nbPosts' => $nbPosts,
-            'state' => $state
+            'nbPosts' => intval($nbPosts),
+            'state' => intval($state)
         ));
         $resultat = $countPages->fetch();
         return $resultat['nb_pages'];
@@ -217,9 +213,7 @@ class PostManager extends Connexion
     {
         $bdd = $this->dbConnect();
         $countPages = $bdd->prepare('SELECT COUNT(*)/:nbPosts AS nb_pages FROM `posts` WHERE posts.state IN (0, 1, 2)');
-        $countPages->execute(array(
-            'nbPosts' => $nbPosts
-        ));
+        $countPages->execute(array('nbPosts' => intval($nbPosts)));
         $resultat = $countPages->fetch();
         return $resultat['nb_pages'];
     }
@@ -251,13 +245,13 @@ class PostManager extends Connexion
         $statement = $bdd->prepare('INSERT INTO `posts` (`title`, `kicker`, `author`, `content`, `url`, `created_at`, `modified_at`, `id_category`, `state`) 
                                                 VALUES (:title, :kicker, :author, :content, :url, NOW(), NOW(), :id_category, :state)');
         $statement->execute(array(
-            'title' => $post->getTitle(),
-            'kicker' => $post->getKicker(),
+            'title' => htmlspecialchars($post->getTitle()),
+            'kicker' => htmlspecialchars($post->getKicker()),
             'author' => $post->getAuthor(),
-            'content' => $post->getContent(),
+            'content' => htmlspecialchars($post->getContent()),
             'url' => $post->getUrl(),
-            'id_category' => $post->getId_Category(),
-            'state' => $post->getState()
+            'id_category' => intval($post->getId_Category()),
+            'state' => intval($post->getState())
         ));
     }
 
@@ -268,9 +262,9 @@ class PostManager extends Connexion
         $statement = $bdd->prepare('UPDATE `posts` SET id_category = :id_category, state = :state, modified_at = NOW()
                                                 WHERE id = :id');
         $statement->execute(array(
-            'id' => $post->getId(),
-            'id_category' => $post->getId_Category(),
-            'state' => $post->getState()
+            'id' => intval($post->getId()),
+            'id_category' => intval($post->getId_Category()),
+            'state' => intval($post->getState())
         ));
     }
 
@@ -281,14 +275,14 @@ class PostManager extends Connexion
         $statement = $bdd->prepare('UPDATE `posts` SET title = :title, kicker = :kicker, author = :author, content = :content, url = :url, modified_at = NOW(), id_category = :id_category, state = :state
                                                 WHERE id = :id');
         $statement->execute(array(
-            'id' => $post->getId(),
-            'title' => $post->getTitle(),
-            'kicker' => $post->getKicker(),
+            'id' => intval($post->getId()),
+            'title' => htmlspecialchars($post->getTitle()),
+            'kicker' => htmlspecialchars($post->getKicker()),
             'author' => $post->getAuthor(),
-            'content' => $post->getContent(),
+            'content' => htmlspecialchars($post->getContent()),
             'url' => $post->getUrl(),
-            'id_category' => $post->getId_Category(),
-            'state' => $post->getState()
+            'id_category' => intval($post->getId_Category()),
+            'state' => intval($post->getState())
         ));
     }
 
@@ -297,15 +291,13 @@ class PostManager extends Connexion
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('DELETE FROM `posts` WHERE id = :id');
-        $statement->execute(array(
-            'id' => $post->getId(),
-        ));
+        $statement->execute(array('id' => intval($post->getId())));
     }
 
     public function deletePosts()
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('DELETE FROM `posts` WHERE state = :state');
-        $statement->execute(array('state' => Constantes::POST_STATUS_DELETED));
+        $statement->execute(array('state' => intval(Constantes::POST_STATUS_DELETED)));
     }
 }

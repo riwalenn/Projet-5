@@ -14,11 +14,11 @@ class UserManager extends Connexion
                                                 VALUES (:pseudo, :role, :email, :password, NOW(), NOW(), :cgu, :state) ');
         $statement->execute(array(
             'pseudo' => htmlspecialchars($user->getPseudo()),
-            'role' => $user->getRole(),
-            'email' => $user->getEmail(),
+            'role' => intval($user->getRole()),
+            'email' => htmlspecialchars($user->getEmail()),
             'password' => password_hash($user->getPassword(), PASSWORD_DEFAULT),
-            'cgu' => $user->getCgu(),
-            'state' => $user->getState()
+            'cgu' => intval($user->getCgu()),
+            'state' => intval($user->getState())
         ));
 
         $id_user = $bdd->lastInsertId();
@@ -57,9 +57,7 @@ class UserManager extends Connexion
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT `id` FROM `users` WHERE `email` LIKE :email');
-        $statement->execute(array(
-            'email' => $user->getEmail()
-        ));
+        $statement->execute(array('email' => htmlspecialchars($user->getEmail())));
         return $statement->fetch();
     }
 
@@ -69,9 +67,7 @@ class UserManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT `token`, `email` FROM `tokens` 
                                                 JOIN `users` ON `id_user` = `id` WHERE `email` LIKE :email');
-        $statement->execute(array(
-            'email' => $user->getEmail()
-        ));
+        $statement->execute(array('email' => htmlspecialchars($user->getEmail())));
 
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
     }
@@ -110,10 +106,7 @@ class UserManager extends Connexion
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('UPDATE `users` SET `state` = :state, `date_modification` = NOW()');
-        $statement->execute(array(
-            'state' => $user->getState()
-        ));
-
+        $statement->execute(array('state' => intval($user->getState())));
     }
 
     //Modification du mot de passe s'il a été oublié
@@ -135,9 +128,9 @@ class UserManager extends Connexion
         $statement = $bdd->prepare('UPDATE `users` SET `pseudo` = :pseudo, `email` = :email, `date_modification` = NOW() 
                                                 WHERE `id` = :id');
         $statement->execute(array(
-            'id' => $user->getId(),
+            'id' => intval($user->getId()),
             'pseudo' => htmlspecialchars($user->getPseudo()),
-            'email' => $user->getEmail(),
+            'email' => htmlspecialchars($user->getEmail()),
         ));
     }
 
@@ -151,9 +144,7 @@ class UserManager extends Connexion
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT * FROM `users` WHERE `email` LIKE :email');
-        $statement->execute(array(
-            'email' => $email
-        ));
+        $statement->execute(array('email' => htmlspecialchars($email)));
         $statement->setFetchMode(PDO::FETCH_CLASS, 'User');
         return $statement->fetch();
     }
@@ -164,9 +155,7 @@ class UserManager extends Connexion
     {
         $bdd =$this->dbConnect();
         $statement = $bdd->prepare('UPDATE `users` SET `date_modification` = NOW() WHERE id = :id');
-        $statement->execute(array(
-            'id' => $_SESSION['id']
-        ));
+        $statement->execute(array('id' => $_SESSION['id']));
     }
 
     /**
@@ -179,9 +168,7 @@ class UserManager extends Connexion
         $statement = $bdd->prepare('SELECT `id`, `password`, `email`, `pseudo`, `role`, `date_inscription`, `date_modification`, `state` 
                                                 FROM `users` 
                                                 WHERE `id` = :id');
-        $statement->execute(array(
-            'id' => $_SESSION['id']
-        ));
+        $statement->execute(array('id' => $_SESSION['id']));
         $statement->setFetchMode(PDO::FETCH_CLASS, 'User');
         return $statement->fetch();
     }
@@ -375,11 +362,11 @@ class UserManager extends Connexion
         $statement = $bdd->prepare('UPDATE `users` SET `pseudo` = :pseudo, `role` = :role, `email` = :email, `state` = :state, `date_modification` = NOW() 
                                                 WHERE `id` = :id');
         $statement->execute(array(
-            'id' => $user->getId(),
-            'pseudo' => $user->getPseudo(),
-            'role' => $user->getRole(),
-            'email' => $user->getEmail(),
-            'state' => $user->getState()
+            'id' => intval($user->getId()),
+            'pseudo' => htmlspecialchars($user->getPseudo()),
+            'role' => intval($user->getRole()),
+            'email' => htmlspecialchars($user->getEmail()),
+            'state' => intval($user->getState())
         ));
     }
 
@@ -391,9 +378,7 @@ class UserManager extends Connexion
                                                 INNER JOIN users ON users.id = comments.id_user
                                                 SET `id_user`= 2  
                                                 WHERE users.id = :id');
-        $statement->execute(array(
-            'id' => $user->getId()
-        ));
+        $statement->execute(array('id' => intval($user->getId())));
     }
 
     //Supprime l'utilisateur
@@ -401,9 +386,7 @@ class UserManager extends Connexion
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('DELETE FROM users WHERE id = :id');
-        $statement->execute(array(
-            'id' => $user->getId()
-        ));
+        $statement->execute(array('id' => intval($user->getId())));
     }
 
     //Compte les utilisateurs à supprimer

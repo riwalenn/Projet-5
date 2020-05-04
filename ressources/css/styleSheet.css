@@ -2,6 +2,18 @@
     margin-top: 10%;
 }
 
+.portfolio-full{
+    width: 100%;
+}
+
+.portfolio-thumb{
+    width: 80%;
+}
+
+.portfolio-small{
+    width: 30%;
+}
+
 li.nav-item.dropdown.show {
     text-transform: initial;
 }
@@ -329,6 +341,12 @@ i.cgu-green {
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
     background-color: #212529;
+}
+
+@media (min-width: 1900px) {
+    .container.dashboard {
+        max-width: 1740px;
+    }
 }
 
 @media (min-width: 576px) {

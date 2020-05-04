@@ -68,12 +68,12 @@ class Portfolio
         $this->content = $content;
     }
 
-    public function getDateConception()
+    public function getDate_conception()
     {
         return $this->date_conception;
     }
 
-    public function setDateConception($date_conception)
+    public function setDate_conception($date_conception)
     {
         $this->date_conception = $date_conception;
     }

@@ -1,5 +1,5 @@
 <section class="page-profil" id="profil">
-    <div class="container">
+    <div class="container dashboard">
         <h1 class="titre-dashboard-admin">Liste des articles</h1>
         <div class="row d-flex justify-content-around">
             <div class="card-deck">
@@ -7,7 +7,7 @@
                     <?= View::generateDashboardPictureTag("posts", "Posts management", "img_posts_dashboard") ?>
                     <div class="card-header d-flex justify-content-between">
                         <blockquote class="blockquote mb-0">
-                            <footer class="blockquote-footer" style="color: #00c0c7"><i class="fa fa-user"></i> Posts Manager</footer>
+                            <footer class="blockquote-footer" style="color: #00c0c7"><i class="fa fa-file-alt"></i> Posts Manager</footer>
                         </blockquote>
                         <?= $errorMessage ?>
                     </div>

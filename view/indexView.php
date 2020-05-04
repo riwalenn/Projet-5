@@ -55,7 +55,7 @@
                                     <i class="fas fa-plus fa-3x"></i>
                                 </div>
                             </div>
-                            <?= View::generatePortfolioThumbailTag($folio) ?>
+                            <?= View::generatePortfolioPicture($folio, 'thumb') ?>
                         </a>
                         <div class="portfolio-caption">
                             <h4><?= $folio->getTitle() ?></h4>
@@ -279,10 +279,10 @@
                                 <!-- Project Details Go Here -->
                                 <h2 class="text-uppercase"><?= $folio->getTitle() ?></h2>
                                 <p class="item-intro text-muted"><?= $folio->getKicker() ?></p>
-                                <?= View::generatePortfolioPictureTag($folio) ?>
+                                <?= View::generatePortfolioPicture($folio, 'full') ?>
                                 <p><?= $folio->getContent() ?></p>
                                 <ul class="list-inline">
-                                    <li>Date de conception: <?= $folio->getDateConception() ?></li>
+                                    <li>Date de conception: <?= $folio->getDate_conception() ?></li>
                                     <li>Client: <?= $folio->getClient() ?></li>
                                     <li>Categorie(s): <i class="fas fa-check-square"></i> <?= $folio->getCategoriesFormatted() ?></li>
                                 </ul>

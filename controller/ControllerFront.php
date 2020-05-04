@@ -460,7 +460,7 @@ class ControllerFront
         endif;
     }
 
-    //Affiche le panneaux de management utilisateurs
+    //Affiche le pannel de management utilisateurs
     public function getUsersDashboardManager($errorMessage = NULL)
     {
         $userManager = new UserManager();
@@ -537,17 +537,19 @@ class ControllerFront
         $userManager = new UserManager();
         $user = new User($_REQUEST);
         switch ($crud) {
-            //Update
-            case 'U':
-                $userManager->updateUser($user);
-                $errorMessage = '<small class="alert alert-success" role="alert">L\'utilisateur a été édité avec succès.</small>';
-                break;
-
-             //Create
+            //Create
             case 'C':
                 $user->setCgu(1);
                 $userManager->registration($user);
                 $errorMessage = '<small class="alert alert-success" role="alert">L\'utilisateur a été créé avec succès.</small>';
+                return $errorMessage;
+                break;
+
+            //Update
+            case 'U':
+                $userManager->updateUser($user);
+                $errorMessage = '<small class="alert alert-success" role="alert">L\'utilisateur a été édité avec succès.</small>';
+                return $errorMessage;
                 break;
 
             //Delete
@@ -559,15 +561,71 @@ class ControllerFront
                     $userManager->updateIdUserInComments($user);
                     $userManager->deleteUser($user);
                     $errorMessage = '<small class="alert alert-success" role="alert">L\'utilisateur a été supprimé avec succès.</small>';
+                    return $errorMessage;
                 else:
                     $errorMessage = '<small class="alert alert-danger" role="alert">L\'utilisateur n\'a pas le status "supprimé"</small>';
+                    return $errorMessage;
                 endif;
                 break;
         }
-        return $errorMessage;
     }
 
-    //Affiche le panneaux de management des articles
+    //Affiche le pannel de management du portfolio
+    public function getPortfolioDashboardManager($errorMessage = NULL)
+    {
+        $userManager = new UserManager();
+        $portfolioManager = new PortfolioManager();
+        $user = $userManager->getUserBySessionId();
+
+        if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
+            if (isset($_REQUEST['CRUD'])) {
+                $this->crudPortfolioManager($_REQUEST['CRUD']);
+            }
+
+            $portfolio = $portfolioManager->getPortfolio();
+
+            $view = new View('Portfolio');
+            $view->render('view/managerPortfolioView.php', ['user' => $user, 'portfolio' => $portfolio, 'errorMessage' => $errorMessage]);
+        }
+    }
+
+    public function crudPortfolioManager($crud)
+    {
+        $portfolioManager = new PortfolioManager();
+        $portfolio = new Portfolio($_REQUEST);
+        switch ($crud) {
+            //Create
+            case 'C':
+                // $portfolioManager = new PortfolioManager();
+                // $lastInsertId = $portfolioManager->getLastInsertId();
+                $errorMessage = '<small class="alert alert-success" role="alert">Le Portfolio a été créé avec succès.</small>';
+                return $errorMessage;
+                break;
+
+            //Update
+            case 'U':
+                $portfolioManager->updatePortfolio($portfolio);
+                $errorMessage = '<small class="alert alert-success" role="alert">Le Portfolio a été modifié avec succès.</small>';
+                return $errorMessage;
+                break;
+
+             //Update Picture
+            case 'UP':
+                //
+                $errorMessage = '<small class="alert alert-success" role="alert">Le Portfolio a été modifié avec succès.</small>';
+                return $errorMessage;
+                break;
+
+            //Delete
+            case 'D':
+                //
+                $errorMessage = '<small class="alert alert-success" role="alert">Le Portfolio a été supprimé avec succès.</small>';
+                return $errorMessage;
+                break;
+        }
+    }
+
+    //Affiche le pannel de management des articles
     public function getPostsDashboardManager($errorMessage = NULL)
     {
         $userManager = new UserManager();
@@ -656,25 +714,30 @@ class ControllerFront
             case 'U':
                 $postManager->updatePost($post);
                 $errorMessage = '<small class="alert alert-success" role="alert">L\'article a été édité avec succès.</small>';
+                return $errorMessage;
                 break;
 
             case 'FU':
                 $postManager->fullUpdatePost($post);
                 $errorMessage = '<small class="alert alert-success" role="alert">L\'article a été édité avec succès.</small>';
+                return $errorMessage;
                 break;
 
             case 'C':
                 $post->setAuthor($user->getId());
                 $postManager->createPost($post);
                 $errorMessage = '<small class="alert alert-success" role="alert">L\'article a été créé avec succès.</small>';
+                return $errorMessage;
                 break;
 
             case 'D':
                 if ($post->getState() == Constantes::POST_STATUS_DELETED) :
                     $postManager->deletePost($post);
                     $errorMessage = '<small class="alert alert-success" role="alert">L\'article a été supprimé avec succès.</small>';
+                    return $errorMessage;
                 else:
                     $errorMessage = '<small class="alert alert-danger" role="alert">L\'utilisateur n\'a pas le status "supprimé"</small>';
+                    return $errorMessage;
                 endif;
                 break;
         }

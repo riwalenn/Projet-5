@@ -54,7 +54,7 @@
                         <h6 class="dropdown-header">Managers</h6>
                         <a class="dropdown-item" href="index.php?action=usersManager&value=all">Utilisateurs</a>
                         <a class="dropdown-item" href="index.php?action=postsManager&value=all">Articles</a>
-                        <a class="dropdown-item" href="#">Portfolio</a>
+                        <a class="dropdown-item" href="index.php?action=portfolioManager">Portfolio</a>
                         <?php endif; ?>
                         <div class="dropdown-divider"></div>
                         <a class="nav-link js-scroll-trigger deco" href="index.php?action=logoutUser" onclick="return ConfirmDeconnexion()">Se déconnecter</a>

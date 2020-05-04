@@ -1,5 +1,5 @@
 <section class="page-profil" id="profil">
-    <div class="container">
+    <div class="container dashboard">
         <h1 class="titre-dashboard-admin">Liste des utilisateurs</h1>
         <div class="row d-flex justify-content-around">
             <div class="card-deck">

@@ -75,7 +75,7 @@ if ((isset($_SESSION['id']))) :
                         <div class="card-header">
                             <blockquote class="blockquote mb-0">
                                 <footer class="blockquote-footer" style="color: #00c0c7">
-                                    <i class="fa fa-file"></i> Coup d'oeil - Articles <span class="badge badge-success"><?= $nbPostTotal ?></span>
+                                    <i class="fa fa-file-alt"></i> Coup d'oeil - Articles <span class="badge badge-success"><?= $nbPostTotal ?></span>
                                 </footer>
                             </blockquote>
                         </div>
@@ -117,8 +117,8 @@ if ((isset($_SESSION['id']))) :
                             <hr>
                             <p>
                                 <small class="text-muted">
-                                    <a class="articles-link" href="index.php?action=portFolioManager">
-                                        <i class="fa fa-history"></i> voir le portfolio</a>
+                                    <a class="articles-link" href="index.php?action=portfolioManager">
+                                        <i class="fa fa-copy"></i> voir le portfolio</a>
                                 </small><br>
                             </p>
                         </div>

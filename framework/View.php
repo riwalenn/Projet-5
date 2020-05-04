@@ -52,20 +52,11 @@ class View
         return $tag;
     }
 
-    static public function generatePortfolioPictureTag($folio)
+    static public function generatePortfolioPicture($folio, $classe)
     {
         $tag = "<picture>";
-        $tag .= '<source srcset="'. Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::FULLIMG . Constantes::EXTENSION_WEBP . '" alt="' . $folio->getTitle() . '">';
-        $tag .= '<img class="img-fluid d-block mx-auto" src="' . Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::FULLIMG . Constantes::EXTENSION_JPG . '" alt="' . $folio->getTitle() . '">';
-        $tag .= "</picture>";
-        return $tag;
-    }
-
-    static public function generatePortfolioThumbailTag($folio)
-    {
-        $tag = "<picture>";
-        $tag .= '<source srcset="'. Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::THUMBNAIL . Constantes::EXTENSION_WEBP . '" alt="' . $folio->getTitle() . '">';
-        $tag .= '<img class="img-fluid d-block mx-auto" src="' . Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::THUMBNAIL . Constantes::EXTENSION_JPG . '" alt="' . $folio->getTitle() . '">';
+        $tag .= '<source class="portfolio-' . $classe . '" srcset="'. Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::EXTENSION_WEBP . '" alt="' . $folio->getTitle() . '">';
+        $tag .= '<img class="img-fluid d-block mx-auto portfolio-' . $classe . '" src="' . Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::EXTENSION_JPG . '" alt="' . $folio->getTitle() . '">';
         $tag .= "</picture>";
         return $tag;
     }

@@ -26,7 +26,7 @@ class CommentManager extends Connexion
         $statement = $bdd->prepare('INSERT INTO `comments` (`id_post`, `id_user`, `created_at`, `title`, `content`, `state`) VALUES (:id_post, :pseudo, NOW(), :title, :content, :state)');
         $statement->execute(array(
             'id_post' => intval($comment->getId_post()),
-            'pseudo' => intval($comment->getPseudo()),
+            'pseudo' => htmlspecialchars($comment->getPseudo()),
             'title' => htmlspecialchars($comment->getTitle()),
             'content' => htmlspecialchars($comment->getContent()),
             'state' => intval($comment->getState())
