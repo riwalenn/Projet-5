@@ -86,7 +86,7 @@
                                             <?php if ($post->getState() != 3) : ?>
                                                 <td><button class="btn btn-primary adm-users" type="submit">Appliquer les modifications</button></td>
                                             <?php else: ?>
-                                                <td><button class="btn btn-danger adm-users" type="submit">Supprimer le compte</button></td>
+                                                <td><button class="btn btn-danger adm-users" type="submit">Supprimer l'article</button></td>
                                             <?php endif; ?>
                                     </tr>
                                 </form>

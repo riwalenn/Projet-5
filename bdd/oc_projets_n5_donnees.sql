@@ -23,6 +23,32 @@ SET time_zone = "+00:00";
 --
 
 --
+-- Déchargement des données de la table `users`
+--
+
+INSERT INTO `users` (`id`, `pseudo`, `role`, `email`, `password`, `date_modification`, `date_inscription`, `cgu`, `state`) VALUES
+(1, 'Riwalenn', 1, 'riwalenn@gmail.com', '$2y$10$my4B/iIYpeoURnvrH6mYLOYpIXcu1xD6EzoS74bA5CSrA5mu.J8PG', '2020-05-06 10:36:31', '2019-12-01 16:37:47', 1, 2),
+(2, 'Anonyme', 2, 'no-reply@riwalennbas.com', '$2y$10$sT/NGEIrb8z5XwCvPv9NpeeF3fuge7Vyyf4AWIEQPr7ZWmuJIS2gC', '2019-12-01 00:00:00', '2019-12-01 21:48:31', 1, 2),
+(4, 'test', 2, 'test@gmail.com', '$2y$10$my4B/iIYpeoURnvrH6mYLOYpIXcu1xD6EzoS74bA5CSrA5mu.J8PG', '2019-12-02 15:04:47', '2019-12-01 15:04:47', 1, 2),
+(5, 'test1', 2, 'test1@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-04-06 10:58:42', '2020-04-06 10:58:42', 1, 0),
+(6, 'test2', 2, 'test2@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-01-01 10:58:42', '2019-12-01 10:58:42', 1, 2),
+(7, 'test3', 2, 'test3@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-01-01 10:58:42', '2019-12-01 10:58:42', 1, 2),
+(8, 'test4', 2, 'test4@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-04-06 10:58:42', '2020-04-06 10:58:42', 1, 1),
+(9, 'test5', 2, 'test5@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-04-06 10:58:42', '2020-04-06 10:58:42', 1, 1),
+(10, 'test10', 2, 'test10@gmail.com', '$2y$10$S2iKEUblMHfugYaVtRpPmOj/zf74MuEYZRu5HzRS3DVGFG0zOHccG', '2020-01-01 11:06:51', '2019-12-01 11:06:51', 1, 3),
+(11, 'test11', 2, 'test11@gmail.ru', '$2y$10$Rwr7jt.njVYBgcTkpAuJ/emBcfd4QRSFFm0/stMxt8CfpQ4t9Hq5C', '2020-04-06 11:08:51', '2020-04-06 11:08:51', 1, 0);
+
+--
+-- Déchargement des données de la table `tokens`
+--
+
+INSERT INTO `tokens` (`id_token`, `token`, `id_user`, `expiration_token`) VALUES
+(2, 'aa5ab2910107e9428cbfa0cbd161d9c722400972e1e2435865babef36f4932d2', 4, '2020-01-13 15:04:47'),
+(3, '046280e85dc8fef38b2565f29dc8d602da0137370d9cd4cde184be5fdf335265', 5, '2020-04-11 10:58:42'),
+(5, '2c7a19c94fe568689ca7f11785dc5ff11ded91595ec85f081949689f37e9bd10', 11, '2020-04-11 11:08:51');
+
+
+--
 -- Déchargement des données de la table `categories`
 --
 
@@ -48,28 +74,6 @@ INSERT INTO `categories` (`id`, `category`) VALUES
 (17, 'wordpress');
 
 --
--- Déchargement des données de la table `comments`
---
-
-INSERT INTO `comments` (`id`, `id_post`, `id_user`, `created_at`, `title`, `content`, `state`) VALUES
-(1, 7, 4, '2020-04-29 00:00:00', 'test', 'test', 1),
-(2, 7, 10, '2020-04-29 10:00:00', 'retest', 'retest', 1);
-
---
--- Déchargement des données de la table `portfolio`
---
-
-INSERT INTO `portfolio` (`id`, `title`, `kicker`, `content`, `date_conception`, `client`, `categories`) VALUES
-(1, 'La cuisine de Cécile', 'Conception d\'un site internet en php.', 'Conception d\'un site en php pour un projet de fin d\'études.', 2011, 'La cuisine de Cécile', 'Html/css/php'),
-(2, 'Festival Jazz à Juan-les-pins', 'Intégration web pour Constellation Network.', 'Intégration web en Xtml à partir d\'une maquette créée par le graphiste.', 2011, 'Ville de Juan-les-pins', 'Intégration'),
-(3, 'Gîtes de France', 'Intégration web pour Constellation Network.', 'Intégration web en Xhtml à partir de la charte graphique des gîtes de France.', 2011, 'Gîtes de France Ardèche', 'Intégration'),
-(4, 'Projet n°2', 'Intégration d\'un thème wordpress.', 'Intégration d\'un thème wordpress (au choix) pour le cadre d\'un projet OpenClassrooms.', 2017, 'Chalets & Caviar (projet fictif)', 'Intégration/wordpress'),
-(5, 'Projet n°3', 'Création d\'un site en html & css.', 'Création d\'un site web en html 5 et Css 3, responsive pour le cadre d\'un projet OpenClassrooms (j\'ai aussi créé la maquette).', 2017, 'Festival des films plein air (projet fictif)', 'html/css'),
-(6, 'Projet n°4', 'Conception de solution technique d\'une application.', 'Conception de diagrammes UML et modélisation de la base de données.', 2017, 'Express Food (projet fictif)', 'Conception UML'),
-(7, 'Projet n°5', 'Conception d\'un blog responsive en php.', 'Conception de diagrammes UML, modélisation de la bdd et site en php.', 2020, 'Riwalenn Bas', 'Conception UML/bootstrap/php'),
-(8, 'Paperfly', 'Conception d\'un blog responsive en php.', 'Conception de diagrammes UML, modélisation de la bdd et site en php.', 2019, 'Mickaël R.', 'Conception UML/bootstrap/php');
-
---
 -- Déchargement des données de la table `posts`
 --
 
@@ -85,32 +89,25 @@ INSERT INTO `posts` (`id`, `title`, `kicker`, `author`, `content`, `url`, `creat
 (10, 'Test modification', 'Le mot de passe est un élément important de notre vie quotidienne, que ce soit de l\'ordre du privé ou du professionnel.', 1, '', '', '2020-02-02', '2020-04-30 14:16:40', 16, 2),
 (11, 'test en archivage', 'Le prototype est à la création de d\'applications ce que le \"bon à tirer\" est à l\'imprimerie !', 1, 'Aujourd\'hui, la création d\'un site web ou d\'une application passe forcement par la case prototypage.<br>\r\nLa création d\'une application ou d\'un site internet est assez complexe et demande une bonne gestion de projet avec une réflexion sur le projet détaillée au plus près des besoins client avec un solide prototypage en amont.<br>\r\nCi-dessous quelques logiciels de prototypage qui vous permettront de tester le rendu de vos maquettes :<br>\r\n- <a href=\"https://marvelapp.com/\">Marvel</a><br>\r\n- <a href=\"https://www.sketch.com/\">Sketch</a><br>\r\n- <a href=\"https://www.hotgloo.com/\">HotGloo</a><br>\r\n- <a href=\"https://principleformac.com/\">Principle for Mac</a><br>\r\n- <a href=\"https://moqups.com/\">Moqups</a><br>\r\n- <a href=\"https://proto.io/\">Proto.io</a><br>\r\n- <a href=\"https://www.framer.com/\">Framer X (Mac)</a><br>\r\n- <a href=\"https://www.axure.com/\">Axure</a><br>\r\n- <a href=\"https://www.invisionapp.com/\">InVision</a><br>\r\n- <a href=\"https://www.adobe.com/fr/products/xd.html\">Adobe Xd</a><br>\r\n- <a href=\"https://origami.design/\">Origami Studio</a><br>\r\n- <a href=\"https://www.flinto.com/\">Flinto</a><br>', '', '2020-01-20', '2020-01-20 19:24:00', 2, 2);
 
---
--- Déchargement des données de la table `tokens`
---
-
-INSERT INTO `tokens` (`id_token`, `token`, `id_user`, `expiration_token`) VALUES
-(2, 'aa5ab2910107e9428cbfa0cbd161d9c722400972e1e2435865babef36f4932d2', 4, '2020-01-13 15:04:47'),
-(3, '046280e85dc8fef38b2565f29dc8d602da0137370d9cd4cde184be5fdf335265', 5, '2020-04-11 10:58:42'),
-(5, '2c7a19c94fe568689ca7f11785dc5ff11ded91595ec85f081949689f37e9bd10', 11, '2020-04-11 11:08:51');
 
 --
--- Déchargement des données de la table `users`
+-- Déchargement des données de la table `comments`
 --
 
-INSERT INTO `users` (`id`, `pseudo`, `role`, `email`, `password`, `date_modification`, `date_inscription`, `cgu`, `state`) VALUES
-(1, 'Riwalenn', 1, 'riwalenn@gmail.com', '$2y$10$my4B/iIYpeoURnvrH6mYLOYpIXcu1xD6EzoS74bA5CSrA5mu.J8PG', '2020-05-06 10:36:31', '2019-12-01 16:37:47', 1, 2),
-(2, 'Anonyme', 2, 'no-reply@riwalennbas.com', '$2y$10$sT/NGEIrb8z5XwCvPv9NpeeF3fuge7Vyyf4AWIEQPr7ZWmuJIS2gC', '2019-12-01 00:00:00', '2019-12-01 21:48:31', 1, 2),
-(4, 'test', 2, 'test@gmail.com', '$2y$10$my4B/iIYpeoURnvrH6mYLOYpIXcu1xD6EzoS74bA5CSrA5mu.J8PG', '2019-12-02 15:04:47', '2019-12-01 15:04:47', 1, 0),
-(5, 'test1', 2, 'test1@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-04-06 10:58:42', '2020-04-06 10:58:42', 1, 0),
-(6, 'test2', 2, 'test2@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-01-01 10:58:42', '2019-12-01 10:58:42', 1, 2),
-(7, 'test3', 2, 'test3@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-01-01 10:58:42', '2019-12-01 10:58:42', 1, 2),
-(8, 'test4', 2, 'test4@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-04-06 10:58:42', '2020-04-06 10:58:42', 1, 1),
-(9, 'test5', 2, 'test5@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-04-06 10:58:42', '2020-04-06 10:58:42', 1, 1),
-(10, 'test10', 2, 'test10@gmail.com', '$2y$10$S2iKEUblMHfugYaVtRpPmOj/zf74MuEYZRu5HzRS3DVGFG0zOHccG', '2020-01-01 11:06:51', '2019-12-01 11:06:51', 1, 3),
-(11, 'test11', 2, 'test11@gmail.ru', '$2y$10$Rwr7jt.njVYBgcTkpAuJ/emBcfd4QRSFFm0/stMxt8CfpQ4t9Hq5C', '2020-04-06 11:08:51', '2020-04-06 11:08:51', 1, 0);
-COMMIT;
+INSERT INTO `comments` (`id`, `id_post`, `id_user`, `created_at`, `title`, `content`, `state`) VALUES
+(1, 7, 8, '2020-04-29 00:00:00', 'test', 'test', 1),
+(2, 7, 10, '2020-04-29 10:00:00', 'retest', 'retest', 1);
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+--
+-- Déchargement des données de la table `portfolio`
+--
+
+INSERT INTO `portfolio` (`id`, `title`, `kicker`, `content`, `date_conception`, `client`, `categories`) VALUES
+(1, 'La cuisine de Cécile', 'Conception d\'un site internet en php.', 'Conception d\'un site en php pour un projet de fin d\'études.', 2011, 'La cuisine de Cécile', 'Html/css/php'),
+(2, 'Festival Jazz à Juan-les-pins', 'Intégration web pour Constellation Network.', 'Intégration web en Xtml à partir d\'une maquette créée par le graphiste.', 2011, 'Ville de Juan-les-pins', 'Intégration'),
+(3, 'Gîtes de France', 'Intégration web pour Constellation Network.', 'Intégration web en Xhtml à partir de la charte graphique des gîtes de France.', 2011, 'Gîtes de France Ardèche', 'Intégration'),
+(4, 'Projet n°2', 'Intégration d\'un thème wordpress.', 'Intégration d\'un thème wordpress (au choix) pour le cadre d\'un projet OpenClassrooms.', 2017, 'Chalets & Caviar (projet fictif)', 'Intégration/wordpress'),
+(5, 'Projet n°3', 'Création d\'un site en html & css.', 'Création d\'un site web en html 5 et Css 3, responsive pour le cadre d\'un projet OpenClassrooms (j\'ai aussi créé la maquette).', 2017, 'Festival des films plein air (projet fictif)', 'html/css'),
+(6, 'Projet n°4', 'Conception de solution technique d\'une application.', 'Conception de diagrammes UML et modélisation de la base de données.', 2017, 'Express Food (projet fictif)', 'Conception UML'),
+(7, 'Projet n°5', 'Conception d\'un blog responsive en php.', 'Conception de diagrammes UML, modélisation de la bdd et site en php.', 2020, 'Riwalenn Bas', 'Conception UML/bootstrap/php'),
+(8, 'Paperfly', 'Conception d\'un blog responsive en php.', 'Conception de diagrammes UML, modélisation de la bdd et site en php.', 2019, 'Mickaël R.', 'Conception UML/bootstrap/php');

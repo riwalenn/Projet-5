@@ -55,7 +55,7 @@
                                     <i class="fas fa-plus fa-3x"></i>
                                 </div>
                             </div>
-                            <?= View::generatePortfolioPicture($folio, Constantes::THUMBNAIL) ?>
+                            <?= View::generatePortfolioPicture($folio, Constantes::FULLIMG) ?>
                         </a>
                         <div class="portfolio-caption">
                             <h4><?= $folio->getTitle() ?></h4>

@@ -51,7 +51,7 @@ if ((isset($_SESSION['id']))) : ?>
                             </table>
                         </div>
                         <div class="card-footer">
-                            <small class="text-muted"><a class="articles-link" data-toggle="modal" href="index.php?action=articlesListe&page=1" ><i class="fas fa-eye"></i> Voir la liste des articles disponibles</a></small>
+                            <small class="text-muted"><a class="articles-link" href="index.php?action=articlesListe&page=1" ><i class="fas fa-eye"></i> Voir la liste des articles disponibles</a></small>
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@ if ((isset($_SESSION['id']))) : ?>
                             <?php endforeach; ?>
                         </div>
                         <div class="card-footer">
-                            <small class="text-muted"><a class="articles-link" data-toggle="modal" href="index.php?action=articlesListe&page=1" ><i class="fas fa-eye"></i> Voir la liste des articles disponibles</a></small>
+                            <small class="text-muted"><a class="articles-link" href="index.php?action=articlesListe&page=1" ><i class="fas fa-eye"></i> Voir la liste des articles disponibles</a></small>
                         </div>
                     </div>
                 </div>

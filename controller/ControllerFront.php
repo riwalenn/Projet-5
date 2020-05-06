@@ -333,6 +333,9 @@ class ControllerFront
     //Affichage de la page des résultats de recherche des articles
     public function afficherResultatRecherche($errorMessage = NULL)
     {
+        if (empty($_REQUEST['submit'])) {
+            $this->afficherListeArticles();
+        }
         $pageCourante = $_REQUEST['page'] ?? 1;
         $submitRecherche = $_REQUEST['submit'] ?? "";
         $postManager = new PostManager();
@@ -345,7 +348,6 @@ class ControllerFront
 
         $nbPages = $postManager->countPagesSearchResult($submitRecherche);
         $userManager = new UserManager();
-        $user = $userManager->getUserBySessionId();
 
         $categoryManager = new CategoryManager();
         foreach ($listPosts as $post) {

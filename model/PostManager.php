@@ -102,7 +102,7 @@ class PostManager extends Connexion
     public function getSearch($recherche, $page, $post = NULL)
     {
         $bdd = $this->dbConnect();
-        if (isset($recherche)) {
+        if (!empty($recherche)) {
             $listPosts = $bdd->prepare("SELECT posts.id, posts.title, posts.kicker, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at 
                                                         FROM `posts` INNER JOIN users ON posts.author = users.id 
                                                         WHERE posts.state = :state AND (posts.title LIKE CONCAT('%', :recherche, '%') OR posts.kicker LIKE CONCAT('%', :recherche, '%') OR posts.content LIKE CONCAT('%', :recherche, '%'))
@@ -231,7 +231,7 @@ class PostManager extends Connexion
             $resultat = $countPages->fetch();
             return $resultat['nb_pages'];
         } else {
-            $this->countPagesByState();
+            $this->countPagesByState(3, 1);
         }
     }
 

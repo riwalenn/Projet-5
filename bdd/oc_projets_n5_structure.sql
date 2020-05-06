@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 06 mai 2020 à 08:37
+-- Généré le :  mer. 06 mai 2020 à 12:25
 -- Version du serveur :  5.7.19
 -- Version de PHP :  7.1.9
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `oc_projets_n5`
 --
+CREATE DATABASE IF NOT EXISTS `oc_projets_n5` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `oc_projets_n5`;
 
 -- --------------------------------------------------------
 
