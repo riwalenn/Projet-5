@@ -19,6 +19,9 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 
+    <!-- include summernote css -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-bs4.min.css" rel="stylesheet">
+
     <!-- Custom styles for this template -->
     <link href="ressources/css/styleSheet.css" rel="stylesheet">
     <link href="ressources/css/agency.min.css" rel="stylesheet">
@@ -33,6 +36,9 @@
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+<!-- include summernote js -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-bs4.min.js"></script>
+
 <!-- Plugin JavaScript -->
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
@@ -43,6 +49,7 @@
 <!-- Custom scripts for this template -->
 <script src="ressources/js/agency.min.js"></script>
 <script src="ressources/js/verifForm.js"></script>
+<script src="ressources/js/summernote.js"></script>
 
 </body>
 </html>

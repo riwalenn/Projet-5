@@ -36,7 +36,7 @@ class ControllerFront
 
         //si l'objet user n'est pas vide
         if (!empty($user)) :
-            $lastPosts = $listPosts->getPosts(1);
+            $lastPosts = $listPosts->getPosts(1, 1);
             $comparePassword = password_verify($_REQUEST['password'], $user->getPassword());
 
             //si les mots de passe correspondent
@@ -47,49 +47,49 @@ class ControllerFront
                 switch (true)
                 {
                     /** Role : Administrateur && Statut : actif */
-                    case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::ACTIVE) :
-                        $view = new View('Tableau de bord');
-                        $view->render('view/dashboardAdminView.php', ['user' => $user]);
+                    case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
+                        $this->getBackendDashboard();
+                        $userManager->newConnexionDate();
                         break;
 
                     /** Role : Administrateur && Statut : inactif */
-                    case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() != Constantes::ACTIVE) :
+                    case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() != Constantes::USER_STATUS_VALIDATED) :
                         $message = 'Vous n\'avez pas les autorisations pour accéder à cette page.';
                         throw new ExceptionOutput($message);
                         break;
 
                     /** Role : Utilisateur && Statut : en attente de validation */
-                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == 0) :
+                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::USER_PENDING_STATUS) :
                         $message = 'Vous n\'avez pas validé votre inscription, un email vous a été envoyé avec un lien vous permettant de le faire ! (vérifiez vos spams) ';
                         throw new ExceptionOutput($message);
                         break;
 
                     /** Role : Utilisateur && Statut : en attente de validation d'un modérateur */
-                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == 1) :
+                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::USER_PENDING_STATUS_MODO) :
                         $message = 'Vous n\'avez pas encore été validé par un modérateur, merci de patienter cela devrait se faire d\'ici 24 heures.';
                         throw new ExceptionOutput($message);
                         break;
 
                     /** Role : Utilisateur && Statut : actif */
-                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::ACTIVE) :
+                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
                         $this->getDashboardUser();
                         $userManager->newConnexionDate();
                         break;
 
                     /** Role : Utilisateur && Statut : supprimé */
-                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == 3) :
+                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::USER_STATUS_DELETED) :
                         $message = 'Votre compte n\'existe plus/pas.';
                         throw new ExceptionOutput($message);
                         break;
 
                     /** Statut : inconnu */
-                    case ($user->getState() > 3) :
+                    case ($user->getState() > Constantes::USER_STATUS_DELETED) :
                         $message = 'Vos informations de connexion ne correspondent pas.';
                         throw new ExceptionOutput($message);
                         break;
 
                     /** Role : inconnu */
-                    case ($user->getRole() < 1 || $user->getRole() > 2) :
+                    case ($user->getRole() < Constantes::ROLE_ADMIN || $user->getRole() > Constantes::ROLE_USER) :
                         $message = 'Vos informations de connexion ne correspondent pas.';
                         throw new ExceptionOutput($message);
                         break;
@@ -117,7 +117,7 @@ class ControllerFront
     }
 
     //Affichage le tableau de bord de l'utilisateur
-    public function getDashboardUser()
+    public function getDashboardUser($errorMessage = NULL)
     {
         $userManager = new UserManager();
         $listPosts = new PostManager();
@@ -125,25 +125,30 @@ class ControllerFront
         $categoryManager = new CategoryManager();
 
         $user = $userManager->getUserBySessionId();
-        $favoritesPosts = $listPosts->getFavoritePostByIdUser($user);
-        foreach ($favoritesPosts as $post) :
-            $commentManager->fillCommentInPost($post);
-            $categoryManager->fillCategoryInPost($post);
-        endforeach;
+        if ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
+            $favoritesPosts = $listPosts->getFavoritePostByIdUser($user);
+            foreach ($favoritesPosts as $post) :
+                $commentManager->fillCommentInPost($post);
+                $categoryManager->fillCategoryInPost($post);
+            endforeach;
 
-        $lastPosts = $listPosts->getPosts(1);
-        foreach ($lastPosts as $post) :
-            $commentManager->fillCommentInPost($post);
-            $categoryManager->fillCategoryInPost($post);
-            $listPosts->fillFavoriteInPost($user, $post);
-        endforeach;
+            $lastPosts = $listPosts->getPosts(1, 1);
+            foreach ($lastPosts as $post) :
+                $commentManager->fillCommentInPost($post);
+                $categoryManager->fillCategoryInPost($post);
+                $listPosts->fillFavoriteInPost($user, $post);
+            endforeach;
 
-        $view = new View('Tableau de bord');
-        $view->render('view/dashboardView.php', ['favoritesPosts' => $favoritesPosts, 'lastPosts' => $lastPosts, 'user' => $user]);
+            $view = new View('Tableau de bord');
+            $view->render('view/dashboardView.php', ['favoritesPosts' => $favoritesPosts, 'errorMessage' => $errorMessage, 'lastPosts' => $lastPosts, 'user' => $user]);
+        else:
+            $message = "Vous n'avez pas les autorisations pour accéder à cette page.";
+            throw new ExceptionOutput($message);
+        endif;
     }
 
     //Modification des données utilisateurs
-    public function modificationDataByUser()
+    public function UpdateDataByUser()
     {
         if (!empty($_SESSION['id'] == $_REQUEST['id'])) :
             $user = new User($_REQUEST);
@@ -152,7 +157,7 @@ class ControllerFront
             $comparePassword = password_verify($_REQUEST['password'], $userBdd->getPassword());
 
             if ($comparePassword == true) :
-                $userManager->userDataModification($user);
+                $userManager->updateUserByUser($user);
                 $this->getDashboardUser();
             else:
                 $message = 'Votre mot de passe ne correspond pas';
@@ -178,7 +183,7 @@ class ControllerFront
      * --------- FAVORIS DE L'UTILISATEUR ---------
      */
 
-    //Ajout d'un post favoris, limité à 7
+    //Ajout d'un post favoris, limité à 10
     public function addFavoritePost()
     {
         if (!empty($_SESSION['id']) && ($_REQUEST['id_post'])) :
@@ -186,13 +191,17 @@ class ControllerFront
             $postFavoris = new Favorites_posts($_REQUEST);
             $postManager = new PostManager();
             $nbFavorites = $postManager->countFavoritesPostUser($user);
-            if ($nbFavorites < 7) :
-                $postManager->addFavoritePostByIdUser($user, $postFavoris);
-            elseif($nbFavorites >= 7) :
-                $message = 'Vous avez atteint le nombre maximal de favoris.';
-                throw new ExceptionOutput($message);
+            $result = $postManager->searchFavorite($user, $postFavoris);
+            if ($nbFavorites < 11) :
+                if ($result == true) {
+                    $errorMessage = '<div class="alert alert-warning" role="alert">Vous avez déjà ajouté ce favoris.</div>';
+                }else{
+                    $postManager->addFavoritePostByIdUser($user, $postFavoris);
+                }
+            else:
+                $errorMessage = '<div class="alert alert-warning" role="alert">Vous avez atteint le nombre maximal de favoris.</div>';
             endif;
-            $this->getDashboardUser();
+            $this->getDashboardUser($errorMessage);
         else:
             $message = 'Votre identification de session ne correspond pas !';
             throw new ExceptionOutput($message);
@@ -234,7 +243,7 @@ class ControllerFront
     {
         $user = new User($_REQUEST);
         $user->setRole(Constantes::ROLE_USER);
-        $user->setState(0);
+        $user->setState(Constantes::USER_PENDING_STATUS);
         $userManager = new UserManager();
         $userManager->registration($user);
         $list = $userManager->tokenRecuperation($user);
@@ -322,7 +331,7 @@ class ControllerFront
      */
 
     //Affichage de la page des résultats de recherche des articles
-    public function afficherResultatRecherche()
+    public function afficherResultatRecherche($errorMessage = NULL)
     {
         $pageCourante = $_REQUEST['page'] ?? 1;
         $submitRecherche = $_REQUEST['submit'] ?? "";
@@ -348,15 +357,16 @@ class ControllerFront
         }
 
         $view = new View('Liste des articles');
-        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante, 'submitRecherche' => $submitRecherche]);
+        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'errorMessage' => $errorMessage, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante, 'submitRecherche' => $submitRecherche]);
     }
 
     //Affichage de la page des articles
-    public function afficherListeArticles()
+    public function afficherListeArticles($errorMessage = NULL)
     {
         $pageCourante = $_REQUEST['page'] ?? 1;
+        $statut = 1; //Afficher les articles validés
         $postManager = new PostManager();
-        $listPosts = $postManager->getPosts($pageCourante);
+        $listPosts = $postManager->getPosts($pageCourante, $statut);
 
         $commentManager = new CommentManager();
         $categoryManager = new CategoryManager();
@@ -370,10 +380,10 @@ class ControllerFront
             endif;
         }
 
-        $nbPages = $postManager->countPages();
+        $nbPages = $postManager->countPagesByState(3, 1);
 
         $view = new View('Liste des articles');
-        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
+        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'errorMessage' => $errorMessage, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
     }
 
     // Ajout d'un commentaire pour un utilisateur connecté
@@ -381,7 +391,7 @@ class ControllerFront
     {
         $comment = new Comment($_REQUEST);
         $comment->setPseudo($_SESSION['id']);
-        $comment->setState(0);
+        $comment->setState(Constantes::COM_PENDING_STATUS);
 
         $commentManager = new CommentManager();
         $commentManager->addComment($comment);
@@ -397,10 +407,405 @@ class ControllerFront
     public function getBackendDashboard()
     {
         $userManager = new UserManager();
+        $postManager = new PostManager();
+        $commentManager = new CommentManager();
+        $categoryManager = new CategoryManager();
+        $portfolioManager = new PortfolioManager();
+        $portfolio = $portfolioManager->getPortfolio();
+
+        $user = $userManager->getUserBySessionId();
+        if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
+            if (isset($_REQUEST['value']))
+            {
+                $value = $_REQUEST['value'];
+                switch ($value)
+                {
+                    case 'tokenExpired':
+                        $userManager->deleteUsersExpiredToken();
+                        break;
+
+                    case 'connexionExpired':
+                        $userManager->deleteUsersExpiredConnection();
+                        break;
+
+                    case 'postsToDelete':
+                        $postManager->deletePosts();
+                        break;
+                }
+            }
+            //Compteurs utilisateurs
+            $nbUsersTotal = $userManager->countAllUsers();
+            $nbUsersReferent = $userManager->countReferents();
+            $nbUsersWaitingList = $userManager->countUsersUncheckedByModo();
+            $nbUsersConnexionExpired = $userManager->countUsersExpiredConnection();
+            $nbUsersTokenExpired = $userManager->countUsersExpiredToken();
+            $nbUsersTokenNotValidate = $userManager->countUsersTokenUnchecked();
+            $nbUsersToDelete = $userManager->countUsersToDelete();
+
+
+            //Compteurs articles
+            $nbPostTotal = $postManager->countAllPosts();
+            $nbPostsUnchecked = $postManager->countPostsUnckecked();
+            $nbPostsArchived = $postManager->countPostsArchived();
+            $nbPostsToDelete = $postManager->countPostsToDelete();
+
+            //Compteur commentaires
+            $nbCommentsUnchecked = $commentManager->countCommentsUncheked();
+
+            $categories = $categoryManager->selectAllCategories();
+
+            $view = new View('Tableau de bord');
+            $view->render('view/dashboardAdminView.php', ['portfolio' => $portfolio, 'user' => $user, 'nbPostsUnchecked' => $nbPostsUnchecked, 'nbPostsArchived' => $nbPostsArchived, 'nbPostsToDelete' => $nbPostsToDelete, 'nbUsersTotal' => $nbUsersTotal, 'nbUsersReferent' =>$nbUsersReferent, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate, 'nbUsersToDelete' => $nbUsersToDelete, 'nbPostTotal' => $nbPostTotal, 'nbCommentsUnchecked' => $nbCommentsUnchecked, 'categories' => $categories]);
+        else:
+            $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
+            throw new ExceptionOutput($message);
+        endif;
+    }
+
+    //Affiche le pannel de management utilisateurs
+    public function getUsersDashboardManager($errorMessage = NULL)
+    {
+        $userManager = new UserManager();
         $user = $userManager->getUserBySessionId();
 
-        $view = new View('Tableau de bord');
-        $view->render('view/dashboardAdminView.php', ['user' => $user]);
+        if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
+
+            if (isset($_REQUEST['CRUD']))
+            {
+                $errorMessage = '';
+                $this->crudUserManager($_REQUEST['CRUD']);
+            }
+
+            $dtz = new DateTimeZone("Europe/Madrid");
+            $now = new DateTime(date("Y-m-d H:i:s"), $dtz);
+
+            $usersList = [];
+            $allValues = [
+                "all" => "Tous les utilisateurs",
+                "uncheckedUsers" => "Utilisateurs à valider",
+                "uncheckedTokenUsers" => "Tokens non validés",
+                "referents" => "Utilisateurs référents",
+                "trash" => "Comptes à supprimer"
+            ];
+            $filArianne = '';
+            if (isset($_REQUEST['value']))
+            {
+                $value = $_REQUEST['value'];
+                switch ($value)
+                {
+                    case 'uncheckedUsers':
+                        $usersList = $userManager->selectUsersUncheckedByModo();
+                        $filArianne = 'Utilisateurs à valider';
+                        break;
+
+                    case 'uncheckedTokenUsers':
+                        $usersList = $userManager->selectUsersTokenUnchecked();
+                        $filArianne = 'Tokens non validés';
+                        break;
+
+                    case 'all':
+                        $usersList = $userManager->selectAllUsers();
+                        $filArianne = 'Tous les utilisateurs';
+                        break;
+
+                    case 'referents':
+                        $usersList = $userManager->selectReferents();
+                        $filArianne = 'Utilisateurs référents';
+                        break;
+
+                    case 'trash':
+                        $usersList = $userManager->selectUsersInTrash();
+                        $filArianne = 'Comptes à supprimer';
+                        break;
+
+                    default:
+                        $usersList = $userManager->selectAllUsers();
+                        $filArianne = 'Tous les utilisateurs';
+                        break;
+                }
+
+                $view = new View('Liste des utilisateurs');
+                $view->render('view/managerUsersView.php', ['usersList' => $usersList, 'allValues' => $allValues, 'errorMessage' => $errorMessage, 'value' => $value, 'now' => $now, 'filArianne' => $filArianne]);
+            }
+        } else {
+            $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
+            throw new ExceptionOutput($message);
+        }
+    }
+
+    //Create, Read, Update, Delete
+    public function crudUserManager($crud)
+    {
+        $userManager = new UserManager();
+        $user = new User($_REQUEST);
+        switch ($crud) {
+            //Create
+            case 'C':
+                $user->setCgu(1);
+                $userManager->registration($user);
+                $errorMessage = '<small class="alert alert-success" role="alert">L\'utilisateur a été créé avec succès.</small>';
+                return $errorMessage;
+                break;
+
+            //Update
+            case 'U':
+                $userManager->updateUser($user);
+                $errorMessage = '<small class="alert alert-success" role="alert">L\'utilisateur a été édité avec succès.</small>';
+                return $errorMessage;
+                break;
+
+            //Delete
+            case 'D':
+                $date_user = new DateTime($user->getDate_modification());
+                $now = new DateTime();
+                $interval = $date_user->diff($now);
+                if ($user->getState() == 3 && ($interval->format('%R%a days') > 7)) :
+                    $userManager->updateIdUserInComments($user);
+                    $userManager->deleteUser($user);
+                    $errorMessage = '<small class="alert alert-success" role="alert">L\'utilisateur a été supprimé avec succès.</small>';
+                    return $errorMessage;
+                else:
+                    $errorMessage = '<small class="alert alert-danger" role="alert">L\'utilisateur n\'a pas le status "supprimé"</small>';
+                    return $errorMessage;
+                endif;
+                break;
+        }
+    }
+
+    //Affiche le pannel de management du portfolio
+    public function getPortfolioDashboardManager($errorMessage = NULL)
+    {
+        $userManager = new UserManager();
+        $portfolioManager = new PortfolioManager();
+        $user = $userManager->getUserBySessionId();
+
+        if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
+            if (isset($_REQUEST['CRUD'])) {
+                $this->crudPortfolioManager($_REQUEST['CRUD']);
+            }
+
+            $portfolio = $portfolioManager->getPortfolio();
+
+            $view = new View('Portfolio');
+            $view->render('view/managerPortfolioView.php', ['user' => $user, 'portfolio' => $portfolio, 'errorMessage' => $errorMessage]);
+        }
+    }
+
+    public function crudPortfolioManager($crud)
+    {
+        $portfolioManager = new PortfolioManager();
+        $portfolio = new Portfolio($_REQUEST);
+        switch ($crud) {
+            //Create
+            case 'C':
+                if (isset($_FILES['foliojpg']) && $_FILES['foliowebp'])
+                {
+                    if ($_FILES['foliojpg']['error'] == 0 && $_FILES['foliowebp']['error'] == 0) :
+                        if ($_FILES['foliojpg']['size'] <= 200000 && $_FILES['foliowebp']['size'] <= 200000) :
+                            $portfolioManager = new PortfolioManager();
+                            $lastInsertId = $portfolioManager->getLastInsertId();
+
+                            $idFile = $lastInsertId+1;
+                            $uploaddir = 'ressources/img/portfolio/';
+                            $infosfichierjpg = pathinfo($_FILES['foliojpg']['name']);
+                            $infosfichierwebp = pathinfo($_FILES['foliowebp']['name']);
+                            $extensionUpdloadjpg = $infosfichierjpg['extension'];
+                            $extensionUpdloadwebp = $infosfichierwebp['extension'];
+                            $extensionsAuthorized = array('jpg', 'webp');
+                            $uploadfilejpg = $uploaddir . basename($idFile) . '.' . $extensionUpdloadjpg;
+                            $uploadfilewebp = $uploaddir . basename($idFile) . '.' . $extensionUpdloadwebp;
+
+                            if (in_array($extensionUpdloadjpg, $extensionsAuthorized)) :
+                                move_uploaded_file($_FILES['foliojpg']['tmp_name'], $uploadfilejpg);
+                            else :
+                                return $errorMessage = "L'extension ne correspond pas.";
+                            endif;
+
+                            if (in_array($extensionUpdloadwebp, $extensionsAuthorized)) :
+                                move_uploaded_file($_FILES['foliowebp']['tmp_name'], $uploadfilewebp);
+                            else :
+                                return $errorMessage = "L'extension ne correspond pas.";
+                            endif;
+
+                            $portfolioManager->createPortfolio($portfolio);
+                        else :
+                            return $errorMessage = "Le fichier est trop volumineux.";
+                        endif;
+                    endif;
+                }
+                $errorMessage = '<small class="alert alert-success" role="alert">Le Portfolio a été créé avec succès.</small>';
+                return $errorMessage;
+                break;
+
+            //Update
+            case 'U':
+                if (isset($_FILES['foliojpg']) || $_FILES['foliowebp'])
+                {
+                    if ($_FILES['foliojpg']['error'] == 0 || $_FILES['foliowebp']['error'] == 0) :
+                        if ($_FILES['foliojpg']['size'] <= 200000 || $_FILES['foliowebp']['size'] <= 200000) :
+                            $portfolioManager = new PortfolioManager();
+                            $id = $portfolio->getId();
+
+                            $uploaddir = 'ressources/img/portfolio/';
+                            $infosfichierjpg = pathinfo($_FILES['foliojpg']['name']);
+                            $infosfichierwebp = pathinfo($_FILES['foliowebp']['name']);
+                            $extensionUpdloadjpg = $infosfichierjpg['extension'];
+                            $extensionUpdloadwebp = $infosfichierwebp['extension'];
+                            $extensionsAuthorized = array('jpg', 'webp');
+                            $uploadfilejpg = $uploaddir . basename($id) . '.' . $extensionUpdloadjpg;
+                            $uploadfilewebp = $uploaddir . basename($id) . '.' . $extensionUpdloadwebp;
+
+                            if (in_array($extensionUpdloadjpg, $extensionsAuthorized)) :
+                                move_uploaded_file($_FILES['foliojpg']['tmp_name'], $uploadfilejpg);
+                            else :
+                                return $errorMessage = "L'extension ne correspond pas.";
+                            endif;
+
+                            if (in_array($extensionUpdloadwebp, $extensionsAuthorized)) :
+                                move_uploaded_file($_FILES['foliowebp']['tmp_name'], $uploadfilewebp);
+                            else :
+                                return $errorMessage = "L'extension ne correspond pas.";
+                            endif;
+                        else :
+                            return $errorMessage = "Le fichier est trop volumineux.";
+                        endif;
+                    endif;
+                }
+                $portfolioManager->updatePortfolio($portfolio);
+                $errorMessage = '<small class="alert alert-success" role="alert">Le Portfolio a été modifié avec succès.</small>';
+                return $errorMessage;
+                break;
+
+            //Delete
+            case 'D':
+                $id = $portfolio->getId();
+                $jpegToDelete = "ressources/img/portfolio/" . $id . '.jpg';
+                $webpToDelete = "ressources/img/portfolio/" . $id . '.webp';
+                unlink($jpegToDelete);
+                unlink($webpToDelete);
+                $portfolioManager->deletePortfolio($portfolio);
+                $errorMessage = '<small class="alert alert-success" role="alert">Le Portfolio a été supprimé avec succès.</small>';
+                return $errorMessage;
+                break;
+        }
+    }
+
+    //Affiche le pannel de management des articles
+    public function getPostsDashboardManager($errorMessage = NULL)
+    {
+        $userManager = new UserManager();
+        $user = $userManager->getUserBySessionId();
+
+        if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
+
+            if (isset($_REQUEST['CRUD']))
+            {
+                $this->crudPostManager($_REQUEST['CRUD']);
+            }
+
+            $postManager = new PostManager();
+            $categoryManager = new CategoryManager();
+            $categories = $categoryManager->selectAllCategories();
+            $pageCourante = $_REQUEST['page'] ?? 1;
+            $allValues = [
+                "all" => "Tous les articles",
+                "uncheckedPosts" => "Articles à valider",
+                "checkedPosts" => "Articles validés",
+                "archived" => "Articles archivés",
+                "trash" => "Articles à supprimer"
+            ];
+            $nbPosts = 10;
+            if (isset($_REQUEST['value']))
+            {
+                $value = $_REQUEST['value'];
+                $categoryManager = new CategoryManager();
+                switch ($value)
+                {
+                    case 'all':
+                        $postsList = $postManager->getAllPosts($pageCourante, $nbPosts);
+                        $nbPages = $postManager->countPagesByAllStates($nbPosts);
+                        $filArianne = 'Tous les articles';
+                        break;
+
+                    case 'uncheckedPosts':
+                        $postsList = $postManager->getPostsByState($pageCourante, 0, $nbPosts);
+                        $nbPages = $postManager->countPagesByState($nbPosts, 0);
+                        $filArianne = 'Articles à valider';
+                        break;
+
+                    case 'checkedPosts':
+                        $postsList = $postManager->getPostsByState($pageCourante, 1, $nbPosts);
+                        $nbPages = $postManager->countPagesByState($nbPosts, 1);
+                        $filArianne = 'Articles validés';
+                        break;
+
+                    case 'archived':
+                        $postsList = $postManager->getPostsByState($pageCourante, 2, $nbPosts);
+                        $nbPages = $postManager->countPagesByState($nbPosts, 2);
+                        $filArianne = 'Articles archivés';
+                        break;
+
+                    case 'trash':
+                        $postsList = $postManager->getPostsByState($pageCourante, 3, $nbPosts);
+                        $nbPages = $postManager->countPagesByState($nbPosts, 3);
+                        $filArianne = 'Articles à supprimer';
+                        break;
+
+                    default:
+                        $postsList = $postManager->getPostsByState($pageCourante, 1, $nbPosts);
+                        $nbPages = $postManager->countPagesByState($nbPosts, 1);
+                        $filArianne = 'Tous les articles';
+                        break;
+                }
+            }
+            foreach ($postsList as $post) {
+                $categoryManager->fillCategoryInPost($post);
+            }
+            $view = new View('Liste des articles');
+            $view->render('view/managerPostsView.php', ['errorMessage' => $errorMessage, 'allValues' => $allValues, 'categories' => $categories, 'pageCourante' => $pageCourante, 'nbPages' => $nbPages, 'value' => $value, 'filArianne' => $filArianne, 'postsList' => $postsList]);
+        } else {
+            $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
+            throw new ExceptionOutput($message);
+        }
+    }
+
+    public function crudPostManager($crud)
+    {
+        $postManager = new PostManager();
+        $post = new Post($_REQUEST);
+        $userManager = new UserManager();
+        $user = $userManager->getUserBySessionId();
+        switch ($crud) {
+            case 'U':
+                $postManager->updatePost($post);
+                $errorMessage = '<small class="alert alert-success" role="alert">L\'article a été édité avec succès.</small>';
+                return $errorMessage;
+                break;
+
+            case 'FU':
+                $postManager->fullUpdatePost($post);
+                $errorMessage = '<small class="alert alert-success" role="alert">L\'article a été édité avec succès.</small>';
+                return $errorMessage;
+                break;
+
+            case 'C':
+                $post->setAuthor($user->getId());
+                $postManager->createPost($post);
+                $errorMessage = '<small class="alert alert-success" role="alert">L\'article a été créé avec succès.</small>';
+                return $errorMessage;
+                break;
+
+            case 'D':
+                if ($post->getState() == Constantes::POST_STATUS_DELETED) :
+                    $postManager->deletePost($post);
+                    $errorMessage = '<small class="alert alert-success" role="alert">L\'article a été supprimé avec succès.</small>';
+                    return $errorMessage;
+                else:
+                    $errorMessage = '<small class="alert alert-danger" role="alert">L\'utilisateur n\'a pas le status "supprimé"</small>';
+                    return $errorMessage;
+                endif;
+                break;
+        }
     }
 
     /**

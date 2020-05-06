@@ -37,6 +37,22 @@ try
                 $controller->getBackendDashboard();
                 break;
 
+            case 'delete':
+                $controller->getBackendDashboard();
+                break;
+
+            case 'usersManager':
+                $controller->getUsersDashboardManager();
+                break;
+
+            case 'postsManager':
+                $controller->getPostsDashboardManager();
+                break;
+
+            case 'portfolioManager':
+                $controller->getPortfolioDashboardManager();
+                break;
+
             // Ajoute un article dans les favoris de l'utilisateur
             case 'addFavorite' :
                 $controller->addFavoritePost();
@@ -49,7 +65,7 @@ try
 
             // Modifie les données de l'utilisateur (pseudo, email)
             case 'modifDataUser':
-                $controller->modificationDataByUser();
+                $controller->UpdateDataByUser();
                 break;
 
             case 'logoutUser' :

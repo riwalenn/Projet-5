@@ -56,6 +56,7 @@
                                     <input type="hidden" name="id_post" value="<?= $post->getid() ?>">
                                     <footer class="blockquote-footer">
                                         Ajouter l'article à vos favoris :  <button class="btn btn-light" data-dismiss="modal" type="submit"><i class="fa fa-plus-square" style="color:#11dbba; "></i></button><br>
+                                        <?= $errorMessage ?>
                                     </footer>
                                 </form>
                             <?php endif; ?>

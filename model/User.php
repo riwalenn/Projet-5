@@ -16,12 +16,17 @@ class User extends Post
     private $id_user;
     private $expiration_token;
 
-    const ADMIN = "Riwalenn";
-
-    const EN_ATTENTE = 0;
-    const ATTENTE_MODO = 1;
-    const VALIDE = 2;
-    const SUPPRESSION = 3;
+    static public $listeStatut = [
+        Constantes::USER_PENDING_STATUS => 'Compte non validé',
+        Constantes::USER_PENDING_STATUS_MODO => 'token validé',
+        Constantes::USER_STATUS_VALIDATED => 'compte validé',
+        Constantes::USER_STATUS_DELETED => 'compte supprimé'
+    ];
+    
+    static public $listeRole = [
+        Constantes::ROLE_ADMIN => 'Administrateur',
+        Constantes::ROLE_USER => 'Utilisateur'
+    ];
 
     public function __construct($donnees = null)
     {
@@ -57,9 +62,6 @@ class User extends Post
 
     public function setPseudo($pseudo)
     {
-        if ($this->pseudo == "Administrateur") :
-            $this->pseudo =  self::ADMIN;
-        endif;
         if (strlen($pseudo) <= 3) :
             $message = "Votre pseudo doit contenir au minimum 4 caractères : " . $pseudo;
             throw new ExceptionOutput($message);
@@ -83,6 +85,20 @@ class User extends Post
         $this->role = $role;
     }
 
+    public function getRoleName()
+    {
+        return self::$listeRole[$this->getRole()];
+    }
+
+    public function getRoleClass()
+    {
+        if ($this->role == 1) :
+            return 'role-dash-table';
+        elseif ($this->role == 2) :
+            return '';
+        endif;
+    }
+
     public function getEmail()
     {
         return $this->email;
@@ -95,6 +111,15 @@ class User extends Post
         else:
             $message = "Le format de votre email ne correspond pas ! (minimum 3 caractères, maximum 55 - 2 caractères minimum après l'arobase et 2 à 5 caractères pour l'extension";
             throw new ExceptionOutput($message);
+        endif;
+    }
+
+    public function getEmailClass()
+    {
+        if ($this->email === 'no-reply@riwalennbas.com') :
+            return 'email-dash-table';
+        else:
+            return '';
         endif;
     }
 
@@ -113,10 +138,15 @@ class User extends Post
         endif;
     }
 
-    public function getDate_inscription()
+    public function getDate_inscription_fr()
     {
         $date = new DateTime($this->date_inscription);
         return date_format($date,'d-m-Y');
+    }
+
+    public function getDate_inscription()
+    {
+        return $this->date_inscription;
     }
 
     public function setDate_inscription($date_inscription)
@@ -124,10 +154,15 @@ class User extends Post
         $this->date_inscription = $date_inscription;
     }
 
-    public function getDate_modification()
+    public function getDate_modification_fr()
     {
         $date = new DateTime($this->date_modification);
         return date_format($date,'d-m-Y à H:m');
+    }
+
+    public function getDate_modification()
+    {
+        return $this->date_modification;
     }
 
     public function setDate_modification($date_modification)
@@ -138,6 +173,15 @@ class User extends Post
     public function getCgu()
     {
         return $this->cgu;
+    }
+
+    public function getCguClass()
+    {
+        if ($this->cgu == 1) :
+            return '<i class="fa fa-check-square cgu-green"></i>';
+        else:
+            return $this->cgu;
+        endif;
     }
 
     public function setCgu($cgu)
@@ -158,6 +202,38 @@ class User extends Post
     public function setState($state)
     {
         $this->state = $state;
+    }
+
+    public function getStateName()
+    {
+       return self::$listeStatut[$this->getState()];
+    }
+
+    public function getStateClass()
+    {
+        switch ($this->state)
+        {
+            case Constantes::USER_PENDING_STATUS:
+                return 'user-status-red';
+                break;
+
+            case Constantes::USER_PENDING_STATUS_MODO:
+                return 'user-status-orange';
+                break;
+
+            case Constantes::USER_STATUS_VALIDATED:
+                return 'user-status-green';
+                break;
+
+            case Constantes::USER_STATUS_DELETED:
+                return 'user-status-red';
+                break;
+
+            default:
+                return 'user-status-red';
+                break;
+
+        }
     }
 
     public function getId_token()
@@ -192,7 +268,12 @@ class User extends Post
 
     public function getExpiration_token()
     {
+        if ($this->expiration_token == NULL) :
         return $this->expiration_token;
+        else:
+        $date = new DateTime($this->expiration_token);
+        return date_format($date,'d-m-Y à H:m');
+        endif;
     }
 
     public function setExpiration_token($expiration_token)

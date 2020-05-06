@@ -5,22 +5,25 @@ class Post
     private $id;
     private $title;
     private $kicker;
+    private $author;
     private $pseudo;
     private $content;
     private $url;
     private $created_at;
     private $modified_at;
+    private $id_category;
     private $category;
     private $favorites;
     private $statut_favorite;
     private $state;
     private $comments;
 
-    const EN_ATTENTE = 0;
-    const VALIDE = 1;
-    const ARCHIVE = 2;
-    const SUPPRESSION = 3;
-    const ADMIN = "Riwalenn";
+    static public $listeStatut = [
+      Constantes::POST_PENDING_STATUS => 'Article en attente',
+      Constantes::POST_STATUS_VALIDATED => 'Article validé',
+      Constantes::POST_STATUS_ARCHIVED => 'Article archivé',
+      Constantes::POST_STATUS_DELETED => 'Article supprimé'
+    ];
 
     public function __construct($donnees = null)
     {
@@ -69,11 +72,18 @@ class Post
         $this->kicker = $kicker;
     }
 
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+    }
+
     public function getPseudo()
     {
-        if ($this->pseudo == "Administrateur") :
-            return self::ADMIN;
-        endif;
         return $this->pseudo;
     }
 
@@ -129,6 +139,15 @@ class Post
         $this->modified_at = $modified_at;
     }
 
+    public function getId_Category()
+    {
+        return $this->id_category;
+    }
+    public function setId_Category($id_category)
+    {
+        $this->id_category = $id_category;
+    }
+
     public function getCategory()
     {
         return $this->category;
@@ -156,10 +175,39 @@ class Post
 
     public function setState($state)
     {
-        if (in_array($state, [self::EN_ATTENTE, self::VALIDE, self::ARCHIVE, self::SUPPRESSION])) :
-            $this->state = $state;
-        endif;
-        $this->state = self::EN_ATTENTE;
+        $this->state = $state;
+    }
+
+    public function getStateName()
+    {
+        return self::$listeStatut[$this->getState()];
+    }
+
+    public function getStateClass()
+    {
+        switch ($this->state)
+        {
+            case Constantes::POST_PENDING_STATUS:
+                return 'user-status-orange';
+                break;
+
+            case Constantes::POST_STATUS_ARCHIVED:
+                return 'user-status-orange';
+                break;
+
+            case Constantes::POST_STATUS_VALIDATED:
+                return 'user-status-green';
+                break;
+
+            case Constantes::POST_STATUS_DELETED:
+                return 'user-status-red';
+                break;
+
+            default:
+                return 'user-status-red';
+                break;
+
+        }
     }
 
     public function getComments()

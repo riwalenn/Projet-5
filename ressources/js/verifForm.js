@@ -15,6 +15,30 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 });
 
+function ConfirmMessage() {
+    if (confirm("Etes-vous sûr de vouloir supprimer ce favori ?")) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function ConfirmMessageAdmin() {
+    if (confirm("Etes-vous sûr de vouloir purger cette liste ?")) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function ConfirmDeconnexion() {
+    if (confirm("Etes-vous sûr de vouloir vous déconnecter ?")) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function surligne(champ, erreur) {
     if (erreur) {
         champ.style.color = "red";
@@ -35,7 +59,7 @@ function verifPseudo(champ) {
 }
 
 function verifEmail(champ) {
-    var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{3,4}$/;
+    var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
     if(!regex.test(champ.value))
     {
         surligne(champ, true);

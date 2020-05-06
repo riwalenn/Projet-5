@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 31 mars 2020 à 11:59
+-- Généré le :  mer. 06 mai 2020 à 08:37
 -- Version du serveur :  5.7.19
 -- Version de PHP :  7.1.9
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `oc_projets_n5`
 --
-CREATE DATABASE IF NOT EXISTS `oc_projets_n5` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `oc_projets_n5`;
 
 -- --------------------------------------------------------
 
@@ -57,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   KEY `state` (`state`),
   KEY `lien_post_comment` (`id_post`),
   KEY `lien_comment_author` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -71,8 +69,8 @@ CREATE TABLE IF NOT EXISTS `favorites_posts` (
   `id_user` int(11) NOT NULL,
   `id_post` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `lien_favorites_posts_author` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  UNIQUE KEY `id_user` (`id_user`,`id_post`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -105,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `kicker` tinytext NOT NULL,
   `author` int(10) NOT NULL,
   `content` longtext NOT NULL,
-  `url` varchar(155) NOT NULL,
+  `url` varchar(155) DEFAULT NULL,
   `created_at` date NOT NULL,
   `modified_at` datetime NOT NULL,
   `id_category` int(10) NOT NULL,
@@ -116,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   KEY `id_category` (`id_category`),
   KEY `created_at` (`created_at`),
   KEY `lien_author_posts` (`author`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -133,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `tokens` (
   PRIMARY KEY (`id_token`),
   UNIQUE KEY `id_user` (`id_user`),
   UNIQUE KEY `token` (`token`,`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -156,9 +154,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `email` (`email`),
   KEY `state` (`state`),
   KEY `pseudo` (`pseudo`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Contraintes pour les tables déchargées

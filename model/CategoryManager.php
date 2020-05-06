@@ -16,4 +16,12 @@ class CategoryManager extends Connexion
         $category = $this->categoryByPost($post->getId());
         $post->setCategory($category);
     }
+
+    public function selectAllCategories()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT * FROM categories');
+        $statement->execute(array());
+        return $statement->fetchAll(PDO::FETCH_CLASS, 'Category');
+    }
 }

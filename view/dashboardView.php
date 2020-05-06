@@ -17,7 +17,7 @@ if ((isset($_SESSION['id']))) : ?>
                             <i class="fas fa-ninja"></i>
                             <p class="text-muted"><b>Votre email :</b> <?= $user->getEmail() ?></p>
                             <p class="text-muted"><b>Date d'inscription :</b> <?= $user->getDate_inscription() ?></p>
-                            <p class="text-muted"><a href="index.php?action=logoutUser"><i class="fas fa-sign-out-alt"></i> Deconnexion</a></p>
+                            <p class="text-muted"><a href="index.php?action=logoutUser" onclick="return ConfirmDeconnexion()"><i class="fas fa-sign-out-alt"></i> Deconnexion</a></p>
                         </div>
                         <div class="card-footer">
                             <small class="text-muted"><a class="articles-link" data-toggle="modal" href="#formModal" ><i class="fas fa-pen"></i> Modifier mes informations</a></small>
@@ -29,16 +29,17 @@ if ((isset($_SESSION['id']))) : ?>
                         <img src="../ressources/img/dashboard/favorite.jpg" class="img_dashboard"/>
                         <div class="card-header">
                             <blockquote class="blockquote mb-0">
-                                <footer class="blockquote-footer">7 Favoris (triés par ordre de date décroissant)</footer>
+                                <footer class="blockquote-footer">10 Favoris (triés par ordre de date décroissant)</footer>
                             </blockquote>
                         </div>
                         <div class="card-body articles-caption">
                             <h4>Ma bibliothèque</h4>
+                            <small><?= $errorMessage ?></small>
                             <table width="100%">
                                 <thead><tr><th></th><th></th> </tr></thead>
                                 <tbody>
                                 <?php foreach ($favoritesPosts as $post) : ?>
-                                    <form action="index.php?action=deleteFavorite" method="post">
+                                    <form action="index.php?action=deleteFavorite" method="post" onsubmit="return ConfirmMessage()">
                                         <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
                                         <tr>
                                             <td><p class="favorites-posts-links"><a class="articles-link" data-toggle="modal" href="#articlesModal<?= $post->getId() ?>"><i class="fas fa-star" style="color: #fed136"></i> <?= $post->getTitle() ?></a></p></td>
@@ -76,6 +77,7 @@ if ((isset($_SESSION['id']))) : ?>
                                         <input type="hidden" name="id_post" value="<?= $post->getid() ?>">
                                         <footer class="blockquote-footer">
                                             Ajouter l'article à vos favoris :  <button class="btn btn-light" data-dismiss="modal" type="submit"><i class="fa fa-plus-square" style="color:#11dbba; "></i></button><br>
+                                            <?= $errorMessage ?>
                                         </footer>
                                     </form>
                                 <?php endif; ?>
