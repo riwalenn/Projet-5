@@ -129,6 +129,8 @@ if ((isset($_SESSION['id']))) :
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
     </section>
     <!-- Modal add user -->
     <div class="articles-modal modal fade" id="formModalAdd" tabindex="-1" role="dialog" aria-hidden="true">
@@ -211,91 +213,91 @@ if ((isset($_SESSION['id']))) :
             </div>
         </div>
     </div>
-<!-- Modal add Post -->
-<div class="articles-modal modal fade" id="formModalAddPost" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl"></div>
+    <!-- Modal add Post -->
+    <div class="articles-modal modal fade" id="formModalAddPost" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <div class="modal-body">
-                            <h5><i class="fa fa-pencil-alt"></i> Ajouter un article</h5>
-                            <form id="formDataUser" action="index.php?action=postsManager&value=all&CRUD=C" method="post">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="modal-body">
+                                <h5><i class="fa fa-pencil-alt"></i> Ajouter un article</h5>
+                                <form id="formDataUser" action="index.php?action=postsManager&value=all&CRUD=C" method="post">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1"><i
                                                         class="fas fa-caret-right"></i></span>
+                                        </div>
+                                        <input type="text" id="title" class="form-control form-control-sm"
+                                               placeholder="entrez le titre ici" name="title"
+                                               aria-label="title" aria-describedby="basic-addon1" required>
                                     </div>
-                                    <input type="text" id="title" class="form-control form-control-sm"
-                                           placeholder="entrez le titre ici" name="title"
-                                           aria-label="title" aria-describedby="basic-addon1" required>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-caret-right"></i></span>
+                                        </div>
+                                        <input type="text" id="kicker" class="form-control form-control-sm"
+                                               placeholder="entrez le châpo ici" name="kicker"
+                                               aria-label="kicker" aria-describedby="basic-addon1" required>
                                     </div>
-                                    <input type="text" id="kicker" class="form-control form-control-sm"
-                                           placeholder="entrez le châpo ici" name="kicker"
-                                           aria-label="kicker" aria-describedby="basic-addon1" required>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1"><i
                                                         class="fas fa-caret-right"></i></span>
+                                        </div>
+                                        <label for="content"></label><textarea class="form-control" id="summernote" rows="5" name="content" placeholder="entrez le contenu de l'article ici" required></textarea>
                                     </div>
-                                    <label for="content"></label><textarea class="form-control" id="summernote" rows="5" name="content" placeholder="entrez le contenu de l'article ici" required></textarea>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1"><i
                                                         class="fas fa-caret-right"></i></span>
+                                        </div>
+                                        <input type="text" id="url" class="form-control form-control-sm"
+                                               placeholder="entrez le lien ici" name="url"
+                                               aria-label="url" aria-describedby="basic-addon1">
                                     </div>
-                                    <input type="text" id="url" class="form-control form-control-sm"
-                                           placeholder="entrez le lien ici" name="url"
-                                           aria-label="url" aria-describedby="basic-addon1">
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1"><i
                                                         class="fas fa-caret-right"></i></span>
+                                        </div>
+                                        <select name="id_category" class="form-control form-control-sm">
+                                            <?php
+                                            foreach ($categories as $category) :
+                                                echo '<option value="' . $category->getId() .'">' . $category->getCategory() .'</option>';
+                                            endforeach;
+                                            ?>
+                                        </select>
                                     </div>
-                                    <select name="id_category" class="form-control form-control-sm">
-                                        <?php
-                                        foreach ($categories as $category) :
-                                            echo '<option value="' . $category->getId() .'">' . $category->getCategory() .'</option>';
-                                        endforeach;
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1"><i
                                                         class="fas fa-caret-right"></i></span>
+                                        </div>
+                                        <select id="state" class="form-control form-control-sm" name="state">
+                                            <?php
+                                            foreach (Post::$listeStatut as $key => $value) :
+                                                echo '<option value="' . $key .'">' . $value .'</option>';
+                                            endforeach;
+                                            ?>
+                                        </select>
                                     </div>
-                                    <select id="state" class="form-control form-control-sm" name="state">
-                                        <?php
-                                        foreach (Post::$listeStatut as $key => $value) :
-                                            echo '<option value="' . $key .'">' . $value .'</option>';
-                                        endforeach;
-                                        ?>
-                                    </select>
-                                </div>
-                                <button class="btn btn-primary my-2 my-sm-0" aria-label="ajouter" type="submit"
-                                        value="add">Ajouter un article
-                                </button>
-                            </form>
+                                    <button class="btn btn-primary my-2 my-sm-0" aria-label="ajouter" type="submit"
+                                            value="add">Ajouter un article
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 <?php
 endif;
 ?>

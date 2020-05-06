@@ -5,7 +5,7 @@ class Constantes
 {
     // ----------- PICTURES CONSTANTES
     const PATH_IMG_RESSOURCES = 'ressources/img/';
-    const THUMBNAIL = '-thumbnail';
+    const THUMBNAIL = '-thumb';
     const FULLIMG = '-full';
     const SMALLIMG = '-small';
     const EXTENSION_WEBP = '.webp';

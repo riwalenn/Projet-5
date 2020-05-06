@@ -56,7 +56,7 @@ class View
     {
         $tag = "<picture>";
         $tag .= '<source class="portfolio-' . $classe . '" srcset="'. Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::EXTENSION_WEBP . '" alt="' . $folio->getTitle() . '">';
-        $tag .= '<img class="img-fluid d-block mx-auto portfolio-' . $classe . '" src="' . Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::EXTENSION_JPG . '" alt="' . $folio->getTitle() . '">';
+        $tag .= '<img class="img-fluid d-block mx-auto portfolio' . $classe . '" src="' . Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::EXTENSION_JPG . '" alt="' . $folio->getTitle() . '">';
         $tag .= "</picture>";
         return $tag;
     }

@@ -410,6 +410,8 @@ class ControllerFront
         $postManager = new PostManager();
         $commentManager = new CommentManager();
         $categoryManager = new CategoryManager();
+        $portfolioManager = new PortfolioManager();
+        $portfolio = $portfolioManager->getPortfolio();
 
         $user = $userManager->getUserBySessionId();
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
@@ -453,7 +455,7 @@ class ControllerFront
             $categories = $categoryManager->selectAllCategories();
 
             $view = new View('Tableau de bord');
-            $view->render('view/dashboardAdminView.php', ['user' => $user, 'nbPostsUnchecked' => $nbPostsUnchecked, 'nbPostsArchived' => $nbPostsArchived, 'nbPostsToDelete' => $nbPostsToDelete, 'nbUsersTotal' => $nbUsersTotal, 'nbUsersReferent' =>$nbUsersReferent, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate, 'nbUsersToDelete' => $nbUsersToDelete, 'nbPostTotal' => $nbPostTotal, 'nbCommentsUnchecked' => $nbCommentsUnchecked, 'categories' => $categories]);
+            $view->render('view/dashboardAdminView.php', ['portfolio' => $portfolio, 'user' => $user, 'nbPostsUnchecked' => $nbPostsUnchecked, 'nbPostsArchived' => $nbPostsArchived, 'nbPostsToDelete' => $nbPostsToDelete, 'nbUsersTotal' => $nbUsersTotal, 'nbUsersReferent' =>$nbUsersReferent, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate, 'nbUsersToDelete' => $nbUsersToDelete, 'nbPostTotal' => $nbPostTotal, 'nbCommentsUnchecked' => $nbCommentsUnchecked, 'categories' => $categories]);
         else:
             $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
             throw new ExceptionOutput($message);
@@ -596,29 +598,92 @@ class ControllerFront
         switch ($crud) {
             //Create
             case 'C':
-                // $portfolioManager = new PortfolioManager();
-                // $lastInsertId = $portfolioManager->getLastInsertId();
+                if (isset($_FILES['foliojpg']) && $_FILES['foliowebp'])
+                {
+                    if ($_FILES['foliojpg']['error'] == 0 && $_FILES['foliowebp']['error'] == 0) :
+                        if ($_FILES['foliojpg']['size'] <= 200000 && $_FILES['foliowebp']['size'] <= 200000) :
+                            $portfolioManager = new PortfolioManager();
+                            $lastInsertId = $portfolioManager->getLastInsertId();
+
+                            $idFile = $lastInsertId+1;
+                            $uploaddir = 'ressources/img/portfolio/';
+                            $infosfichierjpg = pathinfo($_FILES['foliojpg']['name']);
+                            $infosfichierwebp = pathinfo($_FILES['foliowebp']['name']);
+                            $extensionUpdloadjpg = $infosfichierjpg['extension'];
+                            $extensionUpdloadwebp = $infosfichierwebp['extension'];
+                            $extensionsAuthorized = array('jpg', 'webp');
+                            $uploadfilejpg = $uploaddir . basename($idFile) . '.' . $extensionUpdloadjpg;
+                            $uploadfilewebp = $uploaddir . basename($idFile) . '.' . $extensionUpdloadwebp;
+
+                            if (in_array($extensionUpdloadjpg, $extensionsAuthorized)) :
+                                move_uploaded_file($_FILES['foliojpg']['tmp_name'], $uploadfilejpg);
+                            else :
+                                return $errorMessage = "L'extension ne correspond pas.";
+                            endif;
+
+                            if (in_array($extensionUpdloadwebp, $extensionsAuthorized)) :
+                                move_uploaded_file($_FILES['foliowebp']['tmp_name'], $uploadfilewebp);
+                            else :
+                                return $errorMessage = "L'extension ne correspond pas.";
+                            endif;
+
+                            $portfolioManager->createPortfolio($portfolio);
+                        else :
+                            return $errorMessage = "Le fichier est trop volumineux.";
+                        endif;
+                    endif;
+                }
                 $errorMessage = '<small class="alert alert-success" role="alert">Le Portfolio a été créé avec succès.</small>';
                 return $errorMessage;
                 break;
 
             //Update
             case 'U':
-                $portfolioManager->updatePortfolio($portfolio);
-                $errorMessage = '<small class="alert alert-success" role="alert">Le Portfolio a été modifié avec succès.</small>';
-                return $errorMessage;
-                break;
+                if (isset($_FILES['foliojpg']) || $_FILES['foliowebp'])
+                {
+                    if ($_FILES['foliojpg']['error'] == 0 || $_FILES['foliowebp']['error'] == 0) :
+                        if ($_FILES['foliojpg']['size'] <= 200000 || $_FILES['foliowebp']['size'] <= 200000) :
+                            $portfolioManager = new PortfolioManager();
+                            $id = $portfolio->getId();
 
-             //Update Picture
-            case 'UP':
-                //
+                            $uploaddir = 'ressources/img/portfolio/';
+                            $infosfichierjpg = pathinfo($_FILES['foliojpg']['name']);
+                            $infosfichierwebp = pathinfo($_FILES['foliowebp']['name']);
+                            $extensionUpdloadjpg = $infosfichierjpg['extension'];
+                            $extensionUpdloadwebp = $infosfichierwebp['extension'];
+                            $extensionsAuthorized = array('jpg', 'webp');
+                            $uploadfilejpg = $uploaddir . basename($id) . '.' . $extensionUpdloadjpg;
+                            $uploadfilewebp = $uploaddir . basename($id) . '.' . $extensionUpdloadwebp;
+
+                            if (in_array($extensionUpdloadjpg, $extensionsAuthorized)) :
+                                move_uploaded_file($_FILES['foliojpg']['tmp_name'], $uploadfilejpg);
+                            else :
+                                return $errorMessage = "L'extension ne correspond pas.";
+                            endif;
+
+                            if (in_array($extensionUpdloadwebp, $extensionsAuthorized)) :
+                                move_uploaded_file($_FILES['foliowebp']['tmp_name'], $uploadfilewebp);
+                            else :
+                                return $errorMessage = "L'extension ne correspond pas.";
+                            endif;
+                        else :
+                            return $errorMessage = "Le fichier est trop volumineux.";
+                        endif;
+                    endif;
+                }
+                $portfolioManager->updatePortfolio($portfolio);
                 $errorMessage = '<small class="alert alert-success" role="alert">Le Portfolio a été modifié avec succès.</small>';
                 return $errorMessage;
                 break;
 
             //Delete
             case 'D':
-                //
+                $id = $portfolio->getId();
+                $jpegToDelete = "ressources/img/portfolio/" . $id . '.jpg';
+                $webpToDelete = "ressources/img/portfolio/" . $id . '.webp';
+                unlink($jpegToDelete);
+                unlink($webpToDelete);
+                $portfolioManager->deletePortfolio($portfolio);
                 $errorMessage = '<small class="alert alert-success" role="alert">Le Portfolio a été supprimé avec succès.</small>';
                 return $errorMessage;
                 break;

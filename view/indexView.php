@@ -55,7 +55,7 @@
                                     <i class="fas fa-plus fa-3x"></i>
                                 </div>
                             </div>
-                            <?= View::generatePortfolioPicture($folio, 'thumb') ?>
+                            <?= View::generatePortfolioPicture($folio, Constantes::THUMBNAIL) ?>
                         </a>
                         <div class="portfolio-caption">
                             <h4><?= $folio->getTitle() ?></h4>
@@ -279,7 +279,7 @@
                                 <!-- Project Details Go Here -->
                                 <h2 class="text-uppercase"><?= $folio->getTitle() ?></h2>
                                 <p class="item-intro text-muted"><?= $folio->getKicker() ?></p>
-                                <?= View::generatePortfolioPicture($folio, 'full') ?>
+                                <?= View::generatePortfolioPicture($folio, Constantes::FULLIMG) ?>
                                 <p><?= $folio->getContent() ?></p>
                                 <ul class="list-inline">
                                     <li>Date de conception: <?= $folio->getDate_conception() ?></li>
