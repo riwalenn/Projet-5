@@ -8,6 +8,7 @@ exclude_paths:
   - 'ressources/_img/**'
   - 'ressources/css/agency.css'
   - 'ressources/css/agency.min.css'
+  - 'ressources/css/styleSheet.css'
   - 'ressources/js/**'
   - 'ressources/scss/**/*'
   - 'ressources/pdf/**'
