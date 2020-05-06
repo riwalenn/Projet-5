@@ -113,6 +113,12 @@ if ((isset($_SESSION['id']))) :
                                     <a class="articles-link" href="index.php?action=commentsManager">
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
+                                <small class="text-muted">
+                                    <span class="badge badge-danger"><?= $nbCommentsToDelete ?> </span> commentaire(s) à supprimer - <i class="fas fa-exclamation-triangle danger"></i>
+                                    <a class="articles-link" href="index.php?action=commentsManager&CRUD=D" onclick="return ConfirmMessageAdmin()">
+                                        <i class="fa fa-trash"></i>
+                                        purger la liste</a>
+                                </small>
                             </p>
                             <hr>
                             <p>

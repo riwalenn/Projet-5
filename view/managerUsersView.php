@@ -176,7 +176,7 @@
                                             ?>
                                         </select>
                                     </div>
-                                    <button class="btn btn-primary my-2 my-sm-0" aria-label="ajouter" type="submit" value="edit">Modifier un utilisateur</button>
+                                    <button class="btn btn-primary my-2 my-sm-0" aria-label="modifier" type="submit" value="edit">Modifier un utilisateur</button>
                                 </form>
                             </div>
                         </div>

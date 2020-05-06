@@ -453,11 +453,12 @@ class ControllerFront
 
             //Compteur commentaires
             $nbCommentsUnchecked = $commentManager->countCommentsUncheked();
+            $nbCommentsToDelete = $commentManager->countCommentsToDelete();
 
             $categories = $categoryManager->selectAllCategories();
 
             $view = new View('Tableau de bord');
-            $view->render('view/dashboardAdminView.php', ['portfolio' => $portfolio, 'user' => $user, 'nbPostsUnchecked' => $nbPostsUnchecked, 'nbPostsArchived' => $nbPostsArchived, 'nbPostsToDelete' => $nbPostsToDelete, 'nbUsersTotal' => $nbUsersTotal, 'nbUsersReferent' =>$nbUsersReferent, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate, 'nbUsersToDelete' => $nbUsersToDelete, 'nbPostTotal' => $nbPostTotal, 'nbCommentsUnchecked' => $nbCommentsUnchecked, 'categories' => $categories]);
+            $view->render('view/dashboardAdminView.php', ['portfolio' => $portfolio, 'user' => $user, 'nbPostsUnchecked' => $nbPostsUnchecked, 'nbPostsArchived' => $nbPostsArchived, 'nbPostsToDelete' => $nbPostsToDelete, 'nbUsersTotal' => $nbUsersTotal, 'nbUsersReferent' =>$nbUsersReferent, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate, 'nbUsersToDelete' => $nbUsersToDelete, 'nbPostTotal' => $nbPostTotal, 'nbCommentsUnchecked' => $nbCommentsUnchecked, 'nbCommentsToDelete' => $nbCommentsToDelete, 'categories' => $categories]);
         else:
             $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
             throw new ExceptionOutput($message);
@@ -570,6 +571,53 @@ class ControllerFront
                     $errorMessage = '<small class="alert alert-danger" role="alert">L\'utilisateur n\'a pas le status "supprimé"</small>';
                     return $errorMessage;
                 endif;
+                break;
+        }
+    }
+
+    //Affiche le panel de management des commentaires
+    public function getCommentsDashboardManager($errorMessage = NULL)
+    {
+        $userManager = new UserManager();
+        $user = $userManager->getUserBySessionId();
+        $commentairesManager = new CommentManager();
+
+        if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
+            if (isset($_REQUEST['CRUD'])) {
+                $errorMessage = '';
+                $this->crudCommentsManager($_REQUEST['CRUD']);
+            }
+
+            $commentaires = $commentairesManager->getAllComments();
+
+            $view = new View('Commentaires');
+            $view->render('view/managerCommentsView.php', ['user' => $user, 'commentaires' => $commentaires, 'errorMessage' => $errorMessage]);
+        }
+    }
+
+    public function crudCommentsManager($crud)
+    {
+        $commentairesManager = new CommentManager();
+        $commentaires = new Comment($_REQUEST);
+        switch ($crud) {
+            //Update
+            case 'US':
+                $commentairesManager->updateCommentState($commentaires);
+                $errorMessage = '<small class="alert alert-success" role="alert">Le statut a été modifié avec succès.</small>';
+                return $errorMessage;
+                break;
+
+            case 'U':
+                $commentairesManager->updateComment($commentaires);
+                $errorMessage = '<small class="alert alert-success" role="alert">Le commentaire a été modifié avec succès.</small>';
+                return $errorMessage;
+                break;
+
+            //Delete
+            case 'D':
+                $commentairesManager->deleteComments();
+                $errorMessage = '<small class="alert alert-success" role="alert">Les commentaires ont été supprimés.</small>';
+                return $errorMessage;
                 break;
         }
     }

@@ -2,7 +2,17 @@
 
 class CommentManager extends Connexion
 {
-    public function listByPost($idPost)
+    public function getAllComments()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT comments.id, comments.id_post, users.pseudo, comments.created_at, comments.title, comments.content, comments.state 
+                                                FROM `comments` INNER JOIN users
+                                                ON comments.id_user = users.id
+                                                ORDER BY comments.state ASC');
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_CLASS, 'Comment');
+    }
+    public function getListByPost($idPost)
     {
         $bdd = $this->dbConnect();
         $listComments = $bdd->prepare('SELECT comments.id, comments.id_post, users.pseudo, comments.created_at, comments.title, comments.content 
@@ -17,7 +27,7 @@ class CommentManager extends Connexion
 
     public function fillCommentInPost(Post $post)
     {
-        $post->setComments($this->listByPost($post->getId()));
+        $post->setComments($this->getListByPost($post->getId()));
     }
 
     public function addComment(Comment $comment)
@@ -34,10 +44,48 @@ class CommentManager extends Connexion
 
     }
 
+    public function updateCommentState(Comment $comment)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('UPDATE `comments` SET `state` = :state WHERE `comments`.`id` = :id');
+        $statement->execute(array(
+            'id' => $comment->getId(),
+            'state' => $comment->getState()
+        ));
+    }
+
+    public function deleteComments()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('DELETE FROM `comments` WHERE `state` = 3');
+        $statement->execute();
+    }
+
+    public function updateComment(Comment $comment)
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('UPDATE `comments` SET title = :title, content = :content, state = :state WHERE id = :id');
+        $statement->execute(array(
+            'id' => $comment->getId(),
+            'title' => $comment->getTitle(),
+            'content' => $comment->getContent(),
+            'state' => $comment->getState()
+        ));
+    }
+
     public function countCommentsUncheked()
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT COUNT(id) as nbComments FROM `comments` WHERE state = 0');
+        $statement->execute();
+        $resultat = $statement->fetch();
+        return $resultat['nbComments'];
+    }
+
+    public function countCommentsToDelete()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SELECT COUNT(id) as nbComments FROM `comments` WHERE state = 3');
         $statement->execute();
         $resultat = $statement->fetch();
         return $resultat['nbComments'];
