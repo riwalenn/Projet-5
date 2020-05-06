@@ -228,7 +228,7 @@ tr.role-dash-table {
     text-align: center;
 }
 
-img.img_users_dashboard, img.img_posts_dashboard {
+img.img_users_dashboard, img.img_posts_dashboard, img.img_comms_dashboard, img.img_portfolio_dashboard {
     max-width: 1700px
 }
 

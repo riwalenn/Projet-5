@@ -49,6 +49,10 @@ try
                 $controller->getPostsDashboardManager();
                 break;
 
+            case 'commentsManager':
+                $controller->getCommentsDashboardManager();
+                break;
+
             case 'portfolioManager':
                 $controller->getPortfolioDashboardManager();
                 break;
