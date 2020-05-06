@@ -2,15 +2,15 @@
     margin-top: 10%;
 }
 
-.portfolio-full{
+.portfolio-full {
     width: 100%;
 }
 
-.portfolio-thumb{
+.portfolio-thumb {
     width: 80%;
 }
 
-.portfolio-small{
+.portfolio-small {
     width: 30%;
 }
 
@@ -212,10 +212,6 @@ form .btn-sm {
     margin-bottom: 0rem !important;
 }
 
-#profil > .container > .row.d-flex.justify-content-around {
-    flex-wrap: nowrap !important;
-}
-
 #articles * {
     z-index: 2;
 }
@@ -253,8 +249,9 @@ tr.email-dash-table {
 }
 
 i.cgu-green {
-    color: green!important;
+    color: green !important;
 }
+
 .danger {
     color: red;
 }
@@ -343,9 +340,78 @@ i.cgu-green {
     background-color: #212529;
 }
 
+/** grands formats */
 @media (min-width: 1900px) {
     .container.dashboard {
         max-width: 1740px;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1919px) {
+    body, .btn {
+        font-size: 0.80rem;
+    }
+
+    .card-deck {
+        width: 1190px;
+    }
+
+    input {
+        width: 70px;
+    }
+}
+
+@media (max-width: 1919px) {
+    .card-deck.dash {
+        width: 35%;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        left: -100px;
+    }
+
+    .logo.menu {
+        width: 90%;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    #mainNav .navbar-nav .nav-item .nav-link {
+        padding: 1.1em .80em !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    body {
+        line-height: 1.1;
+    }
+
+    div#profil_Dash {
+        margin-bottom: 5%;
+    }
+}
+
+@media (min-width: 992px) {
+    #profil > .container > .row.d-flex.justify-content-around {
+        flex-wrap: nowrap !important;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 991px) {
+    .card-deck.dash {
+        width: 90%;
+    }
+
+    .card-deck.dash {
+        margin-bottom: 5%;
+    }
+
+    section {
+        padding-top: 50%;
     }
 }
 
@@ -356,21 +422,46 @@ i.cgu-green {
     }
 }
 
-/** 320px */
+/** de 320px à 467px */
 @media (min-width: 320px) and (max-width: 467px) {
     body p {
         font-size: 11px !important;
     }
 
     .page-section h2.section-heading {
-        font-size: 35px !important;
+        font-size: 30px !important;
     }
 
     h4 {
-        font-size: 1.3rem !important;
+        font-size: 1.2rem !important;
     }
 
     .articles-modal .modal-content h2, .conditions-modal .modal-content h2 {
         font-size: 1.8rem !important;
+    }
+
+    #mainNav .navbar-nav .nav-item .nav-link {
+        padding: 0.5em 0.5em !important;
+    }
+
+    header.masthead .intro-text .intro-heading {
+        font-size: 40px!important;
+    }
+
+    .py-5 > .container > .row > .col-md-3.col-sm-6 > img.img-fluid.d-block.mx-auto {
+        width: 200px;
+    }
+
+    .modal-dialog {
+        width: 100%;
+        max-width: 280px!important;
+    }
+
+    .container.views {
+        margin-top: 20%;
+    }
+
+    cite.item-intro.text-muted, span, a, .blockquote-footer {
+        font-size: 12px!important;
     }
 }

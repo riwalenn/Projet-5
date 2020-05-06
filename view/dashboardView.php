@@ -3,7 +3,7 @@ if ((isset($_SESSION['id']))) : ?>
     <section class="page-profil" id="profil">
         <div class="container">
             <div class="row d-flex justify-content-around">
-                <div class="card-deck">
+                <div class="card-deck dash">
                     <div class="card" id="profil_Dash">
                         <img src="../ressources/img/dashboard/profil.jpg" class="img_dashboard"/>
                         <div class="card-header">
@@ -24,7 +24,7 @@ if ((isset($_SESSION['id']))) : ?>
                         </div>
                     </div>
                 </div>
-                <div class="card-deck">
+                <div class="card-deck dash">
                     <div class="card" id="profil_Dash">
                         <img src="../ressources/img/dashboard/favorite.jpg" class="img_dashboard"/>
                         <div class="card-header">
@@ -55,7 +55,7 @@ if ((isset($_SESSION['id']))) : ?>
                         </div>
                     </div>
                 </div>
-                <div class="card-deck">
+                <div class="card-deck dash">
                     <div class="card" id="profil_Dash">
                         <img src="../ressources/img/dashboard/articles.jpg" class="img_dashboard"/>
                         <div class="card-header">
