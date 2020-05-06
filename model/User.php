@@ -297,7 +297,8 @@ class User extends Post
             $email = strip_tags(htmlspecialchars($value->email));
             $token = strip_tags(htmlspecialchars($value->token));
             $sujet = "Modification de mon mot de passe sur le blog de Riwalenn Bas";
-            $message = "Pour modifier votre mot de passe, veuillez cliquer sur le lien ci-dessous :\n\nhttp://riwalenn/index.php?action=confirmationEmailForPassword&tokenForPassword=$token";
+            $message = "Pour modifier votre mot de passe, veuillez cliquer sur le lien ci-dessous :\n\n" . Constantes::HTTP_RIWALENN . "/index.php?action=confirmationEmailForPassword&tokenForPassword=$token";
+            //$message = "Pour modifier votre mot de passe, veuillez cliquer sur le lien ci-dessous :\n\nhttps://projet5.riwalennbas.com/index.php?action=confirmationEmailForPassword&tokenForPassword=$token";
 
             $to = $email;
             $email_subject = "$sujet";
@@ -318,7 +319,8 @@ class User extends Post
             $email = strip_tags(htmlspecialchars($value->email));
             $token = strip_tags(htmlspecialchars($value->token));
             $sujet = "Confirmation de votre inscription sur le blog de Riwalenn Bas";
-            $message = "Pour confirmer votre inscription, veuillez cliquer sur le lien ci-dessous :\n\nhttp://riwalenn/index.php?action=confirmationInscriptionByEmail&token=$token";
+            $message = "Pour confirmer votre inscription, veuillez cliquer sur le lien ci-dessous :\n\n" . Constantes::HTTP_RIWALENN . "/index.php?action=confirmationInscriptionByEmail&token=$token";
+            //$message = "Pour confirmer votre inscription, veuillez cliquer sur le lien ci-dessous :\n\nhttps://projet5.riwalennbas.com/index.php?action=confirmationInscriptionByEmail&token=$token";
 
             $to = $email;
             $email_subject = "$sujet";

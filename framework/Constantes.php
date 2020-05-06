@@ -3,6 +3,9 @@
 
 class Constantes
 {
+    // ----------- _URL_
+    const HTTP_RIWALENN = 'http://riwalenn';
+
     // ----------- PICTURES CONSTANTES
     const PATH_IMG_RESSOURCES = 'ressources/img/';
     const THUMBNAIL = '-thumb';

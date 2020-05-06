@@ -454,7 +454,11 @@ i.cgu-green {
 
     .modal-dialog {
         width: 100%;
-        max-width: 280px!important;
+        max-width: 310px!important;
+    }
+
+    .modal-content {
+        width: 310px!important;
     }
 
     .container.views {
