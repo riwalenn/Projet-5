@@ -581,15 +581,16 @@ class ControllerFront
     }
 
     //Affiche le panel de management des commentaires
-    public function getCommentsDashboardManager($successMessage = NULL)
+    public function getCommentsDashboardManager($errorMessage = NULL)
     {
         $userManager = new UserManager();
         $user = $userManager->getUserBySessionId();
         $commentairesManager = new CommentManager();
+        $crud = $_REQUEST['CRUD'];
 
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
-            if (isset($_REQUEST['CRUD'])) {
-                $errorMessage = $this->crudCommentsManager($_REQUEST['CRUD']);
+            if (isset($crud)) {
+                $errorMessage = $this->crudCommentsManager($crud);
             }
 
             $commentaires = $commentairesManager->getAllComments();
