@@ -336,14 +336,14 @@ class User extends Post
 
     static function helpPseudo()
     {
-        $html = "<p class='pseudo-popup'>Votre pseudo doit contenir au minimum 4 caractères, les caractères spéciaux sont interdits.</p>";
+        $html = "Votre pseudo doit contenir au minimum 4 caractères, les caractères spéciaux sont interdits.";
 
         return $html;
     }
 
     static function helpPassword()
     {
-        $html = "<p class='password-popup'>Voici quelques conseils pour vous aider à mieux sécuriser votre vie dématérialisée." . "<br>\n" .
+        $html = "Voici quelques conseils pour vous aider à mieux sécuriser votre vie dématérialisée." . "<br>\n" .
             "- Utilisez un mot de passe <u>unique</u> pour chaque service. En particulier, l’utilisation d’un même " . "<br>\n" .
             "mot de passe entre sa messagerie professionnelle et sa messagerie personnelle est impérativement à proscrire ;" . "<br>\n" .
             "- Choisissez un mot de passe <u>qui n’a pas de lien avec vous</u> (mot de passe composé d’un nom de société," . "<br>\n" .
@@ -362,7 +362,7 @@ class User extends Post
             "- des caractères spéciaux indiqués ci-après : @-_&*!%:;#~^" . "<br>\n" .
             "- les caractères tels que é,ç,+,à,è,`,(,),[,],{,},°,|,\,',\",/,?,\ et la , ne sont pas autorisés," . "<br>\n" .
             "- des chiffres," . "<br>\n" .
-            "- il doit comporter au minimum 10 caractères et 64 au maximum.</p>";
+            "- il doit comporter au minimum 10 caractères et 64 au maximum.";
 
         return $html;
     }

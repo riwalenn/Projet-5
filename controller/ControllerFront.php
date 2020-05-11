@@ -192,18 +192,20 @@ class ControllerFront
             $postManager = new PostManager();
             $nbFavorites = $postManager->countFavoritesPostUser($user);
             $result = $postManager->searchFavorite($user, $postFavoris);
+            $errorMessage = '';
             if ($nbFavorites < 11) :
                 if ($result == true) {
-                    $errorMessage = '<div class="alert alert-warning" role="alert">Vous avez déjà ajouté ce favoris.</div>';
+                    $errorMessage = 'Info : Vous avez déjà ajouté ce favoris.';
                 }else{
                     $postManager->addFavoritePostByIdUser($user, $postFavoris);
+                    $errorMessage = 'Le favoris a été ajouté avec succès.';
                 }
             else:
-                $errorMessage = '<div class="alert alert-warning" role="alert">Vous avez atteint le nombre maximal de favoris.</div>';
+                $errorMessage = 'Info : Vous avez atteint le nombre maximal de favoris.';
             endif;
             $this->getDashboardUser($errorMessage);
         else:
-            $message = 'Votre identification de session ne correspond pas !';
+            $message = 'Erreur : Votre identification de session ne correspond pas !';
             throw new ExceptionOutput($message);
         endif;
     }
@@ -211,12 +213,14 @@ class ControllerFront
     //Suppression d'un favoris
     public function deleteFavoritePost()
     {
+        $errorMessage = '';
         if (!empty($_SESSION['id']) && ($_REQUEST['id_post'])) :
             $user = new User($_SESSION);
             $favorites = new Favorites_posts($_REQUEST);
             $postManager = new PostManager();
             $postManager->deleteFavoritePostByIdUser($user, $favorites);
-            $this->getDashboardUser();
+            $errorMessage = 'Le favoris a bien été supprimé.';
+            $this->getDashboardUser($errorMessage);
         else:
             $message = 'Votre identification de session ne correspond pas !';
             throw new ExceptionOutput($message);
@@ -333,6 +337,7 @@ class ControllerFront
     //Affichage de la page des résultats de recherche des articles
     public function afficherResultatRecherche($errorMessage = NULL)
     {
+        $errorMessage = '';
         if (empty($_REQUEST['submit'])) {
             $this->afficherListeArticles();
         }
@@ -365,6 +370,7 @@ class ControllerFront
     //Affichage de la page des articles
     public function afficherListeArticles($errorMessage = NULL)
     {
+        $errorMessage = '';
         $pageCourante = $_REQUEST['page'] ?? 1;
         $statut = 1; //Afficher les articles validés
         $postManager = new PostManager();
@@ -470,13 +476,13 @@ class ControllerFront
     {
         $userManager = new UserManager();
         $user = $userManager->getUserBySessionId();
+        $errorMessage = '';
 
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
 
             if (isset($_REQUEST['CRUD']))
             {
-                $errorMessage = '';
-                $this->crudUserManager($_REQUEST['CRUD']);
+                $errorMessage = $this->crudUserManager($_REQUEST['CRUD']);
             }
 
             $dtz = new DateTimeZone("Europe/Madrid");
@@ -541,20 +547,19 @@ class ControllerFront
     {
         $userManager = new UserManager();
         $user = new User($_REQUEST);
+        $errorMessage = '';
         switch ($crud) {
             //Create
             case 'C':
                 $user->setCgu(1);
                 $userManager->registration($user);
-                $errorMessage = '<small class="alert alert-success" role="alert">L\'utilisateur a été créé avec succès.</small>';
-                return $errorMessage;
+                $errorMessage = 'L\'utilisateur a été créé avec succès.';
                 break;
 
             //Update
             case 'U':
                 $userManager->updateUser($user);
-                $errorMessage = '<small class="alert alert-success" role="alert">L\'utilisateur a été édité avec succès.</small>';
-                return $errorMessage;
+                $errorMessage = 'L\'utilisateur a été édité avec succès.';
                 break;
 
             //Delete
@@ -565,18 +570,18 @@ class ControllerFront
                 if ($user->getState() == 3 && ($interval->format('%R%a days') > 7)) :
                     $userManager->updateIdUserInComments($user);
                     $userManager->deleteUser($user);
-                    $errorMessage = '<small class="alert alert-success" role="alert">L\'utilisateur a été supprimé avec succès.</small>';
-                    return $errorMessage;
+                    $errorMessage = 'L\'utilisateur a été supprimé avec succès.';
                 else:
-                    $errorMessage = '<small class="alert alert-danger" role="alert">L\'utilisateur n\'a pas le status "supprimé"</small>';
-                    return $errorMessage;
+                    $errorMessage = 'Erreur : L\'utilisateur n\'a pas le status "supprimé"';
                 endif;
                 break;
         }
+
+        return $errorMessage;
     }
 
     //Affiche le panel de management des commentaires
-    public function getCommentsDashboardManager($errorMessage = NULL)
+    public function getCommentsDashboardManager($successMessage = NULL)
     {
         $userManager = new UserManager();
         $user = $userManager->getUserBySessionId();
@@ -584,8 +589,7 @@ class ControllerFront
 
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
             if (isset($_REQUEST['CRUD'])) {
-                $errorMessage = '';
-                $this->crudCommentsManager($_REQUEST['CRUD']);
+                $errorMessage = $this->crudCommentsManager($_REQUEST['CRUD']);
             }
 
             $commentaires = $commentairesManager->getAllComments();
@@ -599,27 +603,26 @@ class ControllerFront
     {
         $commentairesManager = new CommentManager();
         $commentaires = new Comment($_REQUEST);
+        $errorMessage = '';
         switch ($crud) {
             //Update
             case 'US':
                 $commentairesManager->updateCommentState($commentaires);
-                $errorMessage = '<small class="alert alert-success" role="alert">Le statut a été modifié avec succès.</small>';
-                return $errorMessage;
+                $errorMessage = 'Le statut a été modifié avec succès.';
                 break;
 
             case 'U':
                 $commentairesManager->updateComment($commentaires);
-                $errorMessage = '<small class="alert alert-success" role="alert">Le commentaire a été modifié avec succès.</small>';
-                return $errorMessage;
+                $errorMessage = 'Le commentaire a été modifié avec succès.';
                 break;
 
             //Delete
             case 'D':
                 $commentairesManager->deleteComments();
-                $errorMessage = '<small class="alert alert-success" role="alert">Les commentaires ont été supprimés.</small>';
-                return $errorMessage;
+                $errorMessage = 'Les commentaires ont été supprimés.';
                 break;
         }
+        return $errorMessage;
     }
 
     //Affiche le pannel de management du portfolio
@@ -628,10 +631,11 @@ class ControllerFront
         $userManager = new UserManager();
         $portfolioManager = new PortfolioManager();
         $user = $userManager->getUserBySessionId();
+        $errorMessage = '';
 
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
             if (isset($_REQUEST['CRUD'])) {
-                $this->crudPortfolioManager($_REQUEST['CRUD']);
+                $errorMessage = $this->crudPortfolioManager($_REQUEST['CRUD']);
             }
 
             $portfolio = $portfolioManager->getPortfolio();
@@ -645,6 +649,7 @@ class ControllerFront
     {
         $portfolioManager = new PortfolioManager();
         $portfolio = new Portfolio($_REQUEST);
+        $errorMessage = '';
         switch ($crud) {
             //Create
             case 'C':
@@ -653,38 +658,35 @@ class ControllerFront
                     if ($_FILES['foliojpg']['error'] == 0 && $_FILES['foliowebp']['error'] == 0) :
                         if ($_FILES['foliojpg']['size'] <= 200000 && $_FILES['foliowebp']['size'] <= 200000) :
                             $portfolioManager = new PortfolioManager();
-                            $lastInsertId = $portfolioManager->getLastInsertId();
+                            $lastInsertId = $portfolioManager->createPortfolio($portfolio);
 
-                            $idFile = $lastInsertId+1;
                             $uploaddir = 'ressources/img/portfolio/';
                             $infosfichierjpg = pathinfo($_FILES['foliojpg']['name']);
                             $infosfichierwebp = pathinfo($_FILES['foliowebp']['name']);
                             $extensionUpdloadjpg = $infosfichierjpg['extension'];
                             $extensionUpdloadwebp = $infosfichierwebp['extension'];
                             $extensionsAuthorized = array('jpg', 'webp');
-                            $uploadfilejpg = $uploaddir . basename($idFile) . '.' . $extensionUpdloadjpg;
-                            $uploadfilewebp = $uploaddir . basename($idFile) . '.' . $extensionUpdloadwebp;
+                            $uploadfilejpg = $uploaddir . basename($lastInsertId) . '.' . $extensionUpdloadjpg;
+                            $uploadfilewebp = $uploaddir . basename($lastInsertId) . '.' . $extensionUpdloadwebp;
 
                             if (in_array($extensionUpdloadjpg, $extensionsAuthorized)) :
                                 move_uploaded_file($_FILES['foliojpg']['tmp_name'], $uploadfilejpg);
                             else :
-                                return $errorMessage = "L'extension ne correspond pas.";
+                                $errorMessage = "L'extension ne correspond pas.";
                             endif;
 
                             if (in_array($extensionUpdloadwebp, $extensionsAuthorized)) :
                                 move_uploaded_file($_FILES['foliowebp']['tmp_name'], $uploadfilewebp);
                             else :
-                                return $errorMessage = "L'extension ne correspond pas.";
+                                $errorMessage = "Erreur : L'extension ne correspond pas.";
                             endif;
 
-                            $portfolioManager->createPortfolio($portfolio);
                         else :
-                            return $errorMessage = "Le fichier est trop volumineux.";
+                            $errorMessage = "Erreur : Le fichier est trop volumineux.";
                         endif;
                     endif;
                 }
-                $errorMessage = '<small class="alert alert-success" role="alert">Le Portfolio a été créé avec succès.</small>';
-                return $errorMessage;
+                $errorMessage = 'Le Portfolio a été créé avec succès.';
                 break;
 
             //Update
@@ -708,22 +710,21 @@ class ControllerFront
                             if (in_array($extensionUpdloadjpg, $extensionsAuthorized)) :
                                 move_uploaded_file($_FILES['foliojpg']['tmp_name'], $uploadfilejpg);
                             else :
-                                return $errorMessage = "L'extension ne correspond pas.";
+                                return $errorMessage = "Erreur : L'extension ne correspond pas.";
                             endif;
 
                             if (in_array($extensionUpdloadwebp, $extensionsAuthorized)) :
                                 move_uploaded_file($_FILES['foliowebp']['tmp_name'], $uploadfilewebp);
                             else :
-                                return $errorMessage = "L'extension ne correspond pas.";
+                                $errorMessage = "Erreur : L'extension ne correspond pas.";
                             endif;
                         else :
-                            return $errorMessage = "Le fichier est trop volumineux.";
+                            $errorMessage = "Erreur : Le fichier est trop volumineux.";
                         endif;
                     endif;
                 }
                 $portfolioManager->updatePortfolio($portfolio);
-                $errorMessage = '<small class="alert alert-success" role="alert">Le Portfolio a été modifié avec succès.</small>';
-                return $errorMessage;
+                $errorMessage = 'Le Portfolio a été modifié avec succès.';
                 break;
 
             //Delete
@@ -734,10 +735,10 @@ class ControllerFront
                 unlink($jpegToDelete);
                 unlink($webpToDelete);
                 $portfolioManager->deletePortfolio($portfolio);
-                $errorMessage = '<small class="alert alert-success" role="alert">Le Portfolio a été supprimé avec succès.</small>';
-                return $errorMessage;
+                $errorMessage = 'Le Portfolio a été supprimé avec succès.';
                 break;
         }
+        return $errorMessage;
     }
 
     //Affiche le pannel de management des articles
@@ -745,12 +746,13 @@ class ControllerFront
     {
         $userManager = new UserManager();
         $user = $userManager->getUserBySessionId();
+        $errorMessage = '';
 
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
 
             if (isset($_REQUEST['CRUD']))
             {
-                $this->crudPostManager($_REQUEST['CRUD']);
+                $errorMessage = $this->crudPostManager($_REQUEST['CRUD']);
             }
 
             $postManager = new PostManager();
@@ -825,37 +827,34 @@ class ControllerFront
         $post = new Post($_REQUEST);
         $userManager = new UserManager();
         $user = $userManager->getUserBySessionId();
+        $errorMessage = '';
         switch ($crud) {
             case 'U':
                 $postManager->updatePost($post);
-                $errorMessage = '<small class="alert alert-success" role="alert">L\'article a été édité avec succès.</small>';
-                return $errorMessage;
+                $errorMessage = 'L\'article a été édité avec succès.';
                 break;
 
             case 'FU':
                 $postManager->fullUpdatePost($post);
-                $errorMessage = '<small class="alert alert-success" role="alert">L\'article a été édité avec succès.</small>';
-                return $errorMessage;
+                $errorMessage = 'L\'article a été édité avec succès.';
                 break;
 
             case 'C':
                 $post->setAuthor($user->getId());
                 $postManager->createPost($post);
-                $errorMessage = '<small class="alert alert-success" role="alert">L\'article a été créé avec succès.</small>';
-                return $errorMessage;
+                $errorMessage = 'L\'article a été créé avec succès.';
                 break;
 
             case 'D':
                 if ($post->getState() == Constantes::POST_STATUS_DELETED) :
                     $postManager->deletePost($post);
-                    $errorMessage = '<small class="alert alert-success" role="alert">L\'article a été supprimé avec succès.</small>';
-                    return $errorMessage;
+                    $errorMessage = 'L\'article a été supprimé avec succès.';
                 else:
-                    $errorMessage = '<small class="alert alert-danger" role="alert">L\'utilisateur n\'a pas le status "supprimé"</small>';
-                    return $errorMessage;
+                    $errorMessage = 'Erreur : L\'utilisateur n\'a pas le status "supprimé"';
                 endif;
                 break;
         }
+        return $errorMessage;
     }
 
     /**

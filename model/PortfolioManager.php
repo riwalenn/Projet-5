@@ -11,15 +11,6 @@ class PortfolioManager extends Connexion
         return $statement->fetchAll(PDO::FETCH_CLASS, 'Portfolio');
     }
 
-    public function getLastInsertId()
-    {
-        $bdd = $this->dbConnect();
-        $statement = $bdd->prepare('SELECT MAX(id) as lastId FROM `portfolio`');
-        $statement->execute();
-        $result = $statement->fetch();
-        return $result['lastId'];
-    }
-
     public function createPortfolio(Portfolio $portfolio)
     {
         $bdd = $this->dbConnect();
@@ -33,6 +24,7 @@ class PortfolioManager extends Connexion
             'client' => htmlspecialchars($portfolio->getClient()),
             'categories' => htmlspecialchars($portfolio->getCategories())
         ));
+        return $bdd->lastInsertId();
     }
 
     public function updatePortfolio(Portfolio $portfolio)

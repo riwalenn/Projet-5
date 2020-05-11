@@ -34,7 +34,15 @@ if ((isset($_SESSION['id']))) : ?>
                         </div>
                         <div class="card-body articles-caption">
                             <h4>Ma bibliothèque</h4>
-                            <small><?= $errorMessage ?></small>
+                            <?php
+                                if (!empty($errorMessage)):
+                                    if (preg_match('/Info/', $errorMessage)) :
+                                        echo '<small class="blockquote-footer info-message">' . $errorMessage . '</small>';
+                                    else:
+                                        echo '<small class="blockquote-footer success-message">' . $errorMessage . '</small>';
+                                    endif;
+                                endif;
+                            ?>
                             <table width="100%">
                                 <thead><tr><th></th><th></th> </tr></thead>
                                 <tbody>
@@ -77,7 +85,6 @@ if ((isset($_SESSION['id']))) : ?>
                                         <input type="hidden" name="id_post" value="<?= $post->getid() ?>">
                                         <footer class="blockquote-footer">
                                             Ajouter l'article à vos favoris :  <button class="btn btn-light" data-dismiss="modal" type="submit"><i class="fa fa-plus-square" style="color:#11dbba; "></i></button><br>
-                                            <?= $errorMessage ?>
                                         </footer>
                                     </form>
                                 <?php endif; ?>

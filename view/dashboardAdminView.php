@@ -11,7 +11,7 @@ if ((isset($_SESSION['id']))) :
                         <div class="card-header">
                             <blockquote class="blockquote mb-0">
                                 <footer class="blockquote-footer" style="color: #00c0c7"><i class="fa fa-user"></i> Coup
-                                    d'oeil - Utilisateurs <span class="badge badge-success"><?= $nbUsersTotal ?></span>
+                                    d'oeil - Utilisateurs <span class="badge badge-success"><?php echo $nbUsersTotal ?></span>
                                 </footer>
                             </blockquote>
                         </div>
@@ -32,29 +32,29 @@ if ((isset($_SESSION['id']))) :
                                     <a class="articles-link" data-toggle="modal" href="#formModalAdd">
                                         <i class="fa fa-plus-square"></i> ajouter</a>
                                 </small><br>
-                                <small class="text-muted"><span class="badge badge-success"><?= $nbUsersReferent ?></span> utilisateur(s) référents -
+                                <small class="text-muted"><span class="badge badge-success"><?php echo $nbUsersReferent ?></span> utilisateur(s) référents -
                                     <a class="articles-link" href="index.php?action=usersManager&value=referents">
                                         <i class="fa fa-eye"></i> voir liste</a></small><br>
-                                <small class="text-muted"><span class="badge badge-danger"> <?= $nbUsersToDelete ?> </span> utilisateur(s) à supprimer -
+                                <small class="text-muted"><span class="badge badge-danger"> <?php echo $nbUsersToDelete ?> </span> utilisateur(s) à supprimer -
                                     <a class="articles-link" href="index.php?action=usersManager&value=trash">
                                         <i class="fa fa-eye"></i> voir liste</a></small><br>
                                 <small class="text-muted">
-                                    <span class="badge badge-warning"> <?= $nbUsersWaitingList ?> </span>
+                                    <span class="badge badge-warning"> <?php echo $nbUsersWaitingList ?> </span>
                                     utilisateur(s) en attente de validation -
                                     <a class="articles-link" href="index.php?action=usersManager&value=uncheckedUsers">
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
-                                <small class="text-muted"><span class="badge badge-danger"> <?= $nbUsersConnexionExpired ?> </span>
+                                <small class="text-muted"><span class="badge badge-danger"> <?php echo $nbUsersConnexionExpired ?> </span>
                                     utilisateur(s) non connecté depuis 3 mois - <i class="fas fa-exclamation-triangle danger"></i>
                                     <a class="articles-link" href="index.php?action=delete&value=connexionExpired" onclick="return ConfirmMessageAdmin()">
                                         <i class="fa fa-trash"></i> purger la liste</a>
                                 </small><br>
-                                <small class="text-muted"><span class="badge badge-warning"> <?= $nbUsersTokenNotValidate ?> </span>
+                                <small class="text-muted"><span class="badge badge-warning"> <?php echo $nbUsersTokenNotValidate ?> </span>
                                     utilisateur(s) n'ont pas validé leurs token -
                                     <a class="articles-link" href="index.php?action=usersManager&value=uncheckedTokenUsers">
                                         <i class="fa fa-eye"></i> voir liste</a> </small><br>
                                 <small class="text-muted">
-                                    <span class="badge badge-danger"> <?= $nbUsersTokenExpired ?> </span> token(s)
+                                    <span class="badge badge-danger"> <?php echo $nbUsersTokenExpired ?> </span> token(s)
                                     expiré(s) - <i class="fas fa-exclamation-triangle danger"></i>
                                     <a class="articles-link" href="index.php?action=delete&value=tokenExpired" onclick="return ConfirmMessageAdmin()">
                                         <i class="fa fa-trash"></i>
@@ -75,7 +75,7 @@ if ((isset($_SESSION['id']))) :
                         <div class="card-header">
                             <blockquote class="blockquote mb-0">
                                 <footer class="blockquote-footer" style="color: #00c0c7">
-                                    <i class="fa fa-file-alt"></i> Coup d'oeil - Articles <span class="badge badge-success"><?= $nbPostTotal ?></span>
+                                    <i class="fa fa-file-alt"></i> Coup d'oeil - Articles <span class="badge badge-success"><?php echo $nbPostTotal ?></span>
                                 </footer>
                             </blockquote>
                         </div>
@@ -87,19 +87,19 @@ if ((isset($_SESSION['id']))) :
                                         <i class="fa fa-plus-square"></i> ajouter</a>
                                 </small><br>
                                 <small class="text-muted">
-                                    <span class="badge badge-warning"><?= $nbPostsUnchecked ?> </span>
+                                    <span class="badge badge-warning"><?php echo $nbPostsUnchecked ?> </span>
                                     article(s) en attente de validation -
                                     <a class="articles-link" href="index.php?action=postsManager&value=uncheckedPosts">
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
                                 <small class="text-muted">
-                                    <span class="badge badge-warning"><?= $nbPostsArchived ?> </span>
+                                    <span class="badge badge-warning"><?php echo $nbPostsArchived ?> </span>
                                     article(s) archivés -
                                     <a class="articles-link" href="index.php?action=postsManager&value=archived">
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
                                 <small class="text-muted">
-                                    <span class="badge badge-danger"><?= $nbPostsToDelete ?> </span> article(s) à supprimer - <i class="fas fa-exclamation-triangle danger"></i>
+                                    <span class="badge badge-danger"><?php echo $nbPostsToDelete ?> </span> article(s) à supprimer - <i class="fas fa-exclamation-triangle danger"></i>
                                     <a class="articles-link" href="index.php?action=delete&value=postsToDelete" onclick="return ConfirmMessageAdmin()">
                                         <i class="fa fa-trash"></i>
                                         purger la liste</a>
@@ -108,13 +108,13 @@ if ((isset($_SESSION['id']))) :
                             <hr>
                             <p>
                                 <small class="text-muted">
-                                    <span class="badge badge-warning"><?= $nbCommentsUnchecked ?> </span>
+                                    <span class="badge badge-warning"><?php echo $nbCommentsUnchecked ?> </span>
                                     commentaire(s) en attente de validation -
                                     <a class="articles-link" href="index.php?action=commentsManager">
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
                                 <small class="text-muted">
-                                    <span class="badge badge-danger"><?= $nbCommentsToDelete ?> </span> commentaire(s) à supprimer - <i class="fas fa-exclamation-triangle danger"></i>
+                                    <span class="badge badge-danger"><?php echo $nbCommentsToDelete ?> </span> commentaire(s) à supprimer - <i class="fas fa-exclamation-triangle danger"></i>
                                     <a class="articles-link" href="index.php?action=commentsManager&CRUD=D" onclick="return ConfirmMessageAdmin()">
                                         <i class="fa fa-trash"></i>
                                         purger la liste</a>
