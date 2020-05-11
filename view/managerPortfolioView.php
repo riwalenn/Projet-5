@@ -38,7 +38,7 @@
                             </thead>
                             <tbody>
                             <?php foreach ($portfolio as $folio) : ?>
-                                <form action="index.php?action=portfolioManager&CRUD=U" method="post">
+                                <form action="index.php?action=portfolioManager&CRUD=SU" method="post">
                                     <input type="hidden" name="id" value="<?= $folio->getId() ?>">
                                     <tr>
                                         <td><a data-toggle="modal" href="#formModalEdit<?= $folio->getId() ?>"><?= View::generatePortfolioPicture($folio, Constantes::SMALLIMG) ?></a></td>

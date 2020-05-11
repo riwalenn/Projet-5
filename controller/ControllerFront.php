@@ -29,7 +29,7 @@ class ControllerFront
     //Fonction de connexion
     public function login()
     {
-        $email = $_REQUEST['email'];
+        $email = filter_input(INPUT_POST, 'email');
         $userManager = new UserManager();
         $listPosts = new PostManager();
         $user = $userManager->getUserByEmail($email);
@@ -37,7 +37,7 @@ class ControllerFront
         //si l'objet user n'est pas vide
         if (!empty($user)) :
             $lastPosts = $listPosts->getPosts(1, 1);
-            $comparePassword = password_verify($_REQUEST['password'], $user->getPassword());
+            $comparePassword = password_verify(filter_input(INPUT_POST, 'password'), $user->getPassword());
 
             //si les mots de passe correspondent
             if ($comparePassword == true) :
@@ -150,11 +150,11 @@ class ControllerFront
     //Modification des données utilisateurs
     public function UpdateDataByUser()
     {
-        if (!empty($_SESSION['id'] == $_REQUEST['id'])) :
+        if (!empty($_SESSION['id'] == filter_input(INPUT_POST, 'id'))) :
             $user = new User($_REQUEST);
             $userManager = new UserManager();
             $userBdd = $userManager->getUserBySessionId();
-            $comparePassword = password_verify($_REQUEST['password'], $userBdd->getPassword());
+            $comparePassword = password_verify(filter_input(INPUT_POST, 'password'), $userBdd->getPassword());
 
             if ($comparePassword == true) :
                 $userManager->updateUserByUser($user);
@@ -186,7 +186,7 @@ class ControllerFront
     //Ajout d'un post favoris, limité à 10
     public function addFavoritePost()
     {
-        if (!empty($_SESSION['id']) && ($_REQUEST['id_post'])) :
+        if (!empty($_SESSION['id']) && (filter_input(INPUT_POST, 'id_post'))) :
             $user = new User($_SESSION);
             $postFavoris = new Favorites_posts($_REQUEST);
             $postManager = new PostManager();
@@ -214,7 +214,7 @@ class ControllerFront
     public function deleteFavoritePost()
     {
         $errorMessage = '';
-        if (!empty($_SESSION['id']) && ($_REQUEST['id_post'])) :
+        if (!empty($_SESSION['id']) && (filter_input(INPUT_POST, 'id_post'))) :
             $user = new User($_SESSION);
             $favorites = new Favorites_posts($_REQUEST);
             $postManager = new PostManager();
@@ -338,11 +338,11 @@ class ControllerFront
     public function afficherResultatRecherche($errorMessage = NULL)
     {
         $errorMessage = '';
-        if (empty($_REQUEST['submit'])) {
+        if (empty(filter_input(INPUT_GET, 'submit'))) {
             $this->afficherListeArticles();
         }
-        $pageCourante = $_REQUEST['page'] ?? 1;
-        $submitRecherche = $_REQUEST['submit'] ?? "";
+        $pageCourante = filter_input(INPUT_GET, 'page') ?? 1;
+        $submitRecherche = filter_input(INPUT_GET, 'submit') ?? "";
         $postManager = new PostManager();
         $listPosts = $postManager->getSearch($submitRecherche, $pageCourante);
 
@@ -371,7 +371,7 @@ class ControllerFront
     public function afficherListeArticles($errorMessage = NULL)
     {
         $errorMessage = '';
-        $pageCourante = $_REQUEST['page'] ?? 1;
+        $pageCourante = filter_input(INPUT_GET, 'page') ?? 1;
         $statut = 1; //Afficher les articles validés
         $postManager = new PostManager();
         $listPosts = $postManager->getPosts($pageCourante, $statut);
@@ -423,9 +423,9 @@ class ControllerFront
 
         $user = $userManager->getUserBySessionId();
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
-            if (isset($_REQUEST['value']))
+            $value = filter_input(INPUT_GET, 'value');
+            if (isset($value))
             {
-                $value = $_REQUEST['value'];
                 switch ($value)
                 {
                     case 'tokenExpired':
@@ -479,10 +479,10 @@ class ControllerFront
         $errorMessage = '';
 
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
-
-            if (isset($_REQUEST['CRUD']))
+            $crud = filter_input(INPUT_GET, 'CRUD');
+            if (isset($crud))
             {
-                $errorMessage = $this->crudUserManager($_REQUEST['CRUD']);
+                $errorMessage = $this->crudUserManager($crud);
             }
 
             $dtz = new DateTimeZone("Europe/Madrid");
@@ -497,9 +497,9 @@ class ControllerFront
                 "trash" => "Comptes à supprimer"
             ];
             $filArianne = '';
-            if (isset($_REQUEST['value']))
+            $value = filter_input(INPUT_GET, 'value');
+            if (isset($value))
             {
-                $value = $_REQUEST['value'];
                 switch ($value)
                 {
                     case 'uncheckedUsers':
@@ -586,7 +586,7 @@ class ControllerFront
         $userManager = new UserManager();
         $user = $userManager->getUserBySessionId();
         $commentairesManager = new CommentManager();
-        $crud = $_REQUEST['CRUD'];
+        $crud = filter_input(INPUT_GET, 'CRUD');
 
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
             if (isset($crud)) {
@@ -635,8 +635,9 @@ class ControllerFront
         $errorMessage = '';
 
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
-            if (isset($_REQUEST['CRUD'])) {
-                $errorMessage = $this->crudPortfolioManager($_REQUEST['CRUD']);
+            $crud = filter_input(INPUT_GET, 'CRUD');
+            if (isset($crud)) {
+                $errorMessage = $this->crudPortfolioManager($crud);
             }
 
             $portfolio = $portfolioManager->getPortfolio();
@@ -728,6 +729,12 @@ class ControllerFront
                 $errorMessage = 'Le Portfolio a été modifié avec succès.';
                 break;
 
+            //Update
+            case 'SU':
+                $portfolioManager->updatePortfolio($portfolio);
+                $errorMessage = 'Le Portfolio a été modifié avec succès.';
+                break;
+
             //Delete
             case 'D':
                 $id = $portfolio->getId();
@@ -750,16 +757,16 @@ class ControllerFront
         $errorMessage = '';
 
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
-
-            if (isset($_REQUEST['CRUD']))
+            $crud = filter_input(INPUT_GET, 'CRUD');
+            if (isset($crud))
             {
-                $errorMessage = $this->crudPostManager($_REQUEST['CRUD']);
+                $errorMessage = $this->crudPostManager($crud);
             }
 
             $postManager = new PostManager();
             $categoryManager = new CategoryManager();
             $categories = $categoryManager->selectAllCategories();
-            $pageCourante = $_REQUEST['page'] ?? 1;
+            $pageCourante = filter_input(INPUT_GET, 'page') ?? 1;
             $allValues = [
                 "all" => "Tous les articles",
                 "uncheckedPosts" => "Articles à valider",
@@ -768,9 +775,9 @@ class ControllerFront
                 "trash" => "Articles à supprimer"
             ];
             $nbPosts = 10;
-            if (isset($_REQUEST['value']))
+            $value = filter_input(INPUT_GET, 'value');
+            if (isset($value))
             {
-                $value = $_REQUEST['value'];
                 $categoryManager = new CategoryManager();
                 switch ($value)
                 {

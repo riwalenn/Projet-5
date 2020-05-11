@@ -5,7 +5,7 @@ try
     $controller = new ControllerFront();
     if (isset($_REQUEST['action']))
     {
-        $action = $_REQUEST['action'];
+        $action = filter_input(INPUT_GET, 'action');
         switch ($action)
         {
             case 'articlesListe' :
