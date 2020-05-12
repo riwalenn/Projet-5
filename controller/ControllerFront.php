@@ -865,6 +865,30 @@ class ControllerFront
         return $errorMessage;
     }
 
+    public function installBlog()
+    {
+        /*$installationManager = new Installation();
+        $installationManager->installCategoriesTable();
+        $installationManager->installCommentsTable();
+        $installationManager->installFavoritesTable();
+        $installationManager->installPortfolioTable();
+        $installationManager->installPostsTable();
+        $installationManager->installTokensTable();
+        $installationManager->installUsersTable();
+        $installationManager->addConstraints();
+        $installationManager->installData();*/
+
+        $file_name = 'bdd/P5_Bas_Riwalenn.sql';
+        $serveur_sql = SGBD;
+        $nom_de_la_base = DB_NAME;
+        $mot_de_passe = PASSWORD;
+        $user = USER;
+        echo "Votre base est en cours de restauration.......<br>";
+        system("cat $file_name | mysql --host=$serveur_sql --user=$nom_de_la_base --password=$mot_de_passe $nom_de_la_base");
+        echo "C'est fini. Votre base est en place sur cet hébergement.";
+        $this->afficherIndex();
+    }
+
     /**
      * --------- ERREURS ---------
      */

@@ -107,6 +107,10 @@ try
                 $controller->changerPassword();
                 break;
 
+            case 'installation' :
+                $controller->installBlog();
+                break;
+
             default :
                 break;
         }
