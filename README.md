@@ -1,7 +1,6 @@
 # Blog
 
 EN - Projet n°5 created for OpenClassrooms and Backend path.
-FR - Projet n° 5 créé dans le cadre du parcours "Développement d'application PHP & Symfony" pour OpenClassroom.
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ad9a4df6eed64b81b52976433e6074fe)](https://www.codacy.com/manual/riwalenn/Projet-5?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=riwalenn/Projet-5&amp;utm_campaign=Badge_Grade)
 
@@ -20,7 +19,16 @@ You will need Apache, Mysql and PHP before running the blog (like WAMP, XAMPP, e
 * Active your local server if it has not already been done
 * Go to http://localhost/phpmyadmin/ (for Wamp)
 * Click on "New Database" and name it 'P5_Bas_Riwalenn'
+* Go to http://localhost/ **folder_name** /index.php?action=installation to install the database
+It is possible that your provider doesn't accept to send mail with your localhost, you can try my contact me on [this address](https://projet5.riwalennbas.com/index.php#contact)
+Everything is ready, here the connections informations for user and admin to the blog :
+For User account :
+* email : user@gmail.com (fake email)
+* password : 2v0xKFao#D3#KPaL
 
+For Admin account :
+* email : admin@gmail.com (fake email)
+* password : Ze3zK3pZ8Q6fb%rQ
 
 ## Built With
 
