@@ -19,7 +19,11 @@ You will need Apache, Mysql and PHP before running the blog (like WAMP, XAMPP, e
 * Active your local server if it has not already been done
 * Go to http://localhost/phpmyadmin/ (for Wamp)
 * Click on "New Database" and name it 'P5_Bas_Riwalenn'
+* Click on the new Database and "import"
+* Choose the P5_Bas_Riwalenn.sql file whose in bdd folder and Execute
+-----------------------------
 * Go to http://localhost/ **folder_name** /index.php?action=installation to install the database
+----------------------------
 It is possible that your provider doesn't accept to send mail with your localhost, you can try my contact me on [this address](https://projet5.riwalennbas.com/index.php#contact)
 Everything is ready, here the connections informations for user and admin to the blog :
 For User account :
