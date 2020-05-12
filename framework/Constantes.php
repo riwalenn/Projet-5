@@ -4,7 +4,7 @@
 class Constantes
 {
     // ----------- _URL_
-    const HTTP_RIWALENN = 'http://riwalenn';
+    const HTTP_RIWALENN = BASE_URL;
 
     // ----------- PICTURES CONSTANTES
     const PATH_IMG_RESSOURCES = 'ressources/img/';

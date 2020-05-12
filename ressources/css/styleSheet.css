@@ -2,6 +2,18 @@
     margin-top: 10%;
 }
 
+.success-message {
+    color: #11dbba;
+}
+
+.info-message {
+    color: #ffc107;
+}
+
+.error-message {
+    color: #c82333;
+}
+
 .portfolio-full {
     width: 100%;
 }

@@ -31,7 +31,7 @@
         </div>
         <div class='popover-body'>
             <p>Cliquez sur les <i class="fas fa-info-circle pseudo"></i> du formulaire pour avoir plus d'informations.</p>
-            <?= $messagePassword ?>
+            <p class='password-popup'><?= $messagePassword ?></p>
         </div>
     </div>
 </div>

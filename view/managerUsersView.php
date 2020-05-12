@@ -9,7 +9,11 @@
                         <blockquote class="blockquote mb-0">
                             <footer class="blockquote-footer" style="color: #00c0c7"><i class="fa fa-user"></i> Users Manager</footer>
                         </blockquote>
-                        <?= $errorMessage ?>
+                        <?php if (preg_match('/Erreur/', $errorMessage)) : ?>
+                        <small class="error-message"><?= $errorMessage ?></small>
+                        <?php else: ?>
+                        <small class="success-message"><?= $errorMessage ?></small>
+                        <?php endif; ?>
                     </div>
                     <div class="card-body articles-caption">
                         <nav aria-label="breadcrumb">

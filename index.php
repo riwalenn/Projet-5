@@ -3,9 +3,9 @@ require_once 'config/config.php';
 try
 {
     $controller = new ControllerFront();
-    if (isset($_REQUEST['action']))
+    $action = filter_input(INPUT_GET, 'action');
+    if (isset($action))
     {
-        $action = $_REQUEST['action'];
         switch ($action)
         {
             case 'articlesListe' :
