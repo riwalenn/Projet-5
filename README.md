@@ -1,12 +1,25 @@
 # Blog
 
-Projet n° 5 créé dans le cadre du parcours "Développement d'application PHP & Symfony" pour OpenClassroom.
+EN - Projet n°5 created for OpenClassrooms and Backend path.
+FR - Projet n° 5 créé dans le cadre du parcours "Développement d'application PHP & Symfony" pour OpenClassroom.
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ad9a4df6eed64b81b52976433e6074fe)](https://www.codacy.com/manual/riwalenn/Projet-5?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=riwalenn/Projet-5&amp;utm_campaign=Badge_Grade)
 
 ## Download and Installation
 
-* Clone the repo: `git clone https://github.com/riwalenn/Projet-5.git`
+You will need Apache, Mysql and PHP before running the blog (like WAMP, XAMPP, etc..)
+* Clone the repo: `git clone https://github.com/riwalenn/Projet-5.git` or
+* Download the repository
+* Unzip it and install it in your server files (www for windows or htdocs for mac)
+* Rename /config/_config.php to /config/config.php
+* Open the new config.php
+* Change BASE_URL if it's necessary (instead of 'Riwalenn' put the name of the folder in www or htdocs)
+* Change DB_NAME and name it 'P5_Riwalenn_Bas'
+* Change USER informations (usually 'root')
+* Change PASSWORD informations
+* Active your local server if it has not already been done
+* Go to http://localhost/phpmyadmin/ (for Wamp)
+* Click on "New Database" and name it 'P5_Riwalenn_Bas'
 
 
 ## Built With
