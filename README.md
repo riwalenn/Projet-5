@@ -14,12 +14,12 @@ You will need Apache, Mysql and PHP before running the blog (like WAMP, XAMPP, e
 * Rename /config/_config.php to /config/config.php
 * Open the new config.php
 * Change BASE_URL if it's necessary (instead of 'Riwalenn' put the name of the folder in www or htdocs)
-* Change DB_NAME and name it 'P5_Riwalenn_Bas'
+* Change DB_NAME and name it 'P5_Bas_Riwalenn'
 * Change USER informations (usually 'root')
 * Change PASSWORD informations
 * Active your local server if it has not already been done
 * Go to http://localhost/phpmyadmin/ (for Wamp)
-* Click on "New Database" and name it 'P5_Riwalenn_Bas'
+* Click on "New Database" and name it 'P5_Bas_Riwalenn'
 
 
 ## Built With
