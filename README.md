@@ -1,13 +1,38 @@
 # Blog
 
-Projet n° 5 créé dans le cadre du parcours "Développement d'application PHP & Symfony" pour OpenClassroom.
+EN - Projet n°5 created for OpenClassrooms and Backend path.
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ad9a4df6eed64b81b52976433e6074fe)](https://www.codacy.com/manual/riwalenn/Projet-5?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=riwalenn/Projet-5&amp;utm_campaign=Badge_Grade)
 
 ## Download and Installation
 
-* Clone the repo: `git clone https://github.com/riwalenn/Projet-5.git`
+You will need Apache, Mysql and PHP before running the blog (like WAMP, XAMPP, etc..)
+* Clone the repo: `git clone https://github.com/riwalenn/Projet-5.git` or
+* Download the repository
+* Unzip it and install it in your server files (www for windows or htdocs for mac)
+* Rename /config/_config.php to /config/config.php
+* Open the new config.php
+* Change BASE_URL if it's necessary (instead of 'Riwalenn' put the name of the folder in www or htdocs)
+* Change DB_NAME and name it 'P5_Bas_Riwalenn'
+* Change USER informations (usually 'root')
+* Change PASSWORD informations
+* Active your local server if it has not already been done
+* Go to http://localhost/phpmyadmin/ (for Wamp)
+* Click on "New Database" and name it 'P5_Bas_Riwalenn'
+* Click on the new Database and "import"
+* Choose the P5_Bas_Riwalenn.sql file whose in bdd folder and Execute
+-----------------------------
+* Go to http://localhost/ **folder_name** /index.php?action=installation to install the database
+----------------------------
+It is possible that your provider doesn't accept to send mail with your localhost, you can try my contact me on [this address](https://projet5.riwalennbas.com/index.php#contact)
+Everything is ready, here the connections informations for user and admin to the blog :
+For User account :
+* email : user@gmail.com (fake email)
+* password : 2v0xKFao#D3#KPaL
 
+For Admin account :
+* email : admin@gmail.com (fake email)
+* password : Ze3zK3pZ8Q6fb%rQ
 
 ## Built With
 
