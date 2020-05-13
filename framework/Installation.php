@@ -164,9 +164,12 @@ class Installation extends Connexion
         $statement->execute();
 
         $statement = $bdd->prepare('ALTER TABLE `posts`
-                                                ADD CONSTRAINT `lien_author_posts` FOREIGN KEY (`author`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
-                                                ADD CONSTRAINT `lien_categories_posts` FOREIGN KEY (`id_category`) REFERENCES `categories` (`id`) ON UPDATE CASCADE');
+                                                ADD CONSTRAINT `lien_author_posts` FOREIGN KEY (`author`) REFERENCES `users` (`id`) ON UPDATE CASCADE');
         $statement->execute();
+
+        /*$statement = $bdd->prepare('ALTER TABLE `posts`
+                                                ADD CONSTRAINT `lien_categories_posts` FOREIGN KEY (`id_category`) REFERENCES `categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE');
+        $statement->execute();*/
 
         $statement = $bdd->prepare('ALTER TABLE `tokens`
                                                 ADD CONSTRAINT `lien_user_token` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE');
