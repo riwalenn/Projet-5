@@ -12,6 +12,7 @@ class CommentManager extends Connexion
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS, 'Comment');
     }
+
     public function getListByPost($idPost)
     {
         $bdd = $this->dbConnect();
@@ -35,11 +36,11 @@ class CommentManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('INSERT INTO `comments` (`id_post`, `id_user`, `created_at`, `title`, `content`, `state`) VALUES (:id_post, :pseudo, NOW(), :title, :content, :state)');
         $statement->execute(array(
-            'id_post' => intval($comment->getId_post()),
+            'id_post' => $comment->getId_post(),
             'pseudo' => htmlspecialchars($comment->getPseudo()),
             'title' => htmlspecialchars($comment->getTitle()),
             'content' => htmlspecialchars($comment->getContent()),
-            'state' => intval($comment->getState())
+            'state' => $comment->getState()
         ));
 
     }

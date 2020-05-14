@@ -36,11 +36,16 @@
                 </li>
                 <li class="nav-item <?php if (isset($_SESSION['id'])) : ?> dropdown<?php endif; ?>">
                     <?php if ((isset($_SESSION['id'])) && ($_SESSION['role'] == Constantes::ROLE_USER)) : ?>
-                        <a class="nav-link js-scroll-trigger <?php if (isset($_SESSION['id'])) : ?>dropdown-toggle"<?php endif; ?> href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-ninja"></i></a>
-                    <?php elseif((isset($_SESSION['id'])) && ($_SESSION['role'] == Constantes::ROLE_ADMIN)) : ?>
-                        <a class="nav-link js-scroll-trigger <?php if (isset($_SESSION['id'])) : ?>dropdown-toggle"<?php endif; ?> href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-secret"></i></a>
+                        <a class="nav-link js-scroll-trigger <?php if (isset($_SESSION['id'])) : ?>dropdown-toggle"<?php endif; ?>
+                           href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"><i class="fas fa-user-ninja"></i></a>
+                    <?php elseif ((isset($_SESSION['id'])) && ($_SESSION['role'] == Constantes::ROLE_ADMIN)) : ?>
+                        <a class="nav-link js-scroll-trigger <?php if (isset($_SESSION['id'])) : ?>dropdown-toggle"<?php endif; ?>
+                           href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"><i class="fas fa-user-secret"></i></a>
                     <?php else : ?>
-                        <a class="nav-link js-scroll-trigger" href="index.php?action=connexion"><i class="fas fa-users-cog"></i></a>
+                        <a class="nav-link js-scroll-trigger" href="index.php?action=connexion"><i
+                                    class="fas fa-users-cog"></i></a>
                     <?php endif; ?>
                     <?php if ((isset($_SESSION['id']))) : ?>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -50,15 +55,16 @@
                             <a class="dropdown-item" href="index.php?action=backendDashboard">Tableau de bord</a>
                         <?php endif; ?>
                         <?php if ($_SESSION['role'] == Constantes::ROLE_ADMIN) : ?>
-                        <div class="dropdown-divider"></div>
-                        <h6 class="dropdown-header">Managers</h6>
-                        <a class="dropdown-item" href="index.php?action=usersManager&value=all">Utilisateurs</a>
-                        <a class="dropdown-item" href="index.php?action=postsManager&value=all">Articles</a>
-                        <a class="dropdown-item" href="index.php?action=portfolioManager">Portfolio</a>
-                        <a class="dropdown-item" href="index.php?action=commentsManager">Commentaires</a>
+                            <div class="dropdown-divider"></div>
+                            <h6 class="dropdown-header">Managers</h6>
+                            <a class="dropdown-item" href="index.php?action=usersManager&value=all">Utilisateurs</a>
+                            <a class="dropdown-item" href="index.php?action=postsManager&value=all">Articles</a>
+                            <a class="dropdown-item" href="index.php?action=portfolioManager">Portfolio</a>
+                            <a class="dropdown-item" href="index.php?action=commentsManager">Commentaires</a>
                         <?php endif; ?>
                         <div class="dropdown-divider"></div>
-                        <a class="nav-link js-scroll-trigger deco" href="index.php?action=logoutUser" onclick="return ConfirmDeconnexion()">Se déconnecter</a>
+                        <a class="nav-link js-scroll-trigger deco" href="index.php?action=logoutUser"
+                           onclick="return ConfirmDeconnexion()">Se déconnecter</a>
                         <?php endif; ?>
                     </div>
                 </li>

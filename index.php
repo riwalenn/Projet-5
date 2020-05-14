@@ -1,13 +1,10 @@
 <?php
 require_once 'config/config.php';
-try
-{
+try {
     $controller = new ControllerFront();
     $action = filter_input(INPUT_GET, 'action');
-    if (isset($action))
-    {
-        switch ($action)
-        {
+    if (isset($action)) {
+        switch ($action) {
             case 'articlesListe' :
                 $controller->afficherListeArticles();
                 break;
@@ -117,21 +114,12 @@ try
     } else {
         $controller->afficherIndex();
     }
-}
-
-catch (PDOException $e){
+} catch (PDOException $e) {
     $controller->erreurPDO($e);
-}
-
-catch (ExceptionOutput $e) {
+} catch (ExceptionOutput $e) {
     $controller->erreurOutput($e);
-}
-
-catch (InvalidArgumentException $e)
-{
+} catch (InvalidArgumentException $e) {
     $controller->erreur();
-}
-
-catch (Exception $e) {
+} catch (Exception $e) {
     echo 'Exception : ' . $e->getMessage() . '(code :' . $e->getCode() . '), ligne ' . $e->getLine() . ' dans le fichier ' . $e->getFile();
 }

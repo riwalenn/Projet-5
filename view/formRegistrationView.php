@@ -1,41 +1,55 @@
 <div class="container views">
     <div class="row">
-        <form action="index.php?action=inscription" method="post" onsubmit="return verifForm(this)" >
+        <form action="index.php?action=inscription" method="post" onsubmit="return verifForm(this)">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-secret"></i></span>
                 </div>
-                <input type="text" id="pseudo" class="form-control form-control-sm" placeholder="entrez votre pseudonyme ici" name="pseudo" aria-label="Pseudonyme" aria-describedby="basic-addon1" onkeyup="verifPseudo(this)" value="<?php if (isset($_REQUEST['pseudo'])) : return $_REQUEST['pseudo']; endif ?>" required>
+                <input type="text" id="pseudo" class="form-control form-control-sm"
+                       placeholder="entrez votre pseudonyme ici" name="pseudo" aria-label="Pseudonyme"
+                       aria-describedby="basic-addon1" onkeyup="verifPseudo(this)"
+                       value="<?php if (isset($_REQUEST['pseudo'])) : return $_REQUEST['pseudo']; endif ?>" required>
                 <div class="input-group-append">
-                    <span class="input-group-text"><i class="fas fa-info-circle pseudo" data-toggle="tooltip" data-placement="right" title="Cliquez ici pour avoir plus d'infos !"></i></span>
+                    <span class="input-group-text"><i class="fas fa-info-circle pseudo" data-toggle="tooltip"
+                                                      data-placement="right"
+                                                      title="Cliquez ici pour avoir plus d'infos !"></i></span>
                 </div>
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
                 </div>
-                <input id="email" class="form-control form-control-sm" placeholder="entrez votre email ici" aria-label="email" type="email" name="email" onkeyup="verifEmail(this)" required>
+                <input id="email" class="form-control form-control-sm" placeholder="entrez votre email ici"
+                       aria-label="email" type="email" name="email" onkeyup="verifEmail(this)" required>
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
                 </div>
-                <input id="password" class="form-control form-control-sm classeMdp" placeholder="entrez votre mot de passe ici" aria-label="password" type="password" name="password" maxlength="64" minlength="10" onkeyup="verifPassword(this)" required>
+                <input id="password" class="form-control form-control-sm classeMdp"
+                       placeholder="entrez votre mot de passe ici" aria-label="password" type="password" name="password"
+                       maxlength="64" minlength="10" onkeyup="verifPassword(this)" required>
                 <div class="input-group-append">
-                    <span class="input-group-text"><i class="fas fa-info-circle password" data-toggle="tooltip" data-placement="right" title="Cliquez ici pour avoir plus d'infos !"></i></span>
+                    <span class="input-group-text"><i class="fas fa-info-circle password" data-toggle="tooltip"
+                                                      data-placement="right"
+                                                      title="Cliquez ici pour avoir plus d'infos !"></i></span>
                 </div>
             </div>
             <div class="form-group">
                 <small><input type="checkbox" id="invalidCheck" value="1" name="cgu" onkeyup="verifCgu(this)" required>
-                    Je déclare avoir lu les <a href="#conditionsModal" data-toggle="modal">mentions légales</a> avant de m'être inscrit et en accepte les conditions d'utilisation.</small>
+                    Je déclare avoir lu les <a href="#conditionsModal" data-toggle="modal">mentions légales</a> avant de
+                    m'être inscrit et en accepte les conditions d'utilisation.</small>
             </div>
-            <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="connexion">Inscription</button>
+            <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="connexion">
+                Inscription
+            </button>
             <div class='ui fluid hidden helpmessage'>
                 <div class='header'>
                     <h3 class='popover-header'>Règles conçernant le pseudonyme et le mot de passe :</h3>
                 </div>
                 <div class='popover-body'>
-                    <p>Cliquez sur les <i class="fas fa-info-circle pseudo"></i> du formulaire pour avoir plus d'informations.</p>
+                    <p>Cliquez sur les <i class="fas fa-info-circle pseudo"></i> du formulaire pour avoir plus
+                        d'informations.</p>
                     <p class='password-popup'><?= $messagePseudo ?></p>
                     <p class='password-popup'><?= $messagePassword ?></p>
                 </div>
@@ -77,7 +91,8 @@
                                                                                                 href="https://www.subdelirium.com/generateur-de-mentions-legales/"
                                                                                                 alt="Modèle de mentions légales">Modèle
                                     de mentions légales</a><br>
-                                Les images proviennent du site <a href="https://pixabay.com/" target="_blank">Pixabay.com</a>.</p>
+                                Les images proviennent du site <a href="https://pixabay.com/" target="_blank">Pixabay.com</a>.
+                            </p>
 
                             <h3>2. Conditions générales d’utilisation du site et des services proposés.</h3>
                             <p>L’utilisation du site <a href="https://www.riwalennbas.com/">www.riwalennbas.com</a>
@@ -162,19 +177,22 @@
                                 d’identité avec signature du titulaire de la pièce, en précisant l’adresse à laquelle la
                                 réponse doit être envoyée.</p>
                             <p>Aucune information personnelle de l'utilisateur du site <a
-                                        href="https://www.riwalennbas.com/">www.riwalennbas.com</a> n'est publiée à l'insu de
+                                        href="https://www.riwalennbas.com/">www.riwalennbas.com</a> n'est publiée à
+                                l'insu de
                                 l'utilisateur, échangée, transférée, cédée ou vendue sur un support quelconque à des
                                 tiers. Seule l'hypothèse du rachat de Riwalenn Bas et de ses droits permettrait la
                                 transmission des dites informations à l'éventuel acquéreur qui serait à son tour tenu de
                                 la même obligation de conservation et de modification des données vis à vis de
-                                l'utilisateur du site <a href="https://www.riwalennbas.com/">www.riwalennbas.com</a>.</p>
+                                l'utilisateur du site <a href="https://www.riwalennbas.com/">www.riwalennbas.com</a>.
+                            </p>
                             <p>Le site n'est pas déclaré à la CNIL car il ne recueille pas d'informations personnelles.
                                 .</p>
                             <p>Les bases de données sont protégées par les dispositions de la loi du 1er juillet 1998
                                 transposant la directive 96/9 du 11 mars 1996 relative à la protection juridique des
                                 bases de données.</p>
                             <h3>8. Liens hypertextes et cookies.</h3>
-                            <p>Le site <a href="https://www.riwalennbas.com/">www.riwalennbas.com</a> contient un certain
+                            <p>Le site <a href="https://www.riwalennbas.com/">www.riwalennbas.com</a> contient un
+                                certain
                                 nombre de liens hypertextes vers d’autres sites, mis en place avec l’autorisation de
                                 Riwalenn Bas. Cependant, Riwalenn Bas n’a pas la possibilité de vérifier le contenu des
                                 sites ainsi visités, et n’assumera en conséquence aucune responsabilité de ce fait.</p>
@@ -205,7 +223,8 @@
                                 l'onglet "Confidentialité", vous pouvez bloquer les cookies.</p>
 
                             <h3>9. Droit applicable et attribution de juridiction.</h3>
-                            <p>Tout litige en relation avec l’utilisation du site <a href="https://www.riwalennbas.com/">www.riwalennbas.com</a>
+                            <p>Tout litige en relation avec l’utilisation du site <a
+                                        href="https://www.riwalennbas.com/">www.riwalennbas.com</a>
                                 est soumis au droit français. Il est fait attribution exclusive de juridiction aux
                                 tribunaux compétents de Paris.</p>
                             <h3>10. Les principales lois concernées.</h3>

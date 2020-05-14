@@ -89,7 +89,8 @@
                                     <h4 class="subheading">Ilabs & OpenClassrooms</h4>
                                 </div>
                                 <div class="timeline-body">
-                                    <p class="text-muted">Alternance développement d'applications php Symfony, diplôme niveau II - Perpignan</p>
+                                    <p class="text-muted">Alternance développement d'applications php Symfony, diplôme
+                                        niveau II - Perpignan</p>
                                 </div>
                             </div>
                         </li>
@@ -103,7 +104,8 @@
                                     <h4 class="subheading">Association Apesac & CNED</h4>
                                 </div>
                                 <div class="timeline-body">
-                                    <p class="text-muted">Responsable réseaux - Association APESAC & 1ère année BTS SIO SLAM</p>
+                                    <p class="text-muted">Responsable réseaux - Association APESAC & 1ère année BTS SIO
+                                        SLAM</p>
                                 </div>
                             </div>
                         </li>
@@ -191,7 +193,8 @@
             </div>
             <div class="row">
                 <div class="col-lg-8 mx-auto text-center">
-                    <p class="large text-muted">Très peu présente sur les réseaux sociaux, je préfère m'adonner à mes hobbies.</p>
+                    <p class="large text-muted">Très peu présente sur les réseaux sociaux, je préfère m'adonner à mes
+                        hobbies.</p>
                 </div>
             </div>
         </div>
@@ -202,13 +205,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-sm-6">
-                    <img class="img-fluid d-block mx-auto" src="ressources/img/logos/responsive.jpg" alt="Création de sites responsives">
+                    <img class="img-fluid d-block mx-auto" src="ressources/img/logos/responsive.jpg"
+                         alt="Création de sites responsives">
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <img class="img-fluid d-block mx-auto" src="ressources/img/logos/workbench.jpg" alt="Conception UML et bdd">
+                    <img class="img-fluid d-block mx-auto" src="ressources/img/logos/workbench.jpg"
+                         alt="Conception UML et bdd">
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <img class="img-fluid d-block mx-auto" src="ressources/img/logos/design.jpg" alt="Connaissance de photoshop">
+                    <img class="img-fluid d-block mx-auto" src="ressources/img/logos/design.jpg"
+                         alt="Connaissance de photoshop">
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <img class="img-fluid d-block mx-auto" src="ressources/img/logos/PHP.jpg" alt="Php 7 / JQuery / JS">
@@ -228,32 +234,45 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <form id="contactForm" name="sentMessage" onsubmit="return verifFormContact(this)" novalidate="novalidate">
+                    <form id="contactForm" name="sentMessage" onsubmit="return verifFormContact(this)"
+                          novalidate="novalidate">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input class="form-control" id="name" type="text" placeholder="Votre nom *" required="required" data-validation-required-message="Veuillez entrer votre nom sans espace." onblur="verifName(this)">
+                                    <input class="form-control" id="name" type="text" placeholder="Votre nom *"
+                                           required="required"
+                                           data-validation-required-message="Veuillez entrer votre nom sans espace."
+                                           onblur="verifName(this)">
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" id="email" type="email" placeholder="Votre Email *" required="required" data-validation-required-message="Veuillez entrer votre email." onblur="verifEmail(this)">
+                                    <input class="form-control" id="email" type="email" placeholder="Votre Email *"
+                                           required="required"
+                                           data-validation-required-message="Veuillez entrer votre email."
+                                           onblur="verifEmail(this)">
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" id="sujet" type="text" placeholder="Sujet du mail *" required="required" data-validation-required-message="Veuillez entrer un sujet .">
+                                    <input class="form-control" id="sujet" type="text" placeholder="Sujet du mail *"
+                                           required="required"
+                                           data-validation-required-message="Veuillez entrer un sujet .">
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <textarea class="form-control" id="message" placeholder="Message *" required="required" data-validation-required-message="Veuillez entrer un message."></textarea>
+                                    <textarea class="form-control" id="message" placeholder="Message *"
+                                              required="required"
+                                              data-validation-required-message="Veuillez entrer un message."></textarea>
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="clearfix"></div>
                             <div class="col-lg-12 text-center">
                                 <div id="success"></div>
-                                <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Send Message</button>
+                                <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase"
+                                        type="submit">Send Message
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -264,7 +283,8 @@
 
     <!-- Portfolio Modals -->
 <?php foreach ($portfolio as $folio) { ?>
-    <div class="portfolio-modal modal fade" id="portfolioModal<?= $folio->getId() ?>" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="portfolio-modal modal fade" id="portfolioModal<?= $folio->getId() ?>" tabindex="-1" role="dialog"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="close-modal" data-dismiss="modal">
@@ -284,11 +304,14 @@
                                 <ul class="list-inline">
                                     <li>Date de conception: <?= $folio->getDate_conception() ?></li>
                                     <li>Client: <?= $folio->getClient() ?></li>
-                                    <li>Categorie(s): <i class="fas fa-check-square"></i> <?= $folio->getCategoriesFormatted() ?></li>
+                                    <li>Categorie(s): <i
+                                                class="fas fa-check-square"></i> <?= $folio->getCategoriesFormatted() ?>
+                                    </li>
                                 </ul>
                                 <button class="btn btn-primary" data-dismiss="modal" type="button">
                                     <i class="fas fa-times"></i>
-                                    Close Project</button>
+                                    Close Project
+                                </button>
                             </div>
                         </div>
                     </div>

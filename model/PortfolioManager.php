@@ -34,7 +34,7 @@ class PortfolioManager extends Connexion
                                                 SET `title` = :title, `kicker` = :kicker, `content` = :content, `date_conception` = :date_conception, `client` = :client, `categories` = :categories
                                                 WHERE `id` = :id');
         $statement->execute(array(
-            'id' => intval($portfolio->getId()),
+            'id' => $portfolio->getId(),
             'title' => htmlspecialchars($portfolio->getTitle()),
             'kicker' => htmlspecialchars($portfolio->getKicker()),
             'content' => htmlspecialchars($portfolio->getContent()),
@@ -48,6 +48,6 @@ class PortfolioManager extends Connexion
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('DELETE FROM `portfolio` WHERE `id` = :id');
-        $statement->execute(array('id' => intval($portfolio->getId())));
+        $statement->execute(array('id' => $portfolio->getId()));
     }
 }

@@ -14,11 +14,11 @@ class UserManager extends Connexion
                                                 VALUES (:pseudo, :role, :email, :password, NOW(), NOW(), :cgu, :state) ');
         $statement->execute(array(
             'pseudo' => htmlspecialchars($user->getPseudo()),
-            'role' => intval($user->getRole()),
+            'role' => $user->getRole(),
             'email' => htmlspecialchars($user->getEmail()),
             'password' => password_hash($user->getPassword(), PASSWORD_DEFAULT),
-            'cgu' => intval($user->getCgu()),
-            'state' => intval($user->getState())
+            'cgu' => $user->getCgu(),
+            'state' => $user->getState()
         ));
 
         $id_user = $bdd->lastInsertId();
@@ -90,7 +90,7 @@ class UserManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('UPDATE `users` SET `state` = 1, `date_modification` = NOW()
                                                 WHERE `id` = (SELECT `id_user` FROM `tokens` WHERE `token` = :token AND `expiration_token` > NOW())');
-        $statement->execute(array('token' =>$user->getToken()));
+        $statement->execute(array('token' => $user->getToken()));
     }
 
     //Suppression du token à l'inscription & oubli du password
@@ -98,7 +98,7 @@ class UserManager extends Connexion
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('DELETE FROM tokens WHERE token = :token');
-        $statement->execute(array('token' =>$user->getToken()));
+        $statement->execute(array('token' => $user->getToken()));
     }
 
     /** étape 3 : confirmation de l'inscription par l'administrateur */
@@ -128,7 +128,7 @@ class UserManager extends Connexion
         $statement = $bdd->prepare('UPDATE `users` SET `pseudo` = :pseudo, `email` = :email, `date_modification` = NOW() 
                                                 WHERE `id` = :id');
         $statement->execute(array(
-            'id' => intval($user->getId()),
+            'id' => $user->getId(),
             'pseudo' => htmlspecialchars($user->getPseudo()),
             'email' => htmlspecialchars($user->getEmail()),
         ));
@@ -153,18 +153,18 @@ class UserManager extends Connexion
     //"date_modification" sert à plusieurs choses => connexion, modifications sur le compte
     public function newConnexionDate()
     {
-        $bdd =$this->dbConnect();
+        $bdd = $this->dbConnect();
         $statement = $bdd->prepare('UPDATE `users` SET `date_modification` = NOW() WHERE id = :id');
         $statement->execute(array('id' => $_SESSION['id']));
     }
 
     /**
-     * @param $_SESSION['id']
+     * @param $_SESSION ['id']
      * @return User
      */
     public function getUserBySessionId()
     {
-        $bdd =$this->dbConnect();
+        $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT `id`, `password`, `email`, `pseudo`, `role`, `date_inscription`, `date_modification`, `state` 
                                                 FROM `users` 
                                                 WHERE `id` = :id');
@@ -362,11 +362,11 @@ class UserManager extends Connexion
         $statement = $bdd->prepare('UPDATE `users` SET `pseudo` = :pseudo, `role` = :role, `email` = :email, `state` = :state, `date_modification` = NOW() 
                                                 WHERE `id` = :id');
         $statement->execute(array(
-            'id' => intval($user->getId()),
+            'id' => $user->getId(),
             'pseudo' => htmlspecialchars($user->getPseudo()),
-            'role' => intval($user->getRole()),
+            'role' => $user->getRole(),
             'email' => htmlspecialchars($user->getEmail()),
-            'state' => intval($user->getState())
+            'state' => $user->getState()
         ));
     }
 
@@ -378,7 +378,7 @@ class UserManager extends Connexion
                                                 INNER JOIN users ON users.id = comments.id_user
                                                 SET `id_user`= 2  
                                                 WHERE users.id = :id');
-        $statement->execute(array('id' => intval($user->getId())));
+        $statement->execute(array('id' => $user->getId()));
     }
 
     //Supprime l'utilisateur
@@ -386,7 +386,7 @@ class UserManager extends Connexion
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('DELETE FROM users WHERE id = :id');
-        $statement->execute(array('id' => intval($user->getId())));
+        $statement->execute(array('id' => $user->getId()));
     }
 
     //Compte les utilisateurs à supprimer

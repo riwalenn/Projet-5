@@ -44,8 +44,7 @@ class ControllerFront
                 $_SESSION['id'] = $user->getId();
                 $_SESSION['role'] = $user->getRole();
 
-                switch (true)
-                {
+                switch (true) {
                     /** Role : Administrateur && Statut : actif */
                     case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
                         $this->getBackendDashboard();
@@ -196,7 +195,7 @@ class ControllerFront
             if ($nbFavorites < 11) :
                 if ($result == true) {
                     $errorMessage = 'Info : Vous avez déjà ajouté ce favoris.';
-                }else{
+                } else {
                     $postManager->addFavoritePostByIdUser($user, $postFavoris);
                     $errorMessage = 'Le favoris a été ajouté avec succès.';
                 }
@@ -424,10 +423,8 @@ class ControllerFront
         $user = $userManager->getUserBySessionId();
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
             $value = filter_input(INPUT_GET, 'value');
-            if (isset($value))
-            {
-                switch ($value)
-                {
+            if (isset($value)) {
+                switch ($value) {
                     case 'tokenExpired':
                         $userManager->deleteUsersExpiredToken();
                         break;
@@ -464,7 +461,7 @@ class ControllerFront
             $categories = $categoryManager->selectAllCategories();
 
             $view = new View('Tableau de bord');
-            $view->render('view/dashboardAdminView.php', ['portfolio' => $portfolio, 'user' => $user, 'nbPostsUnchecked' => $nbPostsUnchecked, 'nbPostsArchived' => $nbPostsArchived, 'nbPostsToDelete' => $nbPostsToDelete, 'nbUsersTotal' => $nbUsersTotal, 'nbUsersReferent' =>$nbUsersReferent, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate, 'nbUsersToDelete' => $nbUsersToDelete, 'nbPostTotal' => $nbPostTotal, 'nbCommentsUnchecked' => $nbCommentsUnchecked, 'nbCommentsToDelete' => $nbCommentsToDelete, 'categories' => $categories]);
+            $view->render('view/dashboardAdminView.php', ['portfolio' => $portfolio, 'user' => $user, 'nbPostsUnchecked' => $nbPostsUnchecked, 'nbPostsArchived' => $nbPostsArchived, 'nbPostsToDelete' => $nbPostsToDelete, 'nbUsersTotal' => $nbUsersTotal, 'nbUsersReferent' => $nbUsersReferent, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate, 'nbUsersToDelete' => $nbUsersToDelete, 'nbPostTotal' => $nbPostTotal, 'nbCommentsUnchecked' => $nbCommentsUnchecked, 'nbCommentsToDelete' => $nbCommentsToDelete, 'categories' => $categories]);
         else:
             $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
             throw new ExceptionOutput($message);
@@ -480,8 +477,7 @@ class ControllerFront
 
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
             $crud = filter_input(INPUT_GET, 'CRUD');
-            if (isset($crud))
-            {
+            if (isset($crud)) {
                 $errorMessage = $this->crudUserManager($crud);
             }
 
@@ -498,10 +494,8 @@ class ControllerFront
             ];
             $filArianne = '';
             $value = filter_input(INPUT_GET, 'value');
-            if (isset($value))
-            {
-                switch ($value)
-                {
+            if (isset($value)) {
+                switch ($value) {
                     case 'uncheckedUsers':
                         $usersList = $userManager->selectUsersUncheckedByModo();
                         $filArianne = 'Utilisateurs à valider';
@@ -655,8 +649,7 @@ class ControllerFront
         switch ($crud) {
             //Create
             case 'C':
-                if (isset($_FILES['foliojpg']) && $_FILES['foliowebp'])
-                {
+                if (isset($_FILES['foliojpg']) && $_FILES['foliowebp']) {
                     if ($_FILES['foliojpg']['error'] == 0 && $_FILES['foliowebp']['error'] == 0) :
                         if ($_FILES['foliojpg']['size'] <= 200000 && $_FILES['foliowebp']['size'] <= 200000) :
                             $portfolioManager = new PortfolioManager();
@@ -693,8 +686,7 @@ class ControllerFront
 
             //Update
             case 'U':
-                if (isset($_FILES['foliojpg']) || $_FILES['foliowebp'])
-                {
+                if (isset($_FILES['foliojpg']) || $_FILES['foliowebp']) {
                     if ($_FILES['foliojpg']['error'] == 0 || $_FILES['foliowebp']['error'] == 0) :
                         if ($_FILES['foliojpg']['size'] <= 200000 || $_FILES['foliowebp']['size'] <= 200000) :
                             $portfolioManager = new PortfolioManager();
@@ -758,8 +750,7 @@ class ControllerFront
 
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
             $crud = filter_input(INPUT_GET, 'CRUD');
-            if (isset($crud))
-            {
+            if (isset($crud)) {
                 $errorMessage = $this->crudPostManager($crud);
             }
 
@@ -776,11 +767,9 @@ class ControllerFront
             ];
             $nbPosts = 10;
             $value = filter_input(INPUT_GET, 'value');
-            if (isset($value))
-            {
+            if (isset($value)) {
                 $categoryManager = new CategoryManager();
-                switch ($value)
-                {
+                switch ($value) {
                     case 'all':
                         $postsList = $postManager->getAllPosts($pageCourante, $nbPosts);
                         $nbPages = $postManager->countPagesByAllStates($nbPosts);
@@ -871,18 +860,18 @@ class ControllerFront
         $installationManager = new Installation();
         $show = $installationManager->showTables();
         if (count($show) == 0) :
-        $installationManager->installCategoriesTable();
-        $installationManager->installCommentsTable();
-        $installationManager->installFavoritesTable();
-        $installationManager->installPortfolioTable();
-        $installationManager->installPostsTable();
-        $installationManager->installTokensTable();
-        $installationManager->installUsersTable();
-        $installationManager->addConstraints();
-        $installationManager->installData();
-        echo 'L\'installation c\'est bien passée';
-        elseif(count($show) > 0):
-        echo 'Les tables existent déjà !';
+            $installationManager->installCategoriesTable();
+            $installationManager->installCommentsTable();
+            $installationManager->installFavoritesTable();
+            $installationManager->installPortfolioTable();
+            $installationManager->installPostsTable();
+            $installationManager->installTokensTable();
+            $installationManager->installUsersTable();
+            $installationManager->addConstraints();
+            $installationManager->installData();
+            echo 'L\'installation c\'est bien passée';
+        elseif (count($show) > 0):
+            echo 'Les tables existent déjà !';
         endif;
 
         $this->afficherIndex();
