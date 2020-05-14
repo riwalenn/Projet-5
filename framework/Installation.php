@@ -1,6 +1,14 @@
 <?php
 class Installation extends Connexion
 {
+    public function showTables()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('SHOW TABLES');
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+
     public function installCategoriesTable()
     {
         $bdd = $this->dbConnect();
@@ -73,7 +81,7 @@ class Installation extends Connexion
                                                   `client` tinytext NOT NULL,
                                                   `categories` tinytext NOT NULL,
                                                   PRIMARY KEY (`id`)
-                                                ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1');
+                                                ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1');
         $statement->execute();
     }
 
@@ -167,9 +175,10 @@ class Installation extends Connexion
                                                 ADD CONSTRAINT `lien_author_posts` FOREIGN KEY (`author`) REFERENCES `users` (`id`) ON UPDATE CASCADE');
         $statement->execute();
 
-        /*$statement = $bdd->prepare('ALTER TABLE `posts`
-                                                ADD CONSTRAINT `lien_categories_posts` FOREIGN KEY (`id_category`) REFERENCES `categories` (`id`) ON DELETE SET NULL ON UPDATE CASCADE');
-        $statement->execute();*/
+        $statement = $bdd->prepare('ALTER TABLE `posts` 
+                                                ADD CONSTRAINT `lien_categories_posts` FOREIGN KEY (`id_category`) REFERENCES `categories`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE');
+
+        $statement->execute();
 
         $statement = $bdd->prepare('ALTER TABLE `tokens`
                                                 ADD CONSTRAINT `lien_user_token` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE');
