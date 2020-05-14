@@ -108,10 +108,10 @@ class PostManager extends Connexion
                                                         WHERE posts.state = :state AND (posts.title LIKE CONCAT('%', :recherche, '%') OR posts.kicker LIKE CONCAT('%', :recherche, '%') OR posts.content LIKE CONCAT('%', :recherche, '%'))
                                                         ORDER BY posts.created_at DESC LIMIT :page,:offset");
             if (isset($page)) {
-                $listPosts->bindValue(':page', intval(($page -1) * 3), PDO::PARAM_INT);
+                $listPosts->bindValue(':page', ($page -1) * 3, PDO::PARAM_INT);
             }
-            $listPosts->bindValue(':state', intval(1), PDO::PARAM_INT);
-            $listPosts->bindValue(':offset', intval($this->offset), PDO::PARAM_INT);
+            $listPosts->bindValue(':state', 1, PDO::PARAM_INT);
+            $listPosts->bindValue(':offset', $this->offset, PDO::PARAM_INT);
             $listPosts->bindValue(':recherche',  htmlspecialchars($recherche), PDO::PARAM_STR);
             $listPosts->execute();
             return $listPosts->fetchAll(PDO::FETCH_CLASS, 'Post');
@@ -128,7 +128,7 @@ class PostManager extends Connexion
                                                 FROM `favorites_posts` LEFT JOIN posts ON favorites_posts.id_post = posts.id 
                                                     INNER JOIN users ON posts.author = users.id 
                                                 WHERE id_user = :id ORDER BY posts.modified_at DESC');
-        $statement->execute(array('id' => intval($user->getId())));
+        $statement->execute(array('id' => $user->getId()));
         return $statement->fetchAll(PDO::FETCH_CLASS, 'Post');
     }
 
