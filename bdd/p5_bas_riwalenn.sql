@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 12 mai 2020 à 16:19
+-- Généré le :  mar. 12 mai 2020 à 14:09
 -- Version du serveur :  5.7.19
 -- Version de PHP :  7.1.9
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `p5_bas_riwalenn`
+-- Base de données :  `oc_projets_n5`
 --
 
 -- --------------------------------------------------------
