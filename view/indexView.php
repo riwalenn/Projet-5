@@ -197,13 +197,7 @@
                         hobbies.</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Clients -->
-    <section class="py-5">
-        <div class="container">
-            <div class="row">
+            <div class="row competences">
                 <div class="col-md-3 col-sm-6">
                     <img class="img-fluid d-block mx-auto" src="ressources/img/logos/responsive.jpg"
                          alt="Création de sites responsives">
