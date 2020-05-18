@@ -55,7 +55,7 @@ class View
     static public function generatePortfolioPicture($folio, $classe)
     {
         $tag = "<picture>";
-        $tag .= '<source class="portfolio-' . $classe . '" srcset="' . Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::EXTENSION_WEBP . '" alt="' . $folio->getTitle() . '">';
+        $tag .= '<source class="portfolio-' . $classe . '" srcset="' . Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::EXTENSION_WEBP . '">';
         $tag .= '<img class="img-fluid d-block mx-auto portfolio' . $classe . '" src="' . Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::EXTENSION_JPG . '" alt="' . $folio->getTitle() . '">';
         $tag .= "</picture>";
         return $tag;

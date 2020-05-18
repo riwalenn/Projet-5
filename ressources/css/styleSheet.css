@@ -26,6 +26,10 @@
     width: 30%;
 }
 
+.row.competences {
+    margin-top: 5%;
+}
+
 li.nav-item.dropdown.show {
     text-transform: initial;
 }
