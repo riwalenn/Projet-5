@@ -34,7 +34,7 @@
                     <a class="nav-link js-scroll-trigger" href="ressources/pdf/CV_Bas_Riwalenn.pdf" download><i
                                 class="fas fa-file-pdf"></i></a>
                 </li>
-                <li class="nav-item <?php if (isset($_SESSION['id'])) : ?> dropdown<?php endif; ?>">
+                <li class="nav-item <?php if (isset($_SESSION['id'])) : ?> d-none d-lg-block dropdown<?php endif; ?>">
                     <?php if ((isset($_SESSION['id'])) && ($_SESSION['role'] == Constantes::ROLE_USER)) : ?>
                         <a class="nav-link js-scroll-trigger <?php if (isset($_SESSION['id'])) : ?>dropdown-toggle"<?php endif; ?>
                            href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -68,6 +68,13 @@
                     </div>
                         <?php endif; ?>
                 </li>
+                <?php if (isset($_SESSION['id'])) : ?>
+                    <?php if ($_SESSION['role'] == Constantes::ROLE_USER) : ?>
+                    <li class="d-lg-none nav-item"><a class="nav-link js-scroll-trigger" href="index.php?action=dashboard">Tableau de bord</a></li>
+                    <?php elseif ($_SESSION['role'] == Constantes::ROLE_ADMIN) : ?>
+                        <li class="d-lg-none nav-item"><a class="nav-link js-scroll-trigger" href="index.php?action=backendDashboard">Tableau de bord</a></li>
+                    <?php endif; ?>
+                <?php endif; ?>
             </ul>
         </div>
     </div>

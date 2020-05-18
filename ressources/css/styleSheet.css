@@ -473,15 +473,68 @@ i.cgu-green {
         max-width: 310px!important;
     }
 
-    .modal-content {
-        width: 310px!important;
-    }
-
     .container.views {
         margin-top: 20%;
     }
 
     cite.item-intro.text-muted, span, a, .blockquote-footer {
         font-size: 12px!important;
+    }
+}
+
+@media (max-width: 320px) {
+    body {
+        font-size: 0.8rem;
+    }
+    .btn {
+        padding: 0.175rem 0.75rem!important;
+        font-size: 0.8rem!important;
+    }
+    .modal-content {
+        width: 300px!important;
+    }
+}
+
+@media (min-width: 360px) and (max-width: 375px) {
+    body {
+        font-size: 1rem;
+    }
+    .btn {
+        padding: 0.275rem 0.75rem!important;
+        font-size: 1rem!important;
+    }
+    .modal-content {
+        width: 340px!important;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 375px) {
+    .col-lg-8.mx-auto {
+        padding-left: 0!important;
+    }
+    .btn {
+        font-weight: 400!important;
+        line-height: 1.2!important;
+    }
+    .portfolio-modal .modal-dialog, .conditions-modal .modal-dialog {
+        margin: 3%!important;
+    }
+}
+
+@media (min-width: 376px) and (max-width: 415px){
+    body {
+        font-size: 1.2rem!important;
+    }
+    .btn {
+        font-size: 1.2rem!important;
+    }
+    .modal-content {
+        width: 380px!important;
+    }
+    .portfolio-modal .modal-dialog, .conditions-modal .modal-dialog {
+        margin: 3%!important;
+    }
+    .col-lg-8.mx-auto {
+        padding-left: 0!important;
     }
 }

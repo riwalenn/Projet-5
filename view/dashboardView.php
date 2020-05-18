@@ -249,7 +249,7 @@ if ((isset($_SESSION['id']))) : ?>
                                     <?php
                                     if (empty($post->getComments())) :
                                         ?>
-                                        <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire
+                                        <h6 class="alert alert-info d-none d-sm-block">Pas de commentaires, soyez le premier à en écrire
                                             !</h6>
                                         <?php
                                         if (!empty($_SESSION['id']) && $_SESSION['role']) :
