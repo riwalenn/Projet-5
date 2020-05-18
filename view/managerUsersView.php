@@ -80,7 +80,9 @@
                                                         if ($user->getRole() == $key) :
                                                             $selected = 'selected';
                                                         endif;
-                                                        echo '<option value="' . $key . '" ' . $selected . '>' . $val . '</option>';
+                                                        ?>
+                                                        <option value="<?= $key ?>" <?= $selected ?>><?= $val ?></option>
+                                                        <?php
                                                     }
                                                     ?>
                                                 </select>
@@ -100,7 +102,9 @@
                                                         if ($user->getState() == $key) :
                                                             $selected = 'selected';
                                                         endif;
-                                                        echo '<option value="' . $key . '" ' . $selected . '>' . $val . '</option>';
+                                                        ?>
+                                                        <option value="<?= $key ?>" <?= $selected ?>><?= $val ?></option>
+                                                        <?php
                                                     }
                                                     ?>
                                                 </select>
@@ -180,7 +184,9 @@
                                                 if ($user->getRole() == $key) :
                                                     $selected = 'selected';
                                                 endif;
-                                                echo '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+                                                ?>
+                                                <option value="<?= $key ?>" <?= $selected ?>><?= $value ?></option>
+                                            <?php
                                             endforeach;
                                             ?>
                                         </select>
@@ -208,7 +214,9 @@
                                                 if ($user->getState() == $key) :
                                                     $selected = 'selected';
                                                 endif;
-                                                echo '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+                                                ?>
+                                                <option value="<?= $key ?>" <?= $selected ?>><?= $value ?></option>
+                                            <?php
                                             endforeach;
                                             ?>
                                         </select>

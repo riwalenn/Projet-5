@@ -7,12 +7,10 @@
                 </div>
                 <input type="text" id="pseudo" class="form-control form-control-sm"
                        placeholder="entrez votre pseudonyme ici" name="pseudo" aria-label="Pseudonyme"
-                       aria-describedby="basic-addon1" onkeyup="verifPseudo(this)"
-                       value="<?php if (isset($_REQUEST['pseudo'])) : return $_REQUEST['pseudo']; endif ?>" required>
+                       aria-describedby="basic-addon1" onkeyup="verifPseudo(this)" required>
                 <div class="input-group-append">
                     <span class="input-group-text"><i class="fas fa-info-circle pseudo" data-toggle="tooltip"
-                                                      data-placement="right"
-                                                      title="Cliquez ici pour avoir plus d'infos !"></i></span>
+                    data-placement="right" title="Cliquez ici pour avoir plus d'infos !"></i></span>
                 </div>
             </div>
             <div class="input-group mb-3">
@@ -31,8 +29,7 @@
                        maxlength="64" minlength="10" onkeyup="verifPassword(this)" required>
                 <div class="input-group-append">
                     <span class="input-group-text"><i class="fas fa-info-circle password" data-toggle="tooltip"
-                                                      data-placement="right"
-                                                      title="Cliquez ici pour avoir plus d'infos !"></i></span>
+                    data-placement="right" title="Cliquez ici pour avoir plus d'infos !"></i></span>
                 </div>
             </div>
             <div class="form-group">

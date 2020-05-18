@@ -42,9 +42,13 @@ if ((isset($_SESSION['id']))) : ?>
                             <?php
                             if (!empty($errorMessage)):
                                 if (preg_match('/Info/', $errorMessage)) :
-                                    echo '<small class="blockquote-footer info-message">' . $errorMessage . '</small>';
+                                    ?>
+                                    <small class="blockquote-footer info-message"><?= $errorMessage ?></small>
+                                <?php
                                 else:
-                                    echo '<small class="blockquote-footer success-message">' . $errorMessage . '</small>';
+                                    ?>
+                                    <small class="blockquote-footer success-message"><?= $errorMessage ?></small>
+                                <?php
                                 endif;
                             endif;
                             ?>

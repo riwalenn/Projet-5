@@ -59,7 +59,9 @@
                                                     if ($commentaire->getState() == $key) :
                                                         $selected = 'selected';
                                                     endif;
-                                                    echo '<option value="' . $key . '" ' . $selected . '>' . $valueSelect . '</option>';
+                                                    ?>
+                                                    <option value="<?= $key ?>" <?= $selected ?>><?= $valueSelect ?></option>
+                                                <?php
                                                 endforeach;
                                                 ?>
                                             </select>
@@ -130,7 +132,9 @@
                                                 if ($commentaire->getState() == $key) :
                                                     $selected = 'selected';
                                                 endif;
-                                                echo '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
+                                                ?>
+                                                <option value="<?= $key ?>" <?= $selected ?>><?= $value ?></option>
+                                            <?php
                                             endforeach;
                                             ?>
                                         </select>

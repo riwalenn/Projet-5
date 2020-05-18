@@ -5,10 +5,10 @@ if (empty($_REQUEST['name']) || empty($_REQUEST['email']) || empty($_REQUEST['su
     return false;
 }
 
-$name = strip_tags(htmlspecialchars($_POST['name']));
-$email_address = strip_tags(htmlspecialchars($_POST['email']));
-$sujet = strip_tags(htmlspecialchars($_REQUEST['sujet']));
-$message = strip_tags(htmlspecialchars($_POST['message']));
+$name = strip_tags(htmlspecialchars(filter_input(INPUT_POST, 'name')));
+$email_address = strip_tags(htmlspecialchars(filter_input(INPUT_POST, 'email')));
+$sujet = strip_tags(htmlspecialchars(filter_input(INPUT_POST, 'sujet')));
+$message = strip_tags(htmlspecialchars(filter_input(INPUT_POST, 'message')));
 
 
 $to = 'hello@riwalennbas.com';

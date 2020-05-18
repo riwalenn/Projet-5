@@ -82,18 +82,28 @@
                 for ($i = 0; $i < $nbPages; $i++) {
                     $j = $i + 1;
                     if ($j == $pageCourante) :
-                        echo '<li class="page-item active">';
+                        ?>
+                        <li class="page-item active">
+                    <?php
                     else :
-                        echo '<li class="page-item">';
+                        ?>
+                        <li class="page-item">
+                    <?php
                     endif;
                     if (!empty($submitRecherche)) :
-                        echo '<a class="page-link" href="index.php?action=recherche&submit=' . $submitRecherche . '&page=' . $j . '">' . $j . '</a>';
+                        ?>
+                        <a class="page-link"
+                           href="index.php?action=recherche&submit= <?= $submitRecherche ?> &page= <?= $j ?> "> <?= $j ?></a>
+                    <?php
                     else :
-                        echo '<a class="page-link" href="index.php?action=articlesListe&page=' . $j . '">' . $j . '</a>';
+                        ?>
+                        <a class="page-link" href="index.php?action=articlesListe&page= <?= $j ?>"> <?= $j ?> </a>
+                    <?php
                     endif;
+                    ?>
 
-
-                    echo '</li>';
+                    </li>
+                    <?php
                 }
                 ?>
             </ul>

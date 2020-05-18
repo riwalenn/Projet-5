@@ -76,7 +76,9 @@
                                                     if ($post->getCategory()->getCategory() == $category->getCategory()) :
                                                         $selected = 'selected';
                                                     endif;
-                                                    echo '<option value="' . $category->getId() . '" ' . $selected . '>' . $category->getCategory() . '</option>';
+                                                    ?>
+                                                    <option value="<?= $category->getId() ?>"<?= $selected ?>><?= $category->getCategory() ?></option>
+                                                <?php
                                                 endforeach;
                                                 ?>
                                             </select>
@@ -90,7 +92,9 @@
                                                     if ($post->getState() == $key) :
                                                         $selected = 'selected';
                                                     endif;
-                                                    echo '<option value="' . $key . '" ' . $selected . '>' . $valueSelect . '</option>';
+                                                    ?>
+                                                    <option value="<?= $key ?>"<?= $selected ?>><?= $valueSelect ?></option>
+                                                <?php
                                                 endforeach;
                                                 ?>
                                             </select>
@@ -119,12 +123,19 @@
                                 for ($i = 0; $i < $nbPages; $i++) {
                                     $j = $i + 1;
                                     if ($j == $pageCourante) :
-                                        echo '<li class="page-item active">';
+                                        ?>
+                                        <li class="page-item active">
+                                    <?php
                                     else :
-                                        echo '<li class="page-item">';
+                                        ?>
+                                        <li class="page-item">
+                                    <?php
                                     endif;
-                                    echo '<a class="page-link" href="index.php?action=postsManager&value=' . $value . '&page=' . $j . '">' . $j . '</a>';
-                                    echo '</li>';
+                                    ?>
+                                    <a class="page-link"
+                                       href="index.php?action=postsManager&value=<?= $value ?>&page=<?= $j ?>"><?= $j ?></a>
+                                    </li>
+                                    <?php
                                 }
                                 ?>
                             </ul>
@@ -231,7 +242,9 @@
                                                 if ($post->getCategory()->getCategory() == $category->getCategory()) :
                                                     $selected = 'selected';
                                                 endif;
-                                                echo '<option value="' . $category->getId() . '" ' . $selected . '>' . $category->getCategory() . '</option>';
+                                                ?>
+                                                <option value="<?= $category->getId() ?>" <?= $selected ?>><?= $category->getCategory() ?></option>
+                                            <?php
                                             endforeach;
                                             ?>
                                         </select>
@@ -248,7 +261,9 @@
                                                 if ($post->getState() == $key) :
                                                     $selected = 'selected';
                                                 endif;
-                                                echo '<option value="' . $key . '" ' . $selected . '>' . $valueSelect . '</option>';
+                                                ?>
+                                                <option value="<?= $key ?>" <?= $selected ?>><?= $valueSelect ?></option>
+                                            <?php
                                             endforeach;
                                             ?>
                                         </select>

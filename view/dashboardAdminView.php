@@ -190,7 +190,9 @@ if ((isset($_SESSION['id']))) :
                                         <select id="role" class="form-control form-control-sm" name="role">
                                             <?php
                                             foreach (User::$listeRole as $key => $value) :
-                                                echo '<option value="' . $key . '">' . $value . '</option>';
+                                                ?>
+                                                <option value="<?= $key ?>"><?= $value ?></option>
+                                            <?php
                                             endforeach;
                                             ?>
                                         </select>
@@ -222,7 +224,9 @@ if ((isset($_SESSION['id']))) :
                                         <select id="state" class="form-control form-control-sm" name="state">
                                             <?php
                                             foreach (User::$listeStatut as $key => $value) :
-                                                echo '<option value="' . $key . '">' . $value . '</option>';
+                                                ?>
+                                                <option value="<?= $key ?>"><?= $value ?></option>
+                                            <?php
                                             endforeach;
                                             ?>
                                         </select>
@@ -299,7 +303,9 @@ if ((isset($_SESSION['id']))) :
                                         <select name="id_category" class="form-control form-control-sm">
                                             <?php
                                             foreach ($categories as $category) :
-                                                echo '<option value="' . $category->getId() . '">' . $category->getCategory() . '</option>';
+                                                ?>
+                                                <option value="<?= $category->getId() ?>"><?= $category->getCategory() ?></option>
+                                            <?php
                                             endforeach;
                                             ?>
                                         </select>
@@ -312,7 +318,9 @@ if ((isset($_SESSION['id']))) :
                                         <select id="state" class="form-control form-control-sm" name="state">
                                             <?php
                                             foreach (Post::$listeStatut as $key => $value) :
-                                                echo '<option value="' . $key . '">' . $value . '</option>';
+                                                ?>
+                                                <option value="<?= $key ?>"><?= $value ?></option>
+                                            <?php
                                             endforeach;
                                             ?>
                                         </select>
