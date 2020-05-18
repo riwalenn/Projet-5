@@ -65,8 +65,8 @@
                         <div class="dropdown-divider"></div>
                         <a class="nav-link js-scroll-trigger deco" href="index.php?action=logoutUser"
                            onclick="return ConfirmDeconnexion()">Se déconnecter</a>
-                        <?php endif; ?>
                     </div>
+                        <?php endif; ?>
                 </li>
             </ul>
         </div>

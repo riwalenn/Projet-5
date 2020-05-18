@@ -25,7 +25,6 @@
     <!-- Custom styles for this template -->
     <link href="ressources/css/styleSheet.css" rel="stylesheet">
     <link href="ressources/css/agency.min.css" rel="stylesheet">
-    <title><?= $title ?></title>
 </head>
 <body class="container-fluid" id="page-top">
 <?php include 'menu.php' ?>
