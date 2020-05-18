@@ -23,7 +23,8 @@ if ((isset($_SESSION['id']))) :
                                 </footer>
                             </blockquote>
                             <p class="text-muted">
-                                <a href="index.php?action=logoutUser" onclick="return ConfirmDeconnexion()"><i class="fas fa-sign-out-alt"></i> Deconnexion</a>
+                                <a href="index.php?action=logoutUser" onclick="return ConfirmDeconnexion()"><i
+                                            class="fas fa-sign-out-alt"></i> Deconnexion</a>
                             </p>
                             <hr>
                             <p>
@@ -32,10 +33,14 @@ if ((isset($_SESSION['id']))) :
                                     <a class="articles-link" data-toggle="modal" href="#formModalAdd">
                                         <i class="fa fa-plus-square"></i> ajouter</a>
                                 </small><br>
-                                <small class="text-muted"><span class="badge badge-success"><?= $nbUsersReferent ?></span> utilisateur(s) référents -
+                                <small class="text-muted"><span
+                                            class="badge badge-success"><?= $nbUsersReferent ?></span> utilisateur(s)
+                                    référents -
                                     <a class="articles-link" href="index.php?action=usersManager&value=referents">
                                         <i class="fa fa-eye"></i> voir liste</a></small><br>
-                                <small class="text-muted"><span class="badge badge-danger"> <?= $nbUsersToDelete ?> </span> utilisateur(s) à supprimer -
+                                <small class="text-muted"><span
+                                            class="badge badge-danger"> <?= $nbUsersToDelete ?> </span> utilisateur(s) à
+                                    supprimer -
                                     <a class="articles-link" href="index.php?action=usersManager&value=trash">
                                         <i class="fa fa-eye"></i> voir liste</a></small><br>
                                 <small class="text-muted">
@@ -44,19 +49,25 @@ if ((isset($_SESSION['id']))) :
                                     <a class="articles-link" href="index.php?action=usersManager&value=uncheckedUsers">
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
-                                <small class="text-muted"><span class="badge badge-danger"> <?= $nbUsersConnexionExpired ?> </span>
-                                    utilisateur(s) non connecté depuis 3 mois - <i class="fas fa-exclamation-triangle danger"></i>
-                                    <a class="articles-link" href="index.php?action=delete&value=connexionExpired" onclick="return ConfirmMessageAdmin()">
+                                <small class="text-muted"><span
+                                            class="badge badge-danger"> <?= $nbUsersConnexionExpired ?> </span>
+                                    utilisateur(s) non connecté depuis 3 mois - <i
+                                            class="fas fa-exclamation-triangle danger"></i>
+                                    <a class="articles-link" href="index.php?action=delete&value=connexionExpired"
+                                       onclick="return ConfirmMessageAdmin()">
                                         <i class="fa fa-trash"></i> purger la liste</a>
                                 </small><br>
-                                <small class="text-muted"><span class="badge badge-warning"> <?= $nbUsersTokenNotValidate ?> </span>
+                                <small class="text-muted"><span
+                                            class="badge badge-warning"> <?= $nbUsersTokenNotValidate ?> </span>
                                     utilisateur(s) n'ont pas validé leurs token -
-                                    <a class="articles-link" href="index.php?action=usersManager&value=uncheckedTokenUsers">
+                                    <a class="articles-link"
+                                       href="index.php?action=usersManager&value=uncheckedTokenUsers">
                                         <i class="fa fa-eye"></i> voir liste</a> </small><br>
                                 <small class="text-muted">
                                     <span class="badge badge-danger"> <?= $nbUsersTokenExpired ?> </span> token(s)
                                     expiré(s) - <i class="fas fa-exclamation-triangle danger"></i>
-                                    <a class="articles-link" href="index.php?action=delete&value=tokenExpired" onclick="return ConfirmMessageAdmin()">
+                                    <a class="articles-link" href="index.php?action=delete&value=tokenExpired"
+                                       onclick="return ConfirmMessageAdmin()">
                                         <i class="fa fa-trash"></i>
                                         purger la liste</a>
                                 </small>
@@ -64,7 +75,8 @@ if ((isset($_SESSION['id']))) :
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">
-                                <a class="nav-link" href="index.php?action=usersManager&value=all"><i class="fas fa-eye"></i> voir la liste des utilisateurs</a>
+                                <a class="nav-link" href="index.php?action=usersManager&value=all"><i
+                                            class="fas fa-eye"></i> voir la liste des utilisateurs</a>
                             </small>
                         </div>
                     </div>
@@ -75,7 +87,8 @@ if ((isset($_SESSION['id']))) :
                         <div class="card-header">
                             <blockquote class="blockquote mb-0">
                                 <footer class="blockquote-footer" style="color: #00c0c7">
-                                    <i class="fa fa-file-alt"></i> Coup d'oeil - Articles <span class="badge badge-success"><?= $nbPostTotal ?></span>
+                                    <i class="fa fa-file-alt"></i> Coup d'oeil - Articles <span
+                                            class="badge badge-success"><?= $nbPostTotal ?></span>
                                 </footer>
                             </blockquote>
                         </div>
@@ -99,8 +112,10 @@ if ((isset($_SESSION['id']))) :
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
                                 <small class="text-muted">
-                                    <span class="badge badge-danger"><?= $nbPostsToDelete ?> </span> article(s) à supprimer - <i class="fas fa-exclamation-triangle danger"></i>
-                                    <a class="articles-link" href="index.php?action=delete&value=postsToDelete" onclick="return ConfirmMessageAdmin()">
+                                    <span class="badge badge-danger"><?= $nbPostsToDelete ?> </span> article(s) à
+                                    supprimer - <i class="fas fa-exclamation-triangle danger"></i>
+                                    <a class="articles-link" href="index.php?action=delete&value=postsToDelete"
+                                       onclick="return ConfirmMessageAdmin()">
                                         <i class="fa fa-trash"></i>
                                         purger la liste</a>
                                 </small>
@@ -114,8 +129,10 @@ if ((isset($_SESSION['id']))) :
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
                                 <small class="text-muted">
-                                    <span class="badge badge-danger"><?= $nbCommentsToDelete ?> </span> commentaire(s) à supprimer - <i class="fas fa-exclamation-triangle danger"></i>
-                                    <a class="articles-link" href="index.php?action=commentsManager&CRUD=D" onclick="return ConfirmMessageAdmin()">
+                                    <span class="badge badge-danger"><?= $nbCommentsToDelete ?> </span> commentaire(s) à
+                                    supprimer - <i class="fas fa-exclamation-triangle danger"></i>
+                                    <a class="articles-link" href="index.php?action=commentsManager&CRUD=D"
+                                       onclick="return ConfirmMessageAdmin()">
                                         <i class="fa fa-trash"></i>
                                         purger la liste</a>
                                 </small>
@@ -130,7 +147,8 @@ if ((isset($_SESSION['id']))) :
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">
-                                <a class="nav-link" href="index.php?action=postsManager&value=all"><i class="fas fa-eye"></i> voir la liste des articles</a>
+                                <a class="nav-link" href="index.php?action=postsManager&value=all"><i
+                                            class="fas fa-eye"></i> voir la liste des articles</a>
                             </small>
                         </div>
                     </div>
@@ -152,7 +170,8 @@ if ((isset($_SESSION['id']))) :
                         <div class="col-lg-8 mx-auto">
                             <div class="modal-body">
                                 <h5><i class="fa fa-user-cog"></i> Ajouter un utilisateur</h5>
-                                <form id="formDataUser" action="index.php?action=usersManager&value=all&CRUD=C" method="post" onsubmit="return verifForm(this)">
+                                <form id="formDataUser" action="index.php?action=usersManager&value=all&CRUD=C"
+                                      method="post" onsubmit="return verifForm(this)">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1"><i
@@ -171,7 +190,9 @@ if ((isset($_SESSION['id']))) :
                                         <select id="role" class="form-control form-control-sm" name="role">
                                             <?php
                                             foreach (User::$listeRole as $key => $value) :
-                                                echo '<option value="' . $key .'">' . $value .'</option>';
+                                                ?>
+                                                <option value="<?= $key ?>"><?= $value ?></option>
+                                            <?php
                                             endforeach;
                                             ?>
                                         </select>
@@ -203,7 +224,9 @@ if ((isset($_SESSION['id']))) :
                                         <select id="state" class="form-control form-control-sm" name="state">
                                             <?php
                                             foreach (User::$listeStatut as $key => $value) :
-                                                echo '<option value="' . $key .'">' . $value .'</option>';
+                                                ?>
+                                                <option value="<?= $key ?>"><?= $value ?></option>
+                                            <?php
                                             endforeach;
                                             ?>
                                         </select>
@@ -233,7 +256,8 @@ if ((isset($_SESSION['id']))) :
                         <div class="col-lg-8 mx-auto">
                             <div class="modal-body">
                                 <h5><i class="fa fa-pencil-alt"></i> Ajouter un article</h5>
-                                <form id="formDataUser" action="index.php?action=postsManager&value=all&CRUD=C" method="post">
+                                <form id="formDataUser" action="index.php?action=postsManager&value=all&CRUD=C"
+                                      method="post">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1"><i
@@ -245,7 +269,8 @@ if ((isset($_SESSION['id']))) :
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-caret-right"></i></span>
+                                            <span class="input-group-text" id="basic-addon1"><i
+                                                        class="fas fa-caret-right"></i></span>
                                         </div>
                                         <input type="text" id="kicker" class="form-control form-control-sm"
                                                placeholder="entrez le châpo ici" name="kicker"
@@ -256,7 +281,10 @@ if ((isset($_SESSION['id']))) :
                                             <span class="input-group-text" id="basic-addon1"><i
                                                         class="fas fa-caret-right"></i></span>
                                         </div>
-                                        <label for="content"></label><textarea class="form-control" id="summernote" rows="5" name="content" placeholder="entrez le contenu de l'article ici" required></textarea>
+                                        <label for="content"></label><textarea class="form-control" id="summernote"
+                                                                               rows="5" name="content"
+                                                                               placeholder="entrez le contenu de l'article ici"
+                                                                               required></textarea>
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -275,7 +303,9 @@ if ((isset($_SESSION['id']))) :
                                         <select name="id_category" class="form-control form-control-sm">
                                             <?php
                                             foreach ($categories as $category) :
-                                                echo '<option value="' . $category->getId() .'">' . $category->getCategory() .'</option>';
+                                                ?>
+                                                <option value="<?= $category->getId() ?>"><?= $category->getCategory() ?></option>
+                                            <?php
                                             endforeach;
                                             ?>
                                         </select>
@@ -288,7 +318,9 @@ if ((isset($_SESSION['id']))) :
                                         <select id="state" class="form-control form-control-sm" name="state">
                                             <?php
                                             foreach (Post::$listeStatut as $key => $value) :
-                                                echo '<option value="' . $key .'">' . $value .'</option>';
+                                                ?>
+                                                <option value="<?= $key ?>"><?= $value ?></option>
+                                            <?php
                                             endforeach;
                                             ?>
                                         </select>

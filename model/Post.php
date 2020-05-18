@@ -19,10 +19,10 @@ class Post
     private $comments;
 
     static public $listeStatut = [
-      Constantes::POST_PENDING_STATUS => 'Article en attente',
-      Constantes::POST_STATUS_VALIDATED => 'Article validé',
-      Constantes::POST_STATUS_ARCHIVED => 'Article archivé',
-      Constantes::POST_STATUS_DELETED => 'Article supprimé'
+        Constantes::POST_PENDING_STATUS => 'Article en attente',
+        Constantes::POST_STATUS_VALIDATED => 'Article validé',
+        Constantes::POST_STATUS_ARCHIVED => 'Article archivé',
+        Constantes::POST_STATUS_DELETED => 'Article supprimé'
     ];
 
     public function __construct($donnees = null)
@@ -143,6 +143,7 @@ class Post
     {
         return $this->id_category;
     }
+
     public function setId_Category($id_category)
     {
         $this->id_category = $id_category;
@@ -185,8 +186,7 @@ class Post
 
     public function getStateClass()
     {
-        switch ($this->state)
-        {
+        switch ($this->state) {
             case Constantes::POST_PENDING_STATUS:
                 return 'user-status-orange';
                 break;

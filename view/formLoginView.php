@@ -21,18 +21,24 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>
                 </div>
-                <input class="form-control form-control-sm" placeholder="entrez votre email ici" aria-label="email" type="email" name="email" required>
+                <input class="form-control form-control-sm" placeholder="entrez votre email ici" aria-label="email"
+                       type="email" name="email" required>
             </div>
-            <div class="label_password"><label>Mot de passe :</label><small><a href="index.php?action=forgotPassword">Perdu / Oublié ?</a></small></div>
+            <div class="label_password"><label>Mot de passe :</label><small><a href="index.php?action=forgotPassword">Perdu
+                        / Oublié ?</a></small></div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-unlock"></i></span>
                 </div>
-                <input class="form-control form-control-sm" placeholder="entrez votre mot de passe ici" aria-label="password" type="password" name="password" required>
+                <input class="form-control form-control-sm" placeholder="entrez votre mot de passe ici"
+                       aria-label="password" type="password" name="password" required>
             </div>
-            <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="connexion"><i class="fas fa-sign-in-alt"></i> connexion</button>
+            <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit" value="connexion"><i
+                        class="fas fa-sign-in-alt"></i> connexion
+            </button>
             <div>
-                <small>Pas encore de compte ? <a href="index.php?action=nouvelInscrit">Cliquer ici</a> pour en créer un.</small></div>
+                <small>Pas encore de compte ? <a href="index.php?action=nouvelInscrit">Cliquer ici</a> pour en créer un.</small>
+            </div>
         </form>
     </div>
 </div>
@@ -70,7 +76,8 @@
                                                                                                 href="https://www.subdelirium.com/generateur-de-mentions-legales/"
                                                                                                 alt="Modèle de mentions légales">Modèle
                                     de mentions légales</a><br>
-                                Les images proviennent du site <a href="https://pixabay.com/" target="_blank">Pixabay.com</a>.</p>
+                                Les images proviennent du site <a href="https://pixabay.com/" target="_blank">Pixabay.com</a>.
+                            </p>
 
                             <h3>2. Conditions générales d’utilisation du site et des services proposés.</h3>
                             <p>L’utilisation du site <a href="https://www.riwalennbas.com/">www.riwalennbas.com</a>
@@ -155,19 +162,22 @@
                                 d’identité avec signature du titulaire de la pièce, en précisant l’adresse à laquelle la
                                 réponse doit être envoyée.</p>
                             <p>Aucune information personnelle de l'utilisateur du site <a
-                                        href="https://www.riwalennbas.com/">www.riwalennbas.com</a> n'est publiée à l'insu de
+                                        href="https://www.riwalennbas.com/">www.riwalennbas.com</a> n'est publiée à
+                                l'insu de
                                 l'utilisateur, échangée, transférée, cédée ou vendue sur un support quelconque à des
                                 tiers. Seule l'hypothèse du rachat de Riwalenn Bas et de ses droits permettrait la
                                 transmission des dites informations à l'éventuel acquéreur qui serait à son tour tenu de
                                 la même obligation de conservation et de modification des données vis à vis de
-                                l'utilisateur du site <a href="https://www.riwalennbas.com/">www.riwalennbas.com</a>.</p>
+                                l'utilisateur du site <a href="https://www.riwalennbas.com/">www.riwalennbas.com</a>.
+                            </p>
                             <p>Le site n'est pas déclaré à la CNIL car il ne recueille pas d'informations personnelles.
                                 .</p>
                             <p>Les bases de données sont protégées par les dispositions de la loi du 1er juillet 1998
                                 transposant la directive 96/9 du 11 mars 1996 relative à la protection juridique des
                                 bases de données.</p>
                             <h3>8. Liens hypertextes et cookies.</h3>
-                            <p>Le site <a href="https://www.riwalennbas.com/">www.riwalennbas.com</a> contient un certain
+                            <p>Le site <a href="https://www.riwalennbas.com/">www.riwalennbas.com</a> contient un
+                                certain
                                 nombre de liens hypertextes vers d’autres sites, mis en place avec l’autorisation de
                                 Riwalenn Bas. Cependant, Riwalenn Bas n’a pas la possibilité de vérifier le contenu des
                                 sites ainsi visités, et n’assumera en conséquence aucune responsabilité de ce fait.</p>
@@ -198,7 +208,8 @@
                                 l'onglet "Confidentialité", vous pouvez bloquer les cookies.</p>
 
                             <h3>9. Droit applicable et attribution de juridiction.</h3>
-                            <p>Tout litige en relation avec l’utilisation du site <a href="https://www.riwalennbas.com/">www.riwalennbas.com</a>
+                            <p>Tout litige en relation avec l’utilisation du site <a
+                                        href="https://www.riwalennbas.com/">www.riwalennbas.com</a>
                                 est soumis au droit français. Il est fait attribution exclusive de juridiction aux
                                 tribunaux compétents de Paris.</p>
                             <h3>10. Les principales lois concernées.</h3>

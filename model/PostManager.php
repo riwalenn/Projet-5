@@ -12,12 +12,12 @@ class PostManager extends Connexion
                                                     FROM `posts` INNER JOIN users ON posts.author = users.id 
                                                     WHERE posts.state = :state ORDER BY posts.created_at DESC LIMIT :page,:offset');
         if (!empty($page)) {
-            $listPosts->bindValue(':page', intval(($page -1) * 3), PDO::PARAM_INT);
+            $listPosts->bindValue(':page', ($page - 1) * 3, PDO::PARAM_INT);
         } else {
-            $listPosts->bindValue(':page', intval(0), PDO::PARAM_INT);
+            $listPosts->bindValue(':page', 0, PDO::PARAM_INT);
         }
         $listPosts->bindValue(':state', $state);
-        $listPosts->bindValue(':offset', intval($this->offset), PDO::PARAM_INT);
+        $listPosts->bindValue(':offset', $this->offset, PDO::PARAM_INT);
         $listPosts->execute();
         return $listPosts->fetchAll(PDO::FETCH_CLASS, 'Post');
     }
@@ -31,11 +31,11 @@ class PostManager extends Connexion
                                                     FROM `posts` INNER JOIN users ON posts.author = users.id
                                                     WHERE posts.state IN (0, 1, 2) ORDER BY posts.modified_at DESC LIMIT :page, :offset');
         if (!empty($page)) {
-            $listPosts->bindValue(':page', intval(($page -1) * $offset), PDO::PARAM_INT);
+            $listPosts->bindValue(':page', ($page - 1) * $offset, PDO::PARAM_INT);
         } else {
-            $listPosts->bindValue(':page', intval(0), PDO::PARAM_INT);
+            $listPosts->bindValue(':page', 0, PDO::PARAM_INT);
         }
-        $listPosts->bindValue(':offset', intval($offset), PDO::PARAM_INT);
+        $listPosts->bindValue(':offset', $offset, PDO::PARAM_INT);
         $listPosts->execute();
         return $listPosts->fetchAll(PDO::FETCH_CLASS, 'Post');
     }
@@ -48,13 +48,13 @@ class PostManager extends Connexion
                                                     FROM `posts` INNER JOIN users ON posts.author = users.id
                                                     WHERE posts.state = :state ORDER BY posts.modified_at DESC LIMIT :page, :offset');
         if (!empty($page)) {
-            $listPosts->bindValue(':page', intval(($page -1) * $offset), PDO::PARAM_INT);
+            $listPosts->bindValue(':page', ($page - 1) * $offset, PDO::PARAM_INT);
         } else {
-            $listPosts->bindValue(':page', intval(0), PDO::PARAM_INT);
+            $listPosts->bindValue(':page', 0, PDO::PARAM_INT);
         }
 
         $listPosts->bindValue(':state', $state);
-        $listPosts->bindValue(':offset', intval($offset), PDO::PARAM_INT);
+        $listPosts->bindValue(':offset', $offset, PDO::PARAM_INT);
         $listPosts->execute();
         return $listPosts->fetchAll(PDO::FETCH_CLASS, 'Post');
     }
@@ -78,6 +78,7 @@ class PostManager extends Connexion
         $resultat = $statement->fetch();
         return $resultat['nbPosts'];
     }
+
     //Compte le nombre d'articles à supprimer
     public function countPostsToDelete()
     {
@@ -108,11 +109,11 @@ class PostManager extends Connexion
                                                         WHERE posts.state = :state AND (posts.title LIKE CONCAT('%', :recherche, '%') OR posts.kicker LIKE CONCAT('%', :recherche, '%') OR posts.content LIKE CONCAT('%', :recherche, '%'))
                                                         ORDER BY posts.created_at DESC LIMIT :page,:offset");
             if (isset($page)) {
-                $listPosts->bindValue(':page', ($page -1) * 3, PDO::PARAM_INT);
+                $listPosts->bindValue(':page', ($page - 1) * 3, PDO::PARAM_INT);
             }
             $listPosts->bindValue(':state', 1, PDO::PARAM_INT);
             $listPosts->bindValue(':offset', $this->offset, PDO::PARAM_INT);
-            $listPosts->bindValue(':recherche',  htmlspecialchars($recherche), PDO::PARAM_STR);
+            $listPosts->bindValue(':recherche', htmlspecialchars($recherche), PDO::PARAM_STR);
             $listPosts->execute();
             return $listPosts->fetchAll(PDO::FETCH_CLASS, 'Post');
         } else {
@@ -138,8 +139,8 @@ class PostManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('INSERT INTO `favorites_posts`(id_user, id_post) VALUES (:id_user, :id_post)');
         $statement->execute(array(
-            'id_user' => intval($user->getId()),
-            'id_post' => intval($favorites->getId_post())
+            'id_user' => $user->getId(),
+            'id_post' => $favorites->getId_post()
         ));
     }
 
@@ -148,7 +149,7 @@ class PostManager extends Connexion
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT COUNT(id_user) as nb_favorites FROM `favorites_posts` WHERE id_user=:id_user');
-        $statement->execute(array('id_user' => intval($user->getId())));
+        $statement->execute(array('id_user' => $user->getId()));
         $resultat = $statement->fetch();
         return $resultat['nb_favorites'];
     }
@@ -172,8 +173,8 @@ class PostManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT EXISTS(SELECT 1 FROM `favorites_posts` WHERE id_user = :id_user AND id_post = :id_post LIMIT 1) as result');
         $statement->execute(array(
-            'id_user' => intval($user->getId()),
-            'id_post' => intval($favorites->getId_post())
+            'id_user' => $user->getId(),
+            'id_post' => $favorites->getId_post()
         ));
         $resultat = $statement->fetch();
         return $resultat['result'];
@@ -191,8 +192,8 @@ class PostManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('DELETE FROM `favorites_posts` WHERE id_user = :id_user AND id_post = :id_post');
         $statement->execute(array(
-            'id_user' => intval($user->getId()),
-            'id_post' => intval($favorites->getId_post())
+            'id_user' => $user->getId(),
+            'id_post' => $favorites->getId_post()
         ));
     }
 
@@ -222,11 +223,10 @@ class PostManager extends Connexion
     public function countPagesSearchResult($recherche)
     {
         $bdd = $this->dbConnect();
-        if (!empty($recherche))
-        {
+        if (!empty($recherche)) {
             $countPages = $bdd->prepare("SELECT COUNT(*)/3 AS nb_pages FROM `posts` 
                                                     WHERE posts.state = 1 AND posts.title LIKE CONCAT('%', :recherche, '%') OR posts.kicker LIKE CONCAT('%', :recherche, '%') OR posts.content LIKE CONCAT('%', :recherche, '%')");
-            $countPages->bindValue(':recherche',  htmlspecialchars($recherche), PDO::PARAM_STR);
+            $countPages->bindValue(':recherche', htmlspecialchars($recherche), PDO::PARAM_STR);
             $countPages->execute();
             $resultat = $countPages->fetch();
             return $resultat['nb_pages'];
@@ -250,8 +250,8 @@ class PostManager extends Connexion
             'author' => $post->getAuthor(),
             'content' => htmlspecialchars($post->getContent()),
             'url' => $post->getUrl(),
-            'id_category' => intval($post->getId_Category()),
-            'state' => intval($post->getState())
+            'id_category' => $post->getId_Category(),
+            'state' => $post->getState()
         ));
     }
 
@@ -262,9 +262,9 @@ class PostManager extends Connexion
         $statement = $bdd->prepare('UPDATE `posts` SET id_category = :id_category, state = :state, modified_at = NOW()
                                                 WHERE id = :id');
         $statement->execute(array(
-            'id' => intval($post->getId()),
-            'id_category' => intval($post->getId_Category()),
-            'state' => intval($post->getState())
+            'id' => $post->getId(),
+            'id_category' => $post->getId_Category(),
+            'state' => $post->getState()
         ));
     }
 
@@ -275,14 +275,14 @@ class PostManager extends Connexion
         $statement = $bdd->prepare('UPDATE `posts` SET title = :title, kicker = :kicker, author = :author, content = :content, url = :url, modified_at = NOW(), id_category = :id_category, state = :state
                                                 WHERE id = :id');
         $statement->execute(array(
-            'id' => intval($post->getId()),
+            'id' => $post->getId(),
             'title' => htmlspecialchars($post->getTitle()),
             'kicker' => htmlspecialchars($post->getKicker()),
             'author' => $post->getAuthor(),
             'content' => htmlspecialchars($post->getContent()),
             'url' => $post->getUrl(),
-            'id_category' => intval($post->getId_Category()),
-            'state' => intval($post->getState())
+            'id_category' => $post->getId_Category(),
+            'state' => $post->getState()
         ));
     }
 
@@ -291,13 +291,13 @@ class PostManager extends Connexion
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('DELETE FROM `posts` WHERE id = :id');
-        $statement->execute(array('id' => intval($post->getId())));
+        $statement->execute(array('id' => $post->getId()));
     }
 
     public function deletePosts()
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('DELETE FROM `posts` WHERE state = :state');
-        $statement->execute(array('state' => intval(Constantes::POST_STATUS_DELETED)));
+        $statement->execute(array('state' => Constantes::POST_STATUS_DELETED));
     }
 }

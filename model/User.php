@@ -22,7 +22,7 @@ class User extends Post
         Constantes::USER_STATUS_VALIDATED => 'compte validé',
         Constantes::USER_STATUS_DELETED => 'compte supprimé'
     ];
-    
+
     static public $listeRole = [
         Constantes::ROLE_ADMIN => 'Administrateur',
         Constantes::ROLE_USER => 'Utilisateur'
@@ -141,7 +141,7 @@ class User extends Post
     public function getDate_inscription_fr()
     {
         $date = new DateTime($this->date_inscription);
-        return date_format($date,'d-m-Y');
+        return date_format($date, 'd-m-Y');
     }
 
     public function getDate_inscription()
@@ -157,7 +157,7 @@ class User extends Post
     public function getDate_modification_fr()
     {
         $date = new DateTime($this->date_modification);
-        return date_format($date,'d-m-Y à H:m');
+        return date_format($date, 'd-m-Y à H:m');
     }
 
     public function getDate_modification()
@@ -206,13 +206,12 @@ class User extends Post
 
     public function getStateName()
     {
-       return self::$listeStatut[$this->getState()];
+        return self::$listeStatut[$this->getState()];
     }
 
     public function getStateClass()
     {
-        switch ($this->state)
-        {
+        switch ($this->state) {
             case Constantes::USER_PENDING_STATUS:
                 return 'user-status-red';
                 break;
@@ -269,10 +268,10 @@ class User extends Post
     public function getExpiration_token()
     {
         if ($this->expiration_token == NULL) :
-        return $this->expiration_token;
+            return $this->expiration_token;
         else:
-        $date = new DateTime($this->expiration_token);
-        return date_format($date,'d-m-Y à H:m');
+            $date = new DateTime($this->expiration_token);
+            return date_format($date, 'd-m-Y à H:m');
         endif;
     }
 
@@ -282,15 +281,16 @@ class User extends Post
     }
 
 
-
-    public function generateToken($length = 32) {
+    public function generateToken($length = 32)
+    {
         $token = random_bytes($length);
         return bin2hex($token);
     }
 
-    public function sendTokenForPassword($list) {
+    public function sendTokenForPassword($list)
+    {
         foreach ($list as $value) :
-            if(empty($list)) :
+            if (empty($list)) :
                 echo "Le token ou l'email sont manquants !";
                 return false;
             endif;
@@ -305,14 +305,15 @@ class User extends Post
             $email_body = "$message";
             $headers = "From: noreply@riwalennbas.com\n";
             $headers .= "Reply-To: $email";
-            mail($to,$email_subject,$email_body,$headers);
+            mail($to, $email_subject, $email_body, $headers);
         endforeach;
         return true;
     }
 
-    public function sendToken($list) {
+    public function sendToken($list)
+    {
         foreach ($list as $value) :
-            if(empty($list)) :
+            if (empty($list)) :
                 echo "Le token ou l'email sont manquants !";
                 return false;
             endif;
@@ -327,7 +328,7 @@ class User extends Post
             $email_body = "$message";
             $headers = "From: noreply@riwalennbas.com\n";
             $headers .= "Reply-To: $email";
-            mail($to,$email_subject,$email_body,$headers);
+            mail($to, $email_subject, $email_body, $headers);
         endforeach;
         return true;
     }

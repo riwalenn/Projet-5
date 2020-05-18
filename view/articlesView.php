@@ -14,15 +14,18 @@
             <div class="row justify-content-center">
                 <div class="input-group input-group-sm mb-3">
                     <input type="hidden" name="action" value="recherche">
-                    <input type="text" class="form-control" placeholder="Rechercher..." aria-label="Recherche" name="submit">
+                    <input type="text" class="form-control" placeholder="Rechercher..." aria-label="Recherche"
+                           name="submit">
                     <div class="input-group-append">
-                        <button class="input-group-text" id="basic-addon" type="submit"><i class="fa fa-search fa-inverse"></i></button>
+                        <button class="input-group-text" id="basic-addon" type="submit"><i
+                                    class="fa fa-search fa-inverse"></i></button>
                     </div>
                 </div>
                 <?php
                 if (empty($listPosts)) :
                     ?>
-                    <h6 class="alert alert-primary">Nous sommes désolés, la liste est vide ! Merci de revenir plus tard.</h6>
+                    <h6 class="alert alert-primary">Nous sommes désolés, la liste est vide ! Merci de revenir plus
+                        tard.</h6>
                 <?php
                 endif;
                 ?>
@@ -44,18 +47,23 @@
                         <?= View::generatePictureTag($post) ?>
                     </a>
                     <div class="articles-caption">
-                        <footer class="blockquote-footer">catégorie : <?= $post->getCategory()->getCategory() ?></footer>
+                        <footer class="blockquote-footer">catégorie
+                            : <?= $post->getCategory()->getCategory() ?></footer>
                         <footer class="blockquote-footer">Créé le <?= $post->getCreated_at() ?></footer>
                         <?php if ((isset($_SESSION['id']))) : ?>
-                            <?php  if ($post->getStatut_favorite() == 1) : ?>
+                            <?php if ($post->getStatut_favorite() == 1) : ?>
                                 <footer class="blockquote-footer">
-                                    Cet article fait parti de vos favoris <i class="fas fa-star" style="color: #fed136"></i><br>
+                                    Cet article fait parti de vos favoris <i class="fas fa-star"
+                                                                             style="color: #fed136"></i><br>
                                 </footer>
                             <?php elseif ($post->getStatut_favorite() != 1) : ?>
                                 <form action="index.php?action=addFavorite" method="post">
                                     <input type="hidden" name="id_post" value="<?= $post->getid() ?>">
                                     <footer class="blockquote-footer">
-                                        Ajouter l'article à vos favoris :  <button class="btn btn-light" data-dismiss="modal" type="submit"><i class="fa fa-plus-square" style="color:#11dbba; "></i></button><br>
+                                        Ajouter l'article à vos favoris :
+                                        <button class="btn btn-light" data-dismiss="modal" type="submit"><i
+                                                    class="fa fa-plus-square" style="color:#11dbba; "></i></button>
+                                        <br>
                                         <?= $errorMessage ?>
                                     </footer>
                                 </form>
@@ -74,18 +82,28 @@
                 for ($i = 0; $i < $nbPages; $i++) {
                     $j = $i + 1;
                     if ($j == $pageCourante) :
-                        echo '<li class="page-item active">';
+                        ?>
+                        <li class="page-item active">
+                    <?php
                     else :
-                        echo '<li class="page-item">';
+                        ?>
+                        <li class="page-item">
+                    <?php
                     endif;
                     if (!empty($submitRecherche)) :
-                        echo '<a class="page-link" href="index.php?action=recherche&submit='. $submitRecherche .'&page=' . $j . '">' . $j . '</a>';
+                        ?>
+                        <a class="page-link"
+                           href="index.php?action=recherche&submit= <?= $submitRecherche ?> &page= <?= $j ?> "> <?= $j ?></a>
+                    <?php
                     else :
-                        echo '<a class="page-link" href="index.php?action=articlesListe&page=' . $j . '">' . $j . '</a>';
+                        ?>
+                        <a class="page-link" href="index.php?action=articlesListe&page= <?= $j ?>"> <?= $j ?> </a>
+                    <?php
                     endif;
+                    ?>
 
-
-                    echo '</li>';
+                    </li>
+                    <?php
                 }
                 ?>
             </ul>
@@ -114,7 +132,8 @@ foreach ($listPosts as $post) {
                                 <h2 class="text-uppercase"><?= $post->getTitle() ?></h2>
                                 <p class="item-intro text-muted"><?= $post->getKicker() ?></p>
                                 <cite title="Auteur" class="item-intro text-muted">Créé par <?= $post->getPseudo() ?> -
-                                    le <?= $post->getCreated_at() ?> / Modifié le <?= $post->getModified_at() ?><br></cite>
+                                    le <?= $post->getCreated_at() ?> / Modifié le <?= $post->getModified_at() ?>
+                                    <br></cite>
                                 <?= View::generatePictureTag($post) ?>
                                 <p><?= $post->getContent() ?></p>
                                 <button class="btn btn-primary" data-dismiss="modal" type="button">
@@ -132,7 +151,8 @@ foreach ($listPosts as $post) {
                                 <?php
                                 if (empty($post->getComments())) :
                                     ?>
-                                    <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire !</h6>
+                                    <h6 class="alert alert-info">Pas de commentaires, soyez le premier à en écrire
+                                        !</h6>
                                     <?php
                                     if (!empty($_SESSION['id']) && $_SESSION['role']) :
                                         ?>
@@ -145,18 +165,26 @@ foreach ($listPosts as $post) {
                                                 <div><label>Titre du commentaire :</label></div>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="basic-addon1"><i class="far fa-file-alt"></i></span>
+                                                        <span class="input-group-text" id="basic-addon1"><i
+                                                                    class="far fa-file-alt"></i></span>
                                                     </div>
-                                                    <input class="form-control form-control-sm" placeholder="entrez titre de commentaire ici" aria-label="title" type="text" name="title" required>
+                                                    <input class="form-control form-control-sm"
+                                                           placeholder="entrez titre de commentaire ici"
+                                                           aria-label="title" type="text" name="title" required>
                                                 </div>
                                                 <div><label>Commentaire :</label></div>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-comments"></i></span>
+                                                        <span class="input-group-text" id="basic-addon1"><i
+                                                                    class="fas fa-comments"></i></span>
                                                     </div>
-                                                    <input class="form-control form-control-sm" placeholder="entrez votre commentaire ici" aria-label="commentaire" type="text" name="content" required>
+                                                    <input class="form-control form-control-sm"
+                                                           placeholder="entrez votre commentaire ici"
+                                                           aria-label="commentaire" type="text" name="content" required>
                                                 </div>
-                                                <button class="btn btn-primary my-2 my-sm-0" aria-label="envoyer" type="submit" value="commentaire">envoyer mon commentaire</button>
+                                                <button class="btn btn-primary my-2 my-sm-0" aria-label="envoyer"
+                                                        type="submit" value="commentaire">envoyer mon commentaire
+                                                </button>
                                             </form>
                                         </div>
                                     <?php
@@ -173,18 +201,26 @@ foreach ($listPosts as $post) {
                                                 <div><label>Titre du commentaire :</label></div>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="basic-addon1"><i class="far fa-file-alt"></i></span>
+                                                        <span class="input-group-text" id="basic-addon1"><i
+                                                                    class="far fa-file-alt"></i></span>
                                                     </div>
-                                                    <input class="form-control form-control-sm" placeholder="entrez titre de commentaire ici" aria-label="title" type="text" name="title" required>
+                                                    <input class="form-control form-control-sm"
+                                                           placeholder="entrez titre de commentaire ici"
+                                                           aria-label="title" type="text" name="title" required>
                                                 </div>
                                                 <div><label>Commentaire :</label></div>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-comments"></i></span>
+                                                        <span class="input-group-text" id="basic-addon1"><i
+                                                                    class="fas fa-comments"></i></span>
                                                     </div>
-                                                    <input class="form-control form-control-sm" placeholder="entrez votre commentaire ici" aria-label="commentaire" type="text" name="content" required>
+                                                    <input class="form-control form-control-sm"
+                                                           placeholder="entrez votre commentaire ici"
+                                                           aria-label="commentaire" type="text" name="content" required>
                                                 </div>
-                                                <button class="btn btn-primary my-2 my-sm-0" aria-label="envoyer" type="submit" value="commentaire">envoyer mon commentaire</button>
+                                                <button class="btn btn-primary my-2 my-sm-0" aria-label="envoyer"
+                                                        type="submit" value="commentaire">envoyer mon commentaire
+                                                </button>
                                             </form>
                                         </div>
                                     <?php
@@ -196,7 +232,10 @@ foreach ($listPosts as $post) {
                                     <?php
                                     foreach ($post->getComments() as $comment) {
                                         ?>
-                                        <p><?= $comment->getCreated_at() ?> - <b><?= $comment->getTitle() ?> : </b><?= $comment->getContent() ?> <cite title="Auteur" class="item-intro text-muted">// par <?= $comment->getPseudo() ?></cite></p>
+                                        <p><?= $comment->getCreated_at() ?> - <b><?= $comment->getTitle() ?>
+                                                : </b><?= $comment->getContent() ?> <cite title="Auteur"
+                                                                                          class="item-intro text-muted">//
+                                                par <?= $comment->getPseudo() ?></cite></p>
                                     <?php }
                                 endif;
                                 ?>

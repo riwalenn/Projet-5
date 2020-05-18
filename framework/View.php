@@ -46,8 +46,8 @@ class View
     {
         $category = $post->getCategory();
         $tag = "<picture>";
-        $tag .= '<source srcset="'. Constantes::PATH_IMG_RESSOURCES . 'categories/' . $category->getId() . Constantes::EXTENSION_WEBP . '" media="all">';
-        $tag .=  '<img class="img-fluid d-block mx-auto" src="'. Constantes::PATH_IMG_RESSOURCES . 'categories/' . $category->getId() . Constantes::EXTENSION_PNG . '" alt="' . $category->getCategory() . '">';
+        $tag .= '<source srcset="' . Constantes::PATH_IMG_RESSOURCES . 'categories/' . $category->getId() . Constantes::EXTENSION_WEBP . '" media="all">';
+        $tag .= '<img class="img-fluid d-block mx-auto" src="' . Constantes::PATH_IMG_RESSOURCES . 'categories/' . $category->getId() . Constantes::EXTENSION_PNG . '" alt="' . $category->getCategory() . '">';
         $tag .= "</picture>";
         return $tag;
     }
@@ -55,7 +55,7 @@ class View
     static public function generatePortfolioPicture($folio, $classe)
     {
         $tag = "<picture>";
-        $tag .= '<source class="portfolio-' . $classe . '" srcset="'. Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::EXTENSION_WEBP . '" alt="' . $folio->getTitle() . '">';
+        $tag .= '<source class="portfolio-' . $classe . '" srcset="' . Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::EXTENSION_WEBP . '" alt="' . $folio->getTitle() . '">';
         $tag .= '<img class="img-fluid d-block mx-auto portfolio' . $classe . '" src="' . Constantes::PATH_IMG_RESSOURCES . 'portfolio/' . $folio->getId() . Constantes::EXTENSION_JPG . '" alt="' . $folio->getTitle() . '">';
         $tag .= "</picture>";
         return $tag;
@@ -64,8 +64,8 @@ class View
     static public function generateDashboardPictureTag($name, $alt, $classe)
     {
         $tag = "<picture>";
-        $tag .= '<source srcset="'. Constantes::PATH_IMG_RESSOURCES . 'dashboard/' . $name . Constantes::EXTENSION_WEBP . '" media="all" class="'. $classe .'">';
-        $tag .=  '<img class="img-fluid d-block mx-auto ' . $classe . '" src="'. Constantes::PATH_IMG_RESSOURCES . 'dashboard/' . $name . Constantes::EXTENSION_PNG . '" alt="' . $alt . '">';
+        $tag .= '<source srcset="' . Constantes::PATH_IMG_RESSOURCES . 'dashboard/' . $name . Constantes::EXTENSION_WEBP . '" media="all" class="' . $classe . '">';
+        $tag .= '<img class="img-fluid d-block mx-auto ' . $classe . '" src="' . Constantes::PATH_IMG_RESSOURCES . 'dashboard/' . $name . Constantes::EXTENSION_PNG . '" alt="' . $alt . '">';
         $tag .= "</picture>";
         return $tag;
     }
@@ -74,7 +74,7 @@ class View
     {
         $tag = "<div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdownMenuLink\">";
         foreach ($allValues as $key => $value) {
-            $tag .= "<a class=\"dropdown-item\" href=\"index.php?action=".$manager."&value=" . $key . "\">" . $value . "</a>";
+            $tag .= "<a class=\"dropdown-item\" href=\"index.php?action=" . $manager . "&value=" . $key . "\">" . $value . "</a>";
         }
         $tag .= "</div>";
         return $tag;

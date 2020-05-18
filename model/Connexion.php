@@ -18,7 +18,7 @@ class Connexion
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
         );
 
-        $db = new \PDO(SGBD . ':host=' . HOST.';dbname=' . DB_NAME . ';charset=' . CHARSET,
+        $db = new \PDO(SGBD . ':host=' . HOST . ';dbname=' . DB_NAME . ';charset=' . CHARSET,
             USER,
             PASSWORD,
             $db_config['OPTIONS']);

@@ -28,10 +28,10 @@ class Comment extends Post
     }
 
     static public $listeStatut = [
-      Constantes::COM_PENDING_STATUS => 'Commentaire en attente',
-      Constantes::COM_STATUS_VALIDATED => 'Commentaire validé',
-      Constantes::COM_STATUS_ARCHIVED => 'Commentaire archivé',
-      Constantes::COM_STATUS_DELETED => 'Commentaire supprimé'
+        Constantes::COM_PENDING_STATUS => 'Commentaire en attente',
+        Constantes::COM_STATUS_VALIDATED => 'Commentaire validé',
+        Constantes::COM_STATUS_ARCHIVED => 'Commentaire archivé',
+        Constantes::COM_STATUS_DELETED => 'Commentaire supprimé'
     ];
 
     public function getId()
@@ -107,8 +107,7 @@ class Comment extends Post
 
     public function getStateClass()
     {
-        switch ($this->state)
-        {
+        switch ($this->state) {
             case Constantes::COM_PENDING_STATUS:
                 return 'user-status-red';
                 break;
