@@ -241,8 +241,16 @@ class Installation extends Connexion
         $statement->execute();
 
         $statement = $bdd->prepare('INSERT INTO `tokens` (`id_token`, `token`, `id_user`, `expiration_token`) VALUES
-                                                    (3, \'046280e85dc8fef38b2565f29dc8d602da0137370d9cd4cde184be5fdf335265\', 5, \'2020-04-11 10:58:42\'),
-                                                    (13, \'1a7a0c187e0411042cfc2ebac5053b4140989089af61fe3a561b544605f6c1c8\', 4, \'2020-05-11 19:11:09\')');
+                                                    (3, \'046280e85dc8fef38b2565f29dc8d602da0137370d9cd4cde184be5fdf335265\', 5, \'2020-04-11 10:58:42\')');
+        $statement->execute();
+
+        $statement = $bdd->prepare('INSERT INTO `favorites_posts` (`id`, `id_user`, `id_post`) VALUES
+                                                (1, 4, 1),
+                                                (2, 4, 3)');
+        $statement->execute();
+
+        $statement = $bdd->prepare('INSERT INTO `comments` (`id`, `id_post`, `id_user`, `created_at`, `title`, `content`, `state`) VALUES
+                                                (1, 4, 1, \'2020-05-18 11:50:31\', \'test\', \'test comm admin\', 1)');
         $statement->execute();
     }
 }
