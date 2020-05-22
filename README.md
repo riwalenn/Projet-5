@@ -6,8 +6,9 @@ EN - Projet n°5 created for OpenClassrooms and Backend path.
 
 ## Download and Installation
 
-You will need Apache, Mysql and PHP before running the blog (like WAMP, XAMPP, etc..)
-* Clone the repo: `git clone https://github.com/riwalenn/Projet-5.git` or
+You will need Apache, Mysql and PHP before running the blog (like WAMP, XAMPP, etc..),
+**please follow the instructions step by step** :
+* Clone the repository : `git clone https://github.com/riwalenn/Projet-5.git` or
 * Download the repository
 * Unzip it and install it in your server files (www for windows or htdocs for mac)
 * Rename /config/_config.php to /config/config.php
