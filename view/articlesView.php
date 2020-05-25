@@ -93,11 +93,11 @@
                     if (!empty($submitRecherche)) :
                         ?>
                         <a class="page-link"
-                           href="index.php?action=recherche&submit= <?= $submitRecherche ?> &page= <?= $j ?> "> <?= $j ?></a>
+                           href="index.php?action=recherche&submit= <?= $submitRecherche ?> &page=<?= $j ?> "> <?= $j ?></a>
                     <?php
                     else :
                         ?>
-                        <a class="page-link" href="index.php?action=articlesListe&page= <?= $j ?>"> <?= $j ?> </a>
+                        <a class="page-link" href="index.php?action=articlesListe&page=<?= $j ?>"> <?= $j ?></a>
                     <?php
                     endif;
                     ?>
