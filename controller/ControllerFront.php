@@ -561,13 +561,17 @@ class ControllerFront
                 $date_user = new DateTime($user->getDate_modification());
                 $now = new DateTime();
                 $interval = $date_user->diff($now);
-                if ($user->getState() == 3 && ($interval->format('%R%a days') > 7)) :
-                    $userManager->updateIdUserInComments($user);
-                    $userManager->deleteUser($user);
-                    $errorMessage = 'L\'utilisateur a été supprimé avec succès.';
-                else:
+                if ($user->getState() == 3) {
+                    if ($interval->format('%R%a days') > 7) {
+                        $userManager->updateIdUserInComments($user);
+                        $userManager->deleteUser($user);
+                        $errorMessage = 'L\'utilisateur a été supprimé avec succès.';
+                    } else {
+                        $errorMessage = 'Erreur : L\'utilisateur s\'est connecté récemment.';
+                    }
+                } else {
                     $errorMessage = 'Erreur : L\'utilisateur n\'a pas le status "supprimé"';
-                endif;
+                }
                 break;
         }
 
