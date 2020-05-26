@@ -264,7 +264,7 @@ class ControllerFront
         $userManager->registrationConfirmationByToken($user);
         $userManager->deleteToken($user);
 
-        $this->afficherIndex();
+        $this->afficherLoginForm();
     }
 
     /**
