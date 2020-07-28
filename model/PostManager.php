@@ -235,6 +235,18 @@ class PostManager extends Connexion
         }
     }
 
+    //Compte le nombre d'article par catégorie
+    public function countPostsByCategory()
+    {
+        $bdd = $this->dbConnect();
+        $countCategories = $bdd->prepare('SELECT categories.category, COUNT(posts.id) AS nb_posts 
+                                                        FROM `posts` LEFT JOIN `categories` ON posts.id_category = categories.id 
+                                                        GROUP BY id_category');
+        $countCategories->execute();
+        $countCategory = $countCategories->fetchAll();
+        return $countCategory;
+    }
+
     /*
      * CRUD
      */

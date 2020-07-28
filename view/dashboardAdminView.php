@@ -1,7 +1,7 @@
 <?php
 if ((isset($_SESSION['id']))) :
     ?>
-    <section class="page-profil" id="profil">
+    <section class="page-profil" id="profil" xmlns="http://www.w3.org/1999/xhtml">
         <div class="container">
             <h1 class="titre-dashboard-admin">Dashboard ADMIN</h1>
             <div class="row d-flex justify-content-around">
@@ -27,6 +27,7 @@ if ((isset($_SESSION['id']))) :
                                             class="fas fa-sign-out-alt"></i> Deconnexion</a>
                             </p>
                             <hr>
+                            <h6 class="dashboard">Utilisateurs (ajout/validation)</h6>
                             <p>
                                 <small class="text-muted">
                                     * ajouter un utilisateur -
@@ -38,17 +39,21 @@ if ((isset($_SESSION['id']))) :
                                     référents -
                                     <a class="articles-link" href="index.php?action=usersManager&value=referents">
                                         <i class="fa fa-eye"></i> voir liste</a></small><br>
-                                <small class="text-muted"><span
-                                            class="badge badge-danger"> <?= $nbUsersToDelete ?> </span> utilisateur(s) à
-                                    supprimer -
-                                    <a class="articles-link" href="index.php?action=usersManager&value=trash">
-                                        <i class="fa fa-eye"></i> voir liste</a></small><br>
                                 <small class="text-muted">
                                     <span class="badge badge-warning"> <?= $nbUsersWaitingList ?> </span>
                                     utilisateur(s) en attente de validation -
                                     <a class="articles-link" href="index.php?action=usersManager&value=uncheckedUsers">
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
+                            </p>
+                                <hr>
+                            <h6 class="dashboard">Utilisateurs à supprimer</h6>
+                            <p>
+                                <small class="text-muted">
+                                    <span class="badge badge-danger"> <?= $nbUsersToDelete ?> </span> utilisateur(s) à
+                                    supprimer -
+                                    <a class="articles-link" href="index.php?action=usersManager&value=trash">
+                                        <i class="fa fa-eye"></i> voir liste</a></small><br>
                                 <small class="text-muted"><span
                                             class="badge badge-danger"> <?= $nbUsersConnexionExpired ?> </span>
                                     utilisateur(s) non connecté depuis 3 mois - <i
@@ -57,8 +62,12 @@ if ((isset($_SESSION['id']))) :
                                        onclick="return ConfirmMessageAdmin()">
                                         <i class="fa fa-trash"></i> purger la liste</a>
                                 </small><br>
-                                <small class="text-muted"><span
-                                            class="badge badge-warning"> <?= $nbUsersTokenNotValidate ?> </span>
+                            </p>
+                                <hr>
+                            <h6 class="dashboard">Tokens</h6>
+                            <p>
+                                <small class="text-muted">
+                                    <span class="badge badge-warning"> <?= $nbUsersTokenNotValidate ?> </span>
                                     utilisateur(s) n'ont pas validé leurs token -
                                     <a class="articles-link"
                                        href="index.php?action=usersManager&value=uncheckedTokenUsers">
@@ -93,6 +102,7 @@ if ((isset($_SESSION['id']))) :
                             </blockquote>
                         </div>
                         <div class="card-body articles-caption">
+                            <h6 class="dashboard">Articles(ajout/validation/suppression)</h6>
                             <p>
                                 <small class="text-muted">
                                     * ajouter un article -
@@ -121,6 +131,19 @@ if ((isset($_SESSION['id']))) :
                                 </small>
                             </p>
                             <hr>
+                            <h6 class="dashboard">Statistiques</h6>
+                            <p>
+                                <small class="text-muted">
+                                    <?php
+                                    foreach ($nbPostsByCategory as $nbPosts) :
+                                        ?>
+                                        <span class="badge badge-blog"><?= $nbPosts['nb_posts'] ?></span> <?= $nbPosts['category'] ?><br>
+                                    <?php
+                                    endforeach;
+                                    ?>
+                            </p>
+                            <hr>
+                            <h6 class="dashboard">Commentaires</h6>
                             <p>
                                 <small class="text-muted">
                                     <span class="badge badge-warning"><?= $nbCommentsUnchecked ?> </span>
@@ -138,6 +161,7 @@ if ((isset($_SESSION['id']))) :
                                 </small>
                             </p>
                             <hr>
+                            <h6 class="dashboard">Portfolio</h6>
                             <p>
                                 <small class="text-muted">
                                     <a class="articles-link" href="index.php?action=portfolioManager">

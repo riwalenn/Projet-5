@@ -453,6 +453,7 @@ class ControllerFront
             $nbPostsUnchecked = $postManager->countPostsUnckecked();
             $nbPostsArchived = $postManager->countPostsArchived();
             $nbPostsToDelete = $postManager->countPostsToDelete();
+            $nbPostsByCategory = $postManager->countPostsByCategory();
 
             //Compteur commentaires
             $nbCommentsUnchecked = $commentManager->countCommentsUncheked();
@@ -461,7 +462,7 @@ class ControllerFront
             $categories = $categoryManager->selectAllCategories();
 
             $view = new View('Tableau de bord');
-            $view->render('view/dashboardAdminView.php', ['portfolio' => $portfolio, 'user' => $user, 'nbPostsUnchecked' => $nbPostsUnchecked, 'nbPostsArchived' => $nbPostsArchived, 'nbPostsToDelete' => $nbPostsToDelete, 'nbUsersTotal' => $nbUsersTotal, 'nbUsersReferent' => $nbUsersReferent, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate, 'nbUsersToDelete' => $nbUsersToDelete, 'nbPostTotal' => $nbPostTotal, 'nbCommentsUnchecked' => $nbCommentsUnchecked, 'nbCommentsToDelete' => $nbCommentsToDelete, 'categories' => $categories]);
+            $view->render('view/dashboardAdminView.php', ['portfolio' => $portfolio, 'user' => $user, 'nbPostsUnchecked' => $nbPostsUnchecked, 'nbPostsArchived' => $nbPostsArchived, 'nbPostsToDelete' => $nbPostsToDelete, 'nbUsersTotal' => $nbUsersTotal, 'nbUsersReferent' => $nbUsersReferent, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate, 'nbUsersToDelete' => $nbUsersToDelete, 'nbPostTotal' => $nbPostTotal, 'nbPostsByCategory' => $nbPostsByCategory, 'nbCommentsUnchecked' => $nbCommentsUnchecked, 'nbCommentsToDelete' => $nbCommentsToDelete, 'categories' => $categories]);
         else:
             $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
             throw new ExceptionOutput($message);

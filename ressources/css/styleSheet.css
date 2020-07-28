@@ -38,6 +38,18 @@ i.fa.fa-search.fa-inverse {
     color: #00c0c7;
 }
 
+h6.dashboard {
+    color: #000000;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-variant: all-small-caps;
+}
+
+.badge-blog{
+    color: #ffffff;
+    background-color: #00c0c7;
+}
+
 #categories button.btn.btn-outline-info {
     color: #00c0c7;
     border: 1px solid #00c0c7;
