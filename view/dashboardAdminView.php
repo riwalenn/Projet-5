@@ -34,8 +34,8 @@ if ((isset($_SESSION['id']))) :
                                     <a class="articles-link" data-toggle="modal" href="#formModalAdd">
                                         <i class="fa fa-plus-square"></i> ajouter</a>
                                 </small><br>
-                                <small class="text-muted"><span
-                                            class="badge badge-success"><?= $nbUsersReferent ?></span> utilisateur(s)
+                                <small class="text-muted">
+                                    <span class="badge badge-success"><?= $nbUsersReferent ?></span> utilisateur(s)
                                     référents -
                                     <a class="articles-link" href="index.php?action=usersManager&value=referents">
                                         <i class="fa fa-eye"></i> voir liste</a></small><br>
@@ -46,7 +46,7 @@ if ((isset($_SESSION['id']))) :
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
                             </p>
-                                <hr>
+                            <hr>
                             <h6 class="dashboard">Utilisateurs à supprimer</h6>
                             <p>
                                 <small class="text-muted">
@@ -54,8 +54,8 @@ if ((isset($_SESSION['id']))) :
                                     supprimer -
                                     <a class="articles-link" href="index.php?action=usersManager&value=trash">
                                         <i class="fa fa-eye"></i> voir liste</a></small><br>
-                                <small class="text-muted"><span
-                                            class="badge badge-danger"> <?= $nbUsersConnexionExpired ?> </span>
+                                <small class="text-muted">
+                                    <span class="badge badge-danger"> <?= $nbUsersConnexionExpired ?> </span>
                                     utilisateur(s) non connecté depuis 3 mois - <i
                                             class="fas fa-exclamation-triangle danger"></i>
                                     <a class="articles-link" href="index.php?action=delete&value=connexionExpired"
@@ -63,7 +63,7 @@ if ((isset($_SESSION['id']))) :
                                         <i class="fa fa-trash"></i> purger la liste</a>
                                 </small><br>
                             </p>
-                                <hr>
+                            <hr>
                             <h6 class="dashboard">Tokens</h6>
                             <p>
                                 <small class="text-muted">
@@ -137,10 +137,12 @@ if ((isset($_SESSION['id']))) :
                                     <?php
                                     foreach ($nbPostsByCategory as $nbPosts) :
                                         ?>
-                                        <span class="badge badge-blog"><?= $nbPosts['nb_posts'] ?></span> <?= $nbPosts['category'] ?><br>
+                                        <span class="badge badge-blog"><?= $nbPosts['nb_posts'] ?></span> <?= $nbPosts['category'] ?>
+                                        <br>
                                     <?php
                                     endforeach;
                                     ?>
+                                </small><br>
                             </p>
                             <hr>
                             <h6 class="dashboard">Commentaires</h6>
