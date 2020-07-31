@@ -50,19 +50,26 @@ h6.dashboard {
     background-color: #00c0c7;
 }
 
-#categories button.btn.btn-outline-info {
+.categories button.btn.btn-outline-info {
     color: #00c0c7;
     border: 1px solid #00c0c7;
     margin: 5px 0;
 }
 
-#categories button.btn.btn-outline-info:hover {
+.categories button.btn.btn-outline-info:hover {
     background-color: #00c0c7;
     color: #ffffff;
 }
 
-#categories {
+.categories {
     margin-bottom: 2%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: start;
+}
+
+p.variableAPasser, p#variableAPasser1, p#variableAPasser2, p#variableAPasser3, p#variableAPasser4, p#variableAPasser5, p#variableAPasser6, p#variableAPasser7, p#variableAPasser8 {
+    margin-left: 0.2rem;
 }
 
 .helpmessage {
@@ -150,8 +157,40 @@ form .btn-sm {
     text-align: left;
 }
 
+.fas.fa-circle.portfolio {
+    margin: 0.3rem 0.2rem 0 0.4rem;
+}
+
 .fas.fa-check-square {
     color: green !important;
+}
+
+.phpCategory {
+    color: #4f5d95;
+}
+
+.jsCategory {
+    color: #f1e05a;
+}
+
+.cssCategory {
+    color: #563d7c;
+}
+
+.htmlCategory {
+    color: #e34c26;
+}
+
+.bootstrapCategory {
+    color: #7952b3;
+}
+
+.wordPressCategory {
+    color: #003c56;
+}
+
+.umlCategory {
+    color: red;
 }
 
 #articles .articles-item {

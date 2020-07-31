@@ -10,6 +10,11 @@ class ControllerFront
     {
         $portfolioManager = new PortfolioManager();
         $portfolio = $portfolioManager->getPortfolio();
+        $portfolioCategoriesManager = new FolioCategoriesManager();
+
+        foreach ($portfolio as $folio) :
+            $portfolioCategoriesManager->fillCategoryInPortfolio($folio);
+        endforeach;
 
         $view = new View('Riwalenn Bas - développeuse d\'applications PHP/Symfony');
         $view->render('view/indexView.php', ['portfolio' => $portfolio]);
