@@ -68,7 +68,6 @@ class UserManager extends Connexion
         $statement = $bdd->prepare('SELECT `token`, `email` FROM `tokens` 
                                                 JOIN `users` ON `id_user` = `id` WHERE `email` LIKE :email');
         $statement->execute(array('email' => htmlspecialchars($user->getEmail())));
-
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
     }
 

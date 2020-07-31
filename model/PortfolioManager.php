@@ -7,7 +7,7 @@ class PortfolioManager extends Connexion
     {
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT * FROM `portfolio` ORDER BY id DESC');
-        $statement->execute();
+        $statement->execute(array());
         return $statement->fetchAll(PDO::FETCH_CLASS, 'Portfolio');
     }
 

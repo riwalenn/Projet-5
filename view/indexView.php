@@ -298,8 +298,16 @@
                                 <ul class="list-inline">
                                     <li>Date de conception: <?= $folio->getDate_conception() ?></li>
                                     <li>Client: <?= $folio->getClient() ?></li>
-                                    <li>Categorie(s): <i
-                                                class="fas fa-check-square"></i> <?= $folio->getCategoriesFormatted() ?>
+                                    <li class="categories"><p>Categorie(s): </p>
+                                            <?php foreach ($folio->getCategories() as $categories) {
+                                                ?>
+                                                <i class="fas fa-circle portfolio" style="color: <?= $categories->getColor() ?>"></i>
+                                                <?=
+                                                $categories->getCategory()
+                                                ?>
+                                                <?php
+                                            } ?>
+                                        </p>
                                     </li>
                                 </ul>
                                 <button class="btn btn-primary" data-dismiss="modal" type="button">

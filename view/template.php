@@ -46,7 +46,9 @@
 
 <!-- Custom scripts for this template -->
 <script src="ressources/js/agency.min.js"></script>
+<script src="ressources/js/categoriesCircleStyle.js"></script>
 <script src="ressources/js/verifForm.js"></script>
+<script src="ressources/js/deleteUser.js"></script>
 <script src="ressources/js/summernote.js"></script>
 
 </body>

@@ -102,7 +102,7 @@ class Portfolio
     {
         $categories = $this->getCategories();
         $categoriesexploded = explode('/', $categories);
-        $categoriesFormatted = implode(' - <i class="fas fa-check-square"></i> ', $categoriesexploded);
+        $categoriesFormatted = implode(' - ', $categoriesexploded);
         return $categoriesFormatted;
     }
 }
