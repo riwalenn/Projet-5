@@ -18,13 +18,19 @@ if ((isset($_SESSION['id']))) : ?>
                             <i class="fas fa-ninja"></i>
                             <p class="text-muted"><b>Votre email :</b> <?= $user->getEmail() ?></p>
                             <p class="text-muted"><b>Date d'inscription :</b> <?= $user->getDate_inscription() ?></p>
-                            <p class="text-muted"><a href="index.php?action=logoutUser"
-                                                     onclick="return ConfirmDeconnexion()"><i
-                                            class="fas fa-sign-out-alt"></i> Deconnexion</a></p>
+                            <p class="text-muted">
+                                <small class="text-muted"><a class="articles-link" data-toggle="modal" href="#formModal"><i
+                                                class="fas fa-pen"></i> Modifier mes informations</a></small>
+                            </p>
+                            <p class="text-muted">
+                                <a href="index.php?action=logoutUser" onclick="return ConfirmDeconnexion()">
+                                    <i class="fas fa-sign-out-alt"></i> Deconnexion</a>
+                            </p>
                         </div>
                         <div class="card-footer">
-                            <small class="text-muted"><a class="articles-link" data-toggle="modal" href="#formModal"><i
-                                            class="fas fa-pen"></i> Modifier mes informations</a></small>
+                            <small class="text-muted">
+                                <a class="articles-link" data-toggle="modal" href="#formModalDeleteUser">
+                                    Supprimer mon compte <i class="far fa-trash-alt"></i></a></small>
                         </div>
                     </div>
                 </div>
@@ -198,6 +204,51 @@ if ((isset($_SESSION['id']))) : ?>
                                         informations.</p>
                                     <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit"
                                             value="Modification">Modifier mes données
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Modal suppression user -->
+    <div class="articles-modal modal fade" id="formModalDeleteUser" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl"></div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="modal-body">
+                                <h5>Suppression de mon compte</h5>
+                                <p><b style="color: red">Si vous choisissez la suppression de votre compte et non de vos données,</b> vos commentaires seront modifiés et mis en anonyme, sinon cochez la case pour tout supprimer (compte + commentaires + favoris)</p>
+                                <p>Valider la suppression en entrant votre adresse email utilisée pour la création de votre compte.</p>
+                                <form id="formDataUser" action="index.php?action=deleteUser" method="post"
+                                      onsubmit="return verifFormUser(this)">
+                                    <input type="hidden" value="<?= $_SESSION['id'] ?>" name="id" id="id">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><i
+                                                        class="fas fa-at"></i></span>
+                                        </div>
+                                        <input id="email" class="form-control form-control-sm"
+                                               placeholder="entrez votre email ici" aria-label="email" type="email"
+                                               name="email" value="<?= $user->getEmail() ?>" onkeyup="verifEmail(this)"
+                                               required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="fas fa-pen" data-toggle="tooltip"
+                                                                              data-placement="right"></i></span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit"
+                                            value="Suppression">Supprimer mon compte
                                     </button>
                                 </form>
                             </div>
