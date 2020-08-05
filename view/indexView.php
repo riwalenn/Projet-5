@@ -298,7 +298,7 @@
                                 <ul class="list-inline">
                                     <li>Date de conception: <?= $folio->getDate_conception() ?></li>
                                     <li>Client: <?= $folio->getClient() ?></li>
-                                    <li>Categorie(s): <p id="variableAPasser<?= $folio->getId() ?>"><?= $folio->getCategoriesFormatted() ?></p>
+                                    <li><p class="categories">Categorie(s):</p> <p id="variableAPasser<?= $folio->getId() ?>"><?= $folio->getCategoriesFormatted() ?></p>
                                     </li>
                                 </ul>
                                 <button class="btn btn-primary" data-dismiss="modal" type="button">

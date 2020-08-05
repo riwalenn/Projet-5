@@ -41,6 +41,30 @@ function getCategoriesColors(category) {
             classe = "#003c56";
             break;
 
+        case 'python':
+            classe = "#3572A5";
+            break;
+
+        case 'vue':
+            classe = "#2c3e50";
+            break;
+
+        case 'typeScript':
+            classe = "#2b7489";
+            break;
+
+        case 'java':
+            classe = "#b07219";
+            break;
+
+        case 'swift':
+            classe = "#ffac45";
+            break;
+
+        case 'c':
+            classe = "#178600";
+            break;
+
         default:
             classe = "green";
             break;
@@ -80,6 +104,30 @@ function getClassCategoryColor(category) {
             classe = "wordpressCategory";
             break;
 
+        case 'python':
+            classe = "pythonCategory";
+            break;
+
+        case 'vue':
+            classe = "vueCategory";
+            break;
+
+        case 'typeScript':
+            classe = "typeScriptCategory";
+            break;
+
+        case 'java':
+            classe = "javaCategory";
+            break;
+
+        case 'swift':
+            classe = "swiftCategory";
+            break;
+
+        case 'c':
+            classe = "cCategory";
+            break;
+
         default:
             classe = "green";
             break;
@@ -102,12 +150,13 @@ for (let i = 0; i < getElementsByRegexId(/^variableAPasser/, "p").length; i++) {
 
     //nouvelle boucle pour ajouter le sticker
     for (let i = 0; i < categoriesArray.length; i++) {
+        console.log(getElementsByRegexId(/^variableAPasser/, "p").length);
         let styleBalise = "style=\"color:" + getCategoriesColors(categoriesArray[i]) + "\"";
-        let sticker = '<i class=\"fas fa-circle "' + getClassCategoryColor(categoriesArray[i]) + '\" ' + styleBalise + '"></i>';
+        let sticker = '<i class=\"fas fa-circle "' + getClassCategoryColor(categoriesArray[i]) + '\" ' + styleBalise + '></i>';
         var newCategoriesArray = sticker + " " + categoriesArray[i];
     }
     paragraphOfCategories.remove();
     let c = document.getElementsByClassName("categories");
-    /*c.append(newCategoriesArray);
-    categoriesArray.length--;*/
+    console.log(newCategoriesArray);
+    /*c.append(newCategoriesArray);*/
 }
