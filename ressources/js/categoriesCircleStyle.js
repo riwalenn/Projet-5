@@ -2,74 +2,12 @@
 function getElementsByRegexId(regexParam, tagParam) {
     tagParam = (tagParam === undefined) ? '*' : tagParam;
     var elementsTable = new Array();
-    for(let i = 0; i<document.getElementsByTagName(tagParam).length; i++) {
-        if(document.getElementsByTagName(tagParam)[i].id && document.getElementsByTagName(tagParam)[i].id.match(regexParam)) {
+    for (let i = 0; i < document.getElementsByTagName(tagParam).length; i++) {
+        if (document.getElementsByTagName(tagParam)[i].id && document.getElementsByTagName(tagParam)[i].id.match(regexParam)) {
             elementsTable.push(document.getElementsByTagName(tagParam)[i]);
         }
     }
     return elementsTable;
-}
-//ajoute la couleur dans le html avec la balise "style"
-//ATTENTION: ceci oblige à modifier le fichier js à chaque nouvelle catégorie.
-function getCategoriesColors(category) {
-    switch (category) {
-        case 'conception UML':
-            classe = "red";
-            break;
-
-        case 'javascript':
-            classe = "#f1e05a";
-            break;
-
-        case 'php':
-            classe = "#4F5D95";
-            break;
-
-        case 'css':
-            classe = "#563d7c";
-            break;
-
-        case 'html':
-            classe = "#e34c26";
-            break;
-
-        case 'bootstrap':
-            classe = "#7952b3";
-            break;
-
-        case 'wordpress':
-            classe = "#003c56";
-            break;
-
-        case 'python':
-            classe = "#3572A5";
-            break;
-
-        case 'vue':
-            classe = "#2c3e50";
-            break;
-
-        case 'typeScript':
-            classe = "#2b7489";
-            break;
-
-        case 'java':
-            classe = "#b07219";
-            break;
-
-        case 'swift':
-            classe = "#ffac45";
-            break;
-
-        case 'c':
-            classe = "#178600";
-            break;
-
-        default:
-            classe = "green";
-            break;
-    }
-    return  classe;
 }
 
 //ajoute la couleur dans le html via une classe !
@@ -132,12 +70,13 @@ function getClassCategoryColor(category) {
             classe = "green";
             break;
     }
-    return  classe;
+    return classe;
 }
+
 //tableau DOM des paragraphes commençant par l'id "variableAPasser"
 let paragraphOfCategoriesArray = getElementsByRegexId(/^variableAPasser/, "p");
-//console.log(paragraphOfCategoriesArray.length);
-for (let i = 0; i < getElementsByRegexId(/^variableAPasser/, "p").length; i++) {
+let nbElem = getElementsByRegexId(/^variableAPasser/, "p").length;
+for (let i = 0; i < nbElem; i++) {
     //Convertit les paragraphes de catégories
     let paragraphOfCategories = Object.values(paragraphOfCategoriesArray)[i];
 
@@ -149,24 +88,20 @@ for (let i = 0; i < getElementsByRegexId(/^variableAPasser/, "p").length; i++) {
         return item.trim();
     });
 
+
     //nouvelle boucle pour ajouter le sticker
-    for (let i = 0; i < categoriesArray.length; i++) {
-        //console.log(categoriesArray.length);
-        /*
-        //création du sticker avec une balise style
-        let styleBalise = "style=\"color:" + getCategoriesColors(categoriesArray[i]) + "\"";
-        let sticker = '<i class=\"fas fa-circle "' + getClassCategoryColor(categoriesArray[i]) + '\" ' + styleBalise + '></i>';
-        */
-
+    for (let j = 0; j < categoriesArray.length; j++) {
         //création du sticker avec récupération de la couleur correspondante en classe
-        let sticker = '<i class=\"fas fa-circle ' + getClassCategoryColor(categoriesArray[i]) + '\"></i>';
-        var newCategoriesArray = sticker + " " + categoriesArray[i];
+        let categoryNode = document.createElement('i');
+        categoryNode.setAttribute("class", "fas fa-circle portfolio " + getClassCategoryColor(categoriesArray[j]));
+        c = paragraphOfCategories.parentNode;
+        c.append(categoryNode);
 
-        //console.log(sticker);
-        console.log(paragraphOfCategories);
-        paragraphOfCategories.remove();
-        let c = document.getElementsByClassName("categories");
-        //console.log(newCategoriesArray);
-        /*c.append(newCategoriesArray);*/
+        //récupération et intégration des catégories
+        let spanNode = document.createElement('p');
+        spanNode.textContent = categoriesArray[j];
+        c.append(spanNode);
     }
+
+    paragraphOfCategories.remove();
 }

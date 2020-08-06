@@ -61,8 +61,18 @@ h6.dashboard {
     color: #ffffff;
 }
 
+.fas.fa-circle.portfolio {
+    margin: 0.3rem 0.2rem 0 0.4rem;
+}
+
 #categories {
     margin-bottom: 2%;
+}
+
+.stickers {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: start;
 }
 
 .helpmessage {
