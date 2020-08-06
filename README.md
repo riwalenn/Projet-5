@@ -33,6 +33,9 @@ For Admin account :
 * email : admin@gmail.com (fake email)
 * password : Ze3zK3pZ8Q6fb%rQ
 
+## New_Features Module
+Do not Merge this feature... On the indexView page, there is the portoflio, it will do the same as i code with php : replace with javascript the categories portfolio with a color sticker and the category name.
+
 ## Built With
 
 * [PHP 7.1.9]
