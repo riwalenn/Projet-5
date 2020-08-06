@@ -159,7 +159,13 @@ INSERT INTO `folio_categories_color` (`id`, `category`, `color`) VALUES
 (5, 'bootstrap', '#7952b3'),
 (6, 'wordpress', '#003c56'),
 (7, 'uml', 'red'),
-(8, 'intégration', 'green');
+(8, 'intégration', 'green'),
+(9, 'python', '#3572A5'),
+(10, 'vue', '#2c3e50'),
+(11, 'typeScript', '#2b7489'),
+(12, 'java', '#b07219'),
+(13, 'swift', '#ffac45'),
+(14, 'c', '#178600');
 
 -- --------------------------------------------------------
 
@@ -175,7 +181,6 @@ CREATE TABLE IF NOT EXISTS `portfolio` (
   `content` text NOT NULL,
   `date_conception` year(4) NOT NULL,
   `client` tinytext NOT NULL,
-  `categories` tinytext NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
