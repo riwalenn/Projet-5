@@ -136,6 +136,7 @@ function getClassCategoryColor(category) {
 }
 //tableau DOM des paragraphes commençant par l'id "variableAPasser"
 let paragraphOfCategoriesArray = getElementsByRegexId(/^variableAPasser/, "p");
+//console.log(paragraphOfCategoriesArray.length);
 for (let i = 0; i < getElementsByRegexId(/^variableAPasser/, "p").length; i++) {
     //Convertit les paragraphes de catégories
     let paragraphOfCategories = Object.values(paragraphOfCategoriesArray)[i];
@@ -150,13 +151,22 @@ for (let i = 0; i < getElementsByRegexId(/^variableAPasser/, "p").length; i++) {
 
     //nouvelle boucle pour ajouter le sticker
     for (let i = 0; i < categoriesArray.length; i++) {
-        console.log(getElementsByRegexId(/^variableAPasser/, "p").length);
+        //console.log(categoriesArray.length);
+        /*
+        //création du sticker avec une balise style
         let styleBalise = "style=\"color:" + getCategoriesColors(categoriesArray[i]) + "\"";
         let sticker = '<i class=\"fas fa-circle "' + getClassCategoryColor(categoriesArray[i]) + '\" ' + styleBalise + '></i>';
+        */
+
+        //création du sticker avec récupération de la couleur correspondante en classe
+        let sticker = '<i class=\"fas fa-circle ' + getClassCategoryColor(categoriesArray[i]) + '\"></i>';
         var newCategoriesArray = sticker + " " + categoriesArray[i];
+
+        //console.log(sticker);
+        console.log(paragraphOfCategories);
+        paragraphOfCategories.remove();
+        let c = document.getElementsByClassName("categories");
+        //console.log(newCategoriesArray);
+        /*c.append(newCategoriesArray);*/
     }
-    paragraphOfCategories.remove();
-    let c = document.getElementsByClassName("categories");
-    console.log(newCategoriesArray);
-    /*c.append(newCategoriesArray);*/
 }
