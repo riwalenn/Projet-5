@@ -30,6 +30,10 @@
     margin-top: 5%;
 }
 
+.hobbies {
+    border: 1px solid #00c0c7;
+}
+
 li.nav-item.dropdown.show {
     text-transform: initial;
 }

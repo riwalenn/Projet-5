@@ -28,10 +28,10 @@
                 <div class="col-md-4">
           <span class="fa-stack fa-4x">
             <i class="fas fa-circle fa-stack-2x text-primary"></i>
-            <i class="fab fa-wordpress fa-stack-1x fa-inverse"></i>
+            <i class="fab fa-symfony fa-stack-1x fa-inverse"></i>
           </span>
-                    <h4 class="service-heading">Wordpress</h4>
-                    <p class="text-muted">Configuration, utilisation et intégration de thèmes dans Wordpress.</p>
+                    <h4 class="service-heading">Symfony/twig</h4>
+                    <p class="text-muted">Prise en main de Symfony et Twig, gestion de bases de données avec Doctrine.</p>
                 </div>
             </div>
         </div>
@@ -199,19 +199,23 @@
             </div>
             <div class="row competences">
                 <div class="col-md-3 col-sm-6">
-                    <img class="img-fluid d-block mx-auto" src="ressources/img/logos/responsive.jpg"
-                         alt="Création de sites responsives">
+                    <a href="https://riwalenn.wordpress.com/category/photos/">
+                        <img class="img-fluid d-block mx-auto hobbies" src="ressources/img/hobbies/photographe.jpg"
+                         alt="Photographie">
+                    </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <img class="img-fluid d-block mx-auto" src="ressources/img/logos/workbench.jpg"
-                         alt="Conception UML et bdd">
+                    <a href="https://open.spotify.com/playlist/37i9dQZF1EjwanrjhCDbh2?si=H4YopdD7TQCCLQzByZqPAQ">
+                        <img class="img-fluid d-block mx-auto hobbies" src="ressources/img/hobbies/musique.jpg"
+                         alt="Musique">
+                    </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <img class="img-fluid d-block mx-auto" src="ressources/img/logos/design.jpg"
-                         alt="Connaissance de photoshop">
+                    <img class="img-fluid d-block mx-auto hobbies" src="ressources/img/hobbies/manette_playstation.jpg"
+                         alt="Jeux vidéos">
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <img class="img-fluid d-block mx-auto" src="ressources/img/logos/PHP.jpg" alt="Php 7 / JQuery / JS">
+                    <img class="img-fluid d-block mx-auto hobbies" src="ressources/img/hobbies/bol_asie.jpg" alt="L'asie">
                 </div>
             </div>
         </div>

@@ -29,6 +29,7 @@
 <body class="container-fluid" id="page-top">
 <?php include 'menu.php' ?>
 <?= $content ?>
+
 <?php include 'footer.html' ?>
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
