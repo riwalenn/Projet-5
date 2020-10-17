@@ -66,6 +66,21 @@ class Installation extends Connexion
         $statement->execute();
     }
 
+    public function installPortfolioCategoriesColorTable()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('DROP TABLE IF EXISTS `folio_categories_color`');
+
+        $statement = $bdd->prepare('DROP TABLE IF EXISTS `folio_categories_color`;
+                                                CREATE TABLE IF NOT EXISTS `folio_categories_color` (
+                                                  `id` int(10) NOT NULL AUTO_INCREMENT,
+                                                  `category` varchar(20) NOT NULL,
+                                                  `color` varchar(10) NOT NULL,
+                                                  UNIQUE KEY `id` (`id`)
+                                                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;');
+        $statement->execute();
+    }
+
     public function installPortfolioTable()
     {
         $bdd = $this->dbConnect();
@@ -83,6 +98,24 @@ class Installation extends Connexion
                                                   `categories` tinytext NOT NULL,
                                                   PRIMARY KEY (`id`)
                                                 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1');
+        $statement->execute();
+    }
+
+    public function installPortfolioCategoriesTable()
+    {
+        $bdd = $this->dbConnect();
+        $statement = $bdd->prepare('DROP TABLE IF EXISTS `folio_categories`');
+        $statement->execute();
+        $statement = $bdd->prepare('CREATE TABLE IF NOT EXISTS `folio_categories` (
+                                                  `id_folio` int(10) NOT NULL,
+                                                  `id_folio_cat` int(10) NOT NULL,
+                                                  KEY `id_folio` (`id_folio`,`id_folio_cat`),
+                                                  KEY `folio_category` (`id_folio_cat`)
+                                                ) ENGINE=InnoDB DEFAULT CHARSET=latin1;');
+        $statement->execute();
+        $statement = $bdd->prepare('ALTER TABLE `folio_categories`
+                                              ADD CONSTRAINT `folio_category` FOREIGN KEY (`id_folio_cat`) REFERENCES `folio_categories_color` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+                                              ADD CONSTRAINT `folio_folio` FOREIGN KEY (`id_folio`) REFERENCES `portfolio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;');
         $statement->execute();
     }
 
@@ -203,7 +236,7 @@ class Installation extends Connexion
                                                     (15, \'médias\'),
                                                     (18, \'php & sql\'),
                                                     (2, \'prototypage\'),
-                                                    (12, \'ressources humaines\'),
+                                                    (12, \'public humaines\'),
                                                     (100, \'Sans catégorie\'),
                                                     (99, \'sécurité\'),
                                                     (5, \'social media\'),
@@ -211,15 +244,58 @@ class Installation extends Connexion
                                                     (17, \'wordpress\')');
         $statement->execute();
 
-        $statement = $bdd->prepare('INSERT INTO `portfolio` (`id`, `title`, `kicker`, `content`, `date_conception`, `client`, `categories`) VALUES
-                                                        (1, \'La cuisine de Cécile\', \'Conception d un site internet en php . \', \'Conception d un site en php pour un projet de fin d études.\', 2011, \'La cuisine de Cécile\', \'Html/css/php\'),
-                                                        (2, \'Festival Jazz à Juan-les-pins\', \'Intégration web pour Constellation Network.\', \'Intégration web en Xtml à partir d une maquette créée par le graphiste . \', 2011, \'Ville de Juan-les-pins\', \'Intégration\'),
-                                                        (3, \'Gîtes de France\', \'Intégration web pour Constellation Network.\', \'Intégration web en Xhtml à partir de la charte graphique des gîtes de France.\', 2011, \'Gîtes de France Ardèche\', \'Intégration\'),
-                                                        (4, \'Projet n°2\', \'Intégration d un thème wordpress . \', \'Intégration d un thème wordpress(au choix) pour le cadre d un projet OpenClassrooms.\', 2017, \'Chalets & Caviar (projet fictif)\', \'Intégration/wordpress\'),
-                                                        (5, \'Projet n°3\', \'Création d un site en html & css . \', \'Création d un site web en html 5 et Css 3, responsive pour le cadre d un projet OpenClassrooms (j ai aussi créé la maquette).\', 2017, \'Festival des films plein air (projet fictif)\', \'html/css\'),
-                                                        (6, \'Projet n°4\', \'Conception de solution technique d une application . \', \'Conception de diagrammes UML et modélisation de la base de données.\', 2017, \'Express Food (projet fictif)\', \'Conception UML\'),
-                                                        (7, \'Projet n°5\', \'Conception d un blog responsive en php . \', \'Conception de diagrammes UML, modélisation de la bdd et site en php.\', 2020, \'Riwalenn Bas\', \'Conception UML/bootstrap/php\'),
-                                                        (8, \'Paperfly\', \'Conception d un blog responsive en php . \', \'Conception de diagrammes UML, modélisation de la bdd et site en php.\', 2019, \'Mickaël R.\', \'Conception UML/bootstrap/php\')');
+        $statement = $bdd->prepare("INSERT INTO `portfolio` (`id`, `title`, `kicker`, `content`, `date_conception`, `client`, `categories`) VALUES
+                                                (1, 'La cuisine de Cécile', 'Conception d\'un site internet en php.', 'Conception d\'un site en php pour un projet de fin d\'études.', 2011, 'La cuisine de Cécile', 'html/css/php'),
+                                                (2, 'Festival Jazz à Juan-les-pins', 'Intégration web pour Constellation Network.', 'Intégration web en Xtml à partir d\'une maquette créée par le graphiste.', 2011, 'Ville de Juan-les-pins', 'intégration'),
+                                                (3, 'Gîtes de France', 'Intégration web pour Constellation Network.', 'Intégration web en Xhtml à partir de la charte graphique des gîtes de France.', 2011, 'Gîtes de France Ardèche', 'intégration'),
+                                                (4, 'Projet n°2', 'Intégration d\'un thème wordpress.', 'Intégration d\'un thème wordpress (au choix) pour le cadre d\'un projet OpenClassrooms.', 2017, 'Chalets & Caviar (projet fictif)', 'wordpress/intégration'),
+                                                (5, 'Projet n°3', 'Création d\'un site en html & css.', 'Création d\'un site web en html 5 et Css 3, responsive pour le cadre d\'un projet OpenClassrooms (j\'ai aussi créé la maquette).', 2017, 'Festival des films plein air (projet fictif)', 'html/css'),
+                                                (6, 'Projet n°4', 'Conception de solution technique d\'une application.', 'Conception de diagrammes UML et modélisation de la base de données.', 2017, 'Express Food (projet fictif)', 'conception UML'),
+                                                (7, 'Projet n°5', 'Conception d\'un blog responsive en php.', 'Conception de diagrammes UML, modélisation de la bdd et site en php.<br>Système de favoris et fil d\'Arianne.', 2020, 'Riwalenn Bas', 'conception UML/bootstrap/php/javascript'),
+                                                (9, 'Projet n°6', 'Conception d\'un site communautaire sur le snowboarding.', 'Conception de diagrammes UML, modélisation de la bdd et créé avec le framework Symfony.', 2020, 'Jimmy Sweat (faux client)', 'symfony/twig/php/javascript/bootstrap/uml');
+");
+        $statement->execute();
+
+        $statement = $bdd->prepare("INSERT INTO `folio_categories_color` (`id`, `category`, `color`) VALUES
+                                                (1, 'php', '#4F5D95'),
+                                                (2, 'javascript', '#f1e05a'),
+                                                (3, 'css', '#563d7c'),
+                                                (4, 'html', '#e34c26'),
+                                                (5, 'bootstrap', '#7952b3'),
+                                                (6, 'wordpress', '#003c56'),
+                                                (7, 'uml', 'red'),
+                                                (8, 'intégration', 'green'),
+                                                (9, 'python', '#3572A5'),
+                                                (10, 'vue', '#2c3e50'),
+                                                (11, 'typeScript', '#2b7489'),
+                                                (12, 'java', '#b07219'),
+                                                (13, 'swift', '#ffac45'),
+                                                (14, 'c', '#178600'),
+                                                (15, 'twig', '#bacf29');");
+        $statement->execute();
+
+        $statement = $bdd->prepare('INSERT INTO `folio_categories` (`id_folio`, `id_folio_cat`) VALUES
+                                                (1, 1),
+                                                (1, 3),
+                                                (1, 4),
+                                                (2, 8),
+                                                (3, 8),
+                                                (4, 6),
+                                                (4, 8),
+                                                (5, 3),
+                                                (5, 4),
+                                                (6, 7),
+                                                (7, 1),
+                                                (7, 2),
+                                                (7, 3),
+                                                (7, 5),
+                                                (7, 7),
+                                                (9, 1),
+                                                (9, 2),
+                                                (9, 3),
+                                                (9, 5),
+                                                (9, 7),
+                                                (9, 15);');
         $statement->execute();
 
         $statement = $bdd->prepare('INSERT INTO `users` (`id`, `pseudo`, `role`, `email`, `password`, `date_modification`, `date_inscription`, `cgu`, `state`) VALUES

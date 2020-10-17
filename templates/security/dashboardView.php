@@ -5,7 +5,7 @@ if ((isset($_SESSION['id']))) : ?>
             <div class="row d-flex justify-content-around">
                 <div class="card-deck dash">
                     <div class="card" id="profil_Dash">
-                        <img src="../ressources/img/dashboard/profil.jpg" class="img_dashboard"/>
+                        <img src="../../public/img/dashboard/profil.jpg" class="img_dashboard"/>
                         <div class="card-header">
                             <blockquote class="blockquote mb-0">
                                 <footer class="blockquote-footer">Dernière connexion
@@ -30,7 +30,7 @@ if ((isset($_SESSION['id']))) : ?>
                 </div>
                 <div class="card-deck dash">
                     <div class="card" id="profil_Dash">
-                        <img src="../ressources/img/dashboard/favorite.jpg" class="img_dashboard"/>
+                        <img src="../../public/img/dashboard/favorite.jpg" class="img_dashboard"/>
                         <div class="card-header">
                             <blockquote class="blockquote mb-0">
                                 <footer class="blockquote-footer">10 Favoris (triés par ordre de date décroissant)
@@ -91,7 +91,7 @@ if ((isset($_SESSION['id']))) : ?>
                 </div>
                 <div class="card-deck dash">
                     <div class="card" id="profil_Dash">
-                        <img src="../ressources/img/dashboard/articles.jpg" class="img_dashboard"/>
+                        <img src="../../public/img/dashboard/articles.jpg" class="img_dashboard"/>
                         <div class="card-header">
                             <blockquote class="blockquote mb-0">
                                 <footer class="blockquote-footer">Articles (triés par ordre de date décroissant)

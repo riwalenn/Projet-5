@@ -1,4 +1,4 @@
-<?php include 'header.html' ?>
+<?php include Constantes::PATH_FOLDER_TEMPLATES.'header.html' ?>
     <!-- Services -->
     <section class="page-section" id="services">
         <div class="container">
@@ -81,7 +81,7 @@
                     <ul class="timeline">
                         <li>
                             <div class="timeline-image">
-                                <img class="rounded-circle img-fluid" src="ressources/img/about/1.jpg" alt="">
+                                <img class="rounded-circle img-fluid" src="<?= Constantes::PATH_IMG_RESSOURCES ?>about/1.jpg" alt="">
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
@@ -96,7 +96,7 @@
                         </li>
                         <li class="timeline-inverted">
                             <div class="timeline-image">
-                                <img class="rounded-circle img-fluid" src="ressources/img/about/2.jpg" alt="">
+                                <img class="rounded-circle img-fluid" src="<?= Constantes::PATH_IMG_RESSOURCES ?>about/2.jpg" alt="">
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
@@ -111,7 +111,7 @@
                         </li>
                         <li>
                             <div class="timeline-image">
-                                <img class="rounded-circle img-fluid" src="ressources/img/about/3.jpg" alt="">
+                                <img class="rounded-circle img-fluid" src="<?= Constantes::PATH_IMG_RESSOURCES ?>about/3.jpg" alt="">
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
@@ -125,7 +125,7 @@
                         </li>
                         <li class="timeline-inverted">
                             <div class="timeline-image">
-                                <img class="rounded-circle img-fluid" src="ressources/img/about/1.jpg" alt="">
+                                <img class="rounded-circle img-fluid" src="<?= Constantes::PATH_IMG_RESSOURCES ?>about/1.jpg" alt="">
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
@@ -139,7 +139,7 @@
                         </li>
                         <li>
                             <div class="timeline-image">
-                                <img class="rounded-circle img-fluid" src="ressources/img/about/2.jpg" alt="">
+                                <img class="rounded-circle img-fluid" src="<?= Constantes::PATH_IMG_RESSOURCES ?>about/2.jpg" alt="">
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
@@ -168,7 +168,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="team-member">
-                        <img class="mx-auto rounded-circle" src="ressources/img/team/3.jpg" alt="">
+                        <img class="mx-auto rounded-circle" src="<?= Constantes::PATH_IMG_RESSOURCES ?>team/3.jpg" alt="">
                         <h4>Riwalenn Bas</h4>
                         <p class="text-muted">Développeuse d'applications junior</p>
                         <ul class="list-inline social-buttons">
@@ -183,7 +183,7 @@
                                 </a>
                             </li>
                             <li class="list-inline-item">
-                                <a href="ressources/pdf/CV_Bas_Riwalenn.pdf" download>
+                                <a href="<?= Constantes::PATH_FOLDER_PUBLIC ?>/pdf/CV_Bas_Riwalenn.pdf" download>
                                     <i class="fas fa-file-pdf"></i>
                                 </a>
                             </li>
@@ -200,22 +200,22 @@
             <div class="row competences">
                 <div class="col-md-3 col-sm-6">
                     <a href="https://riwalenn.wordpress.com/category/photos/">
-                        <img class="img-fluid d-block mx-auto hobbies" src="ressources/img/hobbies/photographe.jpg"
+                        <img class="img-fluid d-block mx-auto hobbies" src="<?= Constantes::PATH_IMG_RESSOURCES ?>hobbies/photographe.jpg"
                          alt="Photographie">
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <a href="https://open.spotify.com/playlist/37i9dQZF1EjwanrjhCDbh2?si=H4YopdD7TQCCLQzByZqPAQ">
-                        <img class="img-fluid d-block mx-auto hobbies" src="ressources/img/hobbies/musique.jpg"
+                        <img class="img-fluid d-block mx-auto hobbies" src="<?= Constantes::PATH_IMG_RESSOURCES ?>hobbies/musique.jpg"
                          alt="Musique">
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <img class="img-fluid d-block mx-auto hobbies" src="ressources/img/hobbies/manette_playstation.jpg"
+                    <img class="img-fluid d-block mx-auto hobbies" src="<?= Constantes::PATH_IMG_RESSOURCES ?>hobbies/manette_playstation.jpg"
                          alt="Jeux vidéos">
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <img class="img-fluid d-block mx-auto hobbies" src="ressources/img/hobbies/bol_asie.jpg" alt="L'asie">
+                    <img class="img-fluid d-block mx-auto hobbies" src="<?= Constantes::PATH_IMG_RESSOURCES ?>hobbies/bol_asie.jpg" alt="L'asie">
                 </div>
             </div>
         </div>

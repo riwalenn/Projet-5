@@ -3,7 +3,7 @@
 
 function autoload($classname)
 {
-    $folders = ['model/', 'framework/', 'controller/'];
+    $folders = ['src/model/', 'src/security/', 'src/entity/', 'framework/', 'src/controller/', 'migrations/'];
 
     foreach ($folders as $folder) {
         $classpath = $folder . $classname . '.php';

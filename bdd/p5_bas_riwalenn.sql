@@ -54,7 +54,7 @@ INSERT INTO `categories` (`id`, `category`) VALUES
 (15, 'médias'),
 (18, 'php & sql'),
 (2, 'prototypage'),
-(12, 'ressources humaines'),
+(12, 'public humaines'),
 (100, 'Sans catégorie'),
 (99, 'sécurité'),
 (5, 'social media'),

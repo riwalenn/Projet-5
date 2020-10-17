@@ -2,7 +2,7 @@
 //clone pour les infos sensibles
 
 //Chemin du template de la vue
-define('TEMPLATE_PATH', 'view/template.php');
+define('TEMPLATE_PATH', 'templates/base.php');
 
 //Chemin de l'autoload
 require_once 'framework/autoload.php';

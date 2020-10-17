@@ -170,6 +170,10 @@ if ((isset($_SESSION['id']))) :
                                         <i class="fa fa-copy"></i> voir le portfolio</a>
                                 </small><br>
                             </p>
+                            <hr>
+                                <!--<small class="text-muted chart-wrapper">
+
+                                </small>-->
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">

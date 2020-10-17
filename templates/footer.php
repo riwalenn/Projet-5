@@ -6,7 +6,7 @@
                 <span class="copyright">Copyright &copy; Riwalenn Bas 2019</span>
             </div>
             <div class="col-md-4">
-                <img src="ressources/img/logos/logo.png" class="logo menu" alt="logo"/>
+                <img src="<?= Constantes::PATH_IMG_RESSOURCES ?>logos/logo.png" class="logo menu" alt="logo"/>
             </div>
             <div class="col-md-4">
                 <ul class="list-inline quicklinks">

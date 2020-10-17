@@ -2,6 +2,29 @@
 
 class ControllerFront
 {
+    /*
+     *  VARIABLES DE VUE FRONTEND
+     */
+    private $indexView                  = Constantes::PATH_FOLDER_TEMPLATES_FRONT.'indexView.php';
+    private $articleView                = Constantes::PATH_FOLDER_TEMPLATES_FRONT.'articlesView.php';
+    private $formMailView               = Constantes::PATH_FOLDER_TEMPLATES_FRONT.'formMailView.php';
+
+
+    /*
+     *  VARIABLES DE VUE SECURITY
+     */
+    private $formLoginView              = Constantes::PATH_FOLDER_TEMPLATES_SECURITY.'formLoginView.php';
+    private $dashboardView              = Constantes::PATH_FOLDER_TEMPLATES_SECURITY.'dashboardView.php';
+    private $formRegistrationView       = Constantes::PATH_FOLDER_TEMPLATES_SECURITY.'formRegistrationView.php';
+    private $formPasswordView           = Constantes::PATH_FOLDER_TEMPLATES_SECURITY.'formPasswordView.php';
+    private $dashboardAdminView         = Constantes::PATH_FOLDER_TEMPLATES_SECURITY.'dashboardAdminView.php';
+    private $managerUsersView           = Constantes::PATH_FOLDER_TEMPLATES_SECURITY.'managerUsersView.php';
+    private $managerCommentsView        = Constantes::PATH_FOLDER_TEMPLATES_SECURITY.'managerCommentsView.php';
+    private $managerPortfolioView       = Constantes::PATH_FOLDER_TEMPLATES_SECURITY.'managerPortfolioView.php';
+    private $managerPostsView           = Constantes::PATH_FOLDER_TEMPLATES_SECURITY.'managerPostsView.php';
+
+
+
     /**
      * --------- INDEX ---------
      */
@@ -17,7 +40,7 @@ class ControllerFront
         endforeach;
 
         $view = new View('Riwalenn Bas - développeuse d\'applications PHP/Symfony');
-        $view->render('view/indexView.php', ['portfolio' => $portfolio]);
+        $view->render($this->indexView, ['portfolio' => $portfolio]);
     }
 
     /**
@@ -28,7 +51,7 @@ class ControllerFront
     public function afficherLoginForm()
     {
         $view = new View('Connexion');
-        $view->render('view/formLoginView.php');
+        $view->render($this->formLoginView);
     }
 
     //Fonction de connexion
@@ -108,7 +131,7 @@ class ControllerFront
                 $message = 'Le mot de passe ne correspond pas avec celui utilisé à l\'inscription';
 
                 $view = new View('Connexion');
-                $view->render('view/formLoginView.php', ['message' => $message]);
+                $view->render($this->formLoginView, ['message' => $message]);
             endif;
 
         /** si l'objet user est vide */
@@ -116,7 +139,7 @@ class ControllerFront
             $message = 'Vos informations de connexion ne correspondent pas.';
 
             $view = new View('Connexion');
-            $view->render('view/formLoginView.php', ['message' => $message]);
+            $view->render($this->formLoginView, ['message' => $message]);
         endif;
     }
 
@@ -144,7 +167,7 @@ class ControllerFront
             endforeach;
 
             $view = new View('Tableau de bord');
-            $view->render('view/dashboardView.php', ['favoritesPosts' => $favoritesPosts, 'errorMessage' => $errorMessage, 'lastPosts' => $lastPosts, 'user' => $user]);
+            $view->render($this->dashboardView, ['favoritesPosts' => $favoritesPosts, 'errorMessage' => $errorMessage, 'lastPosts' => $lastPosts, 'user' => $user]);
         else:
             $message = "Vous n'avez pas les autorisations pour accéder à cette page.";
             throw new ExceptionOutput($message);
@@ -243,7 +266,7 @@ class ControllerFront
         $messagePseudo = $userMessages->helpPseudo();
 
         $view = new View('Inscription');
-        $view->render('view/formRegistrationView.php', ['messagePassword' => $messagePassword, 'messagePseudo' => $messagePseudo]);
+        $view->render($this->formRegistrationView, ['messagePassword' => $messagePassword, 'messagePseudo' => $messagePseudo]);
     }
 
     //Fonction d'inscription
@@ -280,7 +303,7 @@ class ControllerFront
     public function afficherMailForm()
     {
         $view = new View('Formulaire');
-        $view->render('view/formMailView.php');
+        $view->render($this->formMailView);
     }
 
     //Fonction d'envoi de mail pour l'oubli du mot de passe
@@ -312,11 +335,11 @@ class ControllerFront
             $messageError = "Le token n'existe plus !";
 
             $view = new View('Formulaire');
-            $view->render('view/formPasswordView.php', ['messagePassword' => $messagePassword, 'token' => $token, 'messageError' => $messageError]);
+            $view->render($this->formPasswordView , ['messagePassword' => $messagePassword, 'token' => $token, 'messageError' => $messageError]);
 
         else:
             $view = new View('Formulaire');
-            $view->render('view/formPasswordView.php', ['messagePassword' => $messagePassword, 'token' => $token]);
+            $view->render($this->formPasswordView , ['messagePassword' => $messagePassword, 'token' => $token]);
         endif;
 
     }
@@ -331,7 +354,7 @@ class ControllerFront
 
         $confirmationMessage = "Votre mot de passe a bien été modifié." ?? "";
         $view = new View('Connexion');
-        $view->render('view/formLoginView.php', ['confirmationMessage' => $confirmationMessage]);
+        $view->render($this->formLoginView, ['confirmationMessage' => $confirmationMessage]);
     }
 
     /**
@@ -368,7 +391,7 @@ class ControllerFront
         }
 
         $view = new View('Liste des articles');
-        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'errorMessage' => $errorMessage, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante, 'submitRecherche' => $submitRecherche]);
+        $view->render($this->articleView, ['listPosts' => $listPosts, 'errorMessage' => $errorMessage, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante, 'submitRecherche' => $submitRecherche]);
     }
 
     //Affichage de la page des articles
@@ -395,7 +418,7 @@ class ControllerFront
         $nbPages = $postManager->countPagesByState(3, 1);
 
         $view = new View('Liste des articles');
-        $view->render('view/articlesView.php', ['listPosts' => $listPosts, 'errorMessage' => $errorMessage, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
+        $view->render($this->articleView, ['listPosts' => $listPosts, 'errorMessage' => $errorMessage, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
     }
 
     // Ajout d'un commentaire pour un utilisateur connecté
@@ -418,11 +441,13 @@ class ControllerFront
     //Affiche le backend Admin
     public function getBackendDashboard()
     {
-        $userManager = new UserManager();
-        $postManager = new PostManager();
-        $commentManager = new CommentManager();
-        $categoryManager = new CategoryManager();
-        $portfolioManager = new PortfolioManager();
+        $userManager                = new UserManager();
+        $postManager                = new PostManager();
+        $commentManager             = new CommentManager();
+        $categoryManager            = new CategoryManager();
+        $portfolioManager           = new PortfolioManager();
+        $folioCategoriesManager     = new FolioCategoriesManager();
+
         $portfolio = $portfolioManager->getPortfolio();
 
         $user = $userManager->getUserBySessionId();
@@ -444,30 +469,32 @@ class ControllerFront
                 }
             }
             //Compteurs utilisateurs
-            $nbUsersTotal = $userManager->countAllUsers();
-            $nbUsersReferent = $userManager->countReferents();
-            $nbUsersWaitingList = $userManager->countUsersUncheckedByModo();
-            $nbUsersConnexionExpired = $userManager->countUsersExpiredConnection();
-            $nbUsersTokenExpired = $userManager->countUsersExpiredToken();
-            $nbUsersTokenNotValidate = $userManager->countUsersTokenUnchecked();
-            $nbUsersToDelete = $userManager->countUsersToDelete();
+            $nbUsersTotal               = $userManager->countAllUsers();
+            $nbUsersReferent            = $userManager->countReferents();
+            $nbUsersWaitingList         = $userManager->countUsersUncheckedByModo();
+            $nbUsersConnexionExpired    = $userManager->countUsersExpiredConnection();
+            $nbUsersTokenExpired        = $userManager->countUsersExpiredToken();
+            $nbUsersTokenNotValidate    = $userManager->countUsersTokenUnchecked();
+            $nbUsersToDelete            = $userManager->countUsersToDelete();
 
 
             //Compteurs articles
-            $nbPostTotal = $postManager->countAllPosts();
-            $nbPostsUnchecked = $postManager->countPostsUnckecked();
-            $nbPostsArchived = $postManager->countPostsArchived();
-            $nbPostsToDelete = $postManager->countPostsToDelete();
-            $nbPostsByCategory = $postManager->countPostsByCategory();
+            $nbPostTotal                = $postManager->countAllPosts();
+            $nbPostsUnchecked           = $postManager->countPostsUnckecked();
+            $nbPostsArchived            = $postManager->countPostsArchived();
+            $nbPostsToDelete            = $postManager->countPostsToDelete();
+            $nbPostsByCategory          = $postManager->countPostsByCategory();
 
             //Compteur commentaires
-            $nbCommentsUnchecked = $commentManager->countCommentsUncheked();
-            $nbCommentsToDelete = $commentManager->countCommentsToDelete();
+            $nbCommentsUnchecked        = $commentManager->countCommentsUncheked();
+            $nbCommentsToDelete         = $commentManager->countCommentsToDelete();
 
-            $categories = $categoryManager->selectAllCategories();
+            $categories                 = $categoryManager->selectAllCategories();
+
+            $nbFolioCategories          = $folioCategoriesManager->getNbCategoriesFolio();
 
             $view = new View('Tableau de bord');
-            $view->render('view/dashboardAdminView.php', ['portfolio' => $portfolio, 'user' => $user, 'nbPostsUnchecked' => $nbPostsUnchecked, 'nbPostsArchived' => $nbPostsArchived, 'nbPostsToDelete' => $nbPostsToDelete, 'nbUsersTotal' => $nbUsersTotal, 'nbUsersReferent' => $nbUsersReferent, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate, 'nbUsersToDelete' => $nbUsersToDelete, 'nbPostTotal' => $nbPostTotal, 'nbPostsByCategory' => $nbPostsByCategory, 'nbCommentsUnchecked' => $nbCommentsUnchecked, 'nbCommentsToDelete' => $nbCommentsToDelete, 'categories' => $categories]);
+            $view->render($this->dashboardAdminView, ['portfolio' => $portfolio, 'nbFolioCategories' => $nbFolioCategories, 'user' => $user, 'nbPostsUnchecked' => $nbPostsUnchecked, 'nbPostsArchived' => $nbPostsArchived, 'nbPostsToDelete' => $nbPostsToDelete, 'nbUsersTotal' => $nbUsersTotal, 'nbUsersReferent' => $nbUsersReferent, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate, 'nbUsersToDelete' => $nbUsersToDelete, 'nbPostTotal' => $nbPostTotal, 'nbPostsByCategory' => $nbPostsByCategory, 'nbCommentsUnchecked' => $nbCommentsUnchecked, 'nbCommentsToDelete' => $nbCommentsToDelete, 'categories' => $categories]);
         else:
             $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
             throw new ExceptionOutput($message);
@@ -534,7 +561,7 @@ class ControllerFront
                 }
 
                 $view = new View('Liste des utilisateurs');
-                $view->render('view/managerUsersView.php', ['usersList' => $usersList, 'allValues' => $allValues, 'errorMessage' => $errorMessage, 'value' => $value, 'now' => $now, 'filArianne' => $filArianne]);
+                $view->render($this->managerUsersView, ['usersList' => $usersList, 'allValues' => $allValues, 'errorMessage' => $errorMessage, 'value' => $value, 'now' => $now, 'filArianne' => $filArianne]);
             }
         } else {
             $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
@@ -600,7 +627,7 @@ class ControllerFront
             $commentaires = $commentairesManager->getAllComments();
 
             $view = new View('Commentaires');
-            $view->render('view/managerCommentsView.php', ['user' => $user, 'commentaires' => $commentaires, 'errorMessage' => $errorMessage]);
+            $view->render($this->managerCommentsView, ['user' => $user, 'commentaires' => $commentaires, 'errorMessage' => $errorMessage]);
         }
     }
 
@@ -647,7 +674,7 @@ class ControllerFront
             $portfolio = $portfolioManager->getPortfolio();
 
             $view = new View('Portfolio');
-            $view->render('view/managerPortfolioView.php', ['user' => $user, 'portfolio' => $portfolio, 'errorMessage' => $errorMessage]);
+            $view->render($this->managerPortfolioView , ['user' => $user, 'portfolio' => $portfolio, 'errorMessage' => $errorMessage]);
         }
     }
 
@@ -665,7 +692,7 @@ class ControllerFront
                             $portfolioManager = new PortfolioManager();
                             $lastInsertId = $portfolioManager->createPortfolio($portfolio);
 
-                            $uploaddir = 'ressources/img/portfolio/';
+                            $uploaddir = 'public/img/portfolio/';
                             $infosfichierjpg = pathinfo($_FILES['foliojpg']['name']);
                             $infosfichierwebp = pathinfo($_FILES['foliowebp']['name']);
                             $extensionUpdloadjpg = $infosfichierjpg['extension'];
@@ -702,7 +729,7 @@ class ControllerFront
                             $portfolioManager = new PortfolioManager();
                             $id = $portfolio->getId();
 
-                            $uploaddir = 'ressources/img/portfolio/';
+                            $uploaddir = 'public/img/portfolio/';
                             $infosfichierjpg = pathinfo($_FILES['foliojpg']['name']);
                             $infosfichierwebp = pathinfo($_FILES['foliowebp']['name']);
                             $extensionUpdloadjpg = $infosfichierjpg['extension'];
@@ -740,8 +767,8 @@ class ControllerFront
             //Delete
             case 'D':
                 $id = $portfolio->getId();
-                $jpegToDelete = "ressources/img/portfolio/" . $id . '.jpg';
-                $webpToDelete = "ressources/img/portfolio/" . $id . '.webp';
+                $jpegToDelete = "public/img/portfolio/" . $id . '.jpg';
+                $webpToDelete = "public/img/portfolio/" . $id . '.webp';
                 unlink($jpegToDelete);
                 unlink($webpToDelete);
                 $portfolioManager->deletePortfolio($portfolio);
@@ -821,7 +848,7 @@ class ControllerFront
                 $categoryManager->fillCategoryInPost($post);
             }
             $view = new View('Liste des articles');
-            $view->render('view/managerPostsView.php', ['errorMessage' => $errorMessage, 'allValues' => $allValues, 'categories' => $categories, 'pageCourante' => $pageCourante, 'nbPages' => $nbPages, 'value' => $value, 'filArianne' => $filArianne, 'postsList' => $postsList]);
+            $view->render($this->managerPostsView, ['errorMessage' => $errorMessage, 'allValues' => $allValues, 'categories' => $categories, 'pageCourante' => $pageCourante, 'nbPages' => $nbPages, 'value' => $value, 'filArianne' => $filArianne, 'postsList' => $postsList]);
         } else {
             $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
             throw new ExceptionOutput($message);
@@ -873,7 +900,9 @@ class ControllerFront
             $installationManager->installCategoriesTable();
             $installationManager->installCommentsTable();
             $installationManager->installFavoritesTable();
+            $installationManager->installPortfolioCategoriesColorTable();
             $installationManager->installPortfolioTable();
+            $installationManager->installPortfolioCategoriesTable();
             $installationManager->installPostsTable();
             $installationManager->installTokensTable();
             $installationManager->installUsersTable();
@@ -899,7 +928,7 @@ class ControllerFront
         $erreurFile = $pdoException->getFile();
 
         $view = new View('Erreur PDO');
-        $view->render('view/errorView.php', ['erreurMessage' => $erreurMessage, 'erreurCode' => $erreurCode, 'erreurLine' => $erreurLine, 'erreurFile' => $erreurFile]);
+        $view->render('templates/errorView.php', ['erreurMessage' => $erreurMessage, 'erreurCode' => $erreurCode, 'erreurLine' => $erreurLine, 'erreurFile' => $erreurFile]);
     }
 
     public function erreurOutput($outputException)
@@ -910,7 +939,7 @@ class ControllerFront
         $erreurFile = $outputException->getFile();
 
         $view = new View('Erreur');
-        $view->render('view/errorView.php', ['erreurMessage' => $erreurMessage, 'erreurCode' => $erreurCode, 'erreurLine' => $erreurLine, 'erreurFile' => $erreurFile]);
+        $view->render('templates/errorView.php', ['erreurMessage' => $erreurMessage, 'erreurCode' => $erreurCode, 'erreurLine' => $erreurLine, 'erreurFile' => $erreurFile]);
     }
 
     public function erreur()
@@ -922,6 +951,6 @@ class ControllerFront
         $erreurFile = $erreurManager->getFile();
 
         $view = new View('Exception');
-        $view->render('view/errorView.php', ['erreurMessage' => $erreurMessage, 'erreurCode' => $erreurCode, 'erreurLine' => $erreurLine, 'erreurFile' => $erreurFile]);
+        $view->render('templates/errorView.php', ['erreurMessage' => $erreurMessage, 'erreurCode' => $erreurCode, 'erreurLine' => $erreurLine, 'erreurFile' => $erreurFile]);
     }
 }

@@ -31,7 +31,7 @@
                     <a class="nav-link js-scroll-trigger" href="index.php?action=articlesListe&page=1">Articles</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="ressources/pdf/CV_Bas_Riwalenn.pdf" download><i
+                    <a class="nav-link js-scroll-trigger" href="<?= Constantes::PATH_FOLDER_PUBLIC ?>pdf/CV_Bas_Riwalenn.pdf" download><i
                                 class="fas fa-file-pdf"></i></a>
                 </li>
                 <li class="nav-item <?php if (isset($_SESSION['id'])) : ?> d-none d-lg-block dropdown<?php endif; ?>">
