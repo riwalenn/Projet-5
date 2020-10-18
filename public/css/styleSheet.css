@@ -136,6 +136,11 @@ form .btn-sm {
     border: 1px solid #dee2e6 !important;
 }
 
+div.show-tick > button.btn-light {
+    background-color: #11dbba;
+    border-color: #11dbba;
+}
+
 .btn.filtres-submit:hover, .page-item.active:hover .page-link:hover {
     background-color: #00c0c7;
 }

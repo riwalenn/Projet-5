@@ -13,6 +13,7 @@ class ManagersController
     {
         $userManager = new UserManager();
         $user = $userManager->getUserBySessionId();
+        $arrayManager = new GetArray();
         $errorMessage = '';
 
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
@@ -25,13 +26,7 @@ class ManagersController
             $now = new DateTime(date("Y-m-d H:i:s"), $dtz);
 
             $usersList = [];
-            $allValues = [
-                "all" => "Tous les utilisateurs",
-                "uncheckedUsers" => "Utilisateurs à valider",
-                "uncheckedTokenUsers" => "Tokens non validés",
-                "referents" => "Utilisateurs référents",
-                "trash" => "Comptes à supprimer"
-            ];
+            $allValues = $arrayManager->userManagerList();
             $filArianne = '';
             $value = filter_input(INPUT_GET, 'value');
             if (isset($value)) {
@@ -193,6 +188,7 @@ class ManagersController
         $userManager = new UserManager();
         $portfolioManager = new PortfolioManager();
         $user = $userManager->getUserBySessionId();
+        $arrayManager = new GetArray();
         $errorMessage = '';
 
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
@@ -202,9 +198,10 @@ class ManagersController
             }
 
             $portfolio = $portfolioManager->getPortfolio();
+            $categoriesColor = $arrayManager->categoriesFolioManagerList();
 
             $view = new View('Portfolio');
-            $view->render($this->managerPortfolioView , ['user' => $user, 'portfolio' => $portfolio, 'errorMessage' => $errorMessage]);
+            $view->render($this->managerPortfolioView , ['user' => $user, 'portfolio' => $portfolio, 'categoriesColor' => $categoriesColor, 'errorMessage' => $errorMessage]);
         }
     }
 
@@ -313,6 +310,7 @@ class ManagersController
     {
         $userManager = new UserManager();
         $user = $userManager->getUserBySessionId();
+        $arrayManager = new GetArray();
         $errorMessage = '';
 
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
@@ -325,13 +323,7 @@ class ManagersController
             $categoryManager = new CategoryManager();
             $categories = $categoryManager->selectAllCategories();
             $pageCourante = filter_input(INPUT_GET, 'page') ?? 1;
-            $allValues = [
-                "all" => "Tous les articles",
-                "uncheckedPosts" => "Articles à valider",
-                "checkedPosts" => "Articles validés",
-                "archived" => "Articles archivés",
-                "trash" => "Articles à supprimer"
-            ];
+            $allValues = $arrayManager->postManagerList();
             $nbPosts = 10;
             $value = filter_input(INPUT_GET, 'value');
             if (isset($value)) {

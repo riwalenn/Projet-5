@@ -9,6 +9,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="<?= Constantes::PATH_FOLDER_VENDOR ?>bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -35,6 +36,7 @@
 <!-- Bootstrap core JavaScript -->
 <script src="<?= Constantes::PATH_FOLDER_VENDOR ?>jquery/jquery.min.js"></script>
 <script src="<?= Constantes::PATH_FOLDER_VENDOR ?>bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
 <!-- include summernote js -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-bs4.min.js"></script>

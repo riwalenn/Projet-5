@@ -208,8 +208,7 @@
                                 </div>
                                 <div class="input-group mb-3">
                                     <label for="categories"></label>
-                                    <input class="form-control form-control-sm" type="text" id="categories"
-                                           name="categories" placeholder="Inscrivez les catégories ici">
+                                    <?= $categoriesColor ?>
                                 </div>
                                 <p class="alert-info">Les images doivent être de format 800x600 maximum</p>
                                 <input type="hidden" name="MAX_FILES_SIZE" value="200000">
