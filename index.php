@@ -1,111 +1,119 @@
 <?php
 require_once 'config/config.php';
 try {
-    $controller = new ControllerFront();
+    $controller                 = new ControllerFront();
+    $controllerBack             = new ControllerBack();
+    $securityController         = new SecurityController();
+    $dashboardController        = new DashboardUserController();
+    $favorisController          = new FavorisController();
+    $postController             = new PostController();
+    $installationController     = new InstallationController();
+    $managers                   = new ManagersController();
+
     $action = filter_input(INPUT_GET, 'action');
     if (isset($action)) {
         switch ($action) {
             case 'articlesListe' :
-                $controller->afficherListeArticles();
+                $postController->afficherListeArticles();
                 break;
 
             case 'addComment' :
-                $controller->ajoutCommentaire();
+                $postController->ajoutCommentaire();
                 break;
 
             case 'recherche' :
-                $controller->afficherResultatRecherche();
+                $postController->afficherResultatRecherche();
                 break;
 
             // Affiche le formulaire
             case 'connexion' :
-                $controller->afficherLoginForm();
+                $securityController->afficherLoginForm();
                 break;
 
             case 'loginUser' :
-                $controller->login();
+                $securityController->login();
                 break;
 
             case 'dashboard' :
-                $controller->getDashboardUser();
+                $dashboardController->getDashboardUser();
                 break;
 
             case 'backendDashboard':
-                $controller->getBackendDashboard();
+                $controllerBack->getBackendDashboard();
                 break;
 
             case 'delete':
-                $controller->getBackendDashboard();
+                $controllerBack->getBackendDashboard();
                 break;
 
             case 'usersManager':
-                $controller->getUsersDashboardManager();
+                $managers->getUsersDashboardManager();
                 break;
 
             case 'postsManager':
-                $controller->getPostsDashboardManager();
+                $managers->getPostsDashboardManager();
                 break;
 
             case 'commentsManager':
-                $controller->getCommentsDashboardManager();
+                $managers->getCommentsDashboardManager();
                 break;
 
             case 'portfolioManager':
-                $controller->getPortfolioDashboardManager();
+                $managers->getPortfolioDashboardManager();
                 break;
 
             // Ajoute un article dans les favoris de l'utilisateur
             case 'addFavorite' :
-                $controller->addFavoritePost();
+                $favorisController->addFavoritePost();
                 break;
 
             // Supprime un article des favoris de l'utilisateur
             case 'deleteFavorite' :
-                $controller->deleteFavoritePost();
+                $favorisController->deleteFavoritePost();
                 break;
 
             // Modifie les données de l'utilisateur (pseudo, email)
             case 'modifDataUser':
-                $controller->UpdateDataByUser();
+                $managers->UpdateDataByUser();
                 break;
 
             case 'logoutUser' :
-                $controller->logout();
+                $securityController->logout();
                 break;
 
             // Affiche le formulaire
             case 'nouvelInscrit' :
-                $controller->afficherNewLoginForm();
+                $securityController->afficherNewLoginForm();
                 break;
 
             case 'inscription' :
-                $controller->inscription();
+                $securityController->inscription();
                 break;
 
             case 'confirmationInscriptionByEmail' :
-                $controller->confirmationByToken();
+                $securityController->confirmationByToken();
                 break;
 
             // Affiche le formulaire
             case 'forgotPassword' :
-                $controller->afficherMailForm();
+                $securityController->afficherMailForm();
                 break;
 
             case 'forgotPasswordSendMail' :
-                $controller->envoyerEmailForPassword();
+                $securityController->envoyerEmailForPassword();
                 break;
 
             // Affiche le formulaire
             case 'confirmationEmailForPassword' :
-                $controller->afficherPasswordForm();
+                $securityController->afficherPasswordForm();
                 break;
 
             case 'modifierPassword' :
-                $controller->changerPassword();
+                $securityController->changerPassword();
                 break;
 
             case 'installation' :
-                $controller->installBlog();
+                $installationController->installBlog();
                 break;
 
             default :
