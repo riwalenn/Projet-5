@@ -25,6 +25,7 @@ class User extends Post
 
     static public $listeRole = [
         Constantes::ROLE_ADMIN => 'Administrateur',
+        Constantes::ROLE_AUTHOR => 'Auteur',
         Constantes::ROLE_USER => 'Utilisateur'
     ];
 
@@ -214,23 +215,18 @@ class User extends Post
         switch ($this->state) {
             case Constantes::USER_PENDING_STATUS:
                 return 'user-status-red';
-                break;
 
             case Constantes::USER_PENDING_STATUS_MODO:
                 return 'user-status-orange';
-                break;
 
             case Constantes::USER_STATUS_VALIDATED:
                 return 'user-status-green';
-                break;
 
             case Constantes::USER_STATUS_DELETED:
                 return 'user-status-red';
-                break;
 
             default:
                 return 'user-status-red';
-                break;
 
         }
     }
@@ -285,52 +281,6 @@ class User extends Post
     {
         $token = random_bytes($length);
         return bin2hex($token);
-    }
-
-    public function sendTokenForPassword($list)
-    {
-        foreach ($list as $value) :
-            if (empty($list)) :
-                echo "Le token ou l'email sont manquants !";
-                return false;
-            endif;
-            $email = strip_tags(htmlspecialchars($value->email));
-            $token = strip_tags(htmlspecialchars($value->token));
-            $sujet = "Modification de mon mot de passe sur le blog de Riwalenn Bas";
-            $message = "Pour modifier votre mot de passe, veuillez cliquer sur le lien ci-dessous :\n\n" . Constantes::HTTP_RIWALENN . "/index.php?action=confirmationEmailForPassword&tokenForPassword=$token";
-            //$message = "Pour modifier votre mot de passe, veuillez cliquer sur le lien ci-dessous :\n\nhttps://projet5.riwalennbas.com/index.php?action=confirmationEmailForPassword&tokenForPassword=$token";
-
-            $to = $email;
-            $email_subject = "$sujet";
-            $email_body = "$message";
-            $headers = "From: noreply@riwalennbas.com\n";
-            $headers .= "Reply-To: $email";
-            mail($to, $email_subject, $email_body, $headers);
-        endforeach;
-        return true;
-    }
-
-    public function sendToken($list)
-    {
-        foreach ($list as $value) :
-            if (empty($list)) :
-                echo "Le token ou l'email sont manquants !";
-                return false;
-            endif;
-            $email = strip_tags(htmlspecialchars($value->email));
-            $token = strip_tags(htmlspecialchars($value->token));
-            $sujet = "Confirmation de votre inscription sur le blog de Riwalenn Bas";
-            $message = "Pour confirmer votre inscription, veuillez cliquer sur le lien ci-dessous :\n\n" . Constantes::HTTP_RIWALENN . "/index.php?action=confirmationInscriptionByEmail&token=$token";
-            //$message = "Pour confirmer votre inscription, veuillez cliquer sur le lien ci-dessous :\n\nhttps://projet5.riwalennbas.com/index.php?action=confirmationInscriptionByEmail&token=$token";
-
-            $to = $email;
-            $email_subject = "$sujet";
-            $email_body = "$message";
-            $headers = "From: noreply@riwalennbas.com\n";
-            $headers .= "Reply-To: $email";
-            mail($to, $email_subject, $email_body, $headers);
-        endforeach;
-        return true;
     }
 
     // --- Statics functions

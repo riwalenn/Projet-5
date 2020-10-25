@@ -1,6 +1,5 @@
 <?php
 
-
 class SecurityController
 {
 
@@ -53,26 +52,26 @@ class SecurityController
                         throw new ExceptionOutput($message);
                         break;
 
-                    /** Role : Utilisateur && Statut : en attente de validation */
-                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::USER_PENDING_STATUS) :
+                    /** Role : Utilisateur ou auteur && Statut : en attente de validation */
+                    case (($user->getRole() == Constantes::ROLE_USER || $user->getRole() == Constantes::ROLE_AUTHOR) && $user->getState() == Constantes::USER_PENDING_STATUS) :
                         $message = 'Vous n\'avez pas validé votre inscription, un email vous a été envoyé avec un lien vous permettant de le faire ! (vérifiez vos spams) ';
                         throw new ExceptionOutput($message);
                         break;
 
-                    /** Role : Utilisateur && Statut : en attente de validation d'un modérateur */
-                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::USER_PENDING_STATUS_MODO) :
+                    /** Role : Utilisateur ou auteur && Statut : en attente de validation d'un modérateur */
+                    case (($user->getRole() == Constantes::ROLE_USER || $user->getRole() == Constantes::ROLE_AUTHOR) && $user->getState() == Constantes::USER_PENDING_STATUS_MODO) :
                         $message = 'Vous n\'avez pas encore été validé par un modérateur, merci de patienter cela devrait se faire d\'ici 24 heures.';
                         throw new ExceptionOutput($message);
                         break;
 
-                    /** Role : Utilisateur && Statut : actif */
-                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
+                    /** Role : Utilisateur ou auteur && Statut : actif */
+                    case (($user->getRole() == Constantes::ROLE_USER || $user->getRole() == Constantes::ROLE_AUTHOR) && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
                         $dashboardUser->getDashboardUser();
                         $userManager->newConnexionDate();
                         break;
 
-                    /** Role : Utilisateur && Statut : supprimé */
-                    case ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::USER_STATUS_DELETED) :
+                    /** Role : Utilisateur ou auteur && Statut : supprimé */
+                    case (($user->getRole() == Constantes::ROLE_USER || $user->getRole() == Constantes::ROLE_AUTHOR) && $user->getState() == Constantes::USER_STATUS_DELETED) :
                         $message = 'Votre compte n\'existe plus/pas.';
                         throw new ExceptionOutput($message);
                         break;
@@ -142,14 +141,15 @@ class SecurityController
     public function inscription()
     {
         $controller = new ControllerFront();
+        $sendMail   = new SendMail();
 
         $user = new User($_REQUEST);
         $user->setRole(Constantes::ROLE_USER);
         $user->setState(Constantes::USER_PENDING_STATUS);
         $userManager = new UserManager();
         $userManager->registration($user);
-        $list = $userManager->tokenRecuperation($user);
-        $user->sendToken($list);
+        $array = $userManager->tokenRecuperation($user);
+        $sendMail->sendToken($array, 'inscription');
         $controller->afficherIndex();
     }
 
@@ -181,14 +181,14 @@ class SecurityController
     public function envoyerEmailForPassword()
     {
         $controller = new ControllerFront();
-
+        $sendMail = new SendMail();
         $user = new User($_REQUEST);
         $userManager = new UserManager();
         $list = $userManager->idUserRecuperation($user); //Récupération id_user par l'email
         $id_user = $list['id'];
         $userManager->tokenCreation($id_user); //Création du token
-        $tokenList = $userManager->tokenRecuperation($user); //Récupération du token
-        $user->sendTokenForPassword($tokenList); //Envoi du token par email
+        $array = $userManager->tokenRecuperation($user); //Récupération du compte
+        $sendMail->sendToken($array, 'password'); //Envoi du token par email
 
         $controller->afficherIndex();
     }
@@ -196,7 +196,7 @@ class SecurityController
     //Affichage du formulaire pour modifier le mot de passe
     public function afficherPasswordForm()
     {
-        $token = $_REQUEST['tokenForPassword'];
+        $token = $_REQUEST['token'];
         $user = new User($_REQUEST);
         $user->setToken($token);
         $userManager = new UserManager();

@@ -104,7 +104,7 @@ try {
                 break;
 
             // Affiche le formulaire
-            case 'confirmationEmailForPassword' :
+            case 'iForgotMyPassword' :
                 $securityController->afficherPasswordForm();
                 break;
 

@@ -25,6 +25,7 @@ class Constantes
     const EXTENSION_JPG                     = '.jpg';
 
     // ----------- USERS CONSTANTES
+    const ROLE_AUTHOR                       = 3; //auteur
     const ROLE_USER                         = 2; //utilisateur
     const ROLE_ADMIN                        = 1; //admin
 

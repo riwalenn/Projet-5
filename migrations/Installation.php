@@ -177,7 +177,7 @@ class Installation extends Connexion
                                                 (
                                                   `id` int(10) NOT NULL AUTO_INCREMENT,
                                                   `pseudo` varchar(155) NOT NULL,
-                                                  `role` tinyint(1) NOT NULL DEFAULT \'2\' COMMENT \'1 - admin 2 - user\',
+                                                  `role` tinyint(1) NOT NULL DEFAULT \'2\' COMMENT \'1 - admin 2 - user 3 - author\',
                                                   `email` varchar(155) NOT NULL,
                                                   `password` varchar(155) NOT NULL,
                                                   `date_modification` datetime NOT NULL,
