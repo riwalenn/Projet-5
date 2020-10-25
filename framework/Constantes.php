@@ -5,6 +5,8 @@ class Constantes
 {
     // ----------- _URL_
     const HTTP_RIWALENN                     = BASE_URL;
+    const HTTPS_URL                             = 'https://';
+    const WWW_RIWALENN                      = 'www.riwalennbas.com';
 
     // ----------- DOSSIERS
     const PATH_FOLDER_PUBLIC                = 'public/';
