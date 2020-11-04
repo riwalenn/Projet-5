@@ -1,11 +1,10 @@
 <?php
 
 
-class InstallationController
+class InstallationController extends ControllerFront
 {
     public function installBlog()
     {
-        $controller = new ControllerFront();
         //faire une vérification de la database avec show tables => si c'est vide créé les tables
         $installationManager = new Installation();
         $show = $installationManager->showTables();
@@ -26,6 +25,6 @@ class InstallationController
             echo 'Les tables existent déjà !';
         endif;
 
-        $controller->afficherIndex();
+        $this->afficherIndex();
     }
 }

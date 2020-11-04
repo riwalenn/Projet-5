@@ -187,7 +187,7 @@ class SecurityController
         $list = $userManager->idUserRecuperation($user); //Récupération id_user par l'email
         $id_user = $list['id'];
         $userManager->tokenCreation($id_user); //Création du token
-        $array = $userManager->tokenRecuperation($user); //Récupération du compte
+        $array = $userManager->tokenRecuperation($user); //Récupération du compte // changer le fetch !!!!!!!!
         $sendMail->sendToken($array, 'password'); //Envoi du token par email
 
         $controller->afficherIndex();

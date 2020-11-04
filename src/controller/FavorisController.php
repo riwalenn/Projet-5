@@ -1,7 +1,7 @@
 <?php
 
 
-class FavorisController
+class FavorisController extends DashboardUserController
 {
     /**
      * --------- FAVORIS DE L'UTILISATEUR ---------
@@ -10,7 +10,6 @@ class FavorisController
     //Ajout d'un post favoris, limité à 10
     public function addFavoritePost()
     {
-        $dashboardUser = new DashboardUserController();
         if (!empty($_SESSION['id']) && (filter_input(INPUT_POST, 'id_post'))) :
             $user = new User($_SESSION);
             $postFavoris = new Favorites_posts($_REQUEST);
@@ -28,7 +27,8 @@ class FavorisController
             else:
                 $errorMessage = 'Info : Vous avez atteint le nombre maximal de favoris.';
             endif;
-            $dashboardUser->getDashboardUser($errorMessage);
+
+            $this->getDashboardUser($errorMessage);
         else:
             $message = 'Erreur : Votre identification de session ne correspond pas !';
             throw new ExceptionOutput($message);
@@ -38,7 +38,6 @@ class FavorisController
     //Suppression d'un favoris
     public function deleteFavoritePost()
     {
-        $dashboardUser = new DashboardUserController();
         $errorMessage = '';
         if (!empty($_SESSION['id']) && (filter_input(INPUT_POST, 'id_post'))) :
             $user = new User($_SESSION);
@@ -46,7 +45,7 @@ class FavorisController
             $postManager = new PostManager();
             $postManager->deleteFavoritePostByIdUser($user, $favorites);
             $errorMessage = 'Le favoris a bien été supprimé.';
-            $dashboardUser->getDashboardUser($errorMessage);
+            $this->getDashboardUser($errorMessage);
         else:
             $message = 'Votre identification de session ne correspond pas !';
             throw new ExceptionOutput($message);
