@@ -188,24 +188,15 @@ class Post
     {
         switch ($this->state) {
             case Constantes::POST_PENDING_STATUS:
-                return 'user-status-orange';
-                break;
-
             case Constantes::POST_STATUS_ARCHIVED:
                 return 'user-status-orange';
-                break;
 
             case Constantes::POST_STATUS_VALIDATED:
                 return 'user-status-green';
-                break;
 
             case Constantes::POST_STATUS_DELETED:
-                return 'user-status-red';
-                break;
-
             default:
                 return 'user-status-red';
-                break;
 
         }
     }

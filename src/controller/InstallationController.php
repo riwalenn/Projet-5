@@ -3,6 +3,8 @@
 
 class InstallationController extends ControllerFront
 {
+    private $indexView  = Constantes::PATH_FOLDER_TEMPLATES_FRONT.'indexView.php';
+
     public function installBlog()
     {
         //faire une vérification de la database avec show tables => si c'est vide créé les tables
@@ -20,9 +22,13 @@ class InstallationController extends ControllerFront
             $installationManager->installUsersTable();
             $installationManager->addConstraints();
             $installationManager->installData();
-            echo 'L\'installation c\'est bien passée';
+            $successMessage = "L\'installation c\'est bien passée";
+            $view = new View('index');
+            $view->render($this->indexView, ['successMessage' => $successMessage]);
         elseif (count($show) > 0):
-            echo 'Les tables existent déjà !';
+            $errorMessage =  "Les tables existent déjà !";
+            $view = new View('index');
+            $view->render($this->indexView, ['successMessage' => $errorMessage]);
         endif;
 
         $this->afficherIndex();

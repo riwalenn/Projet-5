@@ -63,7 +63,7 @@ if ((isset($_SESSION['id']))) : ?>
                                 <?php foreach ($favoritesPosts as $post) : ?>
                                     <form action="index.php?action=deleteFavorite" method="post"
                                           onsubmit="return ConfirmMessage()">
-                                        <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
+                                        <input type="hidden" name="id_post" value="<?= htmlspecialchars($post->getId()) ?>">
                                         <tr>
                                             <td><p class="favorites-posts-links"><a class="articles-link"
                                                                                     data-toggle="modal"
@@ -149,7 +149,7 @@ if ((isset($_SESSION['id']))) : ?>
                                 <h5>Modification de mes données</h5>
                                 <form id="formDataUser" action="index.php?action=modifDataUser" method="post"
                                       onsubmit="return verifForm(this)">
-                                    <input type="hidden" value="<?= $_SESSION['id'] ?>" name="id" id="id">
+                                    <input type="hidden" value="<?= htmlspecialchars($_SESSION['id']) ?>" name="id" id="id">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1"><i

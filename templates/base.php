@@ -29,10 +29,10 @@
     <!--<link href="public/css/chart.scss" rel="stylesheet">-->
 </head>
 <body class="container-fluid" id="page-top">
-<?php include 'menu.php' ?>
+<?php require dirname(__DIR__). '/templates/menu.php' ?>
 <?= $content ?>
 
-<?php include 'footer.php' ?>
+<?php require dirname(__DIR__). '/templates/footer.php' ?>
 <!-- Bootstrap core JavaScript -->
 <script src="<?= Constantes::PATH_FOLDER_VENDOR ?>jquery/jquery.min.js"></script>
 <script src="<?= Constantes::PATH_FOLDER_VENDOR ?>bootstrap/js/bootstrap.bundle.min.js"></script>

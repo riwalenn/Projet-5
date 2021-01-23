@@ -70,7 +70,7 @@
                             <?php endif; ?>
                         <?php endif; ?>
 
-                        <h4><?= $post->getTitle() ?></h4>
+                        <h4><?= htmlspecialchars($post->getTitle()) ?></h4>
                         <p class="text-muted"><?= $post->getKicker() ?></p>
                     </div>
                 </div>
@@ -115,7 +115,7 @@
 <?php
 foreach ($listPosts as $post) {
     ?>
-    <div class="articles-modal modal fade" id="articlesModal<?= $post->getId() ?>" tabindex="-1" role="dialog"
+    <div class="articles-modal modal fade" id="articlesModal<?= htmlspecialchars($post->getId()) ?>" tabindex="-1" role="dialog"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -129,7 +129,7 @@ foreach ($listPosts as $post) {
                         <div class="col-lg-8 mx-auto">
                             <div class="modal-body">
                                 <!-- Project Details Go Here -->
-                                <h2 class="text-uppercase"><?= $post->getTitle() ?></h2>
+                                <h2 class="text-uppercase"><?= htmlspecialchars($post->getTitle()) ?></h2>
                                 <p class="item-intro text-muted"><?= $post->getKicker() ?></p>
                                 <cite title="Auteur" class="item-intro text-muted">Créé par <?= $post->getPseudo() ?> -
                                     le <?= $post->getCreated_at() ?> / Modifié le <?= $post->getModified_at() ?>

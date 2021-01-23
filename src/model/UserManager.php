@@ -313,12 +313,12 @@ class UserManager extends Connexion
     //sélectionne tous les utilisateurs avec leur token si existant
     public function selectAllUsers($state)
     {
-        $in = $this->getStatusValues($state);
+        $inArray = $this->getStatusValues($state);
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT users.*, tokens.token, tokens.expiration_token 
                                                 FROM `users` LEFT JOIN tokens 
                                                     ON users.id = tokens.id_user 
-                                                WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') AND state IN ('.$in.')
+                                                WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') AND state IN ('.$inArray.')
                                                 ORDER BY state ASC, date_inscription DESC');
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
@@ -350,12 +350,12 @@ class UserManager extends Connexion
     /** @deprecated  */
     public function selectUsersInTrash($state)
     {
-        $in = $this->getStatusValues($state);
+        $inArray = $this->getStatusValues($state);
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT users.*, tokens.token, tokens.expiration_token 
                                                 FROM `users` LEFT JOIN tokens 
                                                     ON users.id = tokens.id_user 
-                                                WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') AND state IN ('.$in.')
+                                                WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') AND state IN ('.$inArray.')
                                                 ORDER BY state ASC, date_inscription DESC');
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');

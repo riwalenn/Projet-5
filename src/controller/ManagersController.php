@@ -208,78 +208,85 @@ class ManagersController
     {
         $portfolioManager = new PortfolioManager();
         $portfolio = new Portfolio($_REQUEST);
+        $arrayFiles = [$_FILES];
         $errorMessage = '';
         switch ($crud) {
             //Create
             case 'C':
-                if (isset($_FILES['foliojpg']) && $_FILES['foliowebp']) {
-                    if ($_FILES['foliojpg']['error'] == 0 && $_FILES['foliowebp']['error'] == 0) :
-                        if ($_FILES['foliojpg']['size'] <= 200000 && $_FILES['foliowebp']['size'] <= 200000) :
-                            $portfolioManager = new PortfolioManager();
-                            $lastInsertId = $portfolioManager->createPortfolio($portfolio);
+                foreach ($arrayFiles as $file) {
+                    if (isset($file['foliojpg']) && $file['foliowebp']) {
+                        if ($file['foliojpg']['error'] == 0 && $file['foliowebp']['error'] == 0) :
+                            if ($file['foliojpg']['size'] <= 200000 && $file['foliowebp']['size'] <= 200000) :
+                                $portfolioManager = new PortfolioManager();
+                                $lastInsertId = $portfolioManager->createPortfolio($portfolio);
 
-                            $uploaddir = 'public/img/portfolio/';
-                            $infosfichierjpg = pathinfo($_FILES['foliojpg']['name']);
-                            $infosfichierwebp = pathinfo($_FILES['foliowebp']['name']);
-                            $extensionUpdloadjpg = $infosfichierjpg['extension'];
-                            $extensionUpdloadwebp = $infosfichierwebp['extension'];
-                            $extensionsAuthorized = array('jpg', 'webp');
-                            $uploadfilejpg = $uploaddir . basename($lastInsertId) . '.' . $extensionUpdloadjpg;
-                            $uploadfilewebp = $uploaddir . basename($lastInsertId) . '.' . $extensionUpdloadwebp;
+                                $uploaddir = 'public/img/portfolio/';
+                                $infosfichierjpg = pathinfo($file['foliojpg']['name']);
+                                $infosfichierwebp = pathinfo($file['foliowebp']['name']);
+                                $extensionUpdloadjpg = $infosfichierjpg['extension'];
+                                $extensionUpdloadwebp = $infosfichierwebp['extension'];
+                                $extensionsAuthorized = array('jpg', 'webp');
+                                $uploadfilejpg = $uploaddir . basename($lastInsertId) . '.' . $extensionUpdloadjpg;
+                                $uploadfilewebp = $uploaddir . basename($lastInsertId) . '.' . $extensionUpdloadwebp;
 
-                            if (in_array($extensionUpdloadjpg, $extensionsAuthorized)) :
-                                move_uploaded_file($_FILES['foliojpg']['tmp_name'], $uploadfilejpg);
+                                if (in_array($extensionUpdloadjpg, $extensionsAuthorized)) :
+                                    move_uploaded_file($file['foliojpg']['tmp_name'], $uploadfilejpg);
+                                else :
+                                    $errorMessage = "L'extension ne correspond pas.";
+                                endif;
+
+                                if (in_array($extensionUpdloadwebp, $extensionsAuthorized)) :
+                                    move_uploaded_file($file['foliowebp']['tmp_name'], $uploadfilewebp);
+                                else :
+                                    $errorMessage = "Erreur : L'extension ne correspond pas.";
+                                endif;
+
                             else :
-                                $errorMessage = "L'extension ne correspond pas.";
+                                $errorMessage = "Erreur : Le fichier est trop volumineux.";
                             endif;
-
-                            if (in_array($extensionUpdloadwebp, $extensionsAuthorized)) :
-                                move_uploaded_file($_FILES['foliowebp']['tmp_name'], $uploadfilewebp);
-                            else :
-                                $errorMessage = "Erreur : L'extension ne correspond pas.";
-                            endif;
-
-                        else :
-                            $errorMessage = "Erreur : Le fichier est trop volumineux.";
                         endif;
-                    endif;
+                    }
                 }
+
                 $errorMessage = 'Le Portfolio a été créé avec succès.';
                 break;
 
             //Update
             case 'U':
-                if (isset($_FILES['foliojpg']) || $_FILES['foliowebp']) {
-                    if ($_FILES['foliojpg']['error'] == 0 || $_FILES['foliowebp']['error'] == 0) :
-                        if ($_FILES['foliojpg']['size'] <= 200000 || $_FILES['foliowebp']['size'] <= 200000) :
-                            $portfolioManager = new PortfolioManager();
-                            $id = $portfolio->getId();
+                foreach ($arrayFiles as $file) {
+                    if (isset($file['foliojpg']) || $file['foliowebp']) {
+                        if ($file['foliojpg']['error'] == 0 || $file['foliowebp']['error'] == 0) :
+                            if ($file['foliojpg']['size'] <= 200000 || $file['foliowebp']['size'] <= 200000) :
+                                $portfolioManager = new PortfolioManager();
+                                $id = $portfolio->getId();
 
-                            $uploaddir = 'public/img/portfolio/';
-                            $infosfichierjpg = pathinfo($_FILES['foliojpg']['name']);
-                            $infosfichierwebp = pathinfo($_FILES['foliowebp']['name']);
-                            $extensionUpdloadjpg = $infosfichierjpg['extension'];
-                            $extensionUpdloadwebp = $infosfichierwebp['extension'];
-                            $extensionsAuthorized = array('jpg', 'webp');
-                            $uploadfilejpg = $uploaddir . basename($id) . '.' . $extensionUpdloadjpg;
-                            $uploadfilewebp = $uploaddir . basename($id) . '.' . $extensionUpdloadwebp;
+                                $uploaddir = 'public/img/portfolio/';
+                                $infosfichierjpg = pathinfo($file['foliojpg']['name']);
+                                $infosfichierwebp = pathinfo($file['foliowebp']['name']);
+                                $extensionUpdloadjpg = $infosfichierjpg['extension'];
+                                $extensionUpdloadwebp = $infosfichierwebp['extension'];
+                                $extensionsAuthorized = array('jpg', 'webp');
+                                $uploadfilejpg = $uploaddir . basename($id) . '.' . $extensionUpdloadjpg;
+                                $uploadfilewebp = $uploaddir . basename($id) . '.' . $extensionUpdloadwebp;
 
-                            if (in_array($extensionUpdloadjpg, $extensionsAuthorized)) :
-                                move_uploaded_file($_FILES['foliojpg']['tmp_name'], $uploadfilejpg);
+                                if (in_array($extensionUpdloadjpg, $extensionsAuthorized)) :
+                                    move_uploaded_file($file['foliojpg']['tmp_name'], $uploadfilejpg);
+                                else :
+                                    return $errorMessage = "Erreur : L'extension ne correspond pas.";
+                                endif;
+
+                                if (in_array($extensionUpdloadwebp, $extensionsAuthorized)) :
+                                    move_uploaded_file($file['foliowebp']['tmp_name'], $uploadfilewebp);
+                                else :
+                                    $errorMessage = "Erreur : L'extension ne correspond pas.";
+                                endif;
                             else :
-                                return $errorMessage = "Erreur : L'extension ne correspond pas.";
+                                $errorMessage = "Erreur : Le fichier est trop volumineux.";
                             endif;
-
-                            if (in_array($extensionUpdloadwebp, $extensionsAuthorized)) :
-                                move_uploaded_file($_FILES['foliowebp']['tmp_name'], $uploadfilewebp);
-                            else :
-                                $errorMessage = "Erreur : L'extension ne correspond pas.";
-                            endif;
-                        else :
-                            $errorMessage = "Erreur : Le fichier est trop volumineux.";
                         endif;
-                    endif;
+                    }
                 }
+
                 $portfolioManager->updatePortfolio($portfolio);
                 $errorMessage = 'Le Portfolio a été modifié avec succès.';
                 break;

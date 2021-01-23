@@ -302,7 +302,7 @@
                                 <ul class="list-inline">
                                     <li>Date de conception: <?= $folio->getDate_conception() ?></li>
                                     <li>Client: <?= $folio->getClient() ?></li>
-                                    <?= $folio->getLink() ? "<li>Lien: <a href='".$folio->getLink()."' target='_blank'>voir le site</a></li>" : "" ?>
+                                    <?= htmlspecialchars($folio->getLink()) ? "<li>Lien: <a href='".htmlspecialchars($folio->getLink())."' target='_blank'>voir le site</a></li>" : "" ?>
                                     <?= $folio->getCodacy() ? "<li>Codacy: ".$folio->getCodacy()."</li>" : "" ?>
                                     <li class="categories"><p>Categorie(s): </p>
                                             <?php foreach ($folio->getCategories() as $categories) {

@@ -30,12 +30,12 @@ class PostManager extends Connexion
     //Affichage de tous les articles selon le statut
     public function getAllPosts($page, $status, $offset)
     {
-        $in = $this->getStatusValues($status);
+        $inArray = $this->getStatusValues($status);
         $bdd = $this->dbConnect();
 
         $listPosts = $bdd->prepare('SELECT posts.id, posts.title, posts.kicker, posts.author, users.pseudo, posts.content, posts.url, posts.created_at, posts.modified_at, posts.state
                                                     FROM `posts` INNER JOIN users ON posts.author = users.id
-                                                    WHERE posts.state IN ('.$in.') ORDER BY posts.modified_at DESC LIMIT :page, :offset');
+                                                    WHERE posts.state IN ('.$inArray.') ORDER BY posts.modified_at DESC LIMIT :page, :offset');
         if (!empty($page)) {
             $listPosts->bindValue(':page', ($page - 1) * $offset, PDO::PARAM_INT);
         } else {
