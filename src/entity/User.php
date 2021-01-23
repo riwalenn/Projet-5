@@ -93,9 +93,9 @@ class User extends Post
 
     public function getRoleClass()
     {
-        if ($this->role == 1) :
+        if ($this->role == Constantes::ROLE_ADMIN) :
             return 'role-dash-table';
-        elseif ($this->role == 2) :
+        elseif ($this->role == Constantes::ROLE_USER) :
             return '';
         endif;
     }
@@ -178,7 +178,7 @@ class User extends Post
 
     public function getCguClass()
     {
-        if ($this->cgu == 1) :
+        if ($this->cgu == Constantes::CGU_VALIDATED) :
             return '<i class="fa fa-check-square cgu-green"></i>';
         else:
             return $this->cgu;
@@ -187,7 +187,7 @@ class User extends Post
 
     public function setCgu($cgu)
     {
-        if ($cgu == 1) :
+        if ($cgu == Constantes::CGU_VALIDATED) :
             $this->cgu = $cgu;
         else:
             $message = "Vous devez valider les conditions générales d'utilisation pour vous enregistrer";

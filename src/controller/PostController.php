@@ -69,7 +69,7 @@ class PostController
             endif;
         }
 
-        $nbPages = $postManager->countPagesByState(3, 1);
+        $nbPages = $postManager->countPagesByState(3, Constantes::POST_STATUS_VALIDATED);
 
         $view = new View('Liste des articles');
         $view->render($this->articleView, ['listPosts' => $listPosts, 'errorMessage' => $errorMessage, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);

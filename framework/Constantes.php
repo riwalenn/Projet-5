@@ -5,7 +5,7 @@ class Constantes
 {
     // ----------- _URL_
     const HTTP_RIWALENN                     = BASE_URL;
-    const HTTPS_URL                             = 'https://';
+    const HTTPS_URL                         = 'https://';
     const WWW_RIWALENN                      = 'www.riwalennbas.com';
 
     // ----------- DOSSIERS
@@ -28,6 +28,8 @@ class Constantes
     const ROLE_AUTHOR                       = 3; //auteur
     const ROLE_USER                         = 2; //utilisateur
     const ROLE_ADMIN                        = 1; //admin
+    const CGU_NOT_VALIDATED                 = 0;
+    const CGU_VALIDATED                     = 1; //les cgu sont validées
 
     const USER_PENDING_STATUS               = 0; //en attente
     const USER_PENDING_STATUS_MODO          = 1; //en attente validation modérateur

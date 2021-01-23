@@ -32,7 +32,8 @@ class ManagersController
             if (isset($value)) {
                 switch ($value) {
                     case 'uncheckedUsers':
-                        $usersList = $userManager->selectUsersUncheckedByModo();
+                        $states = [Constantes::USER_PENDING_STATUS_MODO];
+                        $usersList = $userManager->selectAllUsers($states);
                         $filArianne = 'Utilisateurs à valider';
                         break;
 
@@ -41,23 +42,21 @@ class ManagersController
                         $filArianne = 'Tokens non validés';
                         break;
 
-                    case 'all':
-                        $usersList = $userManager->selectAllUsers();
-                        $filArianne = 'Tous les utilisateurs';
-                        break;
-
                     case 'referents':
                         $usersList = $userManager->selectReferents();
                         $filArianne = 'Utilisateurs référents';
                         break;
 
                     case 'trash':
-                        $usersList = $userManager->selectUsersInTrash();
+                        $states = [Constantes::USER_STATUS_DELETED];
+                        $usersList = $userManager->selectAllUsers($states);
                         $filArianne = 'Comptes à supprimer';
                         break;
 
+                    case 'all':
                     default:
-                        $usersList = $userManager->selectAllUsers();
+                        $states = [Constantes::USER_PENDING_STATUS, Constantes::USER_PENDING_STATUS_MODO, Constantes::USER_STATUS_VALIDATED];
+                        $usersList = $userManager->selectAllUsers($states);
                         $filArianne = 'Tous les utilisateurs';
                         break;
                 }
@@ -80,7 +79,7 @@ class ManagersController
         switch ($crud) {
             //Create
             case 'C':
-                $user->setCgu(1);
+                $user->setCgu(Constantes::CGU_VALIDATED);
                 $userManager->registration($user);
                 $errorMessage = 'L\'utilisateur a été créé avec succès.';
                 break;
@@ -96,7 +95,7 @@ class ManagersController
                 $date_user = new DateTime($user->getDate_modification());
                 $now = new DateTime();
                 $interval = $date_user->diff($now);
-                if ($user->getState() == 3) {
+                if ($user->getState() == Constantes::USER_STATUS_DELETED) {
                     if ($interval->format('%R%a days') > 7) {
                         $userManager->updateIdUserInComments($user);
                         $userManager->deleteUser($user);
@@ -330,38 +329,45 @@ class ManagersController
                 $categoryManager = new CategoryManager();
                 switch ($value) {
                     case 'all':
-                        $postsList = $postManager->getAllPosts($pageCourante, $nbPosts);
+                        $status = [Constantes::POST_PENDING_STATUS, Constantes::POST_STATUS_VALIDATED, Constantes::POST_STATUS_ARCHIVED];
+                        $postsList = $postManager->getAllPosts($pageCourante, $status, $nbPosts);
                         $nbPages = $postManager->countPagesByAllStates($nbPosts);
                         $filArianne = 'Tous les articles';
                         break;
 
                     case 'uncheckedPosts':
-                        $postsList = $postManager->getPostsByState($pageCourante, 0, $nbPosts);
-                        $nbPages = $postManager->countPagesByState($nbPosts, 0);
+                        $status = [Constantes::POST_PENDING_STATUS];
+                        $postsList = $postManager->getAllPosts($pageCourante, $status, $nbPosts);
+                        $nbPages = $postManager->countPagesByState($nbPosts, Constantes::POST_PENDING_STATUS);
                         $filArianne = 'Articles à valider';
                         break;
 
                     case 'checkedPosts':
-                        $postsList = $postManager->getPostsByState($pageCourante, 1, $nbPosts);
-                        $nbPages = $postManager->countPagesByState($nbPosts, 1);
+                        $status = [Constantes::POST_STATUS_VALIDATED];
+                        $postsList = $postManager->getAllPosts($pageCourante, $status, $nbPosts);
+                        $nbPages = $postManager->countPagesByState($nbPosts, Constantes::POST_STATUS_VALIDATED);
                         $filArianne = 'Articles validés';
                         break;
 
                     case 'archived':
-                        $postsList = $postManager->getPostsByState($pageCourante, 2, $nbPosts);
-                        $nbPages = $postManager->countPagesByState($nbPosts, 2);
+                        $status = [Constantes::POST_STATUS_ARCHIVED];
+                        $postsList = $postManager->getAllPosts($pageCourante, $status, $nbPosts);
+                        $nbPages = $postManager->countPagesByState($nbPosts, Constantes::POST_STATUS_ARCHIVED);
                         $filArianne = 'Articles archivés';
                         break;
 
                     case 'trash':
-                        $postsList = $postManager->getPostsByState($pageCourante, 3, $nbPosts);
-                        $nbPages = $postManager->countPagesByState($nbPosts, 3);
+                        $status = [Constantes::POST_STATUS_DELETED];
+                        $postsList = $postManager->getAllPosts($pageCourante, $status, $nbPosts);
+                        $nbPages = $postManager->countPagesByState($nbPosts, Constantes::POST_STATUS_DELETED);
                         $filArianne = 'Articles à supprimer';
                         break;
 
                     default:
-                        $postsList = $postManager->getPostsByState($pageCourante, 1, $nbPosts);
-                        $nbPages = $postManager->countPagesByState($nbPosts, 1);
+                        //$postsList = $postManager->getPostsByState($pageCourante, Constantes::POST_STATUS_VALIDATED, $nbPosts);
+                        $status = [Constantes::POST_STATUS_VALIDATED];
+                        $postsList = $postManager->getAllPosts($pageCourante, $status, $nbPosts);
+                        $nbPages = $postManager->countPagesByState($nbPosts, Constantes::POST_STATUS_VALIDATED);
                         $filArianne = 'Tous les articles';
                         break;
                 }

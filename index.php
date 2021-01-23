@@ -38,11 +38,8 @@ try {
                 $dashboardController->getDashboardUser();
                 break;
 
-            case 'backendDashboard':
-                $controllerBack->getBackendDashboard();
-                break;
-
             case 'delete':
+            case 'backendDashboard':
                 $controllerBack->getBackendDashboard();
                 break;
 

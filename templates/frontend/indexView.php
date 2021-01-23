@@ -12,26 +12,26 @@
                 <div class="col-md-4">
           <span class="fa-stack fa-4x">
             <i class="fas fa-circle fa-stack-2x text-primary"></i>
-            <i class="fab fa-php fa-stack-1x fa-inverse"></i>
-          </span>
-                    <h4 class="service-heading">CSS3 / HTML5 / PHP7</h4>
-                    <p class="text-muted">Créations de sites & applications avec les derniers languages.</p>
-                </div>
-                <div class="col-md-4">
-          <span class="fa-stack fa-4x">
-            <i class="fas fa-circle fa-stack-2x text-primary"></i>
             <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
           </span>
                     <h4 class="service-heading">Responsive Design</h4>
-                    <p class="text-muted">Sites responsives avec Bootstrap et connaissance de Semantic UI.</p>
+                    <p class="text-muted">Sites responsives avec Bootstrap <br>et Semantic / Fomantic UI..</p>
                 </div>
                 <div class="col-md-4">
           <span class="fa-stack fa-4x">
             <i class="fas fa-circle fa-stack-2x text-primary"></i>
             <i class="fab fa-symfony fa-stack-1x fa-inverse"></i>
           </span>
-                    <h4 class="service-heading">Symfony/twig</h4>
-                    <p class="text-muted">Prise en main de Symfony et Twig, gestion de bases de données avec Doctrine.</p>
+                    <h4 class="service-heading">Frameworks</h4>
+                    <p class="text-muted">Développement professionnel <br>avec Symfony et ZendFramework .</p>
+                </div>
+                <div class="col-md-4">
+          <span class="fa-stack fa-4x">
+            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+            <i class="fa fa-cogs fa-stack-1x fa-inverse"></i>
+          </span>
+                    <h4 class="service-heading">Tests</h4>
+                    <p class="text-muted">Mise en oeuvre de tests unitaires et fonctionnels.</p>
                 </div>
             </div>
         </div>
@@ -302,6 +302,8 @@
                                 <ul class="list-inline">
                                     <li>Date de conception: <?= $folio->getDate_conception() ?></li>
                                     <li>Client: <?= $folio->getClient() ?></li>
+                                    <?= $folio->getLink() ? "<li>Lien: <a href='".$folio->getLink()."' target='_blank'>voir le site</a></li>" : "" ?>
+                                    <?= $folio->getCodacy() ? "<li>Codacy: ".$folio->getCodacy()."</li>" : "" ?>
                                     <li class="categories"><p>Categorie(s): </p>
                                             <?php foreach ($folio->getCategories() as $categories) {
                                                 ?>

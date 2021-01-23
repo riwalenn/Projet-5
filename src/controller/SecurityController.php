@@ -31,7 +31,7 @@ class SecurityController
 
         //si l'objet user n'est pas vide
         if (!empty($user)) :
-            $lastPosts = $listPosts->getPosts(1, 1);
+            $lastPosts = $listPosts->getPosts(1, Constantes::POST_STATUS_VALIDATED);
             $comparePassword = password_verify(filter_input(INPUT_POST, 'password'), $user->getPassword());
 
             //si les mots de passe correspondent

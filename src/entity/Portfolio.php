@@ -9,6 +9,8 @@ class Portfolio
     private $content;
     private $date_conception;
     private $client;
+    private $link;
+    private $codacy;
     private $categories;
 
     public function __construct($donnees = null)
@@ -86,6 +88,26 @@ class Portfolio
     public function setClient($client)
     {
         $this->client = $client;
+    }
+
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    public function setLink($link)
+    {
+        $this->link = $link;
+    }
+
+    public function getCodacy()
+    {
+        return $this->codacy;
+    }
+
+    public function setCodacy($codacy)
+    {
+        $this->codacy = $codacy;
     }
 
     public function getCategories()

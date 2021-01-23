@@ -252,7 +252,7 @@ class Installation extends Connexion
                                                 (5, 'Projet n°3', 'Création d\'un site en html & css.', 'Création d\'un site web en html 5 et Css 3, responsive pour le cadre d\'un projet OpenClassrooms (j\'ai aussi créé la maquette).', 2017, 'Festival des films plein air (projet fictif)', 'html/css'),
                                                 (6, 'Projet n°4', 'Conception de solution technique d\'une application.', 'Conception de diagrammes UML et modélisation de la base de données.', 2017, 'Express Food (projet fictif)', 'conception UML'),
                                                 (7, 'Projet n°5', 'Conception d\'un blog responsive en php.', 'Conception de diagrammes UML, modélisation de la bdd et site en php.<br>Système de favoris et fil d\'Arianne.', 2020, 'Riwalenn Bas', 'conception UML/bootstrap/php/javascript'),
-                                                (9, 'Projet n°6', 'Conception d\'un site communautaire sur le snowboarding.', 'Conception de diagrammes UML, modélisation de la bdd et créé avec le framework Symfony.', 2020, 'Jimmy Sweat (faux client)', 'symfony/twig/php/javascript/bootstrap/uml');
+                                                (8, 'Projet n°6', 'Conception d\'un site communautaire sur le snowboarding.', 'Conception de diagrammes UML, modélisation de la bdd et créé avec le framework Symfony.', 2020, 'Jimmy Sweat (faux client)', 'symfony/twig/php/javascript/bootstrap/uml');
 ");
         $statement->execute();
 
@@ -261,7 +261,7 @@ class Installation extends Connexion
                                                 (2, 'javascript', '#f1e05a'),
                                                 (3, 'css', '#563d7c'),
                                                 (4, 'html', '#e34c26'),
-                                                (5, 'bootstrap', '#7952b3'),
+                                                (5, 'bootstrap 4.3', '#7952b3'),
                                                 (6, 'wordpress', '#003c56'),
                                                 (7, 'uml', 'red'),
                                                 (8, 'intégration', 'green'),
@@ -271,31 +271,41 @@ class Installation extends Connexion
                                                 (12, 'java', '#b07219'),
                                                 (13, 'swift', '#ffac45'),
                                                 (14, 'c', '#178600'),
-                                                (15, 'twig', '#bacf29');");
+                                                (15, 'twig', '#bacf29'),
+                                                (16, 'tests unitaires', '#89e051'),
+                                                (17, 'css 3', '#563d7c'),
+                                                (18, 'html 5', '#e34c26'),
+                                                (19, 'bootstrap 4.5', '#7952b3');");
         $statement->execute();
 
         $statement = $bdd->prepare('INSERT INTO `folio_categories` (`id_folio`, `id_folio_cat`) VALUES
                                                 (1, 1),
                                                 (1, 3),
                                                 (1, 4),
+                                                (2, 3),
+                                                (2, 4),
                                                 (2, 8),
+                                                (3, 3),
+                                                (3, 4),
                                                 (3, 8),
+                                                (4, 3),
                                                 (4, 6),
                                                 (4, 8),
                                                 (5, 3),
                                                 (5, 4),
                                                 (6, 7),
-                                                (7, 1),
                                                 (7, 2),
-                                                (7, 3),
                                                 (7, 5),
                                                 (7, 7),
-                                                (9, 1),
-                                                (9, 2),
-                                                (9, 3),
-                                                (9, 5),
-                                                (9, 7),
-                                                (9, 15);');
+                                                (7, 17),
+                                                (7, 18),
+                                                (8, 1),
+                                                (8, 2),
+                                                (8, 7),
+                                                (8, 15),
+                                                (8, 16),
+                                                (8, 17),
+                                                (8, 18);');
         $statement->execute();
 
         $statement = $bdd->prepare('INSERT INTO `users` (`id`, `pseudo`, `role`, `email`, `password`, `date_modification`, `date_inscription`, `cgu`, `state`) VALUES
@@ -327,6 +337,14 @@ class Installation extends Connexion
 
         $statement = $bdd->prepare('INSERT INTO `comments` (`id`, `id_post`, `id_user`, `created_at`, `title`, `content`, `state`) VALUES
                                                 (1, 4, 1, \'2020-05-18 11:50:31\', \'test\', \'test comm admin\', 1)');
+        $statement->execute();
+
+        $statement = $bdd->prepare('ALTER TABLE `portfolio` ADD `codacy` TEXT NULL AFTER `client`');
+
+        $statement->execute();
+
+        $statement = $bdd->prepare('ALTER TABLE `portfolio` ADD `link` TEXT NULL AFTER `client`');
+
         $statement->execute();
     }
 }

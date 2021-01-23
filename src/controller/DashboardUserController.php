@@ -21,7 +21,7 @@ class DashboardUserController
                 $categoryManager->fillCategoryInPost($post);
             endforeach;
 
-            $lastPosts = $listPosts->getPosts(1, 1);
+            $lastPosts = $listPosts->getPosts(1, Constantes::POST_STATUS_VALIDATED);
             foreach ($lastPosts as $post) :
                 $commentManager->fillCommentInPost($post);
                 $categoryManager->fillCategoryInPost($post);

@@ -12,9 +12,7 @@ class Connexion
     protected function dbConnect()
     {
         $db_config['OPTIONS'] = array(
-            //Activation des exceptions PDO
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-            //change le fetch mode par défaut sur FETCH_ASSOC
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
         );
 

@@ -162,6 +162,11 @@ div.show-tick > button.btn-light {
     border-radius: 20px;
 }
 
+#liste-ilabs {
+    text-align: left;
+    list-style: none;
+}
+
 .portfolio-modal .modal-content ul.list-inline {
     text-align: left;
 }

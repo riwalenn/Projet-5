@@ -211,7 +211,7 @@ class UserManager extends Connexion
         return $resultat['nbUsers'];
     }
 
-    //liste des utilisateurs en attente de validation
+    /** @deprecated  */
     public function selectUsersUncheckedByModo()
     {
         $bdd = $this->dbConnect();
@@ -305,14 +305,20 @@ class UserManager extends Connexion
         return $resultat['nbUsers'];
     }
 
-    //sélectionne tous les utilisateurs avec leur token si existant
-    public function selectAllUsers()
+    public function getStatusValues($status)
     {
+        return implode(',', array_map('intval', $status));
+    }
+
+    //sélectionne tous les utilisateurs avec leur token si existant
+    public function selectAllUsers($state)
+    {
+        $in = $this->getStatusValues($state);
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT users.*, tokens.token, tokens.expiration_token 
                                                 FROM `users` LEFT JOIN tokens 
                                                     ON users.id = tokens.id_user 
-                                                WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') AND state != 3
+                                                WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') AND state IN ('.$in.')
                                                 ORDER BY state ASC, date_inscription DESC');
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
@@ -341,14 +347,15 @@ class UserManager extends Connexion
         return $resultat['nbUsers'];
     }
 
-    //sélectionne les utilisateurs avec le statut à supprimer
-    public function selectUsersInTrash()
+    /** @deprecated  */
+    public function selectUsersInTrash($state)
     {
+        $in = $this->getStatusValues($state);
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT users.*, tokens.token, tokens.expiration_token 
                                                 FROM `users` LEFT JOIN tokens 
                                                     ON users.id = tokens.id_user 
-                                                WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') AND state = 3
+                                                WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') AND state IN ('.$in.')
                                                 ORDER BY state ASC, date_inscription DESC');
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
