@@ -2,7 +2,7 @@
 
 EN - Projet n°5 created for OpenClassrooms and Backend path.
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ad9a4df6eed64b81b52976433e6074fe)](https://www.codacy.com/manual/riwalenn/Projet-5?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=riwalenn/Projet-5&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b9e0bab98f8442cbae85ebb6bd41da23)](https://www.codacy.com/manual/riwalenn/Projet-5?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=riwalenn/Projet-5&amp;utm_campaign=Badge_Grade)
 
 ## Download and Installation
 
