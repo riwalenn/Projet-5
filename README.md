@@ -36,6 +36,20 @@ For Admin account :
 ## New_Features Module
 Do not Merge this feature... On the indexView page, there is the portoflio, it will do the same as i code with php : replace with javascript the categories portfolio with a color sticker and the category name.
 
+## VERSIONS
+V2 of my blog include :
+* code reduction
+* new MVC (migrations, src, templates)
+* new Service email for registration or password forgotten
+* patterns
+
+V3 will be include :
+* user can delete his profil
+* alert when a favorite post is modified
+* alert when a post is created
+* profil picture
+* new role : author
+
 ## Built With
 
 * [PHP 7.1.9]
