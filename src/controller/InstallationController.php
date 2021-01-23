@@ -8,7 +8,9 @@ class InstallationController extends ControllerFront
     public function installBlog()
     {
         //faire une vérification de la database avec show tables => si c'est vide créé les tables
-        $installationManager = new Installation();
+        $installationManager        = new Installation();
+        $constraintInstallation     = new ConstraintsInstallation();
+        $dataInstallationManager    = new DataInstallation();
         $show = $installationManager->showTables();
         if (count($show) == 0) :
             $installationManager->installCategoriesTable();
@@ -20,8 +22,9 @@ class InstallationController extends ControllerFront
             $installationManager->installPostsTable();
             $installationManager->installTokensTable();
             $installationManager->installUsersTable();
-            $installationManager->addConstraints();
-            $installationManager->installData();
+            $constraintInstallation->addConstraints();
+            $dataInstallationManager->installRelatedData();
+            $dataInstallationManager->installOthersData();
             $successMessage = "L\'installation c\'est bien passée";
             $view = new View('index');
             $view->render($this->indexView, ['successMessage' => $successMessage]);

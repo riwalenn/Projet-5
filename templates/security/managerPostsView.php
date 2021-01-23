@@ -47,15 +47,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($postsList
-
-                            as $post) : ?>
+                            <?php foreach ($postsList as $post) : ?>
                             <?php if ($post->getState() != 3): ?>
-                            <form action="index.php?action=postsManager&value=<?= $value ?>&CRUD=U" method="post">
+                            <form action="index.php?action=postsManager&value=<?= htmlspecialchars($value) ?>&CRUD=U" method="post">
                                 <?php else: ?>
-                                <form action="index.php?action=postsManager&value=<?= $value ?>&CRUD=D" method="post">
+                                <form action="index.php?action=postsManager&value=<?= htmlspecialchars($value) ?>&CRUD=D" method="post">
                                     <?php endif; ?>
-                                    <input type="hidden" name="id" value="<?= $post->getId() ?>">
+                                    <input type="hidden" name="id" value="<?= htmlspecialchars($post->getId()) ?>">
                                     <tr>
                                         <td>
                                             <?php if ($post->getState() != 3): ?>
@@ -93,7 +91,7 @@
                                                         $selected = 'selected';
                                                     endif;
                                                     ?>
-                                                    <option value="<?= $key ?>"<?= $selected ?>><?= $valueSelect ?></option>
+                                                    <option value="<?= htmlspecialchars($key) ?>"<?= htmlspecialchars($selected) ?>><?= htmlspecialchars($valueSelect) ?></option>
                                                 <?php
                                                 endforeach;
                                                 ?>
@@ -227,7 +225,7 @@
                                         </div>
                                         <input type="text" id="url" class="form-control form-control-sm"
                                                placeholder="entrez le lien ici" name="url"
-                                               value="<?= $post->getUrl() ?>"
+                                               value="<?= htmlspecialchars($post->getUrl()) ?>"
                                                aria-label="url" aria-describedby="basic-addon1">
                                     </div>
                                     <div class="input-group mb-3">

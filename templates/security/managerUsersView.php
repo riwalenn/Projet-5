@@ -49,19 +49,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($usersList
-
-                            as $user) : ?>
+                            <?php foreach ($usersList as $user) : ?>
                             <?php if ($user->getState() != 3) : ?>
-                            <form action="index.php?action=usersManager&value=<?= $value ?>&CRUD=U" method="post">
-                                <input type="hidden" name="pseudo" value="<?= $user->getPseudo() ?>">
-                                <input type="hidden" name="email" value="<?= $user->getEmail() ?>">
+                            <form action="index.php?action=usersManager&value=<?= htmlspecialchars($value) ?>&CRUD=U" method="post">
+                                <input type="hidden" name="pseudo" value="<?= htmlspecialchars($user->getPseudo()) ?>">
+                                <input type="hidden" name="email" value="<?= htmlspecialchars($user->getEmail()) ?>">
                                 <?php else: ?>
-                                <form action="index.php?action=usersManager&value=<?= $value ?>&CRUD=D" method="post">
+                                <form action="index.php?action=usersManager&value=<?= htmlspecialchars($value) ?>&CRUD=D" method="post">
                                     <input type="hidden" name="date_modification"
                                            value="<?= $user->getDate_modification() ?>">
                                     <?php endif; ?>
-                                    <input type="hidden" name="id" value="<?= $user->getId() ?>">
+                                    <input type="hidden" name="id" value="<?= htmlspecialchars($user->getId()) ?>">
                                     <tr>
                                         <td>
                                             <?php if ($user->getState() != 3) : ?>
@@ -69,8 +67,8 @@
                                                             class="fa fa-edit"></i> Editer</a>
                                             <?php endif; ?>
                                         </td>
-                                        <td><?= $user->getId() ?></td>
-                                        <td><?= $user->getPseudo() ?></td>
+                                        <td><?= htmlspecialchars($user->getId()) ?></td>
+                                        <td><?= htmlspecialchars($user->getPseudo()) ?></td>
                                         <td>
                                             <label>
                                                 <select name="role" class="form-control form-control-sm">
@@ -81,7 +79,7 @@
                                                             $selected = 'selected';
                                                         endif;
                                                         ?>
-                                                        <option value="<?= $key ?>" <?= $selected ?>><?= $val ?></option>
+                                                        <option value="<?= htmlspecialchars($key) ?>" <?= htmlspecialchars($selected) ?>><?= htmlspecialchars($val) ?></option>
                                                         <?php
                                                     }
                                                     ?>
@@ -103,7 +101,7 @@
                                                             $selected = 'selected';
                                                         endif;
                                                         ?>
-                                                        <option value="<?= $key ?>" <?= $selected ?>><?= $val ?></option>
+                                                        <option value="<?= htmlspecialchars($key) ?>" <?= htmlspecialchars($selected) ?>><?= htmlspecialchars($val) ?></option>
                                                         <?php
                                                     }
                                                     ?>
@@ -158,16 +156,16 @@
                             <div class="modal-body">
                                 <h5><i class="fa fa-user-cog"></i> Modifier un utilisateur</h5>
                                 <form id="formDataUser"
-                                      action="index.php?action=usersManager&value=<?= $value ?>&CRUD=U" method="post"
+                                      action="index.php?action=usersManager&value=<?= htmlspecialchars($value) ?>&CRUD=U" method="post"
                                       onsubmit="return verifForm(this)">
-                                    <input type="hidden" name="id" value="<?= $user->getId() ?>">
+                                    <input type="hidden" name="id" value="<?= htmlspecialchars($user->getId()) ?>">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1"><i
                                                         class="fas fa-caret-right"></i></span>
                                         </div>
                                         <input type="text" id="pseudo" class="form-control form-control-sm"
-                                               value="<?= $user->getPseudo() ?>"
+                                               value="<?= htmlspecialchars($user->getPseudo()) ?>"
                                                placeholder="entrez votre pseudonyme ici" name="pseudo"
                                                aria-label="Pseudonyme" aria-describedby="basic-addon1"
                                                onkeyup="verifPseudo(this)" required>
@@ -185,7 +183,7 @@
                                                     $selected = 'selected';
                                                 endif;
                                                 ?>
-                                                <option value="<?= $key ?>" <?= $selected ?>><?= $value ?></option>
+                                                <option value="<?= htmlspecialchars($key) ?>" <?= htmlspecialchars($selected) ?>><?= htmlspecialchars($value) ?></option>
                                             <?php
                                             endforeach;
                                             ?>
@@ -196,7 +194,7 @@
                                             <span class="input-group-text" id="basic-addon1"><i
                                                         class="fas fa-caret-right"></i></span>
                                         </div>
-                                        <input id="email" value="<?= $user->getEmail() ?>"
+                                        <input id="email" value="<?= htmlspecialchars($user->getEmail()) ?>"
                                                class="form-control form-control-sm" placeholder="entrez votre email ici"
                                                aria-label="email" type="email" name="email" onkeyup="verifEmail(this)"
                                                required>
@@ -215,7 +213,7 @@
                                                     $selected = 'selected';
                                                 endif;
                                                 ?>
-                                                <option value="<?= $key ?>" <?= $selected ?>><?= $value ?></option>
+                                                <option value="<?= htmlspecialchars($key) ?>" <?= htmlspecialchars($selected) ?>><?= htmlspecialchars($value) ?></option>
                                             <?php
                                             endforeach;
                                             ?>

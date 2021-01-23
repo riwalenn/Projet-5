@@ -50,7 +50,7 @@
                                         </td>
                                         <td><input type="text" name="title" value="<?= $folio->getTitle() ?>"></td>
                                         <td><textarea name="kicker" rows="2"><?= $folio->getKicker() ?></textarea></td>
-                                        <td><textarea name="content" rows="4"><?= $folio->getContent() ?></textarea>
+                                        <td><textarea name="content" rows="4"><?= htmlspecialchars($folio->getContent()) ?></textarea>
                                         </td>
                                         <td><input type="number" name="date_conception"
                                                    value="<?= $folio->getDate_conception() ?>" placeholder="YYYY"
