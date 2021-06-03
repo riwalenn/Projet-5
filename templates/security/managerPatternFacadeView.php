@@ -32,9 +32,9 @@
                             <th>% 2021</th>
                             </thead>
                             <tbody>
-                                <?php foreach ($document as $doc) {
-                                    echo $doc;
-                                } ?>
+                                <?php foreach ($document as $doc) : ?>
+                                    <?= $doc ?>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                         <!--<table>
