@@ -225,17 +225,8 @@ class User
 
     public function getStateClass(): ?string
     {
-        switch ($this->state) {
-            case Constantes::USER_PENDING_STATUS:
-            case Constantes::USER_STATUS_DELETED:
-                return 'user-status-red';
-
-            case Constantes::USER_PENDING_STATUS_MODO:
-                return 'user-status-orange';
-
-            case Constantes::USER_STATUS_VALIDATED:
-                return 'user-status-green';
-        }
+        $helper = new UserHelper();
+        return $helper->getStateClass($this->state);
     }
 
     public function getId_token(): ?string
