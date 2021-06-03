@@ -19,6 +19,10 @@ class SecurityController
     }
 
     //Fonction de connexion
+
+    /**
+     * @throws ExceptionOutput
+     */
     public function login()
     {
         $email = filter_input(INPUT_POST, 'email');
@@ -50,19 +54,16 @@ class SecurityController
                     case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() != Constantes::USER_STATUS_VALIDATED) :
                         $message = 'Vous n\'avez pas les autorisations pour accéder à cette page.';
                         throw new ExceptionOutput($message);
-                        break;
 
                     /** Role : Utilisateur ou auteur && Statut : en attente de validation */
                     case (($user->getRole() == Constantes::ROLE_USER || $user->getRole() == Constantes::ROLE_AUTHOR) && $user->getState() == Constantes::USER_PENDING_STATUS) :
                         $message = 'Vous n\'avez pas validé votre inscription, un email vous a été envoyé avec un lien vous permettant de le faire ! (vérifiez vos spams) ';
                         throw new ExceptionOutput($message);
-                        break;
 
                     /** Role : Utilisateur ou auteur && Statut : en attente de validation d'un modérateur */
                     case (($user->getRole() == Constantes::ROLE_USER || $user->getRole() == Constantes::ROLE_AUTHOR) && $user->getState() == Constantes::USER_PENDING_STATUS_MODO) :
                         $message = 'Vous n\'avez pas encore été validé par un modérateur, merci de patienter cela devrait se faire d\'ici 24 heures.';
                         throw new ExceptionOutput($message);
-                        break;
 
                     /** Role : Utilisateur ou auteur && Statut : actif */
                     case (($user->getRole() == Constantes::ROLE_USER || $user->getRole() == Constantes::ROLE_AUTHOR) && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
@@ -74,19 +75,12 @@ class SecurityController
                     case (($user->getRole() == Constantes::ROLE_USER || $user->getRole() == Constantes::ROLE_AUTHOR) && $user->getState() == Constantes::USER_STATUS_DELETED) :
                         $message = 'Votre compte n\'existe plus/pas.';
                         throw new ExceptionOutput($message);
-                        break;
 
-                    /** Statut : inconnu */
+                    /** Statut : inconnu ou Role : inconnu */
                     case ($user->getState() > Constantes::USER_STATUS_DELETED) :
-                        $message = 'Vos informations de connexion ne correspondent pas.';
-                        throw new ExceptionOutput($message);
-                        break;
-
-                    /** Role : inconnu */
                     case ($user->getRole() < Constantes::ROLE_ADMIN || $user->getRole() > Constantes::ROLE_USER) :
                         $message = 'Vos informations de connexion ne correspondent pas.';
                         throw new ExceptionOutput($message);
-                        break;
 
                     case 'default':
                         $controller->afficherIndex();
@@ -129,7 +123,7 @@ class SecurityController
     //Affichage de la page de formulaire d'une nouvelle inscription
     public function afficherNewLoginForm()
     {
-        $userMessages = new User();
+        $userMessages = new Helper();
         $messagePassword = $userMessages->helpPassword();
         $messagePseudo = $userMessages->helpPseudo();
 

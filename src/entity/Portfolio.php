@@ -3,6 +3,8 @@
 
 class Portfolio
 {
+    use EntityHydrator;
+
     private $id;
     private $title;
     private $kicker;
@@ -20,54 +22,52 @@ class Portfolio
         endif;
     }
 
-    public function hydrate($donnees)
-    {
-        foreach ($donnees as $cle => $valeur) {
-            $method = 'set' . ucfirst($cle);
-            if (method_exists($this, $method)) :
-                $this->$method($valeur);
-            endif;
-        }
-    }
-
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
+
+        return $this;
     }
 
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setTitle($title)
+    public function setTitle($title): self
     {
         $this->title = $title;
+
+        return $this;
     }
 
-    public function getKicker()
+    public function getKicker(): ?string
     {
         return $this->kicker;
     }
 
-    public function setKicker($kicker)
+    public function setKicker($kicker): self
     {
         $this->kicker = $kicker;
+
+        return $this;
     }
 
-    public function getContent()
+    public function getContent(): ?string
     {
         return $this->content;
     }
 
-    public function setContent($content)
+    public function setContent($content): self
     {
         $this->content = $content;
+
+        return $this;
     }
 
     public function getDate_conception()
@@ -75,42 +75,50 @@ class Portfolio
         return $this->date_conception;
     }
 
-    public function setDate_conception($date_conception)
+    public function setDate_conception($date_conception): self
     {
         $this->date_conception = $date_conception;
+
+        return $this;
     }
 
-    public function getClient()
+    public function getClient(): ?string
     {
         return $this->client;
     }
 
-    public function setClient($client)
+    public function setClient($client): self
     {
         $this->client = $client;
+
+        return $this;
     }
 
-    public function getLink()
+    public function getLink(): ?string
     {
         return $this->link;
     }
 
-    public function setLink($link)
+    public function setLink($link): self
     {
         $this->link = $link;
+
+        return $this;
     }
 
-    public function getCodacy()
+    public function getCodacy(): ?string
     {
         return $this->codacy;
     }
 
-    public function setCodacy($codacy)
+    public function setCodacy($codacy): self
     {
         $this->codacy = $codacy;
+
+        return $this;
     }
 
-    public function getCategories()
+    public function getCategories(): ?array
     {
         return $this->categories;
     }
@@ -118,12 +126,14 @@ class Portfolio
     public function setCategories($categories)
     {
         $this->categories = $categories;
+
+        return $this;
     }
 
     public function getCategoriesFormatted()
     {
         $categories = $this->getCategories();
-        $categoriesexploded = explode('/', $categories);
+        $categoriesexploded = explode('/', (string)$categories);
         $categoriesFormatted = implode(' - ', $categoriesexploded);
         return $categoriesFormatted;
     }

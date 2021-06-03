@@ -13,7 +13,7 @@
                     <li class="list-inline-item">
                         <a class="conditions-link" data-toggle="modal" href="#conditionsModal">Conditions
                             d'utilisation</a> | <a class="conditions-item" href="index.php?action=connexion">Panel
-                        d'admin</a> | <a class="conditions-link" data-toggle="modal" href="#versionModal"> v2.0</a>
+                        d'admin</a>
                     </li>
                 </ul>
             </div>
@@ -26,24 +26,6 @@
             <div class="close-modal" data-dismiss="modal">
                 <div class="lr">
                     <div class="rl"></div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <div class="modal-body">
-                            <h2>Notes de mise à jour</h2>
-                            <h3>version 2.0 : optimisation du code</h3>
-                            <ul style="list-style: none">
-                                <li>- allégement du code</li>
-                                <li>- refonte totale du MVC (ajout dossier src(controller, entity, model, security)</li>
-                                <li>- ajout dossier framework (gestion des constantes, des arrays, envoi email via classe service)</li>
-                                <li>- fix sur condition IN() sur requête sql côté admin</li>
-                                <li>- mise à jour du portfolio (ajout note codacy + lien vers projets)</li>
-                                <li>- modification des compétences sur l'index</li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

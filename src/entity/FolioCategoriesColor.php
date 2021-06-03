@@ -1,8 +1,10 @@
 <?php
 
 
-class FolioCategoriesColor extends Portfolio
+class FolioCategoriesColor
 {
+    use EntityHydrator;
+
     private $id;
     private $category;
     private $color;
@@ -16,17 +18,7 @@ class FolioCategoriesColor extends Portfolio
         endif;
     }
 
-    public function hydrate($donnees)
-    {
-        foreach ($donnees as $cle => $valeur) {
-            $method = 'set' . ucfirst($cle);
-            if (method_exists($this, $method)) :
-                $this->$method($valeur);
-            endif;
-        }
-    }
-
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -36,7 +28,7 @@ class FolioCategoriesColor extends Portfolio
         $this->id = $id;
     }
 
-    public function getCategory()
+    public function getCategory(): ?string
     {
         return $this->category;
     }
@@ -46,7 +38,7 @@ class FolioCategoriesColor extends Portfolio
         $this->category = $category;
     }
 
-    public function getColor()
+    public function getColor(): ?string
     {
         return $this->color;
     }
@@ -56,7 +48,7 @@ class FolioCategoriesColor extends Portfolio
         $this->color = $color;
     }
 
-    public function getId_folio()
+    public function getId_folio(): ?Portfolio
     {
         return $this->id_folio;
     }

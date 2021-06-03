@@ -1,7 +1,9 @@
 <?php
 
-class Comment extends Post
+class Comment
 {
+    use EntityHydrator;
+
     private $id;
     private $id_post;
     private $pseudo;
@@ -17,16 +19,6 @@ class Comment extends Post
         endif;
     }
 
-    public function hydrate($donnees)
-    {
-        foreach ($donnees as $cle => $valeur) {
-            $method = 'set' . ucfirst($cle);
-            if (method_exists($this, $method)) :
-                $this->$method($valeur);
-            endif;
-        }
-    }
-
     static public $listeStatut = [
         Constantes::COM_PENDING_STATUS => 'Commentaire en attente',
         Constantes::COM_STATUS_VALIDATED => 'Commentaire validé',
@@ -34,7 +26,7 @@ class Comment extends Post
         Constantes::COM_STATUS_DELETED => 'Commentaire supprimé'
     ];
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -42,19 +34,23 @@ class Comment extends Post
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
     }
 
-    public function getId_post()
+    public function getId_post(): ?Post
     {
         return $this->id_post;
     }
 
-    public function setId_post($id_post)
+    public function setId_post(?Post $id_post)
     {
         $this->id_post = $id_post;
+
+        return $this;
     }
 
-    public function getPseudo()
+    public function getPseudo(): ?string
     {
         return $this->pseudo;
     }
@@ -62,6 +58,8 @@ class Comment extends Post
     public function setPseudo($pseudo)
     {
         $this->pseudo = $pseudo;
+
+        return $this;
     }
 
     public function getCreated_at()
@@ -73,9 +71,11 @@ class Comment extends Post
     public function setCreated_at($created_at)
     {
         $this->created_at = $created_at;
+
+        return $this;
     }
 
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -83,9 +83,11 @@ class Comment extends Post
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
     }
 
-    public function getContent()
+    public function getContent(): ?string
     {
         return $this->content;
     }
@@ -93,9 +95,11 @@ class Comment extends Post
     public function setContent($content)
     {
         $this->content = $content;
+
+        return $this;
     }
 
-    public function getState()
+    public function getState(): ?int
     {
         return $this->state;
     }
@@ -103,31 +107,22 @@ class Comment extends Post
     public function setState($state)
     {
         $this->state = $state;
+
+        return $this;
     }
 
     public function getStateClass()
     {
         switch ($this->state) {
             case Constantes::COM_PENDING_STATUS:
+            case Constantes::COM_STATUS_DELETED:
                 return 'user-status-red';
-                break;
 
             case Constantes::COM_STATUS_VALIDATED:
                 return 'user-status-green';
-                break;
 
             case Constantes::COM_STATUS_ARCHIVED:
                 return 'user-status-orange';
-                break;
-
-            case Constantes::COM_STATUS_DELETED:
-                return 'user-status-red';
-                break;
-
-            default:
-                return 'user-status-red';
-                break;
-
         }
     }
 }

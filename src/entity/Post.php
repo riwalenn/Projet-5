@@ -2,6 +2,8 @@
 
 class Post
 {
+    use EntityHydrator;
+
     private $id;
     private $title;
     private $kicker;
@@ -32,24 +34,16 @@ class Post
         endif;
     }
 
-    public function hydrate($donnees)
-    {
-        foreach ($donnees as $cle => $valeur) {
-            $method = 'set' . ucfirst($cle);
-            if (method_exists($this, $method)) :
-                $this->$method($valeur);
-            endif;
-        }
-    }
-
     public function getId()
     {
         return $this->id;
     }
 
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
+
+        return $this;
     }
 
     public function getTitle()
@@ -57,9 +51,11 @@ class Post
         return $this->title;
     }
 
-    public function setTitle($title)
+    public function setTitle($title): self
     {
         $this->title = $title;
+
+        return $this;
     }
 
     public function getKicker()
@@ -67,9 +63,11 @@ class Post
         return $this->kicker;
     }
 
-    public function setKicker($kicker)
+    public function setKicker($kicker): self
     {
         $this->kicker = $kicker;
+
+        return $this;
     }
 
     public function getAuthor()
@@ -77,9 +75,11 @@ class Post
         return $this->author;
     }
 
-    public function setAuthor($author)
+    public function setAuthor($author): self
     {
         $this->author = $author;
+
+        return $this;
     }
 
     public function getPseudo()
@@ -87,9 +87,11 @@ class Post
         return $this->pseudo;
     }
 
-    public function setPseudo($pseudo)
+    public function setPseudo($pseudo): self
     {
         $this->pseudo = $pseudo;
+
+        return $this;
     }
 
     public function getContent()
@@ -102,9 +104,11 @@ class Post
         return $this->content . $url;
     }
 
-    public function setContent($content)
+    public function setContent($content): self
     {
         $this->content = $content;
+
+        return $this;
     }
 
     public function getUrl()
@@ -112,9 +116,11 @@ class Post
         return $this->url;
     }
 
-    public function setUrl($url)
+    public function setUrl($url): self
     {
         $this->url = $url;
+
+        return $this;
     }
 
     public function getCreated_at()
@@ -123,9 +129,11 @@ class Post
         return date_format($date, 'd-m-Y');
     }
 
-    public function setCreated_at($created_at)
+    public function setCreated_at($created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
     }
 
     public function getModified_at()
@@ -134,9 +142,11 @@ class Post
         return date_format($date, 'd-m-Y H:m:s');
     }
 
-    public function setModified_at($modified_at)
+    public function setModified_at($modified_at): self
     {
         $this->modified_at = $modified_at;
+
+        return $this;
     }
 
     public function getId_Category()
@@ -147,6 +157,8 @@ class Post
     public function setId_Category($id_category)
     {
         $this->id_category = $id_category;
+
+        return $this;
     }
 
     public function getCategory()
@@ -157,6 +169,8 @@ class Post
     public function setCategory(Category $category)
     {
         $this->category = $category;
+
+        return $this;
     }
 
     public function getFavorites()
@@ -174,9 +188,11 @@ class Post
         return $this->state;
     }
 
-    public function setState($state)
+    public function setState($state): self
     {
         $this->state = $state;
+
+        return $this;
     }
 
     public function getStateName()
@@ -209,6 +225,8 @@ class Post
     public function setComments($comments)
     {
         $this->comments = $comments;
+
+        return $this;
     }
 
     public function getStatut_favorite()
@@ -219,5 +237,7 @@ class Post
     public function setStatut_favorite($statut_favorite)
     {
         $this->statut_favorite = $statut_favorite;
+
+        return $this;
     }
 }
