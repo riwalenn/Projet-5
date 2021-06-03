@@ -21,8 +21,10 @@ class UserManager extends Connexion
             'state' => $user->getState()
         ));
 
+        $service = new UserHelper();
+
         $id_user = $bdd->lastInsertId();
-        $token = $user->generateToken();
+        $token = $service->generateToken();
         $interval = 5 * 24 * 60;
 
         $tokenStatement = $bdd->prepare('INSERT INTO `tokens` (`token`, `id_user`, `expiration_token`) 
@@ -38,9 +40,10 @@ class UserManager extends Connexion
     //création token et inscription en bdd
     public function tokenCreation($id_user)
     {
+        $service = new UserHelper();
         $user = new User();
         $bdd = $this->dbConnect();
-        $token = $user->generateToken();
+        $token = $service->generateToken();
         $interval = 5 * 24 * 60;
         $tokenStatement = $bdd->prepare('INSERT INTO `tokens` (`token`, `id_user`, `expiration_token`) 
                                                     VALUES (:token, :id_user, DATE_ADD(now(), INTERVAL :interval MINUTE))');

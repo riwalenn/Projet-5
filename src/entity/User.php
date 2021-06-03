@@ -284,10 +284,4 @@ class User
     {
         $this->expiration_token = $expiration_token;
     }
-
-    public function generateToken($length = 32)
-    {
-        $token = random_bytes($length);
-        return bin2hex($token);
-    }
 }
