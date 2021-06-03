@@ -1,7 +1,9 @@
 <?php
 
-class User extends Post
+class User
 {
+    use EntityHydrator;
+
     private $id;
     private $pseudo;
     private $role;
@@ -32,36 +34,28 @@ class User extends Post
     public function __construct($donnees = null)
     {
         if (!empty($donnees)) :
-            $this->hydrate($donnees);
+        $this->hydrate($donnees);
         endif;
     }
 
-    public function hydrate($donnees)
-    {
-        foreach ($donnees as $cle => $valeur) {
-            $method = 'set' . ucfirst($cle);
-            if (method_exists($this, $method)) :
-                $this->$method($valeur);
-            endif;
-        }
-    }
-
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
+
+        return $this;
     }
 
-    public function getPseudo()
+    public function getPseudo(): ?string
     {
         return $this->pseudo;
     }
 
-    public function setPseudo($pseudo)
+    public function setPseudo($pseudo): self
     {
         if (strlen($pseudo) <= 3) :
             $message = "Votre pseudo doit contenir au minimum 4 caractères : " . $pseudo;
@@ -72,26 +66,30 @@ class User extends Post
                 throw new ExceptionOutput($message);
             else:
                 $this->pseudo = $pseudo;
+
+                return $this;
             endif;
         endif;
     }
 
-    public function getRole()
+    public function getRole(): ?int
     {
         return $this->role;
     }
 
-    public function setRole($role)
+    public function setRole($role): self
     {
         $this->role = $role;
+
+        return $this;
     }
 
-    public function getRoleName()
+    public function getRoleName(): ?string
     {
         return self::$listeRole[$this->getRole()];
     }
 
-    public function getRoleClass()
+    public function getRoleClass(): ?string
     {
         if ($this->role == Constantes::ROLE_ADMIN) :
             return 'role-dash-table';
@@ -100,22 +98,24 @@ class User extends Post
         endif;
     }
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail($email)
+    public function setEmail($email): self
     {
         if (preg_match('#^[a-z0-9._-]{3,55}+@+[a-z0-9]{2,}\.[a-z]{2,5}$#', $email)) :
             $this->email = $email;
+
+            return $this;
         else:
             $message = "Le format de votre email ne correspond pas ! (minimum 3 caractères, maximum 55 - 2 caractères minimum après l'arobase et 2 à 5 caractères pour l'extension";
             throw new ExceptionOutput($message);
         endif;
     }
 
-    public function getEmailClass()
+    public function getEmailClass(): ?string
     {
         if ($this->email === 'no-reply@riwalennbas.com') :
             return 'email-dash-table';
@@ -124,15 +124,17 @@ class User extends Post
         endif;
     }
 
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword($password)
+    public function setPassword($password): self
     {
         if (preg_match('/^\S*(?=\S{10,64})(?=\S+[a-z])(?=\S+[A-Z])(?=\S+[\d])(?=\S+[\W])\S+$/', $password)):
             $this->password = $password;
+
+            return $this;
         else :
             $message = "Votre mot de passe doit contenir entre 10 et 64 caractères, avoir des majuscules, des chiffres ainsi que des caractères spéciaux";
             throw new ExceptionOutput($message);
@@ -150,9 +152,11 @@ class User extends Post
         return $this->date_inscription;
     }
 
-    public function setDate_inscription($date_inscription)
+    public function setDate_inscription($date_inscription): self
     {
         $this->date_inscription = $date_inscription;
+
+        return $this;
     }
 
     public function getDate_modification_fr()
@@ -166,17 +170,19 @@ class User extends Post
         return $this->date_modification;
     }
 
-    public function setDate_modification($date_modification)
+    public function setDate_modification($date_modification): self
     {
         $this->date_modification = $date_modification;
+
+        return $this;
     }
 
-    public function getCgu()
+    public function getCgu(): ?int
     {
         return $this->cgu;
     }
 
-    public function getCguClass()
+    public function getCguClass(): ?string
     {
         if ($this->cgu == Constantes::CGU_VALIDATED) :
             return '<i class="fa fa-check-square cgu-green"></i>';
@@ -185,53 +191,45 @@ class User extends Post
         endif;
     }
 
-    public function setCgu($cgu)
+    /**
+     * @throws ExceptionOutput
+     */
+    public function setCgu($cgu): self
     {
         if ($cgu == Constantes::CGU_VALIDATED) :
             $this->cgu = $cgu;
+
+            return $this;
         else:
             $message = "Vous devez valider les conditions générales d'utilisation pour vous enregistrer";
             throw new ExceptionOutput($message);
         endif;
     }
 
-    public function getState()
+    public function getState(): ?int
     {
         return $this->state;
     }
 
-    public function setState($state)
+    public function setState($state): self
     {
         $this->state = $state;
+
+        return $this;
     }
 
-    public function getStateName()
+    public function getStateName(): ?string
     {
         return self::$listeStatut[$this->getState()];
     }
 
-    public function getStateClass()
+    public function getStateClass(): ?string
     {
-        switch ($this->state) {
-            case Constantes::USER_PENDING_STATUS:
-                return 'user-status-red';
-
-            case Constantes::USER_PENDING_STATUS_MODO:
-                return 'user-status-orange';
-
-            case Constantes::USER_STATUS_VALIDATED:
-                return 'user-status-green';
-
-            case Constantes::USER_STATUS_DELETED:
-                return 'user-status-red';
-
-            default:
-                return 'user-status-red';
-
-        }
+        $helper = new UserHelper();
+        return $helper->getStateClass($this->state);
     }
 
-    public function getId_token()
+    public function getId_token(): ?string
     {
         return $this->id_token;
     }
@@ -241,17 +239,19 @@ class User extends Post
         $this->id = $id_token;
     }
 
-    public function getToken()
+    public function getToken(): ?string
     {
         return $this->token;
     }
 
-    public function setToken($token)
+    public function setToken($token): self
     {
         $this->token = $token;
+
+        return $this;
     }
 
-    public function getId_user()
+    public function getId_user(): ?int
     {
         return $this->id_user;
     }
@@ -274,47 +274,5 @@ class User extends Post
     public function setExpiration_token($expiration_token)
     {
         $this->expiration_token = $expiration_token;
-    }
-
-
-    public function generateToken($length = 32)
-    {
-        $token = random_bytes($length);
-        return bin2hex($token);
-    }
-
-    // --- Statics functions
-
-    static function helpPseudo()
-    {
-        $html = "Votre pseudo doit contenir au minimum 4 caractères, les caractères spéciaux sont interdits.";
-
-        return $html;
-    }
-
-    static function helpPassword()
-    {
-        $html = "Voici quelques conseils pour vous aider à mieux sécuriser votre vie dématérialisée." . "<br>\n" .
-            "- Utilisez un mot de passe <u>unique</u> pour chaque service. En particulier, l’utilisation d’un même " . "<br>\n" .
-            "mot de passe entre sa messagerie professionnelle et sa messagerie personnelle est impérativement à proscrire ;" . "<br>\n" .
-            "- Choisissez un mot de passe <u>qui n’a pas de lien avec vous</u> (mot de passe composé d’un nom de société," . "<br>\n" .
-            "d’une date de naissance, etc.) ;" . "<br>\n" .
-            "- Ne demandez <u>jamais</u> à un tiers de générer pour vous un mot de passe ;" . "<br>\n" .
-            "- Modifiez systématiquement et au plus tôt les mots de passe par défaut lorsque les systèmes en contiennent ;" . "<br>\n" .
-            "- <u>Renouvelez vos mots de passe avec une fréquence raisonnable</u>. Tous les 90 jours est un bon compromis" . "<br>\n" .
-            "pour les systèmes contenant des données sensibles ;" . "<br>\n" .
-            "- <u>Ne stockez pas</u> les mots de passe dans un fichier sur un poste informatique particulièrement exposé au risque" . "<br>\n" .
-            "(exemple : en ligne sur Internet), encore moins sur un papier facilement accessible ;" . "<br>\n" .
-            "- Ne vous envoyez pas vos propres mots de passe <u>sur votre messagerie personnelle</u> ;" . "<br>\n" .
-            "- Configurez les logiciels, y compris votre navigateur web, <u>pour qu’ils ne se « souviennent » pas" . "<br>\n" .
-            " des mots de passe choisis.</u>" . "<br>\n" .
-            "<b>Votre mot de passe doit obligatoirement contenir :</b> " . "<br>\n" .
-            "- des majuscules et minuscules," . "<br>\n" .
-            "- des caractères spéciaux indiqués ci-après : @-_&*!%:;#~^" . "<br>\n" .
-            "- les caractères tels que é,ç,+,à,è,`,(,),[,],{,},°,|,\,',\",/,?,\ et la , ne sont pas autorisés," . "<br>\n" .
-            "- des chiffres," . "<br>\n" .
-            "- il doit comporter au minimum 10 caractères et 64 au maximum.";
-
-        return $html;
     }
 }

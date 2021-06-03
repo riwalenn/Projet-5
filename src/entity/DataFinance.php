@@ -3,6 +3,8 @@
 
 class DataFinance
 {
+    use EntityHydrator;
+
     private $id;
     private $label;
     private $value;
@@ -19,54 +21,52 @@ class DataFinance
         endif;
     }
 
-    public function hydrate($donnees)
-    {
-        foreach ($donnees as $cle => $valeur) {
-            $method = 'set' . ucfirst($cle);
-            if (method_exists($this, $method)) :
-                $this->$method($valeur);
-            endif;
-        }
-    }
-
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
+
+        return $this;
     }
 
-    public function getLabel()
+    public function getLabel(): ?string
     {
         return $this->label;
     }
 
-    public function setLabel($label)
+    public function setLabel($label): self
     {
         $this->label = $label;
+
+        return $this;
     }
 
-    public function getValue()
+    public function getValue(): ?int
     {
         return $this->value;
     }
 
-    public function setValue($value)
+    public function setValue($value): self
     {
         $this->value = $value;
+
+        return $this;
     }
 
-    public function getValuePercent()
+    public function getValuePercent(): ?float
     {
         return $this->value_percent;
     }
 
-    public function setValuePercent($value_percent)
+    public function setValuePercent($value_percent): self
     {
         $this->value_percent = $value_percent;
+
+        return $this;
     }
 
     public function getDate()
@@ -74,9 +74,11 @@ class DataFinance
         return $this->date;
     }
 
-    public function setDate($date)
+    public function setDate($date): self
     {
         $this->date = $date;
+
+        return $this;
     }
 
     public function getDaModifiedAt()
@@ -84,9 +86,11 @@ class DataFinance
         return $this->modified_at;
     }
 
-    public function setModifiedAt($modified_at)
+    public function setModifiedAt($modified_at): self
     {
         $this->modified_at = $modified_at;
+
+        return $this;
     }
 
     public function getDaModifiedBy()
@@ -94,18 +98,22 @@ class DataFinance
         return $this->modified_by;
     }
 
-    public function setModifiedBy($modified_by)
+    public function setModifiedBy($modified_by): self
     {
         $this->modified_by = $modified_by;
+
+        return $this;
     }
 
-    public function getEtat()
+    public function getEtat(): ?int
     {
         return $this->etat;
     }
 
-    public function setEtat($etat)
+    public function setEtat($etat): self
     {
         $this->etat = $etat;
+
+        return $this;
     }
 }

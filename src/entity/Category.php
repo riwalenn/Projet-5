@@ -1,7 +1,12 @@
 <?php
 
+/**
+ * Class Category
+ */
 class Category
 {
+    use EntityHydrator;
+
     private $id;
     private $category;
 
@@ -12,34 +17,27 @@ class Category
         endif;
     }
 
-    public function hydrate($donnees)
-    {
-        foreach ($donnees as $cle => $valeur) {
-            $method = 'set' . ucfirst($cle);
-            if (method_exists($this, $method)) :
-                $this->$method($valeur);
-            endif;
-        }
-    }
-
-
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId($id)
+    public function setId($id): self
     {
         $this->id = $id;
+
+        return $this;
     }
 
-    public function getCategory()
+    public function getCategory(): ?string
     {
         return $this->category;
     }
 
-    public function setCategory($category)
+    public function setCategory($category): self
     {
         $this->category = $category;
+
+        return $this;
     }
 }
