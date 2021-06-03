@@ -10,6 +10,7 @@ try {
     $installationController     = new InstallationController();
     $managers                   = new ManagersController();
 
+
     $action = filter_input(INPUT_GET, 'action');
     if (isset($action)) {
         switch ($action) {
@@ -53,6 +54,10 @@ try {
 
             case 'commentsManager':
                 $managers->getCommentsDashboardManager();
+                break;
+
+            case 'pattern':
+                $managers->getPatternFacadeTestManager();
                 break;
 
             case 'portfolioManager':
