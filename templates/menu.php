@@ -61,6 +61,7 @@
                             <a class="dropdown-item" href="index.php?action=postsManager&value=all">Articles</a>
                             <a class="dropdown-item" href="index.php?action=portfolioManager">Portfolio</a>
                             <a class="dropdown-item" href="index.php?action=commentsManager">Commentaires</a>
+                            <a class="dropdown-item" href="index.php?action=pattern">Pattern Façade</a>
                         <?php endif; ?>
                         <div class="dropdown-divider"></div>
                         <a class="nav-link js-scroll-trigger deco" href="index.php?action=logoutUser"
