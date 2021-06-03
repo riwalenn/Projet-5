@@ -1,7 +1,7 @@
 <?php
 
 
-class UserHelper
+class UserHelper implements EntityHelperInterface
 {
     /**
      * @throws Exception

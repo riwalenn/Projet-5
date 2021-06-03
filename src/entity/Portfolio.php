@@ -118,7 +118,7 @@ class Portfolio
         return $this;
     }
 
-    public function getCategories(): ?array
+    public function getCategories()
     {
         return $this->categories;
     }
