@@ -28,80 +28,76 @@ class SecurityController
         $email = filter_input(INPUT_POST, 'email');
         $controller     = new ControllerFront();
         $userManager    = new UserManager();
-        $listPosts      = new PostManager();
         $controllerBack = new ControllerBack();
         $dashboardUser  = new DashboardUserController();
         $user = $userManager->getUserByEmail($email);
 
-        //si l'objet user n'est pas vide
-        if (!empty($user)) :
-            //$lastPosts = $listPosts->getPosts(1, Constantes::POST_STATUS_VALIDATED);
-            $comparePassword = password_verify(filter_input(INPUT_POST, 'password'), $user->getPassword());
-
-            //si les mots de passe correspondent
-            if ($comparePassword == true) :
-                $_SESSION['id'] = $user->getId();
-                $_SESSION['role'] = $user->getRole();
-
-                switch (true) {
-                    /** Role : Administrateur && Statut : actif */
-                    case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
-                        $controllerBack->getBackendDashboard();
-                        $userManager->newConnexionDate();
-                        break;
-
-                    /** Role : Administrateur && Statut : inactif */
-                    case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() != Constantes::USER_STATUS_VALIDATED) :
-                        $message = 'Vous n\'avez pas les autorisations pour accéder à cette page.';
-                        throw new ExceptionOutput($message);
-
-                    /** Role : Utilisateur ou auteur && Statut : en attente de validation */
-                    case (($user->getRole() == Constantes::ROLE_USER || $user->getRole() == Constantes::ROLE_AUTHOR) && $user->getState() == Constantes::USER_PENDING_STATUS) :
-                        $message = 'Vous n\'avez pas validé votre inscription, un email vous a été envoyé avec un lien vous permettant de le faire ! (vérifiez vos spams) ';
-                        throw new ExceptionOutput($message);
-
-                    /** Role : Utilisateur ou auteur && Statut : en attente de validation d'un modérateur */
-                    case (($user->getRole() == Constantes::ROLE_USER || $user->getRole() == Constantes::ROLE_AUTHOR) && $user->getState() == Constantes::USER_PENDING_STATUS_MODO) :
-                        $message = 'Vous n\'avez pas encore été validé par un modérateur, merci de patienter cela devrait se faire d\'ici 24 heures.';
-                        throw new ExceptionOutput($message);
-
-                    /** Role : Utilisateur ou auteur && Statut : actif */
-                    case (($user->getRole() == Constantes::ROLE_USER || $user->getRole() == Constantes::ROLE_AUTHOR) && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
-                        $dashboardUser->getDashboardUser();
-                        $userManager->newConnexionDate();
-                        break;
-
-                    /** Role : Utilisateur ou auteur && Statut : supprimé */
-                    case (($user->getRole() == Constantes::ROLE_USER || $user->getRole() == Constantes::ROLE_AUTHOR) && $user->getState() == Constantes::USER_STATUS_DELETED) :
-                        $message = 'Votre compte n\'existe plus/pas.';
-                        throw new ExceptionOutput($message);
-
-                    /** Statut : inconnu ou Role : inconnu */
-                    case ($user->getState() > Constantes::USER_STATUS_DELETED) :
-                    case ($user->getRole() < Constantes::ROLE_ADMIN || $user->getRole() > Constantes::ROLE_USER) :
-                        $message = 'Vos informations de connexion ne correspondent pas.';
-                        throw new ExceptionOutput($message);
-
-                    case 'default':
-                        $controller->afficherIndex();
-                        break;
-                }
-
-            /** si les mots de passe ne correspondent pas */
-            else:
-                $message = 'Le mot de passe ne correspond pas avec celui utilisé à l\'inscription';
-
-                $view = new View('Connexion');
-                $view->render($this->formLoginView, ['message' => $message]);
-            endif;
-
-        /** si l'objet user est vide */
-        else:
+        /** si user non inscrit */
+        if(empty($user)):
             $message = 'Vos informations de connexion ne correspondent pas.';
 
             $view = new View('Connexion');
             $view->render($this->formLoginView, ['message' => $message]);
+            return false;
         endif;
+
+        $comparePassword = password_verify(filter_input(INPUT_POST, 'password'), $user->getPassword());
+
+        /** si mauvais password */
+        if (!$comparePassword) :
+            $message = 'Le mot de passe ne correspond pas avec celui utilisé à l\'inscription';
+
+            $view = new View('Connexion');
+            $view->render($this->formLoginView, ['message' => $message]);
+            return false;
+        endif;
+
+        $_SESSION['id'] = $user->getId();
+        $_SESSION['role'] = $user->getRole();
+
+        switch (true) {
+            /** Role : Administrateur && Statut : actif */
+            case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
+                $controllerBack->getBackendDashboard();
+                $userManager->newConnexionDate();
+                break;
+
+            /** Role : Administrateur && Statut : inactif */
+            case ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() != Constantes::USER_STATUS_VALIDATED) :
+                $message = 'Vous n\'avez pas les autorisations pour accéder à cette page.';
+                throw new ExceptionOutput($message);
+
+            /** Role : Utilisateur ou auteur && Statut : en attente de validation */
+            case (($user->getRole() == Constantes::ROLE_USER || $user->getRole() == Constantes::ROLE_AUTHOR) && $user->getState() == Constantes::USER_PENDING_STATUS) :
+                $message = 'Vous n\'avez pas validé votre inscription, un email vous a été envoyé avec un lien vous permettant de le faire ! (vérifiez vos spams) ';
+                throw new ExceptionOutput($message);
+
+            /** Role : Utilisateur ou auteur && Statut : en attente de validation d'un modérateur */
+            case (($user->getRole() == Constantes::ROLE_USER || $user->getRole() == Constantes::ROLE_AUTHOR) && $user->getState() == Constantes::USER_PENDING_STATUS_MODO) :
+                $message = 'Vous n\'avez pas encore été validé par un modérateur, merci de patienter cela devrait se faire d\'ici 24 heures.';
+                throw new ExceptionOutput($message);
+
+            /** Role : Utilisateur ou auteur && Statut : actif */
+            case (($user->getRole() == Constantes::ROLE_USER || $user->getRole() == Constantes::ROLE_AUTHOR) && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
+                $dashboardUser->getDashboardUser();
+                $userManager->newConnexionDate();
+                break;
+
+            /** Role : Utilisateur ou auteur && Statut : supprimé */
+            case (($user->getRole() == Constantes::ROLE_USER || $user->getRole() == Constantes::ROLE_AUTHOR) && $user->getState() == Constantes::USER_STATUS_DELETED) :
+                $message = 'Votre compte n\'existe plus/pas.';
+                throw new ExceptionOutput($message);
+
+            /** Statut : inconnu ou Role : inconnu */
+            case ($user->getState() > Constantes::USER_STATUS_DELETED) :
+            case ($user->getRole() < Constantes::ROLE_ADMIN || $user->getRole() > Constantes::ROLE_USER) :
+                $message = 'Vos informations de connexion ne correspondent pas.';
+                throw new ExceptionOutput($message);
+
+            case 'default':
+                $controller->afficherIndex();
+                break;
+        }
     }
 
     //Fonction de déconnection

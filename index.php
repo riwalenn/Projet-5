@@ -56,10 +56,6 @@ try {
                 $managers->getCommentsDashboardManager();
                 break;
 
-            case 'pattern':
-                $managers->getPatternFacadeTestManager();
-                break;
-
             case 'portfolioManager':
                 $managers->getPortfolioDashboardManager();
                 break;

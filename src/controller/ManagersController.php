@@ -155,21 +155,6 @@ class ManagersController
         }
     }
 
-    //Affiche le panel de test du pattern de façade
-    public function getPatternFacadeTestManager()
-    {
-        $filArianne = 'Design Pattern de façade';
-        $patternManager = new PatternManager();
-        $datas = $patternManager->get2021DataFinances();
-        foreach ($datas as $data) :
-            $page = new Page($data->getLabel(), [$data->getValue(), $data->getValuePercent()]);
-            $document[] = $page->render(new ViewTemplateFactory());
-        endforeach;
-
-        $view = new  View('Pattern de Façade');
-        $view->render($this->managerPatternView, ['filArianne' => $filArianne, 'datas' => $datas, 'document' => $document]);
-    }
-
     public function crudCommentsManager($crud)
     {
         $commentairesManager = new CommentManager();
