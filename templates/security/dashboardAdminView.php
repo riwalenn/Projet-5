@@ -356,49 +356,64 @@ if ((isset($_SESSION['id']))) :
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.js" integrity="sha512-b3xr4frvDIeyC3gqR1/iOi6T+m3pLlQyXNuvn5FiRrrKiMUJK3du2QqZbCywH6JxS5EOfW0DY0M6WwdXFbCBLQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <script src="/public/js/statistiques.js" type="text/javascript"></script>
     <script>
         var ctx = document.getElementById('myChart');
         var data = <?=$nbPostsByCategory?>;
         var labels = <?=$labelsCategories?>;
-
-        var radar_colors = {
-            red: 'rgba(255, 99, 132, 0.2)',
-            blue: 'rgba(54, 162, 235, 0.2)',
-            yellow: 'rgba(255, 206, 86, 0.2)',
-            lightblue: 'rgba(75, 192, 192, 0.2)',
-            purple: 'rgba(153, 102, 255, 0.2)',
-            orange: 'rgba(255, 159, 64, 0.2)'
-        }
-        var radar_border_colors = {
-            red: 'rgba(255, 99, 132, 1)',
-            blue: 'rgba(54, 162, 235, 1)',
-            yellow: 'rgba(255, 206, 86, 1)',
-            lightblue: 'rgba(75, 192, 192, 1)',
-            purple: 'rgba(153, 102, 255, 1)',
-            orange: 'rgba(255, 159, 64, 1)'
-        }
+        
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: labels.label.split(','),
+                labels: split_array(labels.label),
                 datasets: [{
                     label: 'statistiques',
-                    data: data.split(','),
+                    data: split_array(data),
                     backgroundColor: [
-                        radar_colors.red,
-                        radar_colors.orange,
-                        radar_colors.yellow,
-                        radar_colors.blue,
-                        radar_colors.lightblue,
-                        radar_colors.purple
+                        Radar_colors.green,
+                        Radar_colors.blueprimary,
+                        Radar_colors.navy,
+                        Radar_colors.yellow,
+                        Radar_colors.blue,
+                        Radar_colors.purple,
+                        Radar_colors.orange,
+                        Radar_colors.lightgreen,
+                        Radar_colors.lightblueprimary,
+                        Radar_colors.lightnavy,
+                        Radar_colors.lightyellow,
+                        Radar_colors.lightblue,
+                        Radar_colors.lightpurple,
+                        Radar_colors.lightorange,
+                        Radar_colors.darkgreen,
+                        Radar_colors.darkblueprimary,
+                        Radar_colors.darknavy,
+                        Radar_colors.darkyellow,
+                        Radar_colors.darkblue,
+                        Radar_colors.darkpurple,
+                        Radar_colors.darkorange
                     ],
                     borderColor: [
-                        radar_border_colors.red,
-                        radar_border_colors.orange,
-                        radar_border_colors.yellow,
-                        radar_border_colors.blue,
-                        radar_border_colors.lightblue,
-                        radar_border_colors.purple
+                        Radar_border_colors.green,
+                        Radar_border_colors.blueprimary,
+                        Radar_border_colors.navy,
+                        Radar_border_colors.yellow,
+                        Radar_border_colors.blue,
+                        Radar_border_colors.purple,
+                        Radar_border_colors.orange,
+                        Radar_border_colors.lightgreen,
+                        Radar_border_colors.lightblueprimary,
+                        Radar_border_colors.lightnavy,
+                        Radar_border_colors.lightyellow,
+                        Radar_border_colors.lightblue,
+                        Radar_border_colors.lightpurple,
+                        Radar_border_colors.lightorange,
+                        Radar_border_colors.darkgreen,
+                        Radar_border_colors.darkblueprimary,
+                        Radar_border_colors.darknavy,
+                        Radar_border_colors.darkyellow,
+                        Radar_border_colors.darkblue,
+                        Radar_border_colors.darkpurple,
+                        Radar_border_colors.darkorange
                     ],
                     borderWidth: 1
                 }]
