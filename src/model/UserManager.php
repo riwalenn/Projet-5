@@ -41,7 +41,6 @@ class UserManager extends Connexion
     public function tokenCreation($id_user)
     {
         $service = new UserHelper();
-        $user = new User();
         $bdd = $this->dbConnect();
         $token = $service->generateToken();
         $interval = 5 * 24 * 60;

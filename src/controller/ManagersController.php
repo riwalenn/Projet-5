@@ -6,7 +6,6 @@ class ManagersController
     private $managerCommentsView        = Constantes::PATH_FOLDER_TEMPLATES_SECURITY.'managerCommentsView.php';
     private $managerPortfolioView       = Constantes::PATH_FOLDER_TEMPLATES_SECURITY.'managerPortfolioView.php';
     private $managerPostsView           = Constantes::PATH_FOLDER_TEMPLATES_SECURITY.'managerPostsView.php';
-    private $managerPatternView         = Constantes::PATH_FOLDER_TEMPLATES_SECURITY. 'managerPatternFacadeView.php';
 
     //Affiche le pannel de management utilisateurs
     public function getUsersDashboardManager($errorMessage = NULL)
