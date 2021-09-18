@@ -48,4 +48,13 @@ class GetArray
             $html .= '</select>';
         return $html;
     }
+
+    /**
+     * @param $array
+     * @return string
+     */
+    public function convert_multi_array($array) {
+        $out = implode(",",array_map(function($a) {return implode("~",$a);},$array));
+        return $out;
+    }
 }

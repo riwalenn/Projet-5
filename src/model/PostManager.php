@@ -246,12 +246,22 @@ class PostManager extends Connexion
     public function countPostsByCategory()
     {
         $bdd = $this->dbConnect();
-        $countCategories = $bdd->prepare('SELECT categories.category, COUNT(posts.id) AS nb_posts 
-                                                        FROM `posts` LEFT JOIN `categories` ON posts.id_category = categories.id 
-                                                        GROUP BY id_category');
+        $countCategories = $bdd->prepare('SELECT COUNT(posts.id) AS nb_posts 
+                                                    FROM `posts` LEFT JOIN `categories` ON posts.id_category = categories.id 
+                                                    GROUP BY id_category');
         $countCategories->execute();
         $countCategory = $countCategories->fetchAll();
         return $countCategory;
+    }
+
+    public function getLabelsCategoriesByPosts()
+    {
+        $bdd = $this->dbConnect();
+        $query = $bdd->prepare('SELECT GROUP_CONCAT(DISTINCT(categories.category) SEPARATOR ",") as label 
+                                            FROM `posts` LEFT JOIN `categories` ON posts.id_category = categories.id 
+                                            ORDER by categories.id');
+        $query->execute();
+        return $query->fetch();
     }
 
     /*

@@ -19,6 +19,7 @@ class ControllerBack
         $categoryManager            = new CategoryManager();
         $portfolioManager           = new PortfolioManager();
         $folioCategoriesManager     = new FolioCategoriesManager();
+        $service                    = new GetArray();
 
         $portfolio = $portfolioManager->getPortfolio();
 
@@ -55,18 +56,19 @@ class ControllerBack
             $nbPostsUnchecked           = $postManager->countPostsUnckecked();
             $nbPostsArchived            = $postManager->countPostsArchived();
             $nbPostsToDelete            = $postManager->countPostsToDelete();
-            $nbPostsByCategory          = $postManager->countPostsByCategory();
+            $nbPostsByCategory          = json_encode($service->convert_multi_array($postManager->countPostsByCategory()));
 
             //Compteur commentaires
             $nbCommentsUnchecked        = $commentManager->countCommentsUncheked();
             $nbCommentsToDelete         = $commentManager->countCommentsToDelete();
 
             $categories                 = $categoryManager->selectAllCategories();
+            $labelsCategories           = json_encode($postManager->getLabelsCategoriesByPosts());
 
             $nbFolioCategories          = $folioCategoriesManager->getNbCategoriesFolio();
 
             $view = new View('Tableau de bord');
-            $view->render($this->dashboardAdminView, ['portfolio' => $portfolio, 'nbFolioCategories' => $nbFolioCategories, 'user' => $user, 'nbPostsUnchecked' => $nbPostsUnchecked, 'nbPostsArchived' => $nbPostsArchived, 'nbPostsToDelete' => $nbPostsToDelete, 'nbUsersTotal' => $nbUsersTotal, 'nbUsersReferent' => $nbUsersReferent, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate, 'nbUsersToDelete' => $nbUsersToDelete, 'nbPostTotal' => $nbPostTotal, 'nbPostsByCategory' => $nbPostsByCategory, 'nbCommentsUnchecked' => $nbCommentsUnchecked, 'nbCommentsToDelete' => $nbCommentsToDelete, 'categories' => $categories]);
+            $view->render($this->dashboardAdminView, ['portfolio' => $portfolio, 'nbFolioCategories' => $nbFolioCategories, 'user' => $user, 'nbPostsUnchecked' => $nbPostsUnchecked, 'nbPostsArchived' => $nbPostsArchived, 'nbPostsToDelete' => $nbPostsToDelete, 'nbUsersTotal' => $nbUsersTotal, 'nbUsersReferent' => $nbUsersReferent, 'nbUsersWaitingList' => $nbUsersWaitingList, 'nbUsersTokenExpired' => $nbUsersTokenExpired, 'nbUsersConnexionExpired' => $nbUsersConnexionExpired, 'nbUsersTokenNotValidate' => $nbUsersTokenNotValidate, 'nbUsersToDelete' => $nbUsersToDelete, 'nbPostTotal' => $nbPostTotal, 'nbPostsByCategory' => $nbPostsByCategory, 'nbCommentsUnchecked' => $nbCommentsUnchecked, 'nbCommentsToDelete' => $nbCommentsToDelete, 'categories' => $categories, 'labelsCategories' => $labelsCategories]);
         else:
             $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
             throw new ExceptionOutput($message);

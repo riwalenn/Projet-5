@@ -131,19 +131,7 @@ if ((isset($_SESSION['id']))) :
                                 </small>
                             </p>
                             <hr>
-                            <h6 class="dashboard">Statistiques</h6>
-                            <p>
-                                <small class="text-muted">
-                                    <?php
-                                    foreach ($nbPostsByCategory as $nbPosts) :
-                                        ?>
-                                        <span class="badge badge-blog"><?= $nbPosts['nb_posts'] ?></span> <?= $nbPosts['category'] ?>
-                                        <br>
-                                    <?php
-                                    endforeach;
-                                    ?>
-                                </small><br>
-                            </p>
+                            <canvas id="myChart"></canvas>
                             <hr>
                             <h6 class="dashboard">Commentaires</h6>
                             <p>
@@ -366,6 +354,65 @@ if ((isset($_SESSION['id']))) :
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.js" integrity="sha512-b3xr4frvDIeyC3gqR1/iOi6T+m3pLlQyXNuvn5FiRrrKiMUJK3du2QqZbCywH6JxS5EOfW0DY0M6WwdXFbCBLQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        var ctx = document.getElementById('myChart');
+        var data = <?=$nbPostsByCategory?>;
+        var labels = <?=$labelsCategories?>;
+
+        var radar_colors = {
+            red: 'rgba(255, 99, 132, 0.2)',
+            blue: 'rgba(54, 162, 235, 0.2)',
+            yellow: 'rgba(255, 206, 86, 0.2)',
+            lightblue: 'rgba(75, 192, 192, 0.2)',
+            purple: 'rgba(153, 102, 255, 0.2)',
+            orange: 'rgba(255, 159, 64, 0.2)'
+        }
+        var radar_border_colors = {
+            red: 'rgba(255, 99, 132, 1)',
+            blue: 'rgba(54, 162, 235, 1)',
+            yellow: 'rgba(255, 206, 86, 1)',
+            lightblue: 'rgba(75, 192, 192, 1)',
+            purple: 'rgba(153, 102, 255, 1)',
+            orange: 'rgba(255, 159, 64, 1)'
+        }
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels.label.split(','),
+                datasets: [{
+                    label: 'statistiques',
+                    data: data.split(','),
+                    backgroundColor: [
+                        radar_colors.red,
+                        radar_colors.orange,
+                        radar_colors.yellow,
+                        radar_colors.blue,
+                        radar_colors.lightblue,
+                        radar_colors.purple
+                    ],
+                    borderColor: [
+                        radar_border_colors.red,
+                        radar_border_colors.orange,
+                        radar_border_colors.yellow,
+                        radar_border_colors.blue,
+                        radar_border_colors.lightblue,
+                        radar_border_colors.purple
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    },
+                }
+            }
+        });
+    </script>
 <?php
 endif;
 ?>

@@ -199,13 +199,11 @@
             </div>
             <div class="row competences">
                 <div class="col-md-3 col-sm-6">
-                    <a href="https://riwalenn.wordpress.com/category/photos/">
-                        <img class="img-fluid d-block mx-auto hobbies" src="<?= Constantes::PATH_IMG_RESSOURCES ?>hobbies/photographe.jpg"
-                         alt="Photographie">
-                    </a>
+                    <img class="img-fluid d-block mx-auto hobbies" src="<?= Constantes::PATH_IMG_RESSOURCES ?>hobbies/photographe.jpg"
+                     alt="Photographie">
                 </div>
                 <div class="col-md-3 col-sm-6">
-                    <a href="https://open.spotify.com/playlist/37i9dQZF1EjwanrjhCDbh2?si=H4YopdD7TQCCLQzByZqPAQ">
+                    <a href="https://open.spotify.com/playlist/37i9dQZF1EM94jqFkNYy0Q?si=d845e7ececb44957">
                         <img class="img-fluid d-block mx-auto hobbies" src="<?= Constantes::PATH_IMG_RESSOURCES ?>hobbies/musique.jpg"
                          alt="Musique">
                     </a>
@@ -313,7 +311,6 @@
                                                 ?>
                                                 <?php
                                             } ?>
-                                        </p>
                                     </li>
                                 </ul>
                                 <button class="btn btn-primary" data-dismiss="modal" type="button">
