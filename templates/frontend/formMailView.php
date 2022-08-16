@@ -1,6 +1,6 @@
 <div class="container views">
     <div class="row">
-        <form action="index.php?action=forgotPasswordSendMail" method="post" onsubmit="return verifFormMail(this)">
+        <form action="index.php?action=forgot-password-send-mail" method="post" onsubmit="return verifFormMail(this)">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-at"></i></span>

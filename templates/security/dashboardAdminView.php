@@ -23,7 +23,7 @@ if ((isset($_SESSION['id']))) :
                                 </footer>
                             </blockquote>
                             <p class="text-muted">
-                                <a href="index.php?action=logoutUser" onclick="return ConfirmDeconnexion()"><i
+                                <a href="index.php?action=logout-user" onclick="return ConfirmDeconnexion()"><i
                                             class="fas fa-sign-out-alt"></i> Deconnexion</a>
                             </p>
                             <hr>
@@ -37,12 +37,12 @@ if ((isset($_SESSION['id']))) :
                                 <small class="text-muted">
                                     <span class="badge badge-success"><?= htmlspecialchars($nbUsersReferent) ?></span> utilisateur(s)
                                     référents -
-                                    <a class="articles-link" href="index.php?action=usersManager&value=referents">
+                                    <a class="articles-link" href="index.php?action=users-manager&value=referents">
                                         <i class="fa fa-eye"></i> voir liste</a></small><br>
                                 <small class="text-muted">
                                     <span class="badge badge-warning"> <?= htmlspecialchars($nbUsersWaitingList) ?> </span>
                                     utilisateur(s) en attente de validation -
-                                    <a class="articles-link" href="index.php?action=usersManager&value=uncheckedUsers">
+                                    <a class="articles-link" href="index.php?action=users-manager&value=uncheckedUsers">
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
                             </p>
@@ -52,7 +52,7 @@ if ((isset($_SESSION['id']))) :
                                 <small class="text-muted">
                                     <span class="badge badge-danger"> <?= htmlspecialchars($nbUsersToDelete) ?> </span> utilisateur(s) à
                                     supprimer -
-                                    <a class="articles-link" href="index.php?action=usersManager&value=trash">
+                                    <a class="articles-link" href="index.php?action=users-manager&value=trash">
                                         <i class="fa fa-eye"></i> voir liste</a></small><br>
                                 <small class="text-muted">
                                     <span class="badge badge-danger"> <?= htmlspecialchars($nbUsersConnexionExpired) ?> </span>
@@ -70,7 +70,7 @@ if ((isset($_SESSION['id']))) :
                                     <span class="badge badge-warning"> <?= htmlspecialchars($nbUsersTokenNotValidate) ?> </span>
                                     utilisateur(s) n'ont pas validé leurs token -
                                     <a class="articles-link"
-                                       href="index.php?action=usersManager&value=uncheckedTokenUsers">
+                                       href="index.php?action=users-manager&value=uncheckedTokenUsers">
                                         <i class="fa fa-eye"></i> voir liste</a> </small><br>
                                 <small class="text-muted">
                                     <span class="badge badge-danger"> <?= htmlspecialchars($nbUsersTokenExpired) ?> </span> token(s)
@@ -84,7 +84,7 @@ if ((isset($_SESSION['id']))) :
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">
-                                <a class="nav-link" href="index.php?action=usersManager&value=all"><i
+                                <a class="nav-link" href="index.php?action=users-manager&value=all"><i
                                             class="fas fa-eye"></i> voir la liste des utilisateurs</a>
                             </small>
                         </div>
@@ -112,13 +112,13 @@ if ((isset($_SESSION['id']))) :
                                 <small class="text-muted">
                                     <span class="badge badge-warning"><?= htmlspecialchars($nbPostsUnchecked) ?> </span>
                                     article(s) en attente de validation -
-                                    <a class="articles-link" href="index.php?action=postsManager&value=uncheckedPosts">
+                                    <a class="articles-link" href="index.php?action=posts-manager&value=uncheckedPosts">
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
                                 <small class="text-muted">
                                     <span class="badge badge-warning"><?= htmlspecialchars($nbPostsArchived) ?> </span>
                                     article(s) archivés -
-                                    <a class="articles-link" href="index.php?action=postsManager&value=archived">
+                                    <a class="articles-link" href="index.php?action=posts-manager&value=archived">
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
                                 <small class="text-muted">
@@ -138,13 +138,13 @@ if ((isset($_SESSION['id']))) :
                                 <small class="text-muted">
                                     <span class="badge badge-warning"><?= htmlspecialchars($nbCommentsUnchecked) ?> </span>
                                     commentaire(s) en attente de validation -
-                                    <a class="articles-link" href="index.php?action=commentsManager">
+                                    <a class="articles-link" href="index.php?action=comments-manager">
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
                                 <small class="text-muted">
                                     <span class="badge badge-danger"><?= htmlspecialchars($nbCommentsToDelete) ?> </span> commentaire(s) à
                                     supprimer - <i class="fas fa-exclamation-triangle danger"></i>
-                                    <a class="articles-link" href="index.php?action=commentsManager&CRUD=D"
+                                    <a class="articles-link" href="index.php?action=comments-manager&CRUD=D"
                                        onclick="return ConfirmMessageAdmin()">
                                         <i class="fa fa-trash"></i>
                                         purger la liste</a>
@@ -154,7 +154,7 @@ if ((isset($_SESSION['id']))) :
                             <h6 class="dashboard">Portfolio</h6>
                             <p>
                                 <small class="text-muted">
-                                    <a class="articles-link" href="index.php?action=portfolioManager">
+                                    <a class="articles-link" href="index.php?action=portfolio-manager">
                                         <i class="fa fa-copy"></i> voir le portfolio</a>
                                 </small><br>
                             </p>
@@ -165,7 +165,7 @@ if ((isset($_SESSION['id']))) :
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">
-                                <a class="nav-link" href="index.php?action=postsManager&value=all"><i
+                                <a class="nav-link" href="index.php?action=posts-manager&value=all"><i
                                             class="fas fa-eye"></i> voir la liste des articles</a>
                             </small>
                         </div>
@@ -188,7 +188,7 @@ if ((isset($_SESSION['id']))) :
                         <div class="col-lg-8 mx-auto">
                             <div class="modal-body">
                                 <h5><i class="fa fa-user-cog"></i> Ajouter un utilisateur</h5>
-                                <form id="formDataUser" action="index.php?action=usersManager&value=all&CRUD=C"
+                                <form id="formDataUser" action="index.php?action=users-manager&value=all&CRUD=C"
                                       method="post" onsubmit="return verifForm(this)">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -274,7 +274,7 @@ if ((isset($_SESSION['id']))) :
                         <div class="col-lg-8 mx-auto">
                             <div class="modal-body">
                                 <h5><i class="fa fa-pencil-alt"></i> Ajouter un article</h5>
-                                <form id="formDataUser" action="index.php?action=postsManager&value=all&CRUD=C"
+                                <form id="formDataUser" action="index.php?action=posts-manager&value=all&CRUD=C"
                                       method="post">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">

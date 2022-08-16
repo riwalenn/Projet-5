@@ -28,7 +28,7 @@
                     <a class="nav-link js-scroll-trigger" href="index.php#contact">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="index.php?action=articlesListe&page=1">Articles</a>
+                    <a class="nav-link js-scroll-trigger" href="index.php?action=articles-liste&page=1">Articles</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="<?= Constantes::PATH_FOLDER_PUBLIC ?>pdf/CV_Bas_Riwalenn.pdf" download><i
@@ -52,19 +52,19 @@
                         <?php if ($_SESSION['role'] == Constantes::ROLE_USER) : ?>
                             <a class="dropdown-item" href="index.php?action=dashboard">Tableau de bord</a>
                         <?php elseif ($_SESSION['role'] == Constantes::ROLE_ADMIN) : ?>
-                            <a class="dropdown-item" href="index.php?action=backendDashboard">Tableau de bord</a>
+                            <a class="dropdown-item" href="index.php?action=backend-dashboard">Tableau de bord</a>
                         <?php endif; ?>
                         <?php if ($_SESSION['role'] == Constantes::ROLE_ADMIN) : ?>
                             <div class="dropdown-divider"></div>
                             <h6 class="dropdown-header">Managers</h6>
-                            <a class="dropdown-item" href="index.php?action=usersManager&value=all">Utilisateurs</a>
-                            <a class="dropdown-item" href="index.php?action=postsManager&value=all">Articles</a>
-                            <a class="dropdown-item" href="index.php?action=portfolioManager">Portfolio</a>
-                            <a class="dropdown-item" href="index.php?action=commentsManager">Commentaires</a>
+                            <a class="dropdown-item" href="index.php?action=users-manager&value=all">Utilisateurs</a>
+                            <a class="dropdown-item" href="index.php?action=posts-manager&value=all">Articles</a>
+                            <a class="dropdown-item" href="index.php?action=portfolio-manager">Portfolio</a>
+                            <a class="dropdown-item" href="index.php?action=comments-manager">Commentaires</a>
                             <a class="dropdown-item" href="index.php?action=pattern">Pattern Façade</a>
                         <?php endif; ?>
                         <div class="dropdown-divider"></div>
-                        <a class="nav-link js-scroll-trigger deco" href="index.php?action=logoutUser"
+                        <a class="nav-link js-scroll-trigger deco" href="index.php?action=logout-user"
                            onclick="return ConfirmDeconnexion()">Se déconnecter</a>
                     </div>
                         <?php endif; ?>
@@ -73,7 +73,7 @@
                     <?php if ($_SESSION['role'] == Constantes::ROLE_USER) : ?>
                     <li class="d-lg-none nav-item"><a class="nav-link js-scroll-trigger" href="index.php?action=dashboard">Tableau de bord</a></li>
                     <?php elseif ($_SESSION['role'] == Constantes::ROLE_ADMIN) : ?>
-                        <li class="d-lg-none nav-item"><a class="nav-link js-scroll-trigger" href="index.php?action=backendDashboard">Tableau de bord</a></li>
+                        <li class="d-lg-none nav-item"><a class="nav-link js-scroll-trigger" href="index.php?action=backend-dashboard">Tableau de bord</a></li>
                     <?php endif; ?>
                 <?php endif; ?>
             </ul>

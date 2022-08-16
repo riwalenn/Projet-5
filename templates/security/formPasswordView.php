@@ -5,7 +5,7 @@
         </div>
     <?php endif; ?>
     <div class="row">
-        <form action="index.php?action=modifierPassword" id="formModifPassword" method="post"
+        <form action="index.php?action=modifier-password" id="formModifPassword" method="post"
               onsubmit="return verifFormPassword(this)">
             <input type="hidden" name="token" value="<?= $token ?>">
             <div class="input-group mb-3">

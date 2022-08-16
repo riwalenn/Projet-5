@@ -18,7 +18,7 @@ if ((isset($_SESSION['id']))) : ?>
                             <i class="fas fa-ninja"></i>
                             <p class="text-muted"><b>Votre email :</b> <?= $user->getEmail() ?></p>
                             <p class="text-muted"><b>Date d'inscription :</b> <?= $user->getDate_inscription() ?></p>
-                            <p class="text-muted"><a href="index.php?action=logoutUser"
+                            <p class="text-muted"><a href="index.php?action=logout-user"
                                                      onclick="return ConfirmDeconnexion()"><i
                                             class="fas fa-sign-out-alt"></i> Deconnexion</a></p>
                         </div>
@@ -61,7 +61,7 @@ if ((isset($_SESSION['id']))) : ?>
                                 </thead>
                                 <tbody>
                                 <?php foreach ($favoritesPosts as $post) : ?>
-                                    <form action="index.php?action=deleteFavorite" method="post"
+                                    <form action="index.php?action=delete-favorite" method="post"
                                           onsubmit="return ConfirmMessage()">
                                         <input type="hidden" name="id_post" value="<?= htmlspecialchars($post->getId()) ?>">
                                         <tr>
@@ -84,7 +84,7 @@ if ((isset($_SESSION['id']))) : ?>
                         </div>
                         <div class="card-footer">
                             <small class="text-muted"><a class="articles-link"
-                                                         href="index.php?action=articlesListe&page=1"><i
+                                                         href="index.php?action=articles-liste&page=1"><i
                                             class="fas fa-eye"></i> Voir la liste des articles disponibles</a></small>
                         </div>
                     </div>
@@ -111,7 +111,7 @@ if ((isset($_SESSION['id']))) : ?>
                                                                                  style="color: #fed136"></i><br>
                                     </footer>
                                 <?php elseif ($post->getStatut_favorite() != 1) : ?>
-                                    <form action="index.php?action=addFavorite" method="post">
+                                    <form action="index.php?action=add-favorite" method="post">
                                         <input type="hidden" name="id_post" value="<?= $post->getid() ?>">
                                         <footer class="blockquote-footer">
                                             Ajouter l'article à vos favoris :
@@ -126,7 +126,7 @@ if ((isset($_SESSION['id']))) : ?>
                         </div>
                         <div class="card-footer">
                             <small class="text-muted"><a class="articles-link"
-                                                         href="index.php?action=articlesListe&page=1"><i
+                                                         href="index.php?action=articles-liste&page=1"><i
                                             class="fas fa-eye"></i> Voir la liste des articles disponibles</a></small>
                         </div>
                     </div>
@@ -147,7 +147,7 @@ if ((isset($_SESSION['id']))) : ?>
                         <div class="col-lg-8 mx-auto">
                             <div class="modal-body">
                                 <h5>Modification de mes données</h5>
-                                <form id="formDataUser" action="index.php?action=modifDataUser" method="post"
+                                <form id="formDataUser" action="index.php?action=modif-data-user" method="post"
                                       onsubmit="return verifForm(this)">
                                     <input type="hidden" value="<?= htmlspecialchars($_SESSION['id']) ?>" name="id" id="id">
                                     <div class="input-group mb-3">
@@ -193,7 +193,7 @@ if ((isset($_SESSION['id']))) : ?>
                                         </div>
                                     </div>
                                     <p>Si vous avez oublié votre mot de passe ou que vous souhaitez le changer<br> merci
-                                        d'utiliser le <a href="index.php?action=forgotPassword">formulaire
+                                        d'utiliser le <a href="index.php?action=forgot-password">formulaire
                                             dédié</a>.<br> Le champ ci-dessus n'étant utilisé que pour valider vos
                                         informations.</p>
                                     <button class="btn btn-primary my-2 my-sm-0" aria-label="connexion" type="submit"
@@ -258,7 +258,7 @@ if ((isset($_SESSION['id']))) : ?>
                                             <hr>
                                             <h5>Ecrire un commentaire</h5>
                                             <div class="comment-form">
-                                                <form action="index.php?action=addComment" method="post">
+                                                <form action="index.php?action=add-comment" method="post">
                                                     <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
                                                     <div><label>Titre du commentaire :</label></div>
                                                     <div class="input-group mb-3">
@@ -295,7 +295,7 @@ if ((isset($_SESSION['id']))) : ?>
                                             <hr>
                                             <h5>Ecrire un commentaire</h5>
                                             <div class="comment-form">
-                                                <form action="index.php?action=addComment" method="post">
+                                                <form action="index.php?action=add-comment" method="post">
                                                     <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
                                                     <div><label>Titre du commentaire :</label></div>
                                                     <div class="input-group mb-3">
@@ -398,7 +398,7 @@ if ((isset($_SESSION['id']))) : ?>
                                             <hr>
                                             <h5>Ecrire un commentaire</h5>
                                             <div class="comment-form">
-                                                <form action="index.php?action=addComment" method="post">
+                                                <form action="index.php?action=add-comment" method="post">
                                                     <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
                                                     <div><label>Titre du commentaire :</label></div>
                                                     <div class="input-group mb-3">
@@ -435,7 +435,7 @@ if ((isset($_SESSION['id']))) : ?>
                                             <hr>
                                             <h5>Ecrire un commentaire</h5>
                                             <div class="comment-form">
-                                                <form action="index.php?action=addComment" method="post">
+                                                <form action="index.php?action=add-comment" method="post">
                                                     <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
                                                     <div><label>Titre du commentaire :</label></div>
                                                     <div class="input-group mb-3">

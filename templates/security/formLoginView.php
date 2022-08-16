@@ -15,7 +15,7 @@
     endif;
     ?>
     <div class="row">
-        <form action="index.php?action=loginUser" method="post">
+        <form action="index.php?action=login-user" method="post">
             <div><label>Email :</label></div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -24,7 +24,7 @@
                 <input class="form-control form-control-sm" placeholder="entrez votre email ici" aria-label="email"
                        type="email" name="email" required>
             </div>
-            <div class="label_password"><label>Mot de passe :</label><small><a href="index.php?action=forgotPassword">Perdu
+            <div class="label_password"><label>Mot de passe :</label><small><a href="index.php?action=forgot-password">Perdu
                         / Oublié ?</a></small></div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -37,7 +37,7 @@
                         class="fas fa-sign-in-alt"></i> connexion
             </button>
             <div>
-                <small>Pas encore de compte ? <a href="index.php?action=nouvelInscrit">Cliquer ici</a> pour en créer un.</small>
+                <small>Pas encore de compte ? <a href="index.php?action=nouvel-inscrit">Cliquer ici</a> pour en créer un.</small>
             </div>
         </form>
     </div>

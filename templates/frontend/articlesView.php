@@ -57,7 +57,7 @@
                                                                              style="color: #fed136"></i><br>
                                 </footer>
                             <?php elseif ($post->getStatut_favorite() != 1) : ?>
-                                <form action="index.php?action=addFavorite" method="post">
+                                <form action="index.php?action=add-favorite" method="post">
                                     <input type="hidden" name="id_post" value="<?= $post->getid() ?>">
                                     <footer class="blockquote-footer">
                                         Ajouter l'article à vos favoris :
@@ -97,7 +97,7 @@
                     <?php
                     else :
                         ?>
-                        <a class="page-link" href="index.php?action=articlesListe&page=<?= $j ?>"> <?= $j ?></a>
+                        <a class="page-link" href="index.php?action=articles-liste&page=<?= $j ?>"> <?= $j ?></a>
                     <?php
                     endif;
                     ?>
@@ -160,7 +160,7 @@ foreach ($listPosts as $post) {
                                         <hr>
                                         <h5>Ecrire un commentaire</h5>
                                         <div class="comment-form">
-                                            <form action="index.php?action=addComment" method="post">
+                                            <form action="index.php?action=add-comment" method="post">
                                                 <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
                                                 <div><label>Titre du commentaire :</label></div>
                                                 <div class="input-group mb-3">
@@ -196,7 +196,7 @@ foreach ($listPosts as $post) {
                                         <hr>
                                         <h5>Ecrire un commentaire</h5>
                                         <div class="comment-form">
-                                            <form action="index.php?action=addComment" method="post">
+                                            <form action="index.php?action=add-comment" method="post">
                                                 <input type="hidden" name="id_post" value="<?= $post->getId() ?>">
                                                 <div><label>Titre du commentaire :</label></div>
                                                 <div class="input-group mb-3">

@@ -14,11 +14,11 @@ try {
     $action = filter_input(INPUT_GET, 'action');
     if (isset($action)) {
         switch ($action) {
-            case 'articlesListe' :
+            case 'articles-liste' :
                 $postController->afficherListeArticles();
                 break;
 
-            case 'addComment' :
+            case 'add-comment' :
                 $postController->ajoutCommentaire();
                 break;
 
@@ -31,7 +31,7 @@ try {
                 $securityController->afficherLoginForm();
                 break;
 
-            case 'loginUser' :
+            case 'login-user' :
                 $securityController->login();
                 break;
 
@@ -40,47 +40,47 @@ try {
                 break;
 
             case 'delete':
-            case 'backendDashboard':
+            case 'backend-dashboard':
                 $controllerBack->getBackendDashboard();
                 break;
 
-            case 'usersManager':
+            case 'users-manager':
                 $managers->getUsersDashboardManager();
                 break;
 
-            case 'postsManager':
+            case 'posts-manager':
                 $managers->getPostsDashboardManager();
                 break;
 
-            case 'commentsManager':
+            case 'comments-manager':
                 $managers->getCommentsDashboardManager();
                 break;
 
-            case 'portfolioManager':
+            case 'portfolio-manager':
                 $managers->getPortfolioDashboardManager();
                 break;
 
             // Ajoute un article dans les favoris de l'utilisateur
-            case 'addFavorite' :
+            case 'add-favorite' :
                 $favorisController->addFavoritePost();
                 break;
 
             // Supprime un article des favoris de l'utilisateur
-            case 'deleteFavorite' :
+            case 'delete-favorite' :
                 $favorisController->deleteFavoritePost();
                 break;
 
             // Modifie les données de l'utilisateur (pseudo, email)
-            case 'modifDataUser':
+            case 'modif-data-user':
                 $managers->UpdateDataByUser();
                 break;
 
-            case 'logoutUser' :
+            case 'logout-user' :
                 $securityController->logout();
                 break;
 
             // Affiche le formulaire
-            case 'nouvelInscrit' :
+            case 'nouvel-inscrit' :
                 $securityController->afficherNewLoginForm();
                 break;
 
@@ -88,25 +88,25 @@ try {
                 $securityController->inscription();
                 break;
 
-            case 'confirmationInscriptionByEmail' :
+            case 'confirmation-inscription-by-email' :
                 $securityController->confirmationByToken();
                 break;
 
             // Affiche le formulaire
-            case 'forgotPassword' :
+            case 'forgot-password' :
                 $securityController->afficherMailForm();
                 break;
 
-            case 'forgotPasswordSendMail' :
+            case 'forgot-password-send-mail' :
                 $securityController->envoyerEmailForPassword();
                 break;
 
             // Affiche le formulaire
-            case 'iForgotMyPassword' :
+            case 'i-forgot-my-password' :
                 $securityController->afficherPasswordForm();
                 break;
 
-            case 'modifierPassword' :
+            case 'modifier-password' :
                 $securityController->changerPassword();
                 break;
 
