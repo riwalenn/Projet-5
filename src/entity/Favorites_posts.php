@@ -4,10 +4,10 @@ class Favorites_posts
 {
     use EntityHydrator;
 
-    private $id;
-    private $id_user;
-    private $id_post;
-    private $title;
+    private ?int $id;
+    private ?User $id_user;
+    private ?Post $id_post;
+    private ?string $title;
 
     public function __construct($donnees = null)
     {

@@ -34,6 +34,7 @@ class UserManager extends Connexion
             'interval' => $interval,
             'id_user' => $id_user
         ));
+
         $bdd->commit();
     }
 
@@ -51,6 +52,7 @@ class UserManager extends Connexion
             'interval' => $interval,
             'id_user' => $id_user
         ));
+
         return $tokenStatement;
     }
 
@@ -60,6 +62,7 @@ class UserManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT `id` FROM `users` WHERE `email` LIKE :email');
         $statement->execute(array('email' => htmlspecialchars($user->getEmail())));
+
         return $statement->fetch();
     }
 
@@ -70,6 +73,7 @@ class UserManager extends Connexion
         $statement = $bdd->prepare('SELECT `token`, `email` FROM `tokens` 
                                                 JOIN `users` ON `id_user` = `id` WHERE `email` LIKE :email');
         $statement->execute(array('email' => htmlspecialchars($user->getEmail())));
+
         return $statement->fetch();
     }
 
@@ -82,6 +86,7 @@ class UserManager extends Connexion
                                                 WHERE id_user = (SELECT id FROM users, tokens WHERE token = :token AND tokens.id_user = users.id)');
         $statement->execute(array('token' => $user->getToken()));
         $result = $statement->fetch();
+
         return $result['nbToken'];
     }
 
@@ -147,6 +152,7 @@ class UserManager extends Connexion
         $statement = $bdd->prepare('SELECT * FROM `users` WHERE `email` LIKE :email');
         $statement->execute(array('email' => htmlspecialchars($email)));
         $statement->setFetchMode(PDO::FETCH_CLASS, 'User');
+
         return $statement->fetch();
     }
 
@@ -171,6 +177,7 @@ class UserManager extends Connexion
                                                 WHERE `id` = :id');
         $statement->execute(array('id' => $_SESSION['id']));
         $statement->setFetchMode(PDO::FETCH_CLASS, 'User');
+
         return $statement->fetch();
     }
 
@@ -187,6 +194,7 @@ class UserManager extends Connexion
                                                   AND state = 0');
         $statement->execute();
         $resultat = $statement->fetch();
+
         return $resultat['nbUsers'];
     }
 
@@ -200,6 +208,7 @@ class UserManager extends Connexion
                                                 WHERE expiration_token > NOW() 
                                                   AND state = 0');
         $statement->execute();
+
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
     }
 
@@ -219,6 +228,7 @@ class UserManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT * FROM `users` WHERE `state` = 1');
         $statement->execute();
+
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
     }
 
@@ -233,6 +243,7 @@ class UserManager extends Connexion
                                                   AND state = 0');
         $statement->execute();
         $resultat = $statement->fetch();
+
         return $resultat['nbUsers'];
     }
 
@@ -242,6 +253,7 @@ class UserManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT * FROM `tokens` RIGHT JOIN users ON tokens.id_user = users.id WHERE expiration_token < NOW() AND state = 0');
         $statement->execute();
+
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
     }
 
@@ -266,6 +278,7 @@ class UserManager extends Connexion
                                                   AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\')');
         $statement->execute();
         $resultat = $statement->fetch();
+
         return $resultat['nbUsers'];
     }
 
@@ -280,6 +293,7 @@ class UserManager extends Connexion
                                                   AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') 
                                                 ORDER BY state ASC, date_inscription DESC');
         $statement->execute();
+
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
     }
 
@@ -304,6 +318,7 @@ class UserManager extends Connexion
                                                 WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\')');
         $statement->execute();
         $resultat = $statement->fetch();
+
         return $resultat['nbUsers'];
     }
 
@@ -323,6 +338,7 @@ class UserManager extends Connexion
                                                 WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') AND state IN ('.$inArray.')
                                                 ORDER BY state ASC, date_inscription DESC');
         $statement->execute();
+
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
     }
 
@@ -336,6 +352,7 @@ class UserManager extends Connexion
                                                 WHERE role = 1 OR email IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\')
                                                 ORDER BY state ASC, date_inscription DESC');
         $statement->execute();
+
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
     }
 
@@ -346,6 +363,7 @@ class UserManager extends Connexion
         $statement = $bdd->prepare('SELECT COUNT(id) as nbUsers FROM `users` WHERE role = 1 OR email IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\')');
         $statement->execute();
         $resultat = $statement->fetch();
+
         return $resultat['nbUsers'];
     }
 
@@ -360,6 +378,7 @@ class UserManager extends Connexion
                                                 WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') AND state IN ('.$inArray.')
                                                 ORDER BY state ASC, date_inscription DESC');
         $statement->execute();
+
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
     }
 
@@ -405,6 +424,7 @@ class UserManager extends Connexion
                                                 WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') AND DATEDIFF(NOW(), date_modification) > 7 AND state = 3');
         $statement->execute();
         $resultat = $statement->fetch();
+
         return $resultat['nbUsers'];
     }
 }

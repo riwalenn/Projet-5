@@ -11,7 +11,9 @@ class InstallationController extends ControllerFront
         $installationManager        = new Installation();
         $constraintInstallation     = new ConstraintsInstallation();
         $dataInstallationManager    = new DataInstallation();
+
         $show = $installationManager->showTables();
+
         if (count($show) == 0) :
             $installationManager->installCategoriesTable();
             $installationManager->installCommentsTable();
@@ -26,12 +28,18 @@ class InstallationController extends ControllerFront
             $dataInstallationManager->installRelatedData();
             $dataInstallationManager->installOthersData();
             $successMessage = "L\'installation c\'est bien passée";
+
             $view = new View('index');
-            $view->render($this->indexView, ['successMessage' => $successMessage]);
+            $view->render($this->indexView, [
+                'successMessage' => $successMessage
+            ]);
         elseif (count($show) > 0):
             $errorMessage =  "Les tables existent déjà !";
+
             $view = new View('index');
-            $view->render($this->indexView, ['successMessage' => $errorMessage]);
+            $view->render($this->indexView, [
+                'successMessage' => $errorMessage
+            ]);
         endif;
 
         $this->afficherIndex();

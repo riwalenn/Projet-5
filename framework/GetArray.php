@@ -42,10 +42,13 @@ class GetArray
         $array = $manager->getFolioCategoriesColors();
 
             $html = '<select name="categories" id="sel-bs" class="mdb-select md-form selectpicker" multiple>';
+
             foreach ($array as $value) {
                 $html .= '<option value="'. $value["id"] .'">'. $value["category"] .'</option>';
             }
+
             $html .= '</select>';
+
         return $html;
     }
 
@@ -55,6 +58,7 @@ class GetArray
      */
     public function convert_multi_array($array) {
         $out = implode(",",array_map(function($a) {return implode("~",$a);},$array));
+
         return $out;
     }
 }

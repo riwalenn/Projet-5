@@ -14,11 +14,14 @@ class Debug
         if (!isset($var)) {
             echo ("Debug::printr : aucune variable définie.<br />");
         }
+
         if (empty($titre)) {
             echo ("<pre>");
+
         } else {
             echo ("<pre> $titre : \n");
         }
+
         print_r($var);
         echo ("</pre>");
     }
@@ -51,14 +54,19 @@ class Debug
         $liste_fonction = debug_backtrace();
         $i = 0;
         echo ($titre . " : <br /> \n");
+
         foreach ($liste_fonction as $ligne) {
+
             if ($i != 0) { // On passe le premier affichage, car cela affiche "PrintFunctionStack"
+
                 if (!isset($ligne['file'])) {
                     $ligne['file'] = 'fichier inconnu';
                 }
+
                 if (!isset($ligne['line'])) {
                     $ligne['line'] = 'inconnue';
                 }
+
                 echo '<strong>' . $ligne['function'] . '</strong> dans <em>' . $ligne['file'] . '</em> (ligne ' . $ligne['line'] . ") <br />\n";
             } else {
                 $i++;

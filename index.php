@@ -1,5 +1,7 @@
 <?php
+
 require_once 'config/config.php';
+
 try {
     $controller                 = new ControllerFront();
     $controllerBack             = new ControllerBack();
@@ -12,6 +14,7 @@ try {
 
 
     $action = filter_input(INPUT_GET, 'action');
+
     if (isset($action)) {
         switch ($action) {
             case 'articles-liste' :
@@ -117,9 +120,11 @@ try {
             default :
                 break;
         }
+
     } else {
         $controller->afficherIndex();
     }
+
 } catch (PDOException $e) {
     $controller->erreurPDO($e);
 } catch (ExceptionOutput $e) {

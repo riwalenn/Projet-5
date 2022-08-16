@@ -48,7 +48,9 @@ class SecurityController
             $message = 'Le mot de passe ne correspond pas avec celui utilisé à l\'inscription';
 
             $view = new View('Connexion');
-            $view->render($this->formLoginView, ['message' => $message]);
+            $view->render($this->formLoginView, [
+                'message' => $message
+            ]);
             return false;
         endif;
 
@@ -124,7 +126,10 @@ class SecurityController
         $messagePseudo = $userMessages->helpPseudo();
 
         $view = new View('Inscription');
-        $view->render($this->formRegistrationView, ['messagePassword' => $messagePassword, 'messagePseudo' => $messagePseudo]);
+        $view->render($this->formRegistrationView, [
+            'messagePassword' => $messagePassword,
+            'messagePseudo' => $messagePseudo
+        ]);
     }
 
     //Fonction d'inscription
@@ -137,6 +142,7 @@ class SecurityController
         $user->setRole(Constantes::ROLE_USER);
         $user->setState(Constantes::USER_PENDING_STATUS);
         $userManager = new UserManager();
+
         $userManager->registration($user);
         $array = $userManager->tokenRecuperation($user);
         $sendMail->sendToken($array, 'inscription');
@@ -149,6 +155,7 @@ class SecurityController
         $token = $_REQUEST['token'];
         $userManager = new UserManager();
         $user = new User($_REQUEST);
+
         $user->setToken($token);
         $userManager->registrationConfirmationByToken($user);
         $userManager->deleteToken($user);
@@ -174,6 +181,7 @@ class SecurityController
         $sendMail = new SendMail();
         $user = new User($_REQUEST);
         $userManager = new UserManager();
+
         $list = $userManager->idUserRecuperation($user); //Récupération id_user par l'email
         $id_user = $list['id'];
         $userManager->tokenCreation($id_user); //Création du token
@@ -190,6 +198,7 @@ class SecurityController
         $user = new User($_REQUEST);
         $user->setToken($token);
         $userManager = new UserManager();
+
         $tokenCount = $userManager->countToken($user); //Vérifie qu'il y a bien un token
 
         $messagePassword = $user->helpPassword();
@@ -198,11 +207,18 @@ class SecurityController
             $messageError = "Le token n'existe plus !";
 
             $view = new View('Formulaire');
-            $view->render($this->formPasswordView , ['messagePassword' => $messagePassword, 'token' => $token, 'messageError' => $messageError]);
+            $view->render($this->formPasswordView , [
+                'messagePassword' => $messagePassword,
+                'token' => $token,
+                'messageError' => $messageError
+            ]);
 
         else:
             $view = new View('Formulaire');
-            $view->render($this->formPasswordView , ['messagePassword' => $messagePassword, 'token' => $token]);
+            $view->render($this->formPasswordView , [
+                'messagePassword' => $messagePassword,
+                'token' => $token
+            ]);
         endif;
 
     }
@@ -217,6 +233,8 @@ class SecurityController
 
         $confirmationMessage = "Votre mot de passe a bien été modifié." ?? "";
         $view = new View('Connexion');
-        $view->render($this->formLoginView, ['confirmationMessage' => $confirmationMessage]);
+        $view->render($this->formLoginView, [
+            'confirmationMessage' => $confirmationMessage
+        ]);
     }
 }

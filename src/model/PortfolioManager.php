@@ -8,6 +8,7 @@ class PortfolioManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT * FROM `portfolio` ORDER BY id DESC');
         $statement->execute(array());
+
         return $statement->fetchAll(PDO::FETCH_CLASS, 'Portfolio');
     }
 
@@ -24,6 +25,7 @@ class PortfolioManager extends Connexion
             'client' => htmlspecialchars($portfolio->getClient()),
             'categories' => htmlspecialchars($portfolio->getCategories())
         ));
+
         return $bdd->lastInsertId();
     }
 

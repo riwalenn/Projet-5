@@ -5,11 +5,11 @@ class FolioCategoriesColor
 {
     use EntityHydrator;
 
-    private $id;
-    private $category;
-    private $color;
-    private $id_folio;
-    private $id_folio_cat;
+    private ?int $id;
+    private ?string $category;
+    private ?string $color;
+    private ?Portfolio $id_folio;
+    private ?int $id_folio_cat;
 
     public function __construct($donnees = null)
     {
@@ -58,7 +58,7 @@ class FolioCategoriesColor
         $this->id_folio = $id_folio;
     }
 
-    public function getId_folio_cat()
+    public function getId_folio_cat(): ?int
     {
         return $this->id_folio_cat;
     }

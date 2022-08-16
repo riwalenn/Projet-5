@@ -19,7 +19,9 @@ class ControllerFront
         endforeach;
 
         $view = new View('Riwalenn Bas - développeuse d\'applications PHP/Symfony');
-        $view->render($this->indexView, ['portfolio' => $portfolio]);
+        $view->render($this->indexView, [
+            'portfolio' => $portfolio
+        ]);
     }
 
     /**
@@ -34,7 +36,12 @@ class ControllerFront
         $erreurFile = $pdoException->getFile();
 
         $view = new View('Erreur PDO');
-        $view->render('templates/errorView.php', ['erreurMessage' => $erreurMessage, 'erreurCode' => $erreurCode, 'erreurLine' => $erreurLine, 'erreurFile' => $erreurFile]);
+        $view->render('templates/errorView.php', [
+            'erreurMessage' => $erreurMessage,
+            'erreurCode' => $erreurCode,
+            'erreurLine' => $erreurLine,
+            'erreurFile' => $erreurFile
+        ]);
     }
 
     public function erreurOutput($outputException)
@@ -45,7 +52,12 @@ class ControllerFront
         $erreurFile = $outputException->getFile();
 
         $view = new View('Erreur');
-        $view->render('templates/errorView.php', ['erreurMessage' => $erreurMessage, 'erreurCode' => $erreurCode, 'erreurLine' => $erreurLine, 'erreurFile' => $erreurFile]);
+        $view->render('templates/errorView.php', [
+            'erreurMessage' => $erreurMessage,
+            'erreurCode' => $erreurCode,
+            'erreurLine' => $erreurLine,
+            'erreurFile' => $erreurFile
+        ]);
     }
 
     public function erreur()
@@ -57,6 +69,11 @@ class ControllerFront
         $erreurFile = $erreurManager->getFile();
 
         $view = new View('Exception');
-        $view->render('templates/errorView.php', ['erreurMessage' => $erreurMessage, 'erreurCode' => $erreurCode, 'erreurLine' => $erreurLine, 'erreurFile' => $erreurFile]);
+        $view->render('templates/errorView.php', [
+            'erreurMessage' => $erreurMessage,
+            'erreurCode' => $erreurCode,
+            'erreurLine' => $erreurLine,
+            'erreurFile' => $erreurFile
+        ]);
     }
 }

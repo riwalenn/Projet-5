@@ -13,6 +13,7 @@ class FolioCategoriesManager extends Connexion
                                                 WHERE portfolio.id = :idFolio
                                                 ORDER BY folio_categories.id_folio_cat ASC');
         $statement->execute(array('idFolio' => $idFolio));
+
         return $statement->fetchAll(PDO::FETCH_CLASS, 'FolioCategoriesColor');
     }
 
@@ -30,6 +31,7 @@ class FolioCategoriesManager extends Connexion
                                                         GROUP BY folio_categories_color.category");
         $statement->execute();
         $result = $statement->fetchAll();
+
         return $result;
     }
 }

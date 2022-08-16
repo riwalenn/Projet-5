@@ -21,6 +21,7 @@ class Connexion
             PASSWORD,
             $db_config['OPTIONS']);
         unset($db_config);
+
         return $db;
     }
 }
