@@ -5,11 +5,9 @@ class FolioCategoriesColor
 {
     use EntityHydrator;
 
-    private $id;
-    private $category;
-    private $color;
-    private $id_folio;
-    private $id_folio_cat;
+    private ?int $id;
+    private ?string $category;
+    private ?string $color;
 
     public function __construct($donnees = null)
     {
@@ -46,25 +44,5 @@ class FolioCategoriesColor
     public function setColor($color)
     {
         $this->color = $color;
-    }
-
-    public function getId_folio(): ?Portfolio
-    {
-        return $this->id_folio;
-    }
-
-    public function setId_folio($id_folio)
-    {
-        $this->id_folio = $id_folio;
-    }
-
-    public function getId_folio_cat()
-    {
-        return $this->id_folio_cat;
-    }
-
-    public function setId_folio_cat($id_folio_cat)
-    {
-        $this->id_folio_cat = $id_folio_cat;
     }
 }

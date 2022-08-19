@@ -4,13 +4,13 @@ class Comment
 {
     use EntityHydrator;
 
-    private $id;
-    private $id_post;
-    private $pseudo;
+    private ?int $id;
+    private ?Post $id_post;
+    private ?string $pseudo;
     private $created_at;
-    private $title;
-    private $content;
-    private $state;
+    private ?string $title;
+    private ?string $content;
+    private ?int $state;
 
     public function __construct($donnees = null)
     {

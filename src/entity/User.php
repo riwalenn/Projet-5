@@ -4,28 +4,28 @@ class User
 {
     use EntityHydrator;
 
-    private $id;
-    private $pseudo;
-    private $role;
-    private $email;
-    private $password;
+    private ?int $id;
+    private ?string $pseudo;
+    private ?int $role;
+    private ?string $email;
+    private ?string $password;
     private $date_inscription;
     private $date_modification;
-    private $cgu;
-    private $state;
-    private $id_token;
-    private $token;
-    private $id_user;
+    private ?int $cgu;
+    private ?int $state;
+    private ?string $id_token;
+    private ?string $token;
+    private ?int $id_user;
     private $expiration_token;
 
-    static public $listeStatut = [
+    static public array $listeStatut = [
         Constantes::USER_PENDING_STATUS => 'Compte non validé',
         Constantes::USER_PENDING_STATUS_MODO => 'token validé',
         Constantes::USER_STATUS_VALIDATED => 'compte validé',
         Constantes::USER_STATUS_DELETED => 'compte supprimé'
     ];
 
-    static public $listeRole = [
+    static public array $listeRole = [
         Constantes::ROLE_ADMIN => 'Administrateur',
         Constantes::ROLE_AUTHOR => 'Auteur',
         Constantes::ROLE_USER => 'Utilisateur'
@@ -96,6 +96,8 @@ class User
         elseif ($this->role == Constantes::ROLE_USER) :
             return '';
         endif;
+
+        return '';
     }
 
     public function getEmail(): ?string

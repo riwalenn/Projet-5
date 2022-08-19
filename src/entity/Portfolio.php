@@ -5,15 +5,15 @@ class Portfolio
 {
     use EntityHydrator;
 
-    private $id;
-    private $title;
-    private $kicker;
-    private $content;
+    private ?int $id;
+    private ?string $title;
+    private ?string $kicker;
+    private ?string $content;
     private $date_conception;
-    private $client;
-    private $link;
-    private $codacy;
-    private $categories;
+    private ?string $client;
+    private ?string $link;
+    private ?string $codacy;
+    private ?array $categories;
 
     public function __construct($donnees = null)
     {
@@ -118,12 +118,12 @@ class Portfolio
         return $this;
     }
 
-    public function getCategories()
+    public function getCategories(): array
     {
         return $this->categories;
     }
 
-    public function setCategories($categories)
+    public function setCategories($categories): Portfolio
     {
         $this->categories = $categories;
 

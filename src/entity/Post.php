@@ -4,23 +4,23 @@ class Post
 {
     use EntityHydrator;
 
-    private $id;
-    private $title;
-    private $kicker;
-    private $author;
-    private $pseudo;
-    private $content;
-    private $url;
+    private int $id;
+    private string $title;
+    private string $kicker;
+    private ?User $author;
+    private string $pseudo;
+    private string $content;
+    private string $url;
     private $created_at;
     private $modified_at;
-    private $id_category;
-    private $category;
-    private $favorites;
-    private $statut_favorite;
-    private $state;
+    private int $id_category;
+    private Category $category;
+    private Favorites_posts $favorites;
+    private int $statut_favorite;
+    private int $state;
     private $comments;
 
-    static public $listeStatut = [
+    static public array $listeStatut = [
         Constantes::POST_PENDING_STATUS => 'Article en attente',
         Constantes::POST_STATUS_VALIDATED => 'Article validé',
         Constantes::POST_STATUS_ARCHIVED => 'Article archivé',
@@ -34,7 +34,7 @@ class Post
         endif;
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -46,7 +46,7 @@ class Post
         return $this;
     }
 
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -58,7 +58,7 @@ class Post
         return $this;
     }
 
-    public function getKicker()
+    public function getKicker(): string
     {
         return $this->kicker;
     }
@@ -70,7 +70,7 @@ class Post
         return $this;
     }
 
-    public function getAuthor()
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
@@ -82,7 +82,7 @@ class Post
         return $this;
     }
 
-    public function getPseudo()
+    public function getPseudo(): string
     {
         return $this->pseudo;
     }
@@ -94,7 +94,7 @@ class Post
         return $this;
     }
 
-    public function getContent()
+    public function getContent(): string
     {
         if (!empty($this->getUrl())) :
             $url = ' <a href="' . $this->getUrl() . '" target="_blank">[voir l\'article]</a>';
@@ -111,7 +111,7 @@ class Post
         return $this;
     }
 
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -149,7 +149,7 @@ class Post
         return $this;
     }
 
-    public function getId_Category()
+    public function getId_Category(): int
     {
         return $this->id_category;
     }
@@ -161,7 +161,7 @@ class Post
         return $this;
     }
 
-    public function getCategory()
+    public function getCategory(): Category
     {
         return $this->category;
     }
@@ -173,7 +173,7 @@ class Post
         return $this;
     }
 
-    public function getFavorites()
+    public function getFavorites(): Favorites_posts
     {
         return $this->favorites;
     }
@@ -183,7 +183,7 @@ class Post
         $this->favorites = $favorites;
     }
 
-    public function getState()
+    public function getState(): int
     {
         return $this->state;
     }
@@ -195,7 +195,7 @@ class Post
         return $this;
     }
 
-    public function getStateName()
+    public function getStateName(): string
     {
         return self::$listeStatut[$this->getState()];
     }
@@ -218,7 +218,7 @@ class Post
         return $this;
     }
 
-    public function getStatut_favorite()
+    public function getStatut_favorite(): int
     {
         return $this->statut_favorite;
     }

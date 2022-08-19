@@ -7,8 +7,8 @@ class Category
 {
     use EntityHydrator;
 
-    private $id;
-    private $category;
+    private ?int $id;
+    private ?string $category;
 
     public function __construct($donnees = null)
     {
