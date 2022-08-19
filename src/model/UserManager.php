@@ -41,7 +41,6 @@ class UserManager extends Connexion
     public function tokenCreation($id_user)
     {
         $service = new UserHelper();
-        $user = new User();
         $bdd = $this->dbConnect();
         $token = $service->generateToken();
         $interval = 5 * 24 * 60;
@@ -279,7 +278,7 @@ class UserManager extends Connexion
                                                 WHERE DATEDIFF(NOW(), date_modification) > 90 
                                                   AND state = 2 
                                                   AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') 
-                                                ORDER BY state ASC, date_inscription DESC');
+                                                ORDER BY state, date_inscription DESC');
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
     }
@@ -322,7 +321,7 @@ class UserManager extends Connexion
                                                 FROM `users` LEFT JOIN tokens 
                                                     ON users.id = tokens.id_user 
                                                 WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') AND state IN ('.$inArray.')
-                                                ORDER BY state ASC, date_inscription DESC');
+                                                ORDER BY state, date_inscription DESC');
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
     }
@@ -335,7 +334,7 @@ class UserManager extends Connexion
                                                 FROM `users` LEFT JOIN tokens 
                                                     ON users.id = tokens.id_user 
                                                 WHERE role = 1 OR email IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\')
-                                                ORDER BY state ASC, date_inscription DESC');
+                                                ORDER BY state, date_inscription DESC');
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
     }
@@ -359,7 +358,7 @@ class UserManager extends Connexion
                                                 FROM `users` LEFT JOIN tokens 
                                                     ON users.id = tokens.id_user 
                                                 WHERE role != 1 AND email NOT IN (\'riwalenn@gmail.com\', \'no-reply@riwalennbas.com\') AND state IN ('.$inArray.')
-                                                ORDER BY state ASC, date_inscription DESC');
+                                                ORDER BY state, date_inscription DESC');
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
     }
