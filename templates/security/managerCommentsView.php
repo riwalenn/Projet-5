@@ -21,9 +21,9 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
-                                <li class="breadcrumb-item"><a href="index.php?action=backend-dashboard">Tableau de
+                                <li class="breadcrumb-item"><a href="index.php?action=backendDashboard">Tableau de
                                         bord</a></li>
-                                <li class="breadcrumb-item"><a href="index.php?action=comments-manager">Commentaires</a>
+                                <li class="breadcrumb-item"><a href="index.php?action=commentsManager">Commentaires</a>
                                 </li>
                             </ol>
                         </nav>
@@ -41,7 +41,7 @@
                             </thead>
                             <tbody>
                             <?php foreach ($commentaires as $commentaire) : ?>
-                                <form action="index.php?action=comments-manager&CRUD=US" method="post">
+                                <form action="index.php?action=commentsManager&CRUD=US" method="post">
                                     <input type="hidden" name="id" value="<?= $commentaire->getId() ?>">
                                     <tr>
                                         <td><a data-toggle="modal" href="#formModalEdit<?= $commentaire->getId() ?>"><i
@@ -100,7 +100,7 @@
                         <div class="col-lg-8 mx-auto">
                             <div class="modal-body">
                                 <h5><i class="fa fa-user-cog"></i> Modifier un commentaire</h5>
-                                <form id="formDataUser" action="index.php?action=comments-manager&CRUD=U" method="post">
+                                <form id="formDataUser" action="index.php?action=commentsManager&CRUD=U" method="post">
                                     <input type="hidden" name="id" value="<?= $commentaire->getId() ?>">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">

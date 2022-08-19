@@ -4,13 +4,13 @@ class Comment
 {
     use EntityHydrator;
 
-    private ?int $id;
-    private ?Post $id_post;
-    private ?string $pseudo;
+    private $id;
+    private $id_post;
+    private $pseudo;
     private $created_at;
-    private ?string $title;
-    private ?string $content;
-    private ?int $state;
+    private $title;
+    private $content;
+    private $state;
 
     public function __construct($donnees = null)
     {
@@ -19,7 +19,7 @@ class Comment
         endif;
     }
 
-    static public array $listeStatut = [
+    static public $listeStatut = [
         Constantes::COM_PENDING_STATUS => 'Commentaire en attente',
         Constantes::COM_STATUS_VALIDATED => 'Commentaire validé',
         Constantes::COM_STATUS_ARCHIVED => 'Commentaire archivé',
@@ -65,7 +65,6 @@ class Comment
     public function getCreated_at()
     {
         $date = new DateTime($this->created_at);
-
         return date_format($date, 'd-m-Y à H:i:s');
     }
 
@@ -115,7 +114,6 @@ class Comment
     public function getStateClass()
     {
         $helper = new CommentHelper();
-
         return $helper->getStateClass($this->state);
     }
 }

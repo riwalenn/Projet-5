@@ -15,7 +15,7 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
-                                <li class="breadcrumb-item"><a href="index.php?action=backend-dashboard">Tableau de
+                                <li class="breadcrumb-item"><a href="index.php?action=backendDashboard">Tableau de
                                         bord</a></li>
                                 <li class="breadcrumb-item">
                                     <a class="dropdown-toggle" href="#" id="navbarDropdownMenuLink"

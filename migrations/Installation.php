@@ -7,7 +7,6 @@ class Installation extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SHOW TABLES');
         $statement->execute();
-
         return $statement->fetchAll();
     }
 
@@ -102,9 +101,11 @@ class Installation extends Connexion
         $statement->execute();
 
         $statement = $bdd->prepare('ALTER TABLE `portfolio` ADD `codacy` TEXT NULL AFTER `client`');
+
         $statement->execute();
 
         $statement = $bdd->prepare('ALTER TABLE `portfolio` ADD `link` TEXT NULL AFTER `client`');
+
         $statement->execute();
     }
 
@@ -113,7 +114,6 @@ class Installation extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('DROP TABLE IF EXISTS `folio_categories`');
         $statement->execute();
-
         $statement = $bdd->prepare('CREATE TABLE IF NOT EXISTS `folio_categories` (
                                                   `id_folio` int(10) NOT NULL,
                                                   `id_folio_cat` int(10) NOT NULL,
@@ -121,7 +121,6 @@ class Installation extends Connexion
                                                   KEY `folio_category` (`id_folio_cat`)
                                                 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;');
         $statement->execute();
-
         $statement = $bdd->prepare('ALTER TABLE `folio_categories`
                                               ADD CONSTRAINT `folio_category` FOREIGN KEY (`id_folio_cat`) REFERENCES `folio_categories_color` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
                                               ADD CONSTRAINT `folio_folio` FOREIGN KEY (`id_folio`) REFERENCES `portfolio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;');

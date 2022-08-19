@@ -4,21 +4,21 @@ class Post
 {
     use EntityHydrator;
 
-    private int $id;
-    private string $title;
-    private string $kicker;
-    private User $author;
-    private string $pseudo;
-    private string $content;
-    private string $url;
+    private $id;
+    private $title;
+    private $kicker;
+    private $author;
+    private $pseudo;
+    private $content;
+    private $url;
     private $created_at;
     private $modified_at;
-    private int $id_category;
-    private Category $category;
-    private Favorites_posts $favorites;
-    private int $statut_favorite;
-    private int $state;
-    private Comment $comments;
+    private $id_category;
+    private $category;
+    private $favorites;
+    private $statut_favorite;
+    private $state;
+    private $comments;
 
     static public $listeStatut = [
         Constantes::POST_PENDING_STATUS => 'Article en attente',
@@ -34,7 +34,7 @@ class Post
         endif;
     }
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -46,7 +46,7 @@ class Post
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle()
     {
         return $this->title;
     }
@@ -58,7 +58,7 @@ class Post
         return $this;
     }
 
-    public function getKicker(): string
+    public function getKicker()
     {
         return $this->kicker;
     }
@@ -70,7 +70,7 @@ class Post
         return $this;
     }
 
-    public function getAuthor(): User
+    public function getAuthor()
     {
         return $this->author;
     }
@@ -82,7 +82,7 @@ class Post
         return $this;
     }
 
-    public function getPseudo(): string
+    public function getPseudo()
     {
         return $this->pseudo;
     }
@@ -94,7 +94,7 @@ class Post
         return $this;
     }
 
-    public function getContent(): string
+    public function getContent()
     {
         if (!empty($this->getUrl())) :
             $url = ' <a href="' . $this->getUrl() . '" target="_blank">[voir l\'article]</a>';
@@ -111,7 +111,7 @@ class Post
         return $this;
     }
 
-    public function getUrl(): string
+    public function getUrl()
     {
         return $this->url;
     }
@@ -149,7 +149,7 @@ class Post
         return $this;
     }
 
-    public function getId_Category(): int
+    public function getId_Category()
     {
         return $this->id_category;
     }
@@ -161,7 +161,7 @@ class Post
         return $this;
     }
 
-    public function getCategory(): Category
+    public function getCategory()
     {
         return $this->category;
     }
@@ -173,7 +173,7 @@ class Post
         return $this;
     }
 
-    public function getFavorites(): Favorites_posts
+    public function getFavorites()
     {
         return $this->favorites;
     }
@@ -183,7 +183,7 @@ class Post
         $this->favorites = $favorites;
     }
 
-    public function getState(): int
+    public function getState()
     {
         return $this->state;
     }
@@ -206,7 +206,7 @@ class Post
         return $helper->getStateClass($this->state);
     }
 
-    public function getComments(): Comment
+    public function getComments()
     {
         return $this->comments;
     }
@@ -218,7 +218,7 @@ class Post
         return $this;
     }
 
-    public function getStatut_favorite(): int
+    public function getStatut_favorite()
     {
         return $this->statut_favorite;
     }

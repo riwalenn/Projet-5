@@ -14,17 +14,14 @@ class DashboardUserController
         $categoryManager = new CategoryManager();
 
         $user = $userManager->getUserBySessionId();
-
         if ($user->getRole() == Constantes::ROLE_USER && $user->getState() == Constantes::USER_STATUS_VALIDATED) :
             $favoritesPosts = $listPosts->getFavoritePostByIdUser($user);
-
             foreach ($favoritesPosts as $post) :
                 $commentManager->fillCommentInPost($post);
                 $categoryManager->fillCategoryInPost($post);
             endforeach;
 
             $lastPosts = $listPosts->getPosts(1, Constantes::POST_STATUS_VALIDATED);
-
             foreach ($lastPosts as $post) :
                 $commentManager->fillCommentInPost($post);
                 $categoryManager->fillCategoryInPost($post);
@@ -32,12 +29,7 @@ class DashboardUserController
             endforeach;
 
             $view = new View('Tableau de bord');
-            $view->render($this->dashboardView, [
-                'favoritesPosts' => $favoritesPosts,
-                'errorMessage' => $errorMessage,
-                'lastPosts' => $lastPosts,
-                'user' => $user
-            ]);
+            $view->render($this->dashboardView, ['favoritesPosts' => $favoritesPosts, 'errorMessage' => $errorMessage, 'lastPosts' => $lastPosts, 'user' => $user]);
         else:
             $message = "Vous n'avez pas les autorisations pour accéder à cette page.";
             throw new ExceptionOutput($message);

@@ -21,9 +21,9 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
-                                <li class="breadcrumb-item"><a href="index.php?action=backend-dashboard">Tableau de
+                                <li class="breadcrumb-item"><a href="index.php?action=backendDashboard">Tableau de
                                         bord</a></li>
-                                <li class="breadcrumb-item"><a href="index.php?action=portfolio-manager">Portfolio</a>
+                                <li class="breadcrumb-item"><a href="index.php?action=portfolioManager">Portfolio</a>
                                 </li>
                             </ol>
                         </nav>
@@ -42,7 +42,7 @@
                             </thead>
                             <tbody>
                             <?php foreach ($portfolio as $folio) : ?>
-                                <form action="index.php?action=portfolio-manager&CRUD=SU" method="post">
+                                <form action="index.php?action=portfolioManager&CRUD=SU" method="post">
                                     <input type="hidden" name="id" value="<?= $folio->getId() ?>">
                                     <tr>
                                         <td><a data-toggle="modal"
@@ -73,7 +73,7 @@
                         <a data-toggle="modal" href="#formModaladd">Ajouter un folio <i
                                     class="fa fa-plus-square"></i></a>
                         <small class="text-muted">
-                            <form action="index.php?action=portfolio-manager&CRUD=D" method="post">
+                            <form action="index.php?action=portfolioManager&CRUD=D" method="post">
                                 <div class="d-flex justify-content-sm-start">
                                     <select class="form-control form-control-sm" name="id">
                                         <?php foreach ($portfolio as $folio) : ?>
@@ -108,7 +108,7 @@
                                 <h5><i class="fa fa-pencil-alt"></i> Modifier un portfolio</h5>
                                 <?= View::generatePortfolioPicture($folio, Constantes::FULLIMG) ?>
                                 <p class="alert-info">L'image doit être de format 800x600 maximum</p>
-                                <form method="post" action="index.php?action=portfolio-manager&CRUD=U"
+                                <form method="post" action="index.php?action=portfolioManager&CRUD=U"
                                       enctype="multipart/form-data">
                                     <input type="hidden" name="id" value="<?= $folio->getId() ?>">
                                     <input type="hidden" name="MAX_FILES_SIZE" value="200000">
@@ -179,7 +179,7 @@
                     <div class="col-lg-8 mx-auto">
                         <div class="modal-body">
                             <h5><i class="fa fa-pencil-alt"></i> Ajouter un portfolio</h5>
-                            <form method="post" action="index.php?action=portfolio-manager&CRUD=C"
+                            <form method="post" action="index.php?action=portfolioManager&CRUD=C"
                                   enctype="multipart/form-data">
                                 <div class="input-group mb-3">
                                     <label for="title"></label>

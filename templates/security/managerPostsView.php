@@ -21,7 +21,7 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
-                                <li class="breadcrumb-item"><a href="index.php?action=backend-dashboard">Tableau de
+                                <li class="breadcrumb-item"><a href="index.php?action=backendDashboard">Tableau de
                                         bord</a></li>
                                 <li class="breadcrumb-item">
                                     <a class="dropdown-toggle" href="#" id="navbarDropdownMenuLink"
@@ -49,9 +49,9 @@
                             <tbody>
                             <?php foreach ($postsList as $post) : ?>
                             <?php if ($post->getState() != 3): ?>
-                            <form action="index.php?action=posts-manager&value=<?= htmlspecialchars($value) ?>&CRUD=U" method="post">
+                            <form action="index.php?action=postsManager&value=<?= htmlspecialchars($value) ?>&CRUD=U" method="post">
                                 <?php else: ?>
-                                <form action="index.php?action=posts-manager&value=<?= htmlspecialchars($value) ?>&CRUD=D" method="post">
+                                <form action="index.php?action=postsManager&value=<?= htmlspecialchars($value) ?>&CRUD=D" method="post">
                                     <?php endif; ?>
                                     <input type="hidden" name="id" value="<?= htmlspecialchars($post->getId()) ?>">
                                     <tr>
@@ -131,7 +131,7 @@
                                     endif;
                                     ?>
                                     <a class="page-link"
-                                       href="index.php?action=posts-manager&value=<?= $value ?>&page=<?= $j ?>"><?= $j ?></a>
+                                       href="index.php?action=postsManager&value=<?= $value ?>&page=<?= $j ?>"><?= $j ?></a>
                                     </li>
                                     <?php
                                 }
@@ -142,7 +142,7 @@
                     <div class="card-footer">
                         <blockquote class="blockquote mb-0 d-flex flex-row-reverse">
                             <small class="p-2"><i class="fa fa-trash danger"></i> <a class="articles-link"
-                                                                                     href="index.php?action=posts-manager&value=trash">Corbeille</a></small>
+                                                                                     href="index.php?action=postsManager&value=trash">Corbeille</a></small>
                         </blockquote>
                     </div>
                 </div>
@@ -166,7 +166,7 @@
                         <div class="col-lg-8 mx-auto">
                             <div class="modal-body">
                                 <h5><i class="fa fa-pencil-alt"></i> Modifier un article</h5>
-                                <form id="formDataUser" action="index.php?action=posts-manager&value=all&CRUD=FU"
+                                <form id="formDataUser" action="index.php?action=postsManager&value=all&CRUD=FU"
                                       method="post">
                                     <input type="hidden" name="id" value="<?= $post->getId() ?>">
                                     <div class="input-group mb-3">

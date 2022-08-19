@@ -5,13 +5,9 @@ class CategoryManager extends Connexion
     public function categoryByPost($idPost)
     {
         $bdd = $this->dbConnect();
-        $statement = $bdd->prepare('SELECT DISTINCT categories.id, categories.category 
-                                                FROM `categories` 
-                                                    LEFT JOIN posts ON posts.id_category = categories.id 
-                                                WHERE posts.id = :id');
+        $statement = $bdd->prepare('SELECT DISTINCT categories.id, categories.category FROM `categories` LEFT JOIN posts ON posts.id_category = categories.id WHERE posts.id = :id');
         $statement->execute(array('id' => $idPost));
         $statement->setFetchMode(PDO::FETCH_CLASS, 'Category');
-
         return $statement->fetch();
     }
 
@@ -26,7 +22,6 @@ class CategoryManager extends Connexion
         $bdd = $this->dbConnect();
         $statement = $bdd->prepare('SELECT * FROM categories');
         $statement->execute(array());
-
         return $statement->fetchAll(PDO::FETCH_CLASS, 'Category');
     }
 }

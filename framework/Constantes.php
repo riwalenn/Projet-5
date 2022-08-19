@@ -11,7 +11,6 @@ class Constantes
     // ----------- DOSSIERS
     const PATH_FOLDER_PUBLIC                = 'public/';
     const PATH_FOLDER_VENDOR                = 'vendor/';
-    const PATH_FOLDER_CHART                 = 'public/assets/node_modules/chart.js/dist/';
     const PATH_FOLDER_TEMPLATES             = 'templates/';
     const PATH_FOLDER_TEMPLATES_FRONT       = 'templates/frontend/';
     const PATH_FOLDER_TEMPLATES_SECURITY    = 'templates/security/';

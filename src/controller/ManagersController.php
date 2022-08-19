@@ -6,6 +6,7 @@ class ManagersController
     private $managerCommentsView        = Constantes::PATH_FOLDER_TEMPLATES_SECURITY.'managerCommentsView.php';
     private $managerPortfolioView       = Constantes::PATH_FOLDER_TEMPLATES_SECURITY.'managerPortfolioView.php';
     private $managerPostsView           = Constantes::PATH_FOLDER_TEMPLATES_SECURITY.'managerPostsView.php';
+    private $managerPatternView         = Constantes::PATH_FOLDER_TEMPLATES_SECURITY. 'managerPatternFacadeView.php';
 
     //Affiche le pannel de management utilisateurs
     public function getUsersDashboardManager($errorMessage = NULL)
@@ -28,7 +29,6 @@ class ManagersController
             $allValues = $arrayManager->userManagerList();
             $filArianne = '';
             $value = filter_input(INPUT_GET, 'value');
-
             if (isset($value)) {
                 switch ($value) {
                     case 'uncheckedUsers':
@@ -62,15 +62,8 @@ class ManagersController
                 }
 
                 $view = new View('Liste des utilisateurs');
-                $view->render($this->managerUsersView, [
-                    'usersList' => $usersList,
-                    'allValues' => $allValues,
-                    'errorMessage' => $errorMessage,
-                    'value' => $value,
-                    'now' => $now,
-                    'filArianne' => $filArianne]);
+                $view->render($this->managerUsersView, ['usersList' => $usersList, 'allValues' => $allValues, 'errorMessage' => $errorMessage, 'value' => $value, 'now' => $now, 'filArianne' => $filArianne]);
             }
-
         } else {
             $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
             throw new ExceptionOutput($message);
@@ -83,7 +76,6 @@ class ManagersController
         $userManager = new UserManager();
         $user = new User($_REQUEST);
         $errorMessage = '';
-
         switch ($crud) {
             //Create
             case 'C':
@@ -124,7 +116,6 @@ class ManagersController
     public function UpdateDataByUser()
     {
         $dashboardUser = new DashboardUserController();
-
         if (!empty($_SESSION['id'] == filter_input(INPUT_POST, 'id'))) :
             $user = new User($_REQUEST);
             $userManager = new UserManager();
@@ -138,7 +129,6 @@ class ManagersController
                 $message = 'Votre mot de passe ne correspond pas';
                 throw new ExceptionOutput($message);
             endif;
-
         else:
             $message = 'Votre identification de session ne correspond pas !';
             throw new ExceptionOutput($message);
@@ -161,12 +151,23 @@ class ManagersController
             $commentaires = $commentairesManager->getAllComments();
 
             $view = new View('Commentaires');
-            $view->render($this->managerCommentsView, [
-                'user' => $user,
-                'commentaires' => $commentaires,
-                'errorMessage' => $errorMessage
-            ]);
+            $view->render($this->managerCommentsView, ['user' => $user, 'commentaires' => $commentaires, 'errorMessage' => $errorMessage]);
         }
+    }
+
+    //Affiche le panel de test du pattern de façade
+    public function getPatternFacadeTestManager()
+    {
+        $filArianne = 'Design Pattern de façade';
+        $patternManager = new PatternManager();
+        $datas = $patternManager->get2021DataFinances();
+        foreach ($datas as $data) :
+            $page = new Page($data->getLabel(), [$data->getValue(), $data->getValuePercent()]);
+            $document[] = $page->render(new ViewTemplateFactory());
+        endforeach;
+
+        $view = new  View('Pattern de Façade');
+        $view->render($this->managerPatternView, ['filArianne' => $filArianne, 'datas' => $datas, 'document' => $document]);
     }
 
     public function crudCommentsManager($crud)
@@ -174,7 +175,6 @@ class ManagersController
         $commentairesManager = new CommentManager();
         $commentaires = new Comment($_REQUEST);
         $errorMessage = '';
-
         switch ($crud) {
             //Update
             case 'US':
@@ -193,7 +193,6 @@ class ManagersController
                 $errorMessage = 'Les commentaires ont été supprimés.';
                 break;
         }
-
         return $errorMessage;
     }
 
@@ -216,12 +215,7 @@ class ManagersController
             $categoriesColor = $arrayManager->categoriesFolioManagerList();
 
             $view = new View('Portfolio');
-            $view->render($this->managerPortfolioView , [
-                'user' => $user,
-                'portfolio' => $portfolio,
-                'categoriesColor' => $categoriesColor,
-                'errorMessage' => $errorMessage
-            ]);
+            $view->render($this->managerPortfolioView , ['user' => $user, 'portfolio' => $portfolio, 'categoriesColor' => $categoriesColor, 'errorMessage' => $errorMessage]);
         }
     }
 
@@ -231,16 +225,12 @@ class ManagersController
         $portfolio = new Portfolio($_REQUEST);
         $arrayFiles = [$_FILES];
         $errorMessage = '';
-
         switch ($crud) {
             //Create
             case 'C':
                 foreach ($arrayFiles as $file) {
-
                     if (isset($file['foliojpg']) && $file['foliowebp']) {
-
                         if ($file['foliojpg']['error'] == 0 && $file['foliowebp']['error'] == 0) :
-
                             if ($file['foliojpg']['size'] <= 200000 && $file['foliowebp']['size'] <= 200000) :
                                 $portfolioManager = new PortfolioManager();
                                 $lastInsertId = $portfolioManager->createPortfolio($portfolio);
@@ -279,13 +269,9 @@ class ManagersController
             //Update
             case 'U':
                 foreach ($arrayFiles as $file) {
-
                     if (isset($file['foliojpg']) || $file['foliowebp']) {
-
                         if ($file['foliojpg']['error'] == 0 || $file['foliowebp']['error'] == 0) :
-
                             if ($file['foliojpg']['size'] <= 200000 || $file['foliowebp']['size'] <= 200000) :
-
                                 $portfolioManager = new PortfolioManager();
                                 $id = $portfolio->getId();
 
@@ -350,7 +336,6 @@ class ManagersController
 
         if ($user->getRole() == Constantes::ROLE_ADMIN && $user->getState() == Constantes::USER_STATUS_VALIDATED) {
             $crud = filter_input(INPUT_GET, 'CRUD');
-
             if (isset($crud)) {
                 $errorMessage = $this->crudPostManager($crud);
             }
@@ -362,10 +347,8 @@ class ManagersController
             $allValues = $arrayManager->postManagerList();
             $nbPosts = 10;
             $value = filter_input(INPUT_GET, 'value');
-
             if (isset($value)) {
                 $categoryManager = new CategoryManager();
-
                 switch ($value) {
                     case 'all':
                         $status = [Constantes::POST_PENDING_STATUS, Constantes::POST_STATUS_VALIDATED, Constantes::POST_STATUS_ARCHIVED];
@@ -411,21 +394,11 @@ class ManagersController
                         break;
                 }
             }
-
             foreach ($postsList as $post) {
                 $categoryManager->fillCategoryInPost($post);
             }
             $view = new View('Liste des articles');
-            $view->render($this->managerPostsView, [
-                'errorMessage' => $errorMessage,
-                'allValues' => $allValues,
-                'categories' => $categories,
-                'pageCourante' => $pageCourante,
-                'nbPages' => $nbPages, 'value' => $value,
-                'filArianne' => $filArianne,
-                'postsList' => $postsList
-            ]);
-
+            $view->render($this->managerPostsView, ['errorMessage' => $errorMessage, 'allValues' => $allValues, 'categories' => $categories, 'pageCourante' => $pageCourante, 'nbPages' => $nbPages, 'value' => $value, 'filArianne' => $filArianne, 'postsList' => $postsList]);
         } else {
             $message = "Vous n'avez pas les autorisations pour accéder à cette page !";
             throw new ExceptionOutput($message);
@@ -439,7 +412,6 @@ class ManagersController
         $userManager = new UserManager();
         $user = $userManager->getUserBySessionId();
         $errorMessage = '';
-
         switch ($crud) {
             case 'U':
                 $postManager->updatePost($post);
@@ -458,11 +430,9 @@ class ManagersController
                 break;
 
             case 'D':
-
                 if ($post->getState() == Constantes::POST_STATUS_DELETED) :
                     $postManager->deletePost($post);
                     $errorMessage = 'L\'article a été supprimé avec succès.';
-
                 else:
                     $errorMessage = 'Erreur : L\'utilisateur n\'a pas le status "supprimé"';
                 endif;

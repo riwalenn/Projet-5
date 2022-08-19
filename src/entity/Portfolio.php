@@ -5,15 +5,15 @@ class Portfolio
 {
     use EntityHydrator;
 
-    private ?int $id;
-    private ?string $title;
-    private ?string $kicker;
-    private ?string $content;
+    private $id;
+    private $title;
+    private $kicker;
+    private $content;
     private $date_conception;
-    private ?string $client;
-    private ?string $link;
-    private ?string $codacy;
-    private ?Category $categories;
+    private $client;
+    private $link;
+    private $codacy;
+    private $categories;
 
     public function __construct($donnees = null)
     {
@@ -118,7 +118,7 @@ class Portfolio
         return $this;
     }
 
-    public function getCategories(): ?Category
+    public function getCategories()
     {
         return $this->categories;
     }
@@ -133,7 +133,8 @@ class Portfolio
     public function getCategoriesFormatted()
     {
         $categories = $this->getCategories();
-        $categoriesexploded = explode('/', $categories);
-        return implode(' - ', $categoriesexploded);
+        $categoriesexploded = explode('/', (string)$categories);
+        $categoriesFormatted = implode(' - ', $categoriesexploded);
+        return $categoriesFormatted;
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 12 mai 2020 à 14:09
+-- Généré le :  ven. 31 juil. 2020 à 07:22
 -- Version du serveur :  5.7.19
 -- Version de PHP :  7.1.9
 
@@ -54,7 +54,7 @@ INSERT INTO `categories` (`id`, `category`) VALUES
 (15, 'médias'),
 (18, 'php & sql'),
 (2, 'prototypage'),
-(12, 'ressources humaines'),
+(12, 'public humaines'),
 (100, 'Sans catégorie'),
 (99, 'sécurité'),
 (5, 'social media'),
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   KEY `state` (`state`),
   KEY `lien_post_comment` (`id_post`),
   KEY `lien_comment_author` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -95,14 +95,77 @@ CREATE TABLE IF NOT EXISTS `favorites_posts` (
   `id_post` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_user` (`id_user`,`id_post`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
 
 --
--- Déchargement des données de la table `favorites_posts`
+-- Structure de la table `folio_categories`
 --
 
-INSERT INTO `favorites_posts` (`id`, `id_user`, `id_post`) VALUES
-(15, 4, 7);
+DROP TABLE IF EXISTS `folio_categories`;
+CREATE TABLE IF NOT EXISTS `folio_categories` (
+  `id_folio` int(10) NOT NULL,
+  `id_folio_cat` int(10) NOT NULL,
+  KEY `id_folio` (`id_folio`,`id_folio_cat`),
+  KEY `folio_category` (`id_folio_cat`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `folio_categories`
+--
+
+INSERT INTO `folio_categories` (`id_folio`, `id_folio_cat`) VALUES
+(1, 1),
+(1, 3),
+(1, 4),
+(2, 8),
+(3, 8),
+(4, 6),
+(4, 8),
+(5, 3),
+(5, 4),
+(6, 7),
+(7, 1),
+(7, 5),
+(7, 7),
+(8, 1),
+(8, 5),
+(8, 7);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `folio_categoriesColor`
+--
+
+DROP TABLE IF EXISTS `folio_categories_color`;
+CREATE TABLE IF NOT EXISTS `folio_categories_color` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `category` varchar(20) NOT NULL,
+  `color` varchar(10) NOT NULL,
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `folio_categoriesColor`
+--
+
+INSERT INTO `folio_categories_color` (`id`, `category`, `color`) VALUES
+(1, 'php', '#4F5D95'),
+(2, 'javascript', '#f1e05a'),
+(3, 'css', '#563d7c'),
+(4, 'html', '#e34c26'),
+(5, 'bootstrap', '#7952b3'),
+(6, 'wordpress', '#003c56'),
+(7, 'uml', 'red'),
+(8, 'intégration', 'green'),
+(9, 'python', '#3572A5'),
+(10, 'vue', '#2c3e50'),
+(11, 'typeScript', '#2b7489'),
+(12, 'java', '#b07219'),
+(13, 'swift', '#ffac45'),
+(14, 'c', '#178600');
 
 -- --------------------------------------------------------
 
@@ -118,23 +181,22 @@ CREATE TABLE IF NOT EXISTS `portfolio` (
   `content` text NOT NULL,
   `date_conception` year(4) NOT NULL,
   `client` tinytext NOT NULL,
-  `categories` tinytext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `portfolio`
 --
 
 INSERT INTO `portfolio` (`id`, `title`, `kicker`, `content`, `date_conception`, `client`, `categories`) VALUES
-(1, 'La cuisine de Cécile', 'Conception d\'un site internet en php.', 'Conception d\'un site en php pour un projet de fin d\'études.', 2011, 'La cuisine de Cécile', 'Html/css/php'),
-(2, 'Festival Jazz à Juan-les-pins', 'Intégration web pour Constellation Network.', 'Intégration web en Xtml à partir d\'une maquette créée par le graphiste.', 2011, 'Ville de Juan-les-pins', 'Intégration'),
-(3, 'Gîtes de France', 'Intégration web pour Constellation Network.', 'Intégration web en Xhtml à partir de la charte graphique des gîtes de France.', 2011, 'Gîtes de France Ardèche', 'Intégration'),
-(4, 'Projet n°2', 'Intégration d\'un thème wordpress.', 'Intégration d\'un thème wordpress (au choix) pour le cadre d\'un projet OpenClassrooms.', 2017, 'Chalets & Caviar (projet fictif)', 'Intégration/wordpress'),
+(1, 'La cuisine de Cécile', 'Conception d\'un site internet en php.', 'Conception d\'un site en php pour un projet de fin d\'études.', 2011, 'La cuisine de Cécile', 'html/css/php'),
+(2, 'Festival Jazz à Juan-les-pins', 'Intégration web pour Constellation Network.', 'Intégration web en Xtml à partir d\'une maquette créée par le graphiste.', 2011, 'Ville de Juan-les-pins', 'intégration'),
+(3, 'Gîtes de France', 'Intégration web pour Constellation Network.', 'Intégration web en Xhtml à partir de la charte graphique des gîtes de France.', 2011, 'Gîtes de France Ardèche', 'intégration'),
+(4, 'Projet n°2', 'Intégration d\'un thème wordpress.', 'Intégration d\'un thème wordpress (au choix) pour le cadre d\'un projet OpenClassrooms.', 2017, 'Chalets & Caviar (projet fictif)', 'intégration/wordpress'),
 (5, 'Projet n°3', 'Création d\'un site en html & css.', 'Création d\'un site web en html 5 et Css 3, responsive pour le cadre d\'un projet OpenClassrooms (j\'ai aussi créé la maquette).', 2017, 'Festival des films plein air (projet fictif)', 'html/css'),
-(6, 'Projet n°4', 'Conception de solution technique d\'une application.', 'Conception de diagrammes UML et modélisation de la base de données.', 2017, 'Express Food (projet fictif)', 'Conception UML'),
-(7, 'Projet n°5', 'Conception d\'un blog responsive en php.', 'Conception de diagrammes UML, modélisation de la bdd et site en php.', 2020, 'Riwalenn Bas', 'Conception UML/bootstrap/php'),
-(8, 'Paperfly', 'Conception d\'un blog responsive en php.', 'Conception de diagrammes UML, modélisation de la bdd et site en php.', 2019, 'Mickaël R.', 'Conception UML/bootstrap/php');
+(6, 'Projet n°4', 'Conception de solution technique d\'une application.', 'Conception de diagrammes UML et modélisation de la base de données.', 2017, 'Express Food (projet fictif)', 'conception UML'),
+(7, 'Projet n°5', 'Conception d\'un blog responsive en php.', 'Conception de diagrammes UML, modélisation de la bdd et site en php.<br>Système de favoris et fil d\'Arianne.', 2020, 'Riwalenn Bas', 'conception UML/bootstrap/php'),
+(8, 'Paperfly', 'Conception d\'un blog responsive en php.', 'Conception de diagrammes UML, modélisation de la bdd et site en php.', 2019, 'Mickaël R.', 'conception UML/bootstrap/php');
 
 -- --------------------------------------------------------
 
@@ -160,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   KEY `id_category` (`id_category`),
   KEY `created_at` (`created_at`),
   KEY `lien_author_posts` (`author`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `posts`
@@ -188,15 +250,7 @@ CREATE TABLE IF NOT EXISTS `tokens` (
   PRIMARY KEY (`id_token`),
   UNIQUE KEY `id_user` (`id_user`),
   UNIQUE KEY `token` (`token`,`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `tokens`
---
-
-INSERT INTO `tokens` (`id_token`, `token`, `id_user`, `expiration_token`) VALUES
-(3, '046280e85dc8fef38b2565f29dc8d602da0137370d9cd4cde184be5fdf335265', 5, '2020-04-11 10:58:42'),
-(13, '1a7a0c187e0411042cfc2ebac5053b4140989089af61fe3a561b544605f6c1c8', 4, '2020-05-11 19:11:09');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -219,20 +273,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `email` (`email`),
   KEY `state` (`state`),
   KEY `pseudo` (`pseudo`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `users`
 --
 
 INSERT INTO `users` (`id`, `pseudo`, `role`, `email`, `password`, `date_modification`, `date_inscription`, `cgu`, `state`) VALUES
-(1, 'Compte-Admin', 1, 'admin@gmail.com', '$2y$10$iBDBBcm8ZzVjbyh98bgSGuiHAao5dfRMiAQAAxYU4t8PWoiFrDHhe', '2020-05-12 14:43:59', '2019-12-01 16:37:47', 1, 2),
+(1, 'Riwalenn', 1, 'riwalenn@gmail.com', '$2y$10$iBDBBcm8ZzVjbyh98bgSGuiHAao5dfRMiAQAAxYU4t8PWoiFrDHhe', '2020-07-30 09:08:33', '2019-12-01 16:37:47', 1, 2),
 (2, 'Anonyme', 2, 'no-reply@riwalennbas.com', '$2y$10$sT/NGEIrb8z5XwCvPv9NpeeF3fuge7Vyyf4AWIEQPr7ZWmuJIS2gC', '2019-12-01 00:00:00', '2019-12-01 21:48:31', 1, 2),
-(4, 'Compte-User', 2, 'user@gmail.com', '$2y$10$oCwODFhW5hoq2zAXKFpgeOaRENHAd2oSJ6wcKMd1.6yQtCyBFW35W', '2020-05-12 14:43:15', '2019-12-01 15:04:47', 1, 2),
-(5, 'test0', 2, 'test1@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-04-06 10:58:42', '2020-04-06 10:58:42', 1, 0),
-(6, 'test1', 2, 'test2@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-05-07 13:41:44', '2019-12-01 10:58:42', 1, 1),
-(7, 'test2', 2, 'test3@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-05-07 11:59:51', '2019-12-01 10:58:42', 1, 2),
-(8, 'CommentsTest', 2, 'commentsTest@gmail.com', '$2y$10$ixuvHwqwn65wW9PCVIQKLeTupGZjv74qQKWdkuB6BZOr.IZnY.gi6', '2020-05-06 14:14:10', '2020-04-06 10:58:42', 1, 1);
+(4, 'Compte-User', 2, 'user@gmail.com', '$2y$10$oCwODFhW5hoq2zAXKFpgeOaRENHAd2oSJ6wcKMd1.6yQtCyBFW35W', '2020-07-30 09:44:32', '2019-12-01 15:04:47', 1, 2);
 
 --
 -- Contraintes pour les tables déchargées
@@ -252,11 +302,17 @@ ALTER TABLE `favorites_posts`
   ADD CONSTRAINT `lien_favorites_posts_author` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Contraintes pour la table `folio_categories`
+--
+ALTER TABLE `folio_categories`
+  ADD CONSTRAINT `folio_category` FOREIGN KEY (`id_folio_cat`) REFERENCES `folio_categories_color` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `folio_folio` FOREIGN KEY (`id_folio`) REFERENCES `portfolio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Contraintes pour la table `posts`
 --
 ALTER TABLE `posts`
-  ADD CONSTRAINT `lien_author_posts` FOREIGN KEY (`author`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `lien_categories_posts` FOREIGN KEY (`id_category`) REFERENCES `categories` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `lien_author_posts` FOREIGN KEY (`author`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `tokens`

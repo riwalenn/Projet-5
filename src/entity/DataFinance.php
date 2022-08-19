@@ -5,14 +5,14 @@ class DataFinance
 {
     use EntityHydrator;
 
-    private ?int $id;
-    private ?string $label;
-    private ?int $value;
-    private ?float $value_percent;
+    private $id;
+    private $label;
+    private $value;
+    private $value_percent;
     private $date;
     private $modified_at;
     private $modified_by;
-    private ?int $etat;
+    private $etat;
 
     public function __construct($donnees = null)
     {
@@ -81,24 +81,24 @@ class DataFinance
         return $this;
     }
 
-    public function getDateModifiedAt()
+    public function getDaModifiedAt()
     {
         return $this->modified_at;
     }
 
-    public function setDateModifiedAt($modified_at): self
+    public function setModifiedAt($modified_at): self
     {
         $this->modified_at = $modified_at;
 
         return $this;
     }
 
-    public function getDateModifiedBy()
+    public function getDaModifiedBy()
     {
         return $this->modified_by;
     }
 
-    public function setDateModifiedBy($modified_by): self
+    public function setModifiedBy($modified_by): self
     {
         $this->modified_by = $modified_by;
 

@@ -21,7 +21,7 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
-                                <li class="breadcrumb-item"><a href="index.php?action=backend-dashboard">Tableau de
+                                <li class="breadcrumb-item"><a href="index.php?action=backendDashboard">Tableau de
                                         bord</a></li>
                                 <li class="breadcrumb-item">
                                     <a class="dropdown-toggle" href="#" id="navbarDropdownMenuLink"
@@ -51,11 +51,11 @@
                             <tbody>
                             <?php foreach ($usersList as $user) : ?>
                             <?php if ($user->getState() != 3) : ?>
-                            <form action="index.php?action=users-manager&value=<?= htmlspecialchars($value) ?>&CRUD=U" method="post">
+                            <form action="index.php?action=usersManager&value=<?= htmlspecialchars($value) ?>&CRUD=U" method="post">
                                 <input type="hidden" name="pseudo" value="<?= htmlspecialchars($user->getPseudo()) ?>">
                                 <input type="hidden" name="email" value="<?= htmlspecialchars($user->getEmail()) ?>">
                                 <?php else: ?>
-                                <form action="index.php?action=users-manager&value=<?= htmlspecialchars($value) ?>&CRUD=D" method="post">
+                                <form action="index.php?action=usersManager&value=<?= htmlspecialchars($value) ?>&CRUD=D" method="post">
                                     <input type="hidden" name="date_modification"
                                            value="<?= $user->getDate_modification() ?>">
                                     <?php endif; ?>
@@ -131,7 +131,7 @@
                     <div class="card-footer">
                         <blockquote class="blockquote mb-0 d-flex flex-row-reverse">
                             <small class="p-2"><i class="fa fa-trash danger"></i> <a class="articles-link"
-                                                                                     href="index.php?action=users-manager&value=trash">Corbeille</a></small>
+                                                                                     href="index.php?action=usersManager&value=trash">Corbeille</a></small>
                         </blockquote>
                     </div>
                 </div>
@@ -156,7 +156,7 @@
                             <div class="modal-body">
                                 <h5><i class="fa fa-user-cog"></i> Modifier un utilisateur</h5>
                                 <form id="formDataUser"
-                                      action="index.php?action=users-manager&value=<?= htmlspecialchars($value) ?>&CRUD=U" method="post"
+                                      action="index.php?action=usersManager&value=<?= htmlspecialchars($value) ?>&CRUD=U" method="post"
                                       onsubmit="return verifForm(this)">
                                     <input type="hidden" name="id" value="<?= htmlspecialchars($user->getId()) ?>">
                                     <div class="input-group mb-3">

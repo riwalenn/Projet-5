@@ -23,7 +23,7 @@ if ((isset($_SESSION['id']))) :
                                 </footer>
                             </blockquote>
                             <p class="text-muted">
-                                <a href="index.php?action=logout-user" onclick="return ConfirmDeconnexion()"><i
+                                <a href="index.php?action=logoutUser" onclick="return ConfirmDeconnexion()"><i
                                             class="fas fa-sign-out-alt"></i> Deconnexion</a>
                             </p>
                             <hr>
@@ -37,12 +37,12 @@ if ((isset($_SESSION['id']))) :
                                 <small class="text-muted">
                                     <span class="badge badge-success"><?= htmlspecialchars($nbUsersReferent) ?></span> utilisateur(s)
                                     référents -
-                                    <a class="articles-link" href="index.php?action=users-manager&value=referents">
+                                    <a class="articles-link" href="index.php?action=usersManager&value=referents">
                                         <i class="fa fa-eye"></i> voir liste</a></small><br>
                                 <small class="text-muted">
                                     <span class="badge badge-warning"> <?= htmlspecialchars($nbUsersWaitingList) ?> </span>
                                     utilisateur(s) en attente de validation -
-                                    <a class="articles-link" href="index.php?action=users-manager&value=uncheckedUsers">
+                                    <a class="articles-link" href="index.php?action=usersManager&value=uncheckedUsers">
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
                             </p>
@@ -52,7 +52,7 @@ if ((isset($_SESSION['id']))) :
                                 <small class="text-muted">
                                     <span class="badge badge-danger"> <?= htmlspecialchars($nbUsersToDelete) ?> </span> utilisateur(s) à
                                     supprimer -
-                                    <a class="articles-link" href="index.php?action=users-manager&value=trash">
+                                    <a class="articles-link" href="index.php?action=usersManager&value=trash">
                                         <i class="fa fa-eye"></i> voir liste</a></small><br>
                                 <small class="text-muted">
                                     <span class="badge badge-danger"> <?= htmlspecialchars($nbUsersConnexionExpired) ?> </span>
@@ -70,7 +70,7 @@ if ((isset($_SESSION['id']))) :
                                     <span class="badge badge-warning"> <?= htmlspecialchars($nbUsersTokenNotValidate) ?> </span>
                                     utilisateur(s) n'ont pas validé leurs token -
                                     <a class="articles-link"
-                                       href="index.php?action=users-manager&value=uncheckedTokenUsers">
+                                       href="index.php?action=usersManager&value=uncheckedTokenUsers">
                                         <i class="fa fa-eye"></i> voir liste</a> </small><br>
                                 <small class="text-muted">
                                     <span class="badge badge-danger"> <?= htmlspecialchars($nbUsersTokenExpired) ?> </span> token(s)
@@ -84,7 +84,7 @@ if ((isset($_SESSION['id']))) :
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">
-                                <a class="nav-link" href="index.php?action=users-manager&value=all"><i
+                                <a class="nav-link" href="index.php?action=usersManager&value=all"><i
                                             class="fas fa-eye"></i> voir la liste des utilisateurs</a>
                             </small>
                         </div>
@@ -112,13 +112,13 @@ if ((isset($_SESSION['id']))) :
                                 <small class="text-muted">
                                     <span class="badge badge-warning"><?= htmlspecialchars($nbPostsUnchecked) ?> </span>
                                     article(s) en attente de validation -
-                                    <a class="articles-link" href="index.php?action=posts-manager&value=uncheckedPosts">
+                                    <a class="articles-link" href="index.php?action=postsManager&value=uncheckedPosts">
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
                                 <small class="text-muted">
                                     <span class="badge badge-warning"><?= htmlspecialchars($nbPostsArchived) ?> </span>
                                     article(s) archivés -
-                                    <a class="articles-link" href="index.php?action=posts-manager&value=archived">
+                                    <a class="articles-link" href="index.php?action=postsManager&value=archived">
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
                                 <small class="text-muted">
@@ -131,20 +131,32 @@ if ((isset($_SESSION['id']))) :
                                 </small>
                             </p>
                             <hr>
-                            <canvas id="myChart"></canvas>
+                            <h6 class="dashboard">Statistiques</h6>
+                            <p>
+                                <small class="text-muted">
+                                    <?php
+                                    foreach ($nbPostsByCategory as $nbPosts) :
+                                        ?>
+                                        <span class="badge badge-blog"><?= $nbPosts['nb_posts'] ?></span> <?= $nbPosts['category'] ?>
+                                        <br>
+                                    <?php
+                                    endforeach;
+                                    ?>
+                                </small><br>
+                            </p>
                             <hr>
                             <h6 class="dashboard">Commentaires</h6>
                             <p>
                                 <small class="text-muted">
                                     <span class="badge badge-warning"><?= htmlspecialchars($nbCommentsUnchecked) ?> </span>
                                     commentaire(s) en attente de validation -
-                                    <a class="articles-link" href="index.php?action=comments-manager">
+                                    <a class="articles-link" href="index.php?action=commentsManager">
                                         <i class="fa fa-history"></i> voir liste</a>
                                 </small><br>
                                 <small class="text-muted">
                                     <span class="badge badge-danger"><?= htmlspecialchars($nbCommentsToDelete) ?> </span> commentaire(s) à
                                     supprimer - <i class="fas fa-exclamation-triangle danger"></i>
-                                    <a class="articles-link" href="index.php?action=comments-manager&CRUD=D"
+                                    <a class="articles-link" href="index.php?action=commentsManager&CRUD=D"
                                        onclick="return ConfirmMessageAdmin()">
                                         <i class="fa fa-trash"></i>
                                         purger la liste</a>
@@ -154,7 +166,7 @@ if ((isset($_SESSION['id']))) :
                             <h6 class="dashboard">Portfolio</h6>
                             <p>
                                 <small class="text-muted">
-                                    <a class="articles-link" href="index.php?action=portfolio-manager">
+                                    <a class="articles-link" href="index.php?action=portfolioManager">
                                         <i class="fa fa-copy"></i> voir le portfolio</a>
                                 </small><br>
                             </p>
@@ -165,7 +177,7 @@ if ((isset($_SESSION['id']))) :
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">
-                                <a class="nav-link" href="index.php?action=posts-manager&value=all"><i
+                                <a class="nav-link" href="index.php?action=postsManager&value=all"><i
                                             class="fas fa-eye"></i> voir la liste des articles</a>
                             </small>
                         </div>
@@ -188,7 +200,7 @@ if ((isset($_SESSION['id']))) :
                         <div class="col-lg-8 mx-auto">
                             <div class="modal-body">
                                 <h5><i class="fa fa-user-cog"></i> Ajouter un utilisateur</h5>
-                                <form id="formDataUser" action="index.php?action=users-manager&value=all&CRUD=C"
+                                <form id="formDataUser" action="index.php?action=usersManager&value=all&CRUD=C"
                                       method="post" onsubmit="return verifForm(this)">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -274,7 +286,7 @@ if ((isset($_SESSION['id']))) :
                         <div class="col-lg-8 mx-auto">
                             <div class="modal-body">
                                 <h5><i class="fa fa-pencil-alt"></i> Ajouter un article</h5>
-                                <form id="formDataUser" action="index.php?action=posts-manager&value=all&CRUD=C"
+                                <form id="formDataUser" action="index.php?action=postsManager&value=all&CRUD=C"
                                       method="post">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -354,80 +366,6 @@ if ((isset($_SESSION['id']))) :
             </div>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.js" integrity="sha512-b3xr4frvDIeyC3gqR1/iOi6T+m3pLlQyXNuvn5FiRrrKiMUJK3du2QqZbCywH6JxS5EOfW0DY0M6WwdXFbCBLQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-   <script src="/public/js/statistiques.js" type="text/javascript"></script>
-    <script>
-        var ctx = document.getElementById('myChart');
-        var data = <?=$nbPostsByCategory?>;
-        var labels = <?=$labelsCategories?>;
-        
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: split_array(labels.label),
-                datasets: [{
-                    label: 'statistiques',
-                    data: split_array(data),
-                    backgroundColor: [
-                        Radar_colors.green,
-                        Radar_colors.blueprimary,
-                        Radar_colors.navy,
-                        Radar_colors.yellow,
-                        Radar_colors.blue,
-                        Radar_colors.purple,
-                        Radar_colors.orange,
-                        Radar_colors.lightgreen,
-                        Radar_colors.lightblueprimary,
-                        Radar_colors.lightnavy,
-                        Radar_colors.lightyellow,
-                        Radar_colors.lightblue,
-                        Radar_colors.lightpurple,
-                        Radar_colors.lightorange,
-                        Radar_colors.darkgreen,
-                        Radar_colors.darkblueprimary,
-                        Radar_colors.darknavy,
-                        Radar_colors.darkyellow,
-                        Radar_colors.darkblue,
-                        Radar_colors.darkpurple,
-                        Radar_colors.darkorange
-                    ],
-                    borderColor: [
-                        Radar_border_colors.green,
-                        Radar_border_colors.blueprimary,
-                        Radar_border_colors.navy,
-                        Radar_border_colors.yellow,
-                        Radar_border_colors.blue,
-                        Radar_border_colors.purple,
-                        Radar_border_colors.orange,
-                        Radar_border_colors.lightgreen,
-                        Radar_border_colors.lightblueprimary,
-                        Radar_border_colors.lightnavy,
-                        Radar_border_colors.lightyellow,
-                        Radar_border_colors.lightblue,
-                        Radar_border_colors.lightpurple,
-                        Radar_border_colors.lightorange,
-                        Radar_border_colors.darkgreen,
-                        Radar_border_colors.darkblueprimary,
-                        Radar_border_colors.darknavy,
-                        Radar_border_colors.darkyellow,
-                        Radar_border_colors.darkblue,
-                        Radar_border_colors.darkpurple,
-                        Radar_border_colors.darkorange
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    },
-                }
-            }
-        });
-    </script>
 <?php
 endif;
 ?>

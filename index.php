@@ -1,7 +1,5 @@
 <?php
-
 require_once 'config/config.php';
-
 try {
     $controller                 = new ControllerFront();
     $controllerBack             = new ControllerBack();
@@ -14,14 +12,13 @@ try {
 
 
     $action = filter_input(INPUT_GET, 'action');
-
     if (isset($action)) {
         switch ($action) {
-            case 'articles-liste' :
+            case 'articlesListe' :
                 $postController->afficherListeArticles();
                 break;
 
-            case 'add-comment' :
+            case 'addComment' :
                 $postController->ajoutCommentaire();
                 break;
 
@@ -34,7 +31,7 @@ try {
                 $securityController->afficherLoginForm();
                 break;
 
-            case 'login-user' :
+            case 'loginUser' :
                 $securityController->login();
                 break;
 
@@ -43,47 +40,51 @@ try {
                 break;
 
             case 'delete':
-            case 'backend-dashboard':
+            case 'backendDashboard':
                 $controllerBack->getBackendDashboard();
                 break;
 
-            case 'users-manager':
+            case 'usersManager':
                 $managers->getUsersDashboardManager();
                 break;
 
-            case 'posts-manager':
+            case 'postsManager':
                 $managers->getPostsDashboardManager();
                 break;
 
-            case 'comments-manager':
+            case 'commentsManager':
                 $managers->getCommentsDashboardManager();
                 break;
 
-            case 'portfolio-manager':
+            case 'pattern':
+                $managers->getPatternFacadeTestManager();
+                break;
+
+            case 'portfolioManager':
                 $managers->getPortfolioDashboardManager();
                 break;
 
             // Ajoute un article dans les favoris de l'utilisateur
-            case 'add-favorite' :
+            case 'addFavorite' :
                 $favorisController->addFavoritePost();
                 break;
 
             // Supprime un article des favoris de l'utilisateur
-            case 'delete-favorite' :
+            case 'deleteFavorite' :
                 $favorisController->deleteFavoritePost();
                 break;
 
             // Modifie les données de l'utilisateur (pseudo, email)
-            case 'modif-data-user':
+            case 'modifDataUser':
                 $managers->UpdateDataByUser();
                 break;
 
-            case 'logout-user' :
+            case 'logoutUser' :
                 $securityController->logout();
                 break;
 
             // Affiche le formulaire
-            case 'nouvel-inscrit' :
+            case 'nouvelInscrit' :
                 $securityController->afficherNewLoginForm();
                 break;
 
@@ -91,25 +92,25 @@ try {
                 $securityController->inscription();
                 break;
 
-            case 'confirmation-inscription-by-email' :
+            case 'confirmationInscriptionByEmail' :
                 $securityController->confirmationByToken();
                 break;
 
             // Affiche le formulaire
-            case 'forgot-password' :
+            case 'forgotPassword' :
                 $securityController->afficherMailForm();
                 break;
 
-            case 'forgot-password-send-mail' :
+            case 'forgotPasswordSendMail' :
                 $securityController->envoyerEmailForPassword();
                 break;
 
             // Affiche le formulaire
-            case 'i-forgot-my-password' :
+            case 'iForgotMyPassword' :
                 $securityController->afficherPasswordForm();
                 break;
 
-            case 'modifier-password' :
+            case 'modifierPassword' :
                 $securityController->changerPassword();
                 break;
 
@@ -120,11 +121,9 @@ try {
             default :
                 break;
         }
-
     } else {
         $controller->afficherIndex();
     }
-
 } catch (PDOException $e) {
     $controller->erreurPDO($e);
 } catch (ExceptionOutput $e) {

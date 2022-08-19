@@ -53,6 +53,7 @@
 <script src="<?= Constantes::PATH_FOLDER_PUBLIC ?>js/agency.min.js"></script>
 <script src="<?= Constantes::PATH_FOLDER_PUBLIC ?>js/verifForm.js"></script>
 <script src="<?= Constantes::PATH_FOLDER_PUBLIC ?>js/summernote.js"></script>
+<script src="<?= Constantes::PATH_FOLDER_PUBLIC ?>js/charts.js"></script>
 
 </body>
 </html>

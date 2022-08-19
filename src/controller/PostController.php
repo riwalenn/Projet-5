@@ -24,11 +24,9 @@ class PostController
         $commentManager     = new CommentManager();
 
         $errorMessage = '';
-
         if (empty(filter_input(INPUT_GET, 'submit'))) {
             $this->afficherListeArticles();
         }
-
         $pageCourante = filter_input(INPUT_GET, 'page') ?? 1;
         $submitRecherche = filter_input(INPUT_GET, 'submit') ?? "";
         $listPosts = $postManager->getSearch($submitRecherche, $pageCourante);
@@ -38,10 +36,8 @@ class PostController
         }
 
         $nbPages = $postManager->countPagesSearchResult($submitRecherche);
-
         foreach ($listPosts as $post) {
             $categoryManager->fillCategoryInPost($post);
-
             if (!empty($_SESSION['id'])) :
                 $user = $userManager->getUserBySessionId();
                 $postManager->fillFavoriteInPost($user, $post);
@@ -49,13 +45,7 @@ class PostController
         }
 
         $view = new View('Liste des articles');
-        $view->render($this->articleView, [
-            'listPosts' => $listPosts,
-            'errorMessage' => $errorMessage,
-            'nbPages' => $nbPages,
-            'pageCourante' => $pageCourante,
-            'submitRecherche' => $submitRecherche
-        ]);
+        $view->render($this->articleView, ['listPosts' => $listPosts, 'errorMessage' => $errorMessage, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante, 'submitRecherche' => $submitRecherche]);
     }
 
     //Affichage de la page des articles
@@ -70,11 +60,9 @@ class PostController
         $pageCourante = filter_input(INPUT_GET, 'page') ?? 1;
         $statut = 1; //Afficher les articles validés
         $listPosts = $postManager->getPosts($pageCourante, $statut);
-
         foreach ($listPosts as $post) {
             $commentManager->fillCommentInPost($post);
             $categoryManager->fillCategoryInPost($post);
-
             if (!empty($_SESSION['id'])) :
                 $user = $userManager->getUserBySessionId();
                 $postManager->fillFavoriteInPost($user, $post);
@@ -84,12 +72,7 @@ class PostController
         $nbPages = $postManager->countPagesByState(3, Constantes::POST_STATUS_VALIDATED);
 
         $view = new View('Liste des articles');
-        $view->render($this->articleView, [
-            'listPosts' => $listPosts,
-            'errorMessage' => $errorMessage,
-            'nbPages' => $nbPages,
-            'pageCourante' => $pageCourante
-        ]);
+        $view->render($this->articleView, ['listPosts' => $listPosts, 'errorMessage' => $errorMessage, 'nbPages' => $nbPages, 'pageCourante' => $pageCourante]);
     }
 
     // Ajout d'un commentaire pour un utilisateur connecté

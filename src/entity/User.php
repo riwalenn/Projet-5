@@ -4,18 +4,18 @@ class User
 {
     use EntityHydrator;
 
-    private ?int $id;
-    private ?string $pseudo;
-    private ?int $role;
-    private ?string $email;
-    private ?string $password;
+    private $id;
+    private $pseudo;
+    private $role;
+    private $email;
+    private $password;
     private $date_inscription;
     private $date_modification;
-    private ?int $cgu;
-    private ?int $state;
-    private ?string $id_token;
-    private ?string $token;
-    private ?int $id_user;
+    private $cgu;
+    private $state;
+    private $id_token;
+    private $token;
+    private $id_user;
     private $expiration_token;
 
     static public $listeStatut = [
@@ -60,19 +60,15 @@ class User
         if (strlen($pseudo) <= 3) :
             $message = "Votre pseudo doit contenir au minimum 4 caractères : " . $pseudo;
             throw new ExceptionOutput($message);
-
         else:
-
             if (preg_match('^[\W]^', $pseudo)) :
                 $message = "Votre pseudo ne doit pas contenir de caractères spéciaux : " . $pseudo;
                 throw new ExceptionOutput($message);
-
             else:
                 $this->pseudo = $pseudo;
 
                 return $this;
             endif;
-
         endif;
     }
 
@@ -97,10 +93,8 @@ class User
     {
         if ($this->role == Constantes::ROLE_ADMIN) :
             return 'role-dash-table';
-
         elseif ($this->role == Constantes::ROLE_USER) :
             return '';
-
         endif;
     }
 
@@ -115,7 +109,6 @@ class User
             $this->email = $email;
 
             return $this;
-
         else:
             $message = "Le format de votre email ne correspond pas ! (minimum 3 caractères, maximum 55 - 2 caractères minimum après l'arobase et 2 à 5 caractères pour l'extension";
             throw new ExceptionOutput($message);
@@ -126,7 +119,6 @@ class User
     {
         if ($this->email === 'no-reply@riwalennbas.com') :
             return 'email-dash-table';
-
         else:
             return '';
         endif;
@@ -143,7 +135,6 @@ class User
             $this->password = $password;
 
             return $this;
-
         else :
             $message = "Votre mot de passe doit contenir entre 10 et 64 caractères, avoir des majuscules, des chiffres ainsi que des caractères spéciaux";
             throw new ExceptionOutput($message);
@@ -171,7 +162,6 @@ class User
     public function getDate_modification_fr()
     {
         $date = new DateTime($this->date_modification);
-
         return date_format($date, 'd-m-Y à H:m');
     }
 
@@ -196,7 +186,6 @@ class User
     {
         if ($this->cgu == Constantes::CGU_VALIDATED) :
             return '<i class="fa fa-check-square cgu-green"></i>';
-
         else:
             return $this->cgu;
         endif;
@@ -237,7 +226,6 @@ class User
     public function getStateClass(): ?string
     {
         $helper = new UserHelper();
-
         return $helper->getStateClass($this->state);
     }
 
@@ -276,12 +264,9 @@ class User
     public function getExpiration_token()
     {
         if ($this->expiration_token == NULL) :
-
             return $this->expiration_token;
-
         else:
             $date = new DateTime($this->expiration_token);
-
             return date_format($date, 'd-m-Y à H:m');
         endif;
     }
